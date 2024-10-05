@@ -1,0 +1,11 @@
+<?php
+    if(is_submit()){
+        $user=users()->first(['u_email'=>$_POST['email'],'u_pasword'=>$_POST['password']]);
+        Session()->start($user);
+        redirect('home');
+    }
+    elseif(was_logged()){
+        $user=users()->first(['u_id'=>Session()->get('user_id')]);
+        Session()->start($user);
+        redirect('home');
+    }

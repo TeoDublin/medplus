@@ -1,22 +1,15 @@
 <?php
-    class users extends base{
-        private $table;
-        private $alias;
-        private function _table($switch=false){
-            switch ($switch) {
-                default:
-                    $this->table='users';
-                    $this->alias='u';
-                    break;
-            }
-        }
-        private $fields=[
-            'u_id'=>'u.id',
-            'u_username'=>'u.username',
-            'u_pasword'=>'pasword'
+    class Users extends Base{
+        protected array $tables=[
+            'users'=>'u'
         ];
-        public function select($params){
-            $this->_table($params['table']);
-            
+        protected array $fields=[
+            'u_id'=>'u.id',
+            'u_email'=>'u.email',
+            'u_pasword'=>'u.pasword',
+            'u_template'=>'u.template'
+        ];
+        public function select($params):array{
+            return parent::select($params);
         }
     }

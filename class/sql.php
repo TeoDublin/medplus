@@ -1,13 +1,13 @@
 <?php
 
-class sql {
-    private $connection;
+class Sql {
+    private mysqli $connection;
 
     public function __construct() {
-        switch (_environment()) {
+        switch (environment()) {
             case 'dev':
                 $host='127.0.0.1';
-                $user='teo';
+                $user='medplus';
                 $pass='123testes'; 
                 $db='medplus';
                 break;
@@ -17,17 +17,16 @@ class sql {
             die("Connection failed: " . $this->connection->connect_error);
         }
     }
-    public function select($query) {
+    public function select($query):array {
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    public function query($query) {
+    public function query($query):void {
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
     }
-
     public function __destruct() {
         $this->connection->close();
     }
