@@ -1,4 +1,3 @@
-<?php $theme = Session()->get('template')->theme ?? 'blue';?>
 <!doctype html>
 <html lang="it">
     <head>
@@ -11,4 +10,4 @@
         <script src="assets/js/bootstrap-5.3.3.js"></script>
         <title>MedPlus</title>
     </head>
-    <body data-bs-theme="<?php echo $theme;?>">
+    <body data-bs-theme="<?php echo theme();?>">
