@@ -8,24 +8,12 @@
         setup: document.querySelector('.menu-setup'),
 
         listen: function() {
-            const mouseOverIcon = () => {
-                if(!this.menuIcon.classList.contains('block')){
-                    this.menuIcon.classList.add('hover');
-                    this.menuVertical.classList.add('show');
-                }
-            };
-            const mouseOverContent = () => {
-                if(!this.menuIcon.classList.contains('block')){
-                    this.menuIcon.classList.remove('hover');
-                    this.menuVertical.classList.remove('show');
-                }
-            };
             const togleListening = () => {
                 const isActive = this.menuIcon.classList.toggle('block');
                 if (isActive) {
                     this.menuIcon.classList.add('block');
                     this.menuVertical.classList.add('show');
-                } 
+                }
                 else {
                     this.menuIcon.classList.remove('block');
                     this.menuVertical.classList.remove('show');
@@ -35,8 +23,6 @@
                 document.cookie = "is_logged=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 window.location.href = "index.php";
             };
-            this.menuIcon.addEventListener('mouseover', mouseOverIcon);
-            this.pageContent.addEventListener('mouseover', mouseOverContent);
             this.menuIcon.addEventListener('click', togleListening);
             this.exit.addEventListener('click',menuExit);
             this.setup.addEventListener('click',menuSetup);

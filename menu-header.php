@@ -1,11 +1,11 @@
-<div class="vh-100 vw-100 bg-body-primary d-flex flex-column">
-    <nav class="navbar w-100 p-0 m-0" style="height: 75">
+<div class="vh-100 vw-100 d-flex flex-column">
+    <nav class="navbar w-100 p-0 m-0 mb-3 bg-secondary shadow-lg" style="height: 50;">
         <div class="d-flex  w-100">
             <div class="p-2 d-flex justify-content-center align-items-center" >
-                <img class="menu-icon" src="<?php echo icon('menu.svg');?>" alt="menu" width="40" height="40">
+                <img class="menu-icon" src="<?php echo icon('menu.svg');?>" alt="menu" width="30" height="30">
             </div>
             <div class="p-2 pt-3 d-flex justify-content-center align-items-center">
-                <img src="<?php echo image("logo-".theme().".svg");?>" alt="Medplus" height="50">
+                <img src="<?php echo image("logo-".theme().".svg");?>" alt="Medplus" height="40">
             </div>
             <div class="p-2 pt-3 me-3 d-flex justify-content-center align-items-center ms-auto">
                 <div class="dropstart">
@@ -25,8 +25,8 @@
                             </div>
                         </li>
                     </ul>
-                </div>                
-            </div>            
+                </div>
+            </div>
         </div>
     </nav>
     <div class="d-flex flex-fill">
