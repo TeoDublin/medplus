@@ -5,7 +5,7 @@
         public function __construct($key){
             $this->theme=$key;
             $this->images = [
-                'login'=> root_path("/assets/images/login-{$key}.svg")
+                'login'=> image("login-{$key}.svg")
             ];
         }
     }

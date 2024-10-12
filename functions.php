@@ -2,11 +2,20 @@
     function root_path($path): string {
         return "/medplus/{$path}";
     }
+    function image($name): string {
+        return root_path("assets/images/{$name}");
+    }
+    function icon($name): string {
+        return root_path("assets/icons/{$name}");
+    }
     function root($path):string{
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }
     function environment():string{
         return 'dev';
+    }
+    function theme():string{
+        return Session()->get('template')->theme ?? 'blue';
     }
     function is_submit():bool{
         return !empty($_POST)&&isset($_POST['submit']);
