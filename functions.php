@@ -16,7 +16,7 @@
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }
     function environment():string{
-        return 'dev';
+        return 'prod';
     }
     function theme():string{
         return Session()->get('template')->theme ?? 'blue';

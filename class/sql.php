@@ -12,7 +12,7 @@ class Sql {
                 $db='medplus';
                 break;
             case 'prod':
-                $host='u482567801_';
+                $host='localhost';
                 $user='medplus';
                 $pass='Medplus2024'; 
                 $db='u482567801_medplus';
