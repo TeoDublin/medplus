@@ -5,38 +5,37 @@
         private string $table;
         private string $alias;
         private string $select;
+        private string $set;
         private string $where;
-        private function _table(array $params):void{
-            $this->table = $params['table'] ?? array_keys($this->tables)[0];
-            $this->alias = $this->tables[$this->table];
-            unset($params['table']);
-        }
-        private function _select(array $params):void{
-            $this->select = implode(",",$params['select'] ??= $this->default_select());
-            unset($params['select']);
-        }
-        private function _where(array $params):void{
-            $this->where = $this->_parse_where($params);
-        }
-
+        private int $limit;
+        private int $offset;
         public function select(array $params):array{
             $sql=Sql();
             $this->_table($params);
             $this->_select($params);
+            $this->_limit($params);
+            $this->_offset($params);            
             $this->_where($params);
-            $result=$sql->select("SELECT {$this->select} FROM {$this->table} {$this->alias} WHERE {$this->where}");
+            $query="SELECT {$this->select} FROM {$this->table} {$this->alias} WHERE {$this->where}";
+            if($this->limit)$query.=" LIMIT {$this->limit}";
+            if($this->offset)$query.=" OFFSET {$this->offset}";            
+            $result=$sql->select($query);
             return $result;
         }
         public function first($params):array{
             return $this->select($params)[0];
         }
         public function insert($table,$insert){
-            
+
         }
-        public function update($table,$join,$set,$where){
-            
+        public function update(array $params):void{
+            $sql=Sql();
+            $this->_table($params);
+            $this->_set($params);
+            $this->_where($params);
+            $sql->query("UPDATE {$this->table} {$this->alias} SET {$this->set} WHERE {$this->where}");
         }
-        public function delete($table,$where){
+        public function delete(array &$params){
             
         }
         public function default_select():array{
@@ -44,7 +43,45 @@
                 return substr($field,0,strlen($this->alias))===$this->alias;
             });
         }
-        private function _parse_where($params):string{
+        private function _table(array &$params):void{
+            $this->table = $params['table'] ?? array_keys($this->tables)[0];
+            $this->alias = $this->tables[$this->table];
+            unset($params['table']);
+        }
+        private function _select(array &$params):void{
+            $select=$params['select'] ? $this->_filter($params['select']) : $this->default_select();
+            $this->select = implode(",",  array_values($select));
+            unset($params['select']);
+        }
+        private function _limit(array &$params):void{
+            if(isset($params['limit'])){
+                $this->limit=(int)$params['limit'];
+                unset($params['limit']);
+            }
+            else $this->limit=false;
+        }
+        private function _offset(array &$params):void{
+            if(isset($params['offset'])){
+                $this->offset=(int)$params['offset'];
+                unset($params['offset']);
+            }
+            else $this->offset=false;
+        }
+        private function _filter(array $select):array{
+            $ret=[];
+            foreach($select as $key)$ret[$key]=$this->fields[$key];
+            return $ret;
+        }
+        private function _set(array &$params):void{
+            $set=[];
+            foreach ($params['set'] as $key => $value) $set[]="{$this->fields[$key]}='{$value}'"; 
+            $this->set=implode(',',$set);
+            unset($params['set']);
+        }
+        private function _where(array &$params):void{
+            $this->where = $this->_parse_where($params);
+        }
+        private function _parse_where(&$params):string{
             $conditions=[];
             foreach ($params as $field => $condition) {
                 if(!is_array($condition))$conditions[]="{$this->fields[$field]}='{$condition}'";

@@ -11,6 +11,12 @@ class Sql {
                 $pass='123testes'; 
                 $db='medplus';
                 break;
+            case 'prod':
+                $host='u482567801_';
+                $user='medplus';
+                $pass='Medplus2024'; 
+                $db='u482567801_medplus';
+                break;
         }
         $this->connection = new mysqli($host, $user, $pass, $db);
         if ($this->connection->connect_error) {

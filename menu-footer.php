@@ -1,31 +1,52 @@
-
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     const menu = {
         menuVertical: document.querySelector('.menu-vertical'),
         pageContent: document.querySelector('.page-content'),
+        menuDivider: document.querySelector('.menu-divider'),
+        menuIconBack: document.querySelector('.menu-icon-back'),
         menuIcon: document.querySelector('.menu-icon'),
+        menuLabel: document.querySelectorAll('.menu-label'),
         exit: document.querySelector('.menu-exit'),
         setup: document.querySelector('.menu-setup'),
+        home: document.querySelector('#home'),
+        users: document.querySelector('#users'),
 
         listen: function() {
             const togleListening = () => {
-                const isActive = this.menuIcon.classList.toggle('block');
-                if (isActive) {
-                    this.menuIcon.classList.add('block');
-                    this.menuVertical.classList.add('show');
+                const closed = this.menuVertical.classList.contains('hide');
+                if (closed) {
+                    this.menuVertical.classList.remove('hide');
+                    this.pageContent.classList.remove('px-2');
+                    this.menuDivider.classList.remove('hide');
+                    this.menuLabel.forEach(label => label.classList.remove('hide'));
                 }
                 else {
-                    this.menuIcon.classList.remove('block');
-                    this.menuVertical.classList.remove('show');
+                    this.menuVertical.classList.add('hide');
+                    this.pageContent.classList.add('px-2');
+                    this.menuDivider.classList.add('hide');
+                    this.menuLabel.forEach(label => label.classList.add('hide'));
                 }
             };
             const menuExit = () => {
                 document.cookie = "is_logged=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 window.location.href = "index.php";
             };
+            const homeClick = () =>{
+                window.location.href = "<?php echo url('home.php') ?>";
+            }
+            const usersClick = () =>{
+                window.location.href = "<?php echo url('users.php') ?>";
+            }            
             this.menuIcon.addEventListener('click', togleListening);
+            this.menuIconBack.addEventListener('click', togleListening);
             this.exit.addEventListener('click',menuExit);
-            this.setup.addEventListener('click',menuSetup);
+            this.home.addEventListener('click', homeClick);
+            this.users.addEventListener('click', usersClick);
         }
     }
     menu.listen();

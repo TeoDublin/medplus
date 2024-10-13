@@ -1,14 +1,18 @@
 <?php
-    function root_path($path): string {
+    function root_path(string $path): string {
         return "/medplus/{$path}";
     }
-    function image($name): string {
+    function url(string $path): string {
+        $rootUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
+        return $rootUrl.root_path("{$path}");
+    }
+    function image(string $name): string {
         return root_path("assets/images/{$name}");
     }
-    function icon($name): string {
+    function icon(string $name): string {
         return root_path("assets/icons/{$name}");
     }
-    function root($path):string{
+    function root(string $path):string{
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }
     function environment():string{
@@ -27,7 +31,7 @@
         return !empty($_SESSION)&&Session()->get('is_logged');
     }
     function redirect(string $page):void{
-        header("Location: {$page}.php");
+        header("Location: {$page}". (str_ends_with($page,'.php')?'':'.php'));
         exit();
     }
     function component(string $name, array $params=[]):void{

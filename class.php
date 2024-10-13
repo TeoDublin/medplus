@@ -1,5 +1,5 @@
 <?php
-    $files = glob('class/*.php');
+    $files = glob(__DIR__ . '/class/*.php');
     foreach ($files as $file) require_once $file;
 
     function Html(): Html{

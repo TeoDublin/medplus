@@ -1,7 +1,6 @@
 <?php
     if(is_submit()){
-        //$user=users()->first(['u_email'=>$_POST['email'],'u_pasword'=>$_POST['password']]);
-        $user=['template'=>'blue','id'=>1];
+        $user=users()->first(['u_user'=>$_POST['user'],'u_pasword'=>$_POST['password']]);
         Session()->start($user);
         redirect('home');
     }
