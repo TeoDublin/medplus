@@ -13,7 +13,7 @@ class Sql {
                 break;
             case 'prod':
                 $host='localhost';
-                $user='medplus';
+                $user='u482567801_medplus';
                 $pass='Medplus2024'; 
                 $db='u482567801_medplus';
                 break;
