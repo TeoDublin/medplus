@@ -13,6 +13,18 @@
         public function select($params):array{
             return parent::select($params);
         }
+        public function select_for_table($params):ResultForTable{
+            $limit=$params['limit']??=10;
+            unset($params['limit']);
+            $select=$params['select'];
+            $params['select']='count';
+            $total=parent::first($params)['count'];
+            $params['offset']=$offset=($_REQUEST['pagination']*$limit)??0;
+            $params['limit']=$limit;
+            $params['select']=$select;
+            $result=parent::select($params);
+            return new ResultForTable($result,$total,$offset,$limit);
+        }
         public function update($params):void{
             parent::update($params);
         }

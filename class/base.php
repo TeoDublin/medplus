@@ -9,6 +9,7 @@
         private string $where;
         private int $limit;
         private int $offset;
+        private int $total;
         public function select(array $params):array{
             $sql=Sql();
             $this->_table($params);
@@ -23,7 +24,8 @@
             return $result;
         }
         public function first($params):array{
-            return $this->select($params)[0];
+            $ret=$this->select($params);
+            return count($ret)>0?$ret[0]:$ret;
         }
         public function insert($table,$insert){
 
@@ -49,8 +51,11 @@
             unset($params['table']);
         }
         private function _select(array &$params):void{
-            $select=$params['select'] ? $this->_filter($params['select']) : $this->default_select();
-            $this->select = implode(",",  array_values($select));
+            if($params['select']=='count')$this->select = "count({$this->alias}.id) as `count`";
+            else{
+                $select=$params['select'] ? $this->_filter($params['select']) : $this->default_select();
+                $this->select = implode(",",  array_values($select));
+            }
             unset($params['select']);
         }
         private function _limit(array &$params):void{

@@ -23,17 +23,38 @@ class Sql {
             die("Connection failed: " . $this->connection->connect_error);
         }
     }
-    public function select($query):array {
+    public function select(string $query):array {
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    public function query($query):void {
+    public function query(string $query):void {
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
     }
+    public function raw(string $query):array {
+        $stmt = $this->connection->prepare($query);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }    
     public function __destruct() {
         $this->connection->close();
+    }
+}
+
+Class ResultForTable{
+    public array $result;
+    public int $total;
+    public int $offset;
+    public int $limit;
+    public int $pages;
+    public function __construct(array $result, int $total, int $offset, int $limit){
+        $this->result = $result;
+        $this->total = $total;
+        $this->offset = $offset;
+        $this->limit = $limit;
+        $this->pages = ceil($total/$limit);
     }
 }

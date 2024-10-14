@@ -28,7 +28,7 @@
                     </div>            
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Annulla</button>
                     <button type="submit" class="btn btn-primary">Salva Modifiche</button>
                 </div>
             </form>
@@ -44,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <nav class="navbar w-100 p-0 m-0 bg-secondary shadow-lg" >
+        <nav class="navbar w-100 p-0 m-0 bg-primary shadow-lg" >
             <div class="d-flex  w-100">
                 <div class="p-2 d-flex justify-content-center align-items-center" >
                     <img class="menu-icon" src="<?php echo icon('menu.svg');?>" alt="menu" width="30" height="30">

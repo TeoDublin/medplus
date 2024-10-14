@@ -24,7 +24,8 @@ class Session
     {
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
-        } elseif (isset($_COOKIE[$key])) {
+        } 
+        elseif (isset($_COOKIE[$key])) {
             $value = $_COOKIE[$key];
             $unserializedValue = @unserialize($value);
             return $unserializedValue === false ? $value : $unserializedValue;
