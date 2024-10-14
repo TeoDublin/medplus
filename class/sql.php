@@ -18,9 +18,10 @@ class Sql {
                 $db='u482567801_medplus';
                 break;
         }
-        $this->connection = new mysqli($host, $user, $pass, $db);
-        if ($this->connection->connect_error) {
-            die("Connection failed: " . $this->connection->connect_error);
+        try {
+            $this->connection = new mysqli($host, $user, $pass, $db);
+        } catch (mysqli_sql_exception $e) {
+            echo "Error: " . $e->getMessage();
         }
     }
     public function select(string $query):array {
