@@ -37,7 +37,7 @@
 </div>
 <div class="vh-100 vw-100 d-flex flex-column">
     <div class="d-flex flex-row mb-1" style="height: 40;">
-        <div class="menu-divider">
+        <div class="menu-divider hide">
             <div class="d-flex w-100 justify-content-end">
                 <div class="p-3 d-flex align-items-end pe-4" >
                     <img class="menu-icon-back" src="<?php echo icon('minor.svg');?>" alt="menu" width="30" height="30">
@@ -82,14 +82,14 @@
                     <div class="p-3 d-flex align-items-start ps-2" >
                         <img src="<?php echo icon('home.svg');?>" alt="menu" height="30">
                     </div>
-                    <div class="menu-label align-self-center" ><span>Home</span></div>
+                    <div class="menu-label align-self-center hide" ><span>Home</span></div>
                 </div>
                 <div class="menu-option d-flex w-100 justify-content-start" id="users">
                     <div class="p-3 d-flex align-items-start ps-2" >
                         <img src="<?php echo icon('person-list.svg');?>" alt="menu" width="31" height="30">
                     </div>
-                    <div class="menu-label align-self-center"><span >Utenti</span></div>
+                    <div class="menu-label align-self-center hide"><span >Utenti</span></div>
                 </div>
             </div>
-            <div class="page-content flex-fill pb-2 pt-0">
+            <div class="page-content flex-fill pb-2 pt-0 px-2">
                 <div class="d-flex justify-content-center">
