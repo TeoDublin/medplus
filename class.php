@@ -20,3 +20,9 @@
     function Template($key): Template{
         return new Template($key);
     }
+    function Trattamenti():Trattamenti{
+        return new Trattamenti();
+    }
+    function Terapisti():Terapisti{
+        return new Terapisti();
+    }

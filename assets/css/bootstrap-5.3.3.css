@@ -228,6 +228,7 @@ color-scheme: dark;
     --bs-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+    --bs-link-color:rgb(74, 74, 74);
 }
 [data-bs-theme=pink] {
     --base-color-primary: #fff;
@@ -278,6 +279,9 @@ color-scheme: dark;
     --bs-box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
     --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     --bs-box-shadow-lg: 0 1rem 3rem rgba(7, 0, 0, 0.52);
+    --bs-link-color:rgb(74, 74, 74);
+    --bs-link-hover-color:#000000;
+    --bs-secondary-color:#000000;    
 }
 .display-flex{
     display: flex!important;
@@ -370,10 +374,12 @@ color-scheme: dark;
     max-width: 70px;
 }
 .menu-icon:hover {
-    border-radius: 10px;
-    background-color: rgba(var(--base-bg-primary-rgb),0.5);
     cursor: pointer;
 }
+.menu-icon:hover >svg {
+    fill: black;
+}
+
 .menu-icon-back:hover{
     border-radius: 10px;
     background-color: rgba(var(--base-bg-primary-rgb),0.075);
@@ -401,15 +407,26 @@ color-scheme: dark;
     display: none;
 }
 .menu-option:hover{
-    background-color: rgba(var(--base-bg-secondary-rgb), 0.2) !important;
     cursor: pointer;
+}
+.menu-option:hover svg{
+    fill: rgba(var(--base-bg-secondary-rgb), 0.2) !important;
 }
 .dots:hover{
     cursor: pointer;
 }
+.dots:hover svg{
+    fill: black;
+}
 .table-row:hover > th,.table-row:hover > td{
     background-color: rgba(var(--base-bg-secondary-rgb), 0.2) !important;
     cursor: pointer;
+}
+.action-del:hover > svg{
+    fill: red;
+}
+.action-edit:hover > svg{
+    fill: var(--base-bg-primary);
 }
 *,
 *::before,
@@ -8656,7 +8673,7 @@ text-align: right !important;
 }
 
 .text-center {
-text-align: center !important;
+    text-align: center !important;
 }
 
 .text-decoration-none {

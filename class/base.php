@@ -23,6 +23,18 @@
             $result=$sql->select($query);
             return $result;
         }
+        public function select_for_table($params):ResultForTable{
+            $limit=$params['limit']??=10;
+            unset($params['limit']);
+            $select=$params['select'];
+            $params['select']='count';
+            $total=$this->first($params)['count'];
+            $params['offset']=$offset=($_REQUEST['pagination']*$limit)??0;
+            $params['limit']=$limit;
+            $params['select']=$select;
+            $result=$this->select($params);
+            return new ResultForTable($result,$total,$offset,$limit);
+        }
         public function first($params):array{
             $ret=$this->select($params);
             return count($ret)>0?$ret[0]:$ret;

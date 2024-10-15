@@ -15,6 +15,7 @@
         setup: document.querySelector('.menu-setup'),
         home: document.querySelector('#home'),
         users: document.querySelector('#users'),
+        elenchi: document.querySelector('#elenchi'),
 
         listen: function() {
             const togleListening = () => {
@@ -41,12 +42,16 @@
             }
             const usersClick = () =>{
                 window.location.href = "<?php echo url('users.php') ?>";
-            }            
+            }
+            const elenchiClick = () =>{
+                window.location.href = "<?php echo url('elenchi.php') ?>";
+            }
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);
             this.exit.addEventListener('click',menuExit);
             this.home.addEventListener('click', homeClick);
             this.users.addEventListener('click', usersClick);
+            this.elenchi.addEventListener('click',elenchiClick);
         }
     }
     menu.listen();
