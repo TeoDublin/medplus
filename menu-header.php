@@ -77,7 +77,7 @@
     </div>
     <div class="d-flex flex-fill">
         <div class="d-flex flex-fill flex-row">
-            <div class="menu-vertical h-100 d-flex flex-column p-2">
+            <div class="menu-vertical h-100 d-flex flex-column p-2 hide">
                 <div class="menu-option d-flex w-100 justify-content-start" id="home">
                     <div class="p-3 d-flex align-items-start ps-2" >
                         <img src="<?php echo icon('home.svg');?>" alt="menu" height="30">
