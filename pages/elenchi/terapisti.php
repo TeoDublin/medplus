@@ -1,0 +1,1 @@
+<?php html()->table(['Terapista'],Terapisti()->select_for_table(['select'=>['id','terapista']]),['del'=>'Elimina','edit'=>'Modifica']);?>

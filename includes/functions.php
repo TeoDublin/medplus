@@ -26,7 +26,8 @@
         return Session()->get('template')->theme ?? 'blue';
     }
     function is_submit():bool{
-        return !empty($_POST)&&isset($_POST['submit']);
+        $ret=!empty($_POST)&&isset($_POST['submit']);
+        return $ret;
     }
     function was_logged():bool{
         return Session()->get('is_logged') ?? false;
@@ -40,4 +41,7 @@
     }
     function component(string $name, array $params=[]):void{
         include root("components/{$name}.php");
+    }
+    function clean_post():array{
+        return array_diff_key($_POST,['submit'=>true]);
     }

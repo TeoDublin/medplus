@@ -1,2 +1,0 @@
-<?php
-    $BACKGROUND_PRIMARY="";

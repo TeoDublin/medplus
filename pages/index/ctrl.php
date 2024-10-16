@@ -1,6 +1,6 @@
 <?php
     if(is_submit()){
-        $user=users()->first(['u_user'=>$_POST['user'],'u_pasword'=>$_POST['password']]);
+        $user=users()->first(['user'=>$_POST['user'],'pasword'=>$_POST['password']]);
         if(count($user)> 0){
             Session()->start($user);
             redirect('home');
@@ -9,7 +9,7 @@
 
     }
     elseif(was_logged()){
-        $user=users()->first(['u_id'=>Session()->get('user_id')]);
+        $user=users()->first(['id'=>Session()->get('user_id')]);
         Session()->start($user);
         redirect('home');
     }
