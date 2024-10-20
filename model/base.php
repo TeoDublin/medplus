@@ -24,26 +24,29 @@
             return $result;
         }
         public function insert(array $params):void{
+            unset($params['id']);
             $keys=implode(',',array_map(fn($value)=>"`{$value}`",array_keys($params)));
             $values = implode(',',array_map(fn($value)=>"'{$value}'",$params));
             Sql()->query("INSERT INTO {$this->table} ({$keys}) VALUES ({$values})");
         }
         public function update(array $params):void{
             $this->_alias();
+            $id=$params['id'];
+            unset($params['id']);
             $this->_set($params);
-            $this->_where($params);
-            Sql()->query("UPDATE {$this->table} {$this->alias} SET {$this->set} WHERE {$this->where}");
+            Sql()->query("UPDATE {$this->table} {$this->alias} SET {$this->set} WHERE id = {$id}");
         }
-        public function delete(array &$params):void{
-
+        public function delete(string $id):void{
+            $this->table;
+            Sql()->query("DELETE FROM {$this->table} WHERE id={$id}");
         }
         public function select_for_table($params):ResultForTable{
             $limit=$params['limit']??=10;
             unset($params['limit']);
-            $select=$params['select'];
+            $select=$params['select'] ?? $this->fields;
             $params['select']='count';
             $total=$this->first($params)['count'];
-            $params['offset']=$offset=($_REQUEST['pagination']*$limit)??0;
+            $params['offset']=$offset=((int)cookie('pagination',0)*$limit)??0;
             $params['limit']=$limit;
             $params['select']=$select;
             $result=$this->select($params);
@@ -52,7 +55,12 @@
         public function first($params):array{
             $ret=$this->select($params);
             return count($ret)>0?$ret[0]:$ret;
-        }        
+        }
+        public function enum(string $column):array{
+            $result=Sql()->select("SELECT COLUMN_TYPE FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$this->table}' AND COLUMN_NAME = '{$column}'");
+            $ret=str_replace("'",'',str_replace(')','',str_replace('enum(','',$result[0]['COLUMN_TYPE'])));
+            return explode(',',$ret);
+        }
         private function _select(array &$params):void{
             if($params['select']=='count')$this->select = "count({$this->alias}.id) as `count`";
             else{
@@ -84,9 +92,8 @@
         }
         private function _set(array &$params):void{
             $set=[];
-            foreach ($params['set'] as $key => $value) $set[]="{$this->alias}.{$key}='{$value}'"; 
+            foreach ($params as $key => $value) $set[]="{$this->alias}.{$key}='{$value}'"; 
             $this->set=implode(',',$set);
-            unset($params['set']);
         }
         private function _where(array &$params):void{
             $this->where = $this->_parse_where($params);
@@ -101,7 +108,8 @@
                             'eq' => "{$this->alias}.{$field}='{$op_condition}'",
                             'neq' => "{$this->alias}.{$field}<>'{$op_condition}'",
                             'in' => "{$this->alias}.{$field} IN('" . implode("','", $op_condition) . "')",
-                            'notin' => "{$this->alias}.{$field} NOT IN('" . implode("','", $op_condition) . "')"
+                            'notin' => "{$this->alias}.{$field} NOT IN('" . implode("','", $op_condition) . "')",
+                            'like' => "{$this->alias}.{$field} LIKE '{$op_condition}'",
                         };
                     }
                 }

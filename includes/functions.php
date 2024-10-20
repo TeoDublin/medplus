@@ -2,8 +2,12 @@
     function environment():string{
         return 'prod';
     }
+    function page():string{
+        $split= explode('/',strtok($_SERVER['REQUEST_URI'], '?'));
+        return str_replace('.php','',end($split));
+    }
     function root_path(string $path): string {
-        return "/medplus/{$path}";
+        return "/".PROJECT_NAME."/{$path}";
     }
     function url(string $path): string {
         $rootUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
@@ -43,5 +47,10 @@
         include root("components/{$name}.php");
     }
     function clean_post():array{
-        return array_diff_key($_POST,['submit'=>true]);
+        $ret=array_diff_key($_POST,['submit'=>true,'action'=>true]);
+        $_POST=[];
+        return $ret;
+    }
+    function now(string $format):string{
+        return date($format);
     }

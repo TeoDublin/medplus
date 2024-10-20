@@ -3,6 +3,9 @@
         protected string $table='trattamenti';
         protected array $fields=[
             'id',
-            'trattamento'
+            'categoria',
+            'trattamento',
+            'tipo',
+            'prezzo'
         ];
     }

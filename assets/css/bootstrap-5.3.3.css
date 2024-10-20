@@ -408,9 +408,13 @@ color-scheme: dark;
 }
 .menu-option:hover{
     cursor: pointer;
+    background-color: rgba(var( --base-bg-primary-rgb),0.2);
 }
 .menu-option:hover svg{
-    fill: rgba(var(--base-bg-secondary-rgb), 0.2) !important;
+    fill: var( --base-bg-primary) !important;
+}
+.menu-option:hover span{
+    color: var( --base-bg-primary) !important;
 }
 .dots:hover{
     cursor: pointer;
@@ -422,11 +426,18 @@ color-scheme: dark;
     background-color: rgba(var(--base-bg-secondary-rgb), 0.2) !important;
     cursor: pointer;
 }
-.action-del:hover > svg{
-    fill: red;
+.warning:hover {
+    background-color: red !important;
+    cursor: pointer;
 }
-.action-edit:hover > svg{
-    fill: var(--base-bg-primary);
+.warning:hover > td{
+    color:white!important;
+}
+.action-Elimina:hover > svg{
+    fill: white;
+}
+.action-Modifica:hover > svg{
+    fill: var(--base-bg-secondary);
 }
 *,
 *::before,
@@ -7877,18 +7888,24 @@ border-width: 5px !important;
 --bs-border-opacity: 1;
 }
 
+.w-10 {
+    width: 10% !important;
+}
+.w-15 {
+    width: 15% !important;
+}
 .w-25 {
-width: 25% !important;
+    width: 25% !important;
 }
-
+.w-35 {
+    width: 35% !important;
+}
 .w-50 {
-width: 50% !important;
+    width: 50% !important;
 }
-
 .w-75 {
-width: 75% !important;
+    width: 75% !important;
 }
-
 .w-100 {
     width: 100% !important;
 }

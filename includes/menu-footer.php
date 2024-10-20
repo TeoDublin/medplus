@@ -2,6 +2,7 @@
             </div>
         </div>
     </div>
+    <div id="modal"></div>
 </div>
 <script>
     const menu = {
@@ -15,20 +16,29 @@
         setup: document.querySelector('.menu-setup'),
         home: document.querySelector('#home'),
         users: document.querySelector('#users'),
-        elenchi: document.querySelector('#elenchi'),
+        impostazioni: document.querySelector('#impostazioni'),
+        prenota: document.querySelector('#prenota'),
+        clienti: document.querySelector('#clienti'),
 
+        start: function(){
+            if(getCookie("menu")=="show"){
+                this.menuVertical.classList.remove('hide');
+                this.menuDivider.classList.remove('hide');
+                this.menuLabel.forEach(label => label.classList.remove('hide'));
+            }
+        },
         listen: function() {
             const togleListening = () => {
                 const closed = this.menuVertical.classList.contains('hide');
                 if (closed) {
+                    setCookie("menu", "show", 365);
                     this.menuVertical.classList.remove('hide');
-                    this.pageContent.classList.remove('px-2');
                     this.menuDivider.classList.remove('hide');
                     this.menuLabel.forEach(label => label.classList.remove('hide'));
                 }
                 else {
+                    setCookie("menu", "hide", 365);
                     this.menuVertical.classList.add('hide');
-                    this.pageContent.classList.add('px-2');
                     this.menuDivider.classList.add('hide');
                     this.menuLabel.forEach(label => label.classList.add('hide'));
                 }
@@ -37,23 +47,20 @@
                 document.cookie = "is_logged=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 window.location.href = "index.php";
             };
-            const homeClick = () =>{
-                window.location.href = "<?php echo url('home.php') ?>";
-            }
-            const usersClick = () =>{
-                window.location.href = "<?php echo url('users.php') ?>";
-            }
-            const elenchiClick = () =>{
-                window.location.href = "<?php echo url('elenchi.php') ?>";
+            const navigate = (page)=>{
+                window.location.href = "<?php echo url('') ?>"+page+"?pagination=0&openModal=unset&rowId=unset&unset=tab";
             }
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);
             this.exit.addEventListener('click',menuExit);
-            this.home.addEventListener('click', homeClick);
-            this.users.addEventListener('click', usersClick);
-            this.elenchi.addEventListener('click',elenchiClick);
+            this.home.addEventListener('click', () => navigate('home.php'));
+            this.users.addEventListener('click', () => navigate('utenti.php'));
+            this.impostazioni.addEventListener('click', () => navigate('impostazioni.php'));
+            this.prenota.addEventListener('click', () => navigate('prenotazioni.php'));
+            this.clienti.addEventListener('click', () => navigate('clienti.php'));
         }
     }
+    menu.start();
     menu.listen();
 
 </script>

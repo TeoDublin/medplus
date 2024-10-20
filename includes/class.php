@@ -5,8 +5,8 @@
     function Sql(): Sql{
         return new Sql();
     }
-    function Users(): Users{
-        return new Users();
+    function Utenti(): Utenti{
+        return new Utenti();
     }
     function Base(): Base{
         return new Base();
@@ -22,4 +22,7 @@
     }
     function Terapisti():Terapisti{
         return new Terapisti();
+    }
+    function Clienti():Clienti{
+        return new Clienti();
     }

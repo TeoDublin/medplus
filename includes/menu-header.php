@@ -78,23 +78,35 @@
     <div class="d-flex flex-fill">
         <div class="d-flex flex-fill flex-row">
             <div class="menu-vertical h-100 d-flex flex-column p-2 hide">
-                <div class="menu-option d-flex w-100 justify-content-start" id="home" title="Home">
-                    <div class="p-3 d-flex align-items-start ps-2" >
+                <div class="menu-option d-flex w-100 justify-content-start py-3" id="home" title="Home">
+                    <div class=" d-flex align-items-start mx-2" >
                         <?php echo icon('home.svg','black',30,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Home</span></div>
                 </div>
-                <div class="menu-option d-flex w-100 justify-content-start" id="users" title="Utenti">
-                    <div class="p-3 d-flex align-items-start ps-2" >
+                <div class="menu-option d-flex w-100 justify-content-start py-3" id="users" title="Utenti">
+                    <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('person-2.svg','black',31,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Utenti</span></div>
                 </div>
-                <div class="menu-option d-flex w-100 justify-content-start" id="elenchi" title="Elenchi">
-                    <div class="p-3 d-flex align-items-start ps-2" >
+                <div class="menu-option d-flex w-100 justify-content-start py-3" id="impostazioni" title="impostazioni">
+                    <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('gear.svg','black',31,30);?>
                     </div>
-                    <div class="menu-label align-self-center hide" ><span>Elenchi</span></div>
+                    <div class="menu-label align-self-center hide" ><span>Impostazioni</span></div>
+                </div>
+                <div class="menu-option d-flex w-100 justify-content-start py-3" id="prenota" title="prenota">
+                    <div class="d-flex align-items-start mx-2" >
+                        <?php echo icon('calendar-plus.svg','black',31,30);?>
+                    </div>
+                    <div class="menu-label align-self-center hide" ><span>Prenotazioni</span></div>
+                </div>
+                <div class="menu-option d-flex w-100 justify-content-start py-3" id="clienti" title="clienti">
+                    <div class="d-flex align-items-start mx-2" >
+                        <?php echo icon('person-card.svg','black',31,30);?>
+                    </div>
+                    <div class="menu-label align-self-center hide" ><span>Clienti</span></div>
                 </div>                
             </div>
             <div class="page-content flex-fill pb-2 pt-0 px-2">
