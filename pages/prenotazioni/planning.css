@@ -1,0 +1,11 @@
+.planning-date:hover{
+    cursor: pointer;
+}
+
+.planning-back:hover{
+    background-color: rgba(var(--base-bg-primary-rgb),0.5);
+    cursor: pointer;
+}
+.planning-back:hover svg{
+    fill: white;
+}

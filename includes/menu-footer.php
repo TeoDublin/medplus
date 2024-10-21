@@ -14,7 +14,6 @@
         menuLabel: document.querySelectorAll('.menu-label'),
         exit: document.querySelector('.menu-exit'),
         setup: document.querySelector('.menu-setup'),
-        home: document.querySelector('#home'),
         users: document.querySelector('#users'),
         impostazioni: document.querySelector('#impostazioni'),
         prenota: document.querySelector('#prenota'),
@@ -47,17 +46,16 @@
                 document.cookie = "is_logged=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
                 window.location.href = "index.php";
             };
-            const navigate = (page)=>{
-                window.location.href = "<?php echo url('') ?>"+page+"?pagination=0&openModal=unset&rowId=unset&unset=tab";
+            const navigate = (page, menu)=>{
+                window.location.href = "<?php echo url('') ?>"+page+"?pagination=0&openModal=unset&rowId=unset&unset=tab&menu="+menu;
             }
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);
             this.exit.addEventListener('click',menuExit);
-            this.home.addEventListener('click', () => navigate('home.php'));
-            this.users.addEventListener('click', () => navigate('utenti.php'));
-            this.impostazioni.addEventListener('click', () => navigate('impostazioni.php'));
-            this.prenota.addEventListener('click', () => navigate('prenotazioni.php'));
-            this.clienti.addEventListener('click', () => navigate('clienti.php'));
+            this.users.addEventListener('click', () => navigate('utenti.php','utenti'));
+            this.impostazioni.addEventListener('click', () => navigate('impostazioni.php','impostazioni'));
+            this.prenota.addEventListener('click', () => navigate('prenotazioni.php','prenotazioni'));
+            this.clienti.addEventListener('click', () => navigate('clienti.php','clienti'));
         }
     }
     menu.start();

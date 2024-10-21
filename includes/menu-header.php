@@ -35,7 +35,7 @@
         </div>
     </div>
 </div>
-<div class="vh-100 vw-100 d-flex flex-column">
+<div class="vh-98 vw-98 d-flex flex-column">
     <div class="d-flex flex-row mb-1" style="height: 40;">
         <div class="menu-divider hide">
             <div class="d-flex w-100 justify-content-end">
@@ -78,31 +78,25 @@
     <div class="d-flex flex-fill">
         <div class="d-flex flex-fill flex-row">
             <div class="menu-vertical h-100 d-flex flex-column p-2 hide">
-                <div class="menu-option d-flex w-100 justify-content-start py-3" id="home" title="Home">
-                    <div class=" d-flex align-items-start mx-2" >
-                        <?php echo icon('home.svg','black',30,30);?>
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='prenotazioni'?'menu-active':''?>" id="prenota" title="Prenotazioni">
+                    <div class="d-flex align-items-start mx-2" >
+                        <?php echo icon('table.svg','black',31,30);?>
                     </div>
-                    <div class="menu-label align-self-center hide" ><span>Home</span></div>
-                </div>
-                <div class="menu-option d-flex w-100 justify-content-start py-3" id="users" title="Utenti">
+                    <div class="menu-label align-self-center hide" ><span>Prenotazioni</span></div>
+                </div>                
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='utenti'?'menu-active':''?>" id="users" title="Utenti">
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('person-2.svg','black',31,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Utenti</span></div>
                 </div>
-                <div class="menu-option d-flex w-100 justify-content-start py-3" id="impostazioni" title="impostazioni">
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='impostazioni'?'menu-active':''?>" id="impostazioni" title="impostazioni">
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('gear.svg','black',31,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Impostazioni</span></div>
                 </div>
-                <div class="menu-option d-flex w-100 justify-content-start py-3" id="prenota" title="prenota">
-                    <div class="d-flex align-items-start mx-2" >
-                        <?php echo icon('calendar-plus.svg','black',31,30);?>
-                    </div>
-                    <div class="menu-label align-self-center hide" ><span>Prenotazioni</span></div>
-                </div>
-                <div class="menu-option d-flex w-100 justify-content-start py-3" id="clienti" title="clienti">
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='clienti'?'menu-active':''?>" id="clienti" title="clienti">
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('person-card.svg','black',31,30);?>
                     </div>

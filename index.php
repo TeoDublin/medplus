@@ -1,3 +1,3 @@
 <?php 
 require 'includes.php';
-redirect('home.php');
+redirect('prenotazioni.php');

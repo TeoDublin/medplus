@@ -26,3 +26,6 @@
     function Clienti():Clienti{
         return new Clienti();
     }
+    function Prenotazioni():Prenotazioni{
+        return new Prenotazioni();
+    }
