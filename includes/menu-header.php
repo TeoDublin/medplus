@@ -35,8 +35,8 @@
         </div>
     </div>
 </div>
-<div class="vh-98 vw-98 d-flex flex-column">
-    <div class="d-flex flex-row mb-1" style="height: 40;">
+<div class="d-flex flex-column" style="min-width: 760px;">
+    <div class="d-flex flex-row mb-1 w-100" style="height: 40;">
         <div class="menu-divider hide">
             <div class="d-flex w-100 justify-content-end">
                 <div class="p-3 d-flex align-items-end pe-4 menu-icon-back" >
