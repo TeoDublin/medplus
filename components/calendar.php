@@ -162,5 +162,4 @@
         }
     };
     document.addEventListener("DOMContentLoaded", () => { calendar_<?php echo $params['id'];?>.start();});
-
 </script>
