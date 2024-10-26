@@ -1,6 +1,6 @@
 <?php
     function environment():string{
-        return 'prod';
+        return 'dev';
     }
     function page():string{
         $split= explode('/',strtok($_SERVER['REQUEST_URI'], '?'));
@@ -23,6 +23,9 @@
         $svg = str_replace('fill="black"', 'fill="'.$color.'"', $svg);
         return $svg;
     }
+    function component(string $name, $params=[]): void {
+        require root("components/{$name}.php");
+    }
     function root(string $path):string{
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }
@@ -42,9 +45,6 @@
     function redirect(string $page):void{
         header("Location: {$page}". (str_ends_with($page,'.php')?'':'.php'));
         exit();
-    }
-    function component(string $name, array $params=[]):void{
-        include root("components/{$name}.php");
     }
     function clean_post():array{
         $ret=array_diff_key($_POST,['submit'=>true,'action'=>true]);

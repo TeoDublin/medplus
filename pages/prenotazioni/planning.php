@@ -1,12 +1,10 @@
 <link rel="stylesheet" href="<?php echo 'pages/prenotazioni/planning.css?v='.filemtime('pages/prenotazioni/planning.css');?>">
 <div class="" style="overflow-x: auto; overflow-y: auto; height: 100%;">
     <div class="p-3 border my-1 d-flex flex-row" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
-        <div class="planning-back rounded-1 justify-content-center align-items-center d-flex">
-            <div class="p-0 m-0"><?php echo icon('minor.svg','black',20,20) ?></div>
-        </div>
         <div style="overflow: auto; max-height: 100%;">
+            <?php component('calendar',['id'=>'test2','toggleElement'=>'.planning-date','destination'=>'.datepicker']);?>
             <div class="planning-date d-flex">
-                <input class="mx-auto card-title text-center py-2 border-0" id="datepicker" value="<?php echo date('d/m/Y');?>"/>
+                <input class="mx-auto card-title text-center py-2 border-0 datepicker" value="<?php echo date('d/m/Y');?>" date="<?php echo date('Y-m-d');?>"/>
             </div>
             <table class="table table-striped border-0 w-100">
                 <thead>
@@ -37,17 +35,6 @@
                 </tbody>
             </table>
         </div>
-        <div class="planning-back rounded-1 justify-content-center align-items-center d-flex">
-            <div class="p-0 m-0"><?php echo icon('bigger.svg','black',20,20) ?></div>
-        </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js" integrity="sha512-T/tUfKSV1bihCnd+MxKD0Hm1uBBroVYBOYSk1knyvQ9VyZJpc/ALb4P0r6ubwVPSGB2GvjeoMAJJImBG12TiaQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script>
-    $(document).ready(function() {
-        $('#datepicker').datepicker({
-            format: 'dd/mm/yyyy', // Set the date format
-            autoclose: true       // Automatically close the datepicker after a date is selected
-        });
-    });
-</script>
+<script src="pages/prenotazioni/planning.js"></script>
