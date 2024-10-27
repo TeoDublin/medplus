@@ -11,3 +11,6 @@
 .planning-back:hover svg{
     fill: white;
 }
+.date-target:hover{
+    cursor: pointer;
+}

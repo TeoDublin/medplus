@@ -1,0 +1,32 @@
+div.calendar {
+    padding: 20px;
+    border: solid rgba(var(--base-bg-primary-rgb),0.3) 0.5px;
+    border-radius: 5px;
+    background-color: white;
+    width: 455px;
+}
+table.calendar td,th {
+    line-height: 40px;
+    padding-inline: 20px;
+    border-bottom: solid rgba(var(--base-bg-primary-rgb),0.2) 0.2px;
+}
+td.calendar-out{
+    background-color: rgba(var(--base-bg-primary-rgb),0.04);
+}
+td.calendar-in{
+    background-color: transparent;
+}
+td.calendar-in:hover{
+    background-color: rgba(var(--base-bg-primary-rgb),0.2);
+    border-radius: 50%;
+    cursor:pointer;
+}
+td.calendar-current{
+    background-color: rgba(var(--base-bg-primary-rgb),0.2);
+    border-radius: 50%;
+}
+.year-title:hover, .month-title:hover{
+    cursor:pointer;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2);
+    border-radius: 5px;        
+}
