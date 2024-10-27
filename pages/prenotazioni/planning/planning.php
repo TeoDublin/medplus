@@ -1,11 +1,10 @@
-<link rel="stylesheet" href="<?php echo 'pages/prenotazioni/planning.css?v='.filemtime('pages/prenotazioni/planning.css');?>">
 <?php component('calendar','css'); ?>
 <?php component('hour-picker','css'); ?>
-<div>
+<div class="no-scroll">
     <div class="p-3 border my-1 d-flex flex-row" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
         <div style="overflow: auto; max-height: 100%;">
-            <div class="datepicker d-flex" onclick="openCalendar(event,this)">
-                <input class="mx-auto card-title text-center py-2 border-0 date-target" value="<?php echo date('d/m/Y');?>" date="<?php echo date('Y-m-d');?>" readonly/>
+            <div class="d-flex" >
+                <input onclick="openCalendar(event,this)" class="hover mx-auto card-title text-center py-2 border-0 date-target" value="<?php echo date('d/m/Y');?>" date="<?php echo date('Y-m-d');?>" readonly/>
             </div>
             <table class="table table-striped border-0 w-100">
                 <thead>
@@ -25,8 +24,8 @@
                         for($i=1;$i<=$rows;$i++){?>
                             <tr><?php
                                 foreach($terapisti as $col=>$terapista){?>
-                                    <td scope="col" class="text-center border w-5" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>"><input class="  w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value="" readonly /></td>
-                                    <td scope="col" class="text-center border" ><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value="" readonly /></td><?php
+                                    <td scope="col" class="text-center border w-5 hover" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>"><input class="  w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""  style="min-width:40px;"readonly /></td>
+                                    <td scope="col" class="text-center border hover" onclick="openCustomerPicker(this);"><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value="" readonly /></td><?php
                                 }?>
                             </tr><?php
                         }
@@ -38,6 +37,7 @@
 </div>
 <?php component('calendar','js'); ?>
 <?php component('hour-picker','js'); ?>
+<?php component('customer-picker','js'); ?>
 <script>
     function openCalendar(event, element) {
         const rect = event.target.getBoundingClientRect();
@@ -59,7 +59,7 @@
         document.querySelectorAll('#hourPicker').forEach((element)=>{element.remove();});
         const id = element.id;
         const rect = event.target.getBoundingClientRect();
-        const x = rect.x;
+        const x = rect.x + window.scrollX;
         const y = rect.y + window.scrollY;
         fetch('component.php?name=hour-picker')
             .then(response => response.text())
@@ -77,5 +77,36 @@
                 console.error('Error fetching hourPicker:', error);
             });
     }
+    function openCustomerPicker(element) {
+        const body = document.createElement('div');
+        body.id = 'customerPicker';
+        body.setAttribute('style', 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999;');
+        body.classList.add('vw-100', 'vh-100', 'bg-body-primary');
+        input = element.querySelector('input');
+        console.log(input);
+        fetch('component.php?name=customer-picker')
+            .then(response => response.text())
+            .then(data => {
+                const container = document.createElement('div');
+                container.classList.add('d-flex', 'p-5', 'justify-content-center', 'bg-body-primary');
+                const div = document.createElement('div');
+                div.classList.add('bg-white', 'border', 'rounded');
+                div.innerHTML = data;
+                container.appendChild(div);
+                body.appendChild(container);
+                document.body.appendChild(body);
+                document.querySelector('.btn-cancel').addEventListener('click', () => {
+                    document.querySelector('#customerPicker').remove();
+                });
+                document.querySelector('.btn-add').addEventListener('click', () => {
+                    input.value=document.querySelector('#nominativo').value;
+                    document.querySelector('#customerPicker').remove();
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching customer picker:', error);
+            });
+    }
+
 </script>
 

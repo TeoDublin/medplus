@@ -283,6 +283,33 @@ color-scheme: dark;
     --bs-link-hover-color:#000000;
     --bs-secondary-color:#000000;    
 }
+
+/* The scrollbar */
+::-webkit-scrollbar {
+    width: 1px; /* width of the scrollbar */
+    height: 10px; /* height of the scrollbar */
+}
+
+/* The track (background) */
+::-webkit-scrollbar-track {
+    background: #f1f1f1; /* background color of the track */
+}
+
+/* The handle (the draggable part) */
+::-webkit-scrollbar-thumb {
+    background: #888; /* color of the handle */
+    border-radius: 6px; /* rounded corners */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555; /* color of the handle on hover */
+}
+
+/* Optional: Customize the scrollbar corner */
+::-webkit-scrollbar-corner {
+    background: #f1f1f1; /* background color of the corner */
+}
 .display-flex{
     display: flex!important;
 }
@@ -442,16 +469,30 @@ color-scheme: dark;
 .action-Modifica:hover > svg{
     fill: var(--base-bg-secondary);
 }
+.hover:hover, .hover:hover *{
+    cursor: pointer!important;
+    background-color: var(--base-bg-primary)!important;
+    color:white;
+    border-radius: 10px;
+}
+
 *,
 *::before,
 *::after {
 box-sizing: border-box;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-:root {
-scroll-behavior: smooth;
+.maibe-flex {
+    width: 100vw;
 }
+@media (max-width: 1200px) {
+    .maibe-flex {
+        display: flex;
+    }
+}
+@media (prefers-reduced-motion: no-preference) {
+    :root {
+        scroll-behavior: smooth;
+    }
 }
 
 body {
@@ -465,6 +506,8 @@ body {
     background-color: var(--bs-body-bg);
     -webkit-text-size-adjust: 100%;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    scrollbar-color: #888 #f1f1f1;
+    scrollbar-width: thin; /* or auto */    
 }
 
 hr {
@@ -2471,10 +2514,10 @@ transition: none;
 }
 }
 .form-control:hover:not(:disabled):not([readonly])::-webkit-file-upload-button {
-background-color: var(--bs-secondary-bg);
+    background-color: var(--bs-secondary-bg);
 }
 .form-control:hover:not(:disabled):not([readonly])::file-selector-button {
-background-color: var(--bs-secondary-bg);
+    background-color: var(--bs-secondary-bg);
 }
 
 .form-control-plaintext {
@@ -4348,10 +4391,10 @@ transition: none;
 display: none;
 }
 .navbar-expand-sm .offcanvas .offcanvas-body {
-display: flex;
-flex-grow: 0;
-padding: 0;
-overflow-y: visible;
+    display: flex;
+    flex-grow: 0;
+    padding: 0;
+    overflow-y: visible;
 }
 }
 @media (min-width: 768px) {
@@ -7915,6 +7958,9 @@ border-width: 5px !important;
 }
 .w-75 {
     width: 75% !important;
+}
+.w-98 {
+    width: 98% !important;
 }
 .w-100 {
     width: 100% !important;
