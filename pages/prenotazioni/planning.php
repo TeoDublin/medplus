@@ -4,7 +4,7 @@
 <div>
     <div class="p-3 border my-1 d-flex flex-row" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
         <div style="overflow: auto; max-height: 100%;">
-            <div class="datepicker d-flex" onclick="openCalendar(event,this)">
+            <div class="datepicker d-flex" onclick="openCalendar(event,this)" readonly >
                 <input class="mx-auto card-title text-center py-2 border-0 date-target" value="<?php echo date('d/m/Y');?>" date="<?php echo date('Y-m-d');?>"/>
             </div>
             <table class="table table-striped border-0 w-100">
@@ -25,8 +25,8 @@
                         for($i=1;$i<=$rows;$i++){?>
                             <tr><?php
                                 foreach($terapisti as $col=>$terapista){?>
-                                    <td scope="col" class="text-center border w-5" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>"><input class="  w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""/></td>
-                                    <td scope="col" class="text-center border" ><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""/></td><?php
+                                    <td scope="col" class="text-center border w-5" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>"><input class="  w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value="" readonly /></td>
+                                    <td scope="col" class="text-center border" ><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value="" readonly /></td><?php
                                 }?>
                             </tr><?php
                         }
