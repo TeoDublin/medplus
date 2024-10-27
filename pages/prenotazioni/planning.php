@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?php echo 'pages/prenotazioni/planning.css?v='.filemtime('pages/prenotazioni/planning.css');?>">
 <?php component('calendar','css'); ?>
 <?php component('hour-picker','css'); ?>
-<div class="" style="overflow-x: auto; overflow-y: auto; height: 100%;">
+<div>
     <div class="p-3 border my-1 d-flex flex-row" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
         <div style="overflow: auto; max-height: 100%;">
             <div class="datepicker d-flex" onclick="openCalendar(event,this)">
@@ -13,22 +13,20 @@
                         $rows=14;
                         $terapisti=Terapisti()->select([]);                        
                     ?>
-                    <tr class="align-middle">
-                        <th class="text-center" rowspan="2">Terapista/Ora</th><?php
+                    <tr class="align-middle"><?php
                         foreach($terapisti as $terapista){?>
-                            <th scope="col" class="text-center" rowspan="2"><?php echo $terapista['terapista'];?></th>
-                            <th scope="col" class="text-center" rowspan="2">Ora</th><?php
+                            <th scope="col" class="text-center" rowspan="2">Ora</th>
+                            <th scope="col" class="text-center" rowspan="2"><?php echo $terapista['terapista'];?></th><?php
                         }?>
                     </tr>
                 </thead>
                 <tbody>
                     <?php 
                         for($i=1;$i<=$rows;$i++){?>
-                            <tr>
-                                <td scope="col" class="text-center border w-5" onclick="openHourPicker(event,this);" id="hourTarget_<?php echo $i;?>"><input id="hourTarget_<?php echo $i;?>" class="  w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""/></td><?php
-                                foreach($terapisti as $terapista){?>
-                                    <td scope="col" class="text-center border" ><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""/></td>
-                                    <td scope="col" class="text-center border"><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""/></td><?php
+                            <tr><?php
+                                foreach($terapisti as $col=>$terapista){?>
+                                    <td scope="col" class="text-center border w-5" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>"><input class="  w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""/></td>
+                                    <td scope="col" class="text-center border" ><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""/></td><?php
                                 }?>
                             </tr><?php
                         }
@@ -73,7 +71,7 @@
                 document.querySelector('.page-content').appendChild(content);
             })
             .then(() => {
-                hourPicker.start('input#'+id);
+                hourPicker.start('#'+id+' > input');
             })
             .catch(error => {
                 console.error('Error fetching hourPicker:', error);
