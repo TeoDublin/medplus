@@ -81,44 +81,17 @@
         fetch('component.php?name=customer-picker')
             .then(response => response.text())
             .then(data => {
-                const input = element.querySelector('input');
-                
-                const body = document.createElement('div');
-                body.classList.add('modal', 'fade', 'show');
-                body.setAttribute('tabindex', '-1');
-                body.setAttribute('aria-modal', 'true');
-                body.setAttribute('role', 'dialog');
-                body.setAttribute('style', 'display: block');
-                body.id = 'customerPicker';
-
-                const container = document.createElement('div');
-                container.id = body.id+"_container";
-                container.classList.add('modal-dialog', 'modal-xl');
-
-                const content = document.createElement('div');
-                content.classList.add('modal-content');
-
-                const div = document.createElement('div');
-                div.classList.add('modal-body');
-                div.innerHTML = data;
-
-                content.appendChild(div);
-                container.appendChild(content);
-                body.appendChild(container);
-                document.querySelector('.page-content').appendChild(body);
-                document.querySelector('.btn-cancel').addEventListener('click', () => {
-                    document.querySelector('#customerPicker').remove();
-                    document.querySelector('.modal-backdrop').remove();
-                });
-                document.querySelector('.btn-add').addEventListener('click', () => {
+                document.querySelector('#modal-body').innerHTML = data;
+                const modalElement = document.getElementById('modal');
+                const modal = new bootstrap.Modal(modalElement);
+                modalElement.querySelector('.modal-title').textContent = 'Seleziona cliente';
+                modalElement.querySelector('.modal-dialog').classList.add('modal-xl');
+                modalElement.querySelector('.btn-add').addEventListener('click', () => {
+                    const input = element.querySelector('input');
                     input.value = document.querySelector('#nominativo').value;
-                    document.querySelector('#customerPicker').remove();
-                    document.querySelector('.modal-backdrop').remove();
+                    modal.hide();
                 });
-                const myModal = new bootstrap.Modal('#customerPicker', {
-                    keyboard: false
-                });
-                myModal.show();
+                modal.show();
             })
             .catch(error => {
                 console.error('Error fetching customer picker:', error);
@@ -127,4 +100,20 @@
 
 
 </script>
-
+<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="modalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modal-body">
+            ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                <button type="button" class="btn btn-primary btn-add">Aggiungi</button>
+            </div>
+        </div>
+    </div>
+</div>

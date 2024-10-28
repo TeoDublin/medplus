@@ -1,4 +1,4 @@
-<div class="p-5">
+<div class="p-2">
     <div class="d-flex flex-row">
         <div class="mb-3 w-35">
             <label for="nominativo" class="form-label">Nominativo</label>
@@ -68,9 +68,5 @@
             <label for="note_tratammento" class="form-label">Note tratammento</label>
             <textarea rows="3" class="form-control" id="note_tratammento" name="note_tratammento" value=""></textarea>
         </div>   
-    </div>                                             
-    <div class="d-flex justify-content-end">
-        <button type="button" class="btn btn-secondary me-2 btn-cancel" data-bs-dismiss="">Annulla</button>
-        <button type="submit" class="btn btn-primary btn-add">Aggiungi</button>
     </div>
 </div>
