@@ -80,21 +80,30 @@
     function openCustomerPicker(element) {
         const body = document.createElement('div');
         body.id = 'customerPicker';
-        body.setAttribute('style', 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 999;');
-        body.classList.add('vw-100', 'vh-100', 'bg-body-primary');
+        body.classList.add('modal','fade','show');
+        body.setAttribute('tabindex','-1');
+        body.setAttribute('aria-modal','true');
+        body.setAttribute('role','dialog');
+        body.setAttribute('style','display: block');
         input = element.querySelector('input');
-        console.log(input);
         fetch('component.php?name=customer-picker')
             .then(response => response.text())
             .then(data => {
+                const dropback = document.createElement('div');
+                dropback.classList.add('modal-backdrop','fade','show');
+                document.body.appendChild(dropback);
                 const container = document.createElement('div');
-                container.classList.add('d-flex', 'p-5', 'justify-content-center', 'bg-body-primary');
+                container.classList.add('modal-dialog','modal-xl');
+                const content =  document.createElement('div');
+                content.classList.add('modal-content');
                 const div = document.createElement('div');
-                div.classList.add('bg-white', 'border', 'rounded');
+                div.classList.add('modal-body');
                 div.innerHTML = data;
-                container.appendChild(div);
+                content.appendChild(div);
+                container.appendChild(content);
                 body.appendChild(container);
                 document.body.appendChild(body);
+                
                 document.querySelector('.btn-cancel').addEventListener('click', () => {
                     document.querySelector('#customerPicker').remove();
                 });
@@ -102,6 +111,7 @@
                     input.value=document.querySelector('#nominativo').value;
                     document.querySelector('#customerPicker').remove();
                 });
+                console.log(body);
             })
             .catch(error => {
                 console.error('Error fetching customer picker:', error);
