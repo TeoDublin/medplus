@@ -1,5 +1,6 @@
 const hourPicker = {
     start(_target){
+        this.target=_target;
         this.now=new Date();
         this.currentHour=this.now.getHours();
         this.currentMinute=this.now.getMinutes();
@@ -14,7 +15,8 @@ const hourPicker = {
         this.minutes=this.createOptions(0, 45, 15);
         this.createHtml(this.minuteScroller,this.minutes,0,'minute');
         this.enableScrollOnHover(this.minuteScroller,this.minutes,'minute');
-        document.querySelector('.close-btn').addEventListener('click',this.close.bind(this));
+        this.closeBtn=document.querySelector('.close-btn');
+        this.closeBtn.addEventListener('click',this.close.bind(this));
         document.querySelector('.clean-btn').addEventListener('click',this.clean.bind(this));
     },
     close(){

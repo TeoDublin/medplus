@@ -1,4 +1,5 @@
 <div class="p-2">
+    <input type="text" id="id" name="id" value="" hidden/>
     <div class="d-flex flex-row">
         <div class="mb-3 w-35">
             <label for="nominativo" class="form-label">Nominativo</label>

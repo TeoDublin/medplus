@@ -40,6 +40,9 @@ class Sql {
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }    
+    public function insert_id(): int {
+        return $this->connection->insert_id;
+    }
     public function __destruct() {
         $this->connection->close();
     }

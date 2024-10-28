@@ -22,10 +22,10 @@
                 <tbody>
                     <?php 
                         for($i=1;$i<=$rows;$i++){?>
-                            <tr><?php
+                            <tr row="<?php echo $i;?>"><?php
                                 foreach($terapisti as $col=>$terapista){?>
-                                    <td scope="col" class="text-center border w-5 hover" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>"><input class="  w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value=""  style="min-width:40px;"readonly /></td>
-                                    <td scope="col" class="text-center border hover" onclick="openCustomerPicker(this);"><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value="" readonly /></td><?php
+                                    <td scope="col" class="text-center border w-5 hover" id_terapista="<?php echo $terapista['id'];?>" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>"><input class="  w-100 p-0 m-0 text-center border-0 bg-transparent hour-target" type="text" value=""  style="min-width:40px;"readonly /></td>
+                                    <td scope="col" class="text-center border hover" id_terapista="<?php echo $terapista['id'];?>" onclick="openCustomerPicker(this);"><input class="w-100 p-0 m-0 text-center border-0 bg-transparent" type="text" value="" readonly /></td><?php
                                 }?>
                             </tr><?php
                         }
@@ -72,6 +72,15 @@
             })
             .then(() => {
                 hourPicker.start('#'+id+' > input');
+                hourPicker.closeBtn.addEventListener('click',()=>{
+                const _data = {};
+                _data['operation']='hour';
+                _data['row']=element.closest('tr').getAttribute('row');
+                _data['data']=document.querySelector('.date-target').getAttribute('date');
+                _data['ora']=hourPicker.value.value;
+                _data['id_terapista']=element.getAttribute('id_terapista');
+                $.post('post/planning.php',_data).done(response=>{alert('insert ok')}).fail(error=>{alert(error);});
+            });                
             })
             .catch(error => {
                 console.error('Error fetching hourPicker:', error);
@@ -86,10 +95,21 @@
                 const modal = new bootstrap.Modal(modalElement);
                 modalElement.querySelector('.modal-title').textContent = 'Seleziona cliente';
                 modalElement.querySelector('.modal-dialog').classList.add('modal-xl');
+                const addButton = modalElement.querySelector('.btn-add');
+                addButton.replaceWith(addButton.cloneNode(true));
+                const newAddButton = modalElement.querySelector('.btn-add');                
                 modalElement.querySelector('.btn-add').addEventListener('click', () => {
                     const input = element.querySelector('input');
-                    input.value = document.querySelector('#nominativo').value;
+                    input.value = modalElement.querySelector('#nominativo').value;
+                    const _data = {};
+                    _data['operation']='all';
+                    _data['row']=element.closest('tr').getAttribute('row');
+                    _data['data']=document.querySelector('.date-target').getAttribute('date');
+                    _data['ora']=element.closest('tr').querySelector('.hour-target').value;
+                    _data['id_terapista']=element.getAttribute('id_terapista');
+                    modalElement.querySelectorAll('[name]').forEach((modalInput)=>{ _data[modalInput.name] = modalInput.value; });
                     modal.hide();
+                    $.post('post/planning.php',_data).done(response=>{alert('insert ok')}).fail(error=>{alert(error);});
                 });
                 modal.show();
             })
@@ -97,23 +117,4 @@
                 console.error('Error fetching customer picker:', error);
             });
     }
-
-
 </script>
-<div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="modalLabel">Modal title</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="modal-body">
-            ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                <button type="button" class="btn btn-primary btn-add">Aggiungi</button>
-            </div>
-        </div>
-    </div>
-</div>

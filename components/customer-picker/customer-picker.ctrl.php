@@ -5,8 +5,4 @@
         case 'select-nominativo':
             echo json_encode(Clienti()->select(['nominativo'=>['like'=>"%{$_POST['nominativo']}%"]]));
             break;
-        
-        default:
-            # code...
-            break;
     }

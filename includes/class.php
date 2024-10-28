@@ -29,3 +29,6 @@
     function Prenotazioni():Prenotazioni{
         return new Prenotazioni();
     }
+    function Planning():Planning{
+        return new Planning();
+    }

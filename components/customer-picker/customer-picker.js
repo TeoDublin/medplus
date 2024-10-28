@@ -23,19 +23,12 @@ function selectNominativo(event, _nominativo){
                 div.classList.add('form-control','hover','w-100','mt-1');
                 div.addEventListener('click', function() {
                     _nominativo.value = item.nominativo;
-                    document.querySelector('#cf').value = item.cf;
-                    document.querySelector('#telefono').value = item.telefono;
-                    document.querySelector('#celulare').value = item.celulare;
-                    document.querySelector('#email').value = item.email;
-                    document.querySelector('#indirizzo').value = item.indirizzo;
-                    document.querySelector('#citta').value = item.citta;
-                    document.querySelector('#cap').value = item.cap;
-                    document.querySelector('#tipo').value = item.tipo;
-                    document.querySelector('#portato_da').value = item.portato_da;
-                    document.querySelector('#data_inserimento').value = item.data_inserimento;
-                    document.querySelector('#prestazioni_precedenti').value = item.prestazioni_precedenti;
-                    document.querySelector('#notizie_cliniche').value = item.notizie_cliniche;
-                    document.querySelector('#note_tratammento').value = item.note_tratammento;
+                    Object.keys(item).forEach(key => {
+                        const input = document.querySelector(`[name="${key}"]`);
+                        if (input) {
+                            input.value = item[key];
+                        }
+                    });
                     content.remove();
                 });                    
                 content.appendChild(div);

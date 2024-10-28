@@ -23,11 +23,19 @@
             $result=Sql()->select($query);
             return $result;
         }
-        public function insert(array $params):void{
+        public function insert(array $params):string{
             unset($params['id']);
             $keys=implode(',',array_map(fn($value)=>"`{$value}`",array_keys($params)));
-            $values = implode(',',array_map(fn($value)=>"'{$value}'",$params));
-            Sql()->query("INSERT INTO {$this->table} ({$keys}) VALUES ({$values})");
+            $values = implode(',', array_map(function($value) {
+                if (preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $value)) {
+                    $dateParts = explode('/', $value);
+                    $value = "{$dateParts[2]}-{$dateParts[1]}-{$dateParts[0]}";
+                }
+                return "'{$value}'";
+            }, $params));
+            $sql=Sql();
+            $sql->query("INSERT INTO {$this->table} ({$keys}) VALUES ({$values})");
+            return $sql->insert_id();
         }
         public function update(array $params):void{
             $this->_alias();
@@ -92,7 +100,13 @@
         }
         private function _set(array &$params):void{
             $set=[];
-            foreach ($params as $key => $value) $set[]="{$this->alias}.{$key}='{$value}'"; 
+            foreach ($params as $key => $value){
+                if (preg_match('/^\d{2}\/\d{2}\/\d{4}$/', $value)) {
+                    $dateParts = explode('/', $value);
+                    $value = "{$dateParts[2]}-{$dateParts[1]}-{$dateParts[0]}";
+                }
+                $set[]="{$this->alias}.{$key}='{$value}'"; 
+            }
             $this->set=implode(',',$set);
         }
         private function _where(array &$params):void{
