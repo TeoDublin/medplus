@@ -78,26 +78,22 @@
             });
     }
     function openCustomerPicker(element) {
-        const body = document.createElement('div');
-        body.id = 'customerPicker';
-        body.classList.add('modal', 'fade', 'show');
-        body.setAttribute('tabindex', '-1');
-        body.setAttribute('aria-modal', 'true');
-        body.setAttribute('role', 'dialog');
-        body.setAttribute('style', 'display: block');
-        const input = element.querySelector('input');
-
         fetch('component.php?name=customer-picker')
             .then(response => response.text())
             .then(data => {
-                const dropback = document.createElement('div');
-                dropback.classList.add('modal-backdrop', 'fade', 'show');
-                document.body.appendChild(dropback);
+                const input = element.querySelector('input');
+                
+                const body = document.createElement('div');
+                body.classList.add('modal', 'fade', 'show');
+                body.setAttribute('tabindex', '-1');
+                body.setAttribute('aria-modal', 'true');
+                body.setAttribute('role', 'dialog');
+                body.setAttribute('style', 'display: block');
+                body.id = 'customerPicker';
 
                 const container = document.createElement('div');
                 container.id = body.id+"_container";
                 container.classList.add('modal-dialog', 'modal-xl');
-                container.setAttribute('style','transform: translateY(-100px);transition: opacity 0.5s ease-out, transform 0.5s ease-out;');
 
                 const content = document.createElement('div');
                 content.classList.add('modal-content');
@@ -109,8 +105,7 @@
                 content.appendChild(div);
                 container.appendChild(content);
                 body.appendChild(container);
-                dropback.appendChild(body);
-                setTimeout(() => { container.setAttribute('style','translateY(0)');}, 10);
+                document.querySelector('.page-content').appendChild(body);
                 document.querySelector('.btn-cancel').addEventListener('click', () => {
                     document.querySelector('#customerPicker').remove();
                     document.querySelector('.modal-backdrop').remove();
@@ -120,6 +115,10 @@
                     document.querySelector('#customerPicker').remove();
                     document.querySelector('.modal-backdrop').remove();
                 });
+                const myModal = new bootstrap.Modal('#customerPicker', {
+                    keyboard: false
+                });
+                myModal.show();
             })
             .catch(error => {
                 console.error('Error fetching customer picker:', error);
