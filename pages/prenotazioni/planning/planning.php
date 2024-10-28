@@ -80,43 +80,57 @@
     function openCustomerPicker(element) {
         const body = document.createElement('div');
         body.id = 'customerPicker';
-        body.classList.add('modal','fade','show');
-        body.setAttribute('tabindex','-1');
-        body.setAttribute('aria-modal','true');
-        body.setAttribute('role','dialog');
-        body.setAttribute('style','display: block');
-        input = element.querySelector('input');
+        body.classList.add('modal', 'fade', 'show');
+        body.setAttribute('tabindex', '-1');
+        body.setAttribute('aria-modal', 'true');
+        body.setAttribute('role', 'dialog');
+        body.setAttribute('style', 'display: block');
+        const input = element.querySelector('input');
+
         fetch('component.php?name=customer-picker')
             .then(response => response.text())
             .then(data => {
                 const dropback = document.createElement('div');
-                dropback.classList.add('modal-backdrop','fade','show');
+                dropback.classList.add('modal-backdrop', 'fade', 'show');
                 document.body.appendChild(dropback);
+
                 const container = document.createElement('div');
-                container.classList.add('modal-dialog','modal-xl');
-                const content =  document.createElement('div');
+                container.id = body.id+"_container";
+                container.classList.add('modal-dialog', 'modal-xl');
+                container.setAttribute('style','transform: translateY(-100px);transition: opacity 0.5s ease-out, transform 0.5s ease-out;');
+
+                const content = document.createElement('div');
                 content.classList.add('modal-content');
+
                 const div = document.createElement('div');
                 div.classList.add('modal-body');
                 div.innerHTML = data;
+
                 content.appendChild(div);
                 container.appendChild(content);
                 body.appendChild(container);
                 document.body.appendChild(body);
-                
+                setTimeout(() => { container.setAttribute('style','translateY(0)');}, 10);
+                const scale = window.getComputedStyle(document.body).transform;
+                const matrix = new DOMMatrix(scale);
+                if (matrix.a > 1) {
+                    element.style.transform = 'scale(1)';
+                }
                 document.querySelector('.btn-cancel').addEventListener('click', () => {
                     document.querySelector('#customerPicker').remove();
+                    document.querySelector('.modal-backdrop').remove();
                 });
                 document.querySelector('.btn-add').addEventListener('click', () => {
-                    input.value=document.querySelector('#nominativo').value;
+                    input.value = document.querySelector('#nominativo').value;
                     document.querySelector('#customerPicker').remove();
+                    document.querySelector('.modal-backdrop').remove();
                 });
-                console.log(body);
             })
             .catch(error => {
                 console.error('Error fetching customer picker:', error);
             });
     }
+
 
 </script>
 
