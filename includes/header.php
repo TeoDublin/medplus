@@ -12,4 +12,4 @@
         <script src="<?php echo '/'.PROJECT_NAME.'/assets/js/functions.js';?>"></script>
         <title>MedPlus</title>
     </head>
-    <body data-bs-theme="<?php echo theme();?>" class="maibe-flex">
+    <body data-bs-theme="<?php echo theme();?>" class="maybe-flex">

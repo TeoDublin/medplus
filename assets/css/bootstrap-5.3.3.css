@@ -481,11 +481,11 @@ color-scheme: dark;
 *::after {
 box-sizing: border-box;
 }
-.maibe-flex {
+.maybe-flex {
     width: 100vw;
 }
 @media (max-width: 1200px) {
-    .maibe-flex {
+    .maybe-flex {
         display: flex;
     }
 }
