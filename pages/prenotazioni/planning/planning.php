@@ -90,7 +90,7 @@
             .then(response => response.text())
             .then(data => {
                 const dropback = document.createElement('div');
-                dropback.classList.add('modal-backdrop','fade','show');
+                dropback.classList.add('modal-backdrop','fade','show','d-flex');
                 document.body.appendChild(dropback);
                 const container = document.createElement('div');
                 container.classList.add('modal-dialog','modal-xl');
