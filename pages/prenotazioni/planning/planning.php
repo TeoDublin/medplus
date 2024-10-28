@@ -109,13 +109,8 @@
                 content.appendChild(div);
                 container.appendChild(content);
                 body.appendChild(container);
-                document.body.appendChild(body);
+                dropback.appendChild(body);
                 setTimeout(() => { container.setAttribute('style','translateY(0)');}, 10);
-                const scale = window.getComputedStyle(document.body).transform;
-                const matrix = new DOMMatrix(scale);
-                if (matrix.a > 1) {
-                    element.style.transform = 'scale(1)';
-                }
                 document.querySelector('.btn-cancel').addEventListener('click', () => {
                     document.querySelector('#customerPicker').remove();
                     document.querySelector('.modal-backdrop').remove();
