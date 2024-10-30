@@ -200,36 +200,4 @@
         observer.observe(dateTarget, { attributes: true });
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        const table = document.querySelector('.resizable-table');
-        let isResizing = false;
-        let startX, startWidth, targetCell;
-        table.querySelectorAll('th, td').forEach(cell => {
-            const resizer = document.createElement('div');
-            resizer.classList.add('resizer');
-            cell.appendChild(resizer);
-            resizer.addEventListener('mousedown', (e) => {
-                isResizing = true;
-                startX = e.pageX;
-                targetCell = cell;
-                startWidth = cell.offsetWidth;
-                document.body.classList.add('resizing');
-                e.preventDefault();
-            });
-        });
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-            const delta = e.pageX - startX;
-            targetCell.style.width = `${startWidth + delta}px`;
-        });
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-            isResizing = false;
-            document.body.classList.remove('resizing');
-            }
-        });
-    });
-
-
-
 </script>
