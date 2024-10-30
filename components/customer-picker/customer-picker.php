@@ -6,6 +6,20 @@
             <input type="text" class="form-control" id="nominativo" name="nominativo" value="" oninput="selectNominativo(event,this)"/>
         </div>
         <div class="mb-3 ms-2">
+            <label for="id_trattamento" class="form-label">Trattamento</label>
+            <select type="text" class="form-control" id="id_trattamento" name="id_trattamento" value="">
+                <?php 
+                    foreach(Trattamenti()->select([])??[] as $trattamento){
+                        echo "<option value=\"{$trattamento['id']}\">{$trattamento['trattamento']}</option>";
+                    }
+                ?>
+            </select>
+        </div>
+        <div class="mb-3 ms-2">
+            <label for="celulare" class="form-label">Celulare</label>
+            <input type="text" class="form-control" id="celulare" name="celulare" value="">
+        </div>
+        <div class="mb-3 ms-2">
             <label for="cf" class="form-label">CF/PIVA</label>
             <input type="text" class="form-control" id="cf" name="cf" value="">
         </div>
@@ -13,10 +27,7 @@
             <label for="telefono" class="form-label">Telefono</label>
             <input type="text" class="form-control" id="telefono" name="telefono" value="">
         </div>
-        <div class="mb-3 ms-2">
-            <label for="celulare" class="form-label">Celulare</label>
-            <input type="text" class="form-control" id="celulare" name="celulare" value="">
-        </div>
+
         <div class="mb-3 ms-2">
             <label for="email" class="form-label">Email</label>
             <input type="text" class="form-control" id="email" name="email" value="">
@@ -62,12 +73,12 @@
     </div>
     <div class="d-flex flex-row">
         <div class="mb-3 flex-fill">
-            <label for="notizie_cliniche" class="form-label">Notizie_cliniche</label>
+            <label for="notizie_cliniche" class="form-label">Notizie cliniche</label>
             <textarea rows="3" class="form-control" id="notizie_cliniche" name="notizie_cliniche" value=""></textarea>
         </div>
         <div class="mb-3 ms-2 w-50">
-            <label for="note_tratammento" class="form-label">Note tratammento</label>
-            <textarea rows="3" class="form-control" id="note_tratammento" name="note_tratammento" value=""></textarea>
+            <label for="note_trattamento" class="form-label">Note trattamento</label>
+            <textarea rows="3" class="form-control" id="note_trattamento" name="note_trattamento" value=""></textarea>
         </div>   
     </div>
 </div>

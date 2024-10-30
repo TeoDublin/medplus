@@ -16,6 +16,6 @@
             'data_inserimento',
             'prestazioni_precedenti',
             'notizie_cliniche',
-            'note_tratammento'
+            'note_trattamento'
         ];
     }

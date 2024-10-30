@@ -131,7 +131,7 @@
             if(empty($conditions))return '1=1';
             else return implode(" AND ",$conditions);
         }
-        private function _alias(){
-            $this->alias??=substr($this->table,0,1);
+        private function _alias($alias=null){
+            $this->alias= $alias ?? substr($this->table,0,1);
         }
     }

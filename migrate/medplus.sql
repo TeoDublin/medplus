@@ -14,11 +14,11 @@ CREATE TABLE `clienti` (
   `data_inserimento` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `prestazioni_precedenti` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `notizie_cliniche` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `note_tratammento` longtext COLLATE utf8mb4_unicode_ci NOT NULL
+  `note_trattamento` longtext COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
-INSERT INTO `clienti` (`id`, `nominativo`, `indirizzo`, `cap`, `citta`, `cf`, `telefono`, `celulare`, `email`, `tipo`, `portato_da`, `data_inserimento`, `prestazioni_precedenti`, `notizie_cliniche`, `note_tratammento`) VALUES
+INSERT INTO `clienti` (`id`, `nominativo`, `indirizzo`, `cap`, `citta`, `cf`, `telefono`, `celulare`, `email`, `tipo`, `portato_da`, `data_inserimento`, `prestazioni_precedenti`, `notizie_cliniche`, `note_trattamento`) VALUES
 (1, 'test', 'via Bobbio Scipione, 11', '80126', 'Napoli', 'GGLDNL81A31F839B', '3404006396', 'MedPlus', 'Altro', 'MedPlus', 'Altro', '2024-10-19 23:51:57', 'Altro studio Fisioterapico o Medico o Altro', 'Diagnosi ', 'Portatore PaceMaker / Paziente Oncologico'),
 (2, 'test', 'trovatore', '80126', 'Naples', 'GGLDNL81A31F839B', '3758298897', '984555666654', 'teodublin@gmail.com', 'MedPlus', 'Altro', '2024-10-19 23:54:09', 'Altro studio Fisioterapico o Medico o Altro', '', ''),
 (4, 'Gagliotta Danilo', 'trovatore', '80126', 'Naples', 'GGLDNL81A31F839B', '3758298897', '984555666654', 'thierrynapule@gmail.com', 'MedPlus', 'Altro', '2024-10-20 21:47:17', 'Altro studio Fisioterapico o Medico o Altro', 'fapodijfapfdoija paodijf paodijfa poija dopijafdpoaji dpoaijf paoidjf apoidj paoijdf poaijf a podijapdoi jadf aoi japodi jfapo a oijadpoifj aopedfa daoi aj', 'apodijfapd jia adpoifja podijfa  oaidjfpoaijd fa poiajdfpoaijd aop fiajdfpoaij dpaoifa podijfap oidjfapodij apoij faopdfji aopdijf apoijdfoaij dpofaijd poaijdfp oaijdf poaidjfapo dijafpo ijapdofija pdoijafdp oiajddklnaòdlknfòqeofodijjfapo   ');

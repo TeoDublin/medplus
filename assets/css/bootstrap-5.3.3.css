@@ -473,7 +473,7 @@ color-scheme: dark;
     cursor: pointer!important;
     background-color: var(--base-bg-primary)!important;
     color:white;
-    border-radius: 10px;
+    border-radius: 2px;
 }
 *,
 *::before,

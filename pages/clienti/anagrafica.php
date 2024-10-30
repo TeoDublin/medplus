@@ -93,8 +93,8 @@
                             <textarea rows="3" class="form-control" id="modalNotizie_cliniche" name="notizie_cliniche" value="<?php echo $edit['notizie_cliniche']??'';?>"></textarea>
                         </div>
                         <div class="mb-3 ms-2 w-50">
-                            <label for="modalNote_tratammento" class="form-label">Note tratammento</label>
-                            <textarea rows="3" class="form-control" id="modalNote_tratammento" name="note_tratammento" value="<?php echo $edit['note_tratammento']??'';?>"></textarea>
+                            <label for="modalNote_trattamento" class="form-label">Note trattamento</label>
+                            <textarea rows="3" class="form-control" id="modalNote_trattamento" name="note_trattamento" value="<?php echo $edit['note_trattamento']??'';?>"></textarea>
                         </div>   
                     </div>                                             
                     <div class="modal-footer">
@@ -158,7 +158,7 @@
                                 <td scope="col" class="text-center"><?php echo $row['cf'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['celulare'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['notizie_cliniche'];?></td>
-                                <td scope="col" class="text-center"><?php echo $row['note_tratammento'];?></td>
+                                <td scope="col" class="text-center"><?php echo $row['note_trattamento'];?></td>
                                 <td scope="col" class="text-center action-Elimina" title="Elimina"><?php echo icon('bin.svg');?></td>
                             </tr><?php
                         }?>

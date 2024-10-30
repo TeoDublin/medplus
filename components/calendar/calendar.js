@@ -1,7 +1,7 @@
 const calendar = {
-    currentMonth: new Date().getMonth(),
-    currentYear: new Date().getFullYear(),
-    currentDay: new Date().getDate(),
+    currentMonth: (getCookie('currentMonth')) ? getCookie('currentMonth') : new Date().getMonth(),
+    currentYear: (getCookie('currentYear')) ? getCookie('currentYear') : new Date().getFullYear(),
+    currentDay: (getCookie('currentDay')) ? getCookie('currentDay') : new Date().getDate(),
     monthNames: ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"],
     monthDropdownOptions: null,
     yearDropdownOptions: null,
@@ -107,7 +107,6 @@ const calendar = {
     },
     calendarValueUpdate() {
         this.targetValue.setAttribute('value', `${String(this.currentDay).padStart(2, '0')}/${String(Number(this.currentMonth) + 1).padStart(2, '0')}/${this.currentYear}`);
-        this.targetValue.setAttribute('date', `${this.currentYear}-${String(Number(this.currentMonth) + 1).padStart(2, '0')}-${String(this.currentDay).padStart(2, '0')}`);
     },
     calendarCurrentFn() {
         let calendarCurrent = this.calendarContainer.querySelector('.calendar-current');

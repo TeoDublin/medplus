@@ -32,3 +32,6 @@
     function Planning():Planning{
         return new Planning();
     }
+    function Select(string $select){
+        return new Select($select);
+    }

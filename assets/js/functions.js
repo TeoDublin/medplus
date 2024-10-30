@@ -28,3 +28,13 @@ function openModal(id) {
     var modal = new bootstrap.Modal(document.getElementById(id));
     modal.show();
 }
+function success(){
+    const toastLiveExample = document.getElementById('successToast')
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastBootstrap.show();
+}
+function fail(){
+    const toastLiveExample = document.getElementById('failToast')
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    toastBootstrap.show();
+}
