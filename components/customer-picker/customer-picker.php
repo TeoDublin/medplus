@@ -5,16 +5,7 @@
             <label for="nominativo" class="form-label">Nominativo</label>
             <input type="text" class="form-control" id="nominativo" name="nominativo" value="" oninput="selectNominativo(event,this)"/>
         </div>
-        <div class="mb-3 ms-2">
-            <label for="id_trattamento" class="form-label">Trattamento</label>
-            <select type="text" class="form-control" id="id_trattamento" name="id_trattamento" value="">
-                <?php 
-                    foreach(Trattamenti()->select([])??[] as $trattamento){
-                        echo "<option value=\"{$trattamento['id']}\">{$trattamento['trattamento']}</option>";
-                    }
-                ?>
-            </select>
-        </div>
+        <?php component('trattamenti','php'); ?>
         <div class="mb-3 ms-2">
             <label for="celulare" class="form-label">Celulare</label>
             <input type="text" class="form-control" id="celulare" name="celulare" value="">

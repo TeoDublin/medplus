@@ -5,6 +5,7 @@
         protected $left_join;
         protected $where;
         protected $query;
+        protected $orderby;
         public function __construct(string $select){
             $this->select=$this->where=$this->query='';
             $this->left_join=[];
@@ -30,6 +31,7 @@
             $query="SELECT {$this->select} FROM {$this->from}";
             if(!empty($this->left_join))$query.=implode('',$this->left_join);
             if(!empty($this->where))$query.=" WHERE {$this->where}";
+            if(!empty($this->orderby))$query.=" ORDER BY {$this->orderby}";
             return SQL()->select($query);
         }
         public function first():array{
@@ -38,5 +40,9 @@
         }
         public function col(string $col):string|null{
             return $this->first()[$col]??null;
+        }
+        public function orderby(string $orderby){
+            $this->orderby=$orderby;
+            return $this;
         }
     }

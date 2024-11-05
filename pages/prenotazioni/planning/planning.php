@@ -93,6 +93,7 @@
 <?php component('calendar','js'); ?>
 <?php component('hour-picker','js'); ?>
 <?php component('customer-picker','js'); ?>
+<?php component('trattamenti','js'); ?>
 <script>
 
     function openCalendar(event, element) {
@@ -173,6 +174,7 @@
                     modal.hide();
                     $.post('post/planning.php',_data).done(response=>{success();}).fail(error=>{fail();});
                 });
+                trattamenti.bind();
                 modal.show();
             })
             .catch(error => {
