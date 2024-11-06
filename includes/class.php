@@ -32,6 +32,12 @@
     function Planning():Planning{
         return new Planning();
     }
-    function Select(string $select){
+    function Select(string $select):Select{
         return new Select($select);
+    }
+    function Insert(array $insert):Insert{
+        return new Insert($insert);
+    }
+    function Update(string $table):Update{
+        return new Update($table);
     }
