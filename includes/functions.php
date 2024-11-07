@@ -3,7 +3,7 @@
         return 'prod';
     }
     function page():string{
-        $split= explode('/',strtok($_SERVER['REQUEST_URI'], '?'));
+        $split= explode('/',strtok($_SERVER['HTTP_REFERER']??$_SERVER['REQUEST_URI'], '?'));
         return str_replace('.php','',end($split));
     }
     function root_path(string $path): string {

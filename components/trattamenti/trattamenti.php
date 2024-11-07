@@ -1,12 +1,13 @@
 <?php 
-$trattamenti = Select('t.*')
-    ->from('trattamenti', 't')
-    ->orderby('t.tipo, t.categoria, t.trattamento ASC')
-    ->get(); 
+    $trattamenti = Select('t.*')
+        ->from('trattamenti', 't')
+        ->orderby('t.tipo, t.categoria, t.trattamento ASC')
+        ->get(); 
+    $params=$_GET['trattamenti_params'];
 ?>
 <div class="mb-3 ms-2">
     <label for="id_trattamento" class="form-label">Trattamento</label>
-    <select class="form-select" id="id_trattamento" name="id_trattamento">
+    <select class="form-select" id="id_trattamento" name="id_trattamento" value="<?php echo $params['id_trattamento']??''; ?>">
         <?php 
             $current_tipo = $current_categoria = '';
             echo "<option value=\"\" class=\"ps-4  bg-white\" prezzo=\"\" tipo=\"\"></option>";
@@ -34,19 +35,19 @@ $trattamenti = Select('t.*')
                     echo "<optgroup label=\"-- {$trattamento['categoria']}\" class=\"ps-3 bg-primary-7\">";
                 }
 
-                echo "<option value=\"{$trattamento['id']}\" class=\"ps-4  bg-white\" prezzo=\"{$trattamento['prezzo']}\" tipo=\"{$trattamento['tipo']}\">{$trattamento['trattamento']}</option>";
-            }
+                $selected = (isset($params['id_trattamento']) && $params['id_trattamento'] == $trattamento['id']) ? 'selected' : '';
+                echo "<option value=\"{$trattamento['id']}\" class=\"ps-4 bg-white\" prezzo=\"{$trattamento['prezzo']}\" tipo=\"{$trattamento['tipo']}\" $selected>{$trattamento['trattamento']}</option>";            }
 
             if ($current_categoria) echo "</optgroup>";
             if ($current_tipo) echo "</optgroup>";
         ?>
     </select>
 </div>
-<div class="mb-3 ms-2" id="sedute" hidden>
+<div class="mb-3 ms-2" id="sedute" <?php echo $params?'':'hidden'?>>
     <label for="sedute" class="form-label">Sedute</label>
-    <input type="number" class="form-control" id="sedute" name="sedute" value=1> 
+    <input type="number" class="form-control" id="sedute" name="sedute" value="<?php echo $params['sedute']??'1'; ?>"> 
 </div>
-<div class="mb-3 ms-2" id="prezzo" hidden>
+<div class="mb-3 ms-2" id="prezzo" <?php echo $params?'':'hidden'?>>
     <label for="prezzo" class="form-label" >Prezzo</label>
-    <input type="number" class="form-control" id="prezzo" name="prezzo" value=""> 
+    <input type="number" class="form-control" id="prezzo" name="prezzo" value="<?php echo $params['prezzo']??''; ?>"> 
 </div>

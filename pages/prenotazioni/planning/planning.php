@@ -58,19 +58,21 @@
                             ->where('p.data = "'.format_date(cookie('date',date('d/m/Y'))).'"')
                             ->get();
                         for($i=1;$i<=$rows;$i++){?>
-                            <tr row="<?php echo $i;?>"><?php
+                            <tr row="<?php echo $i;?>" row="<?php echo $i;?>"><?php
                                 foreach($terapisti as $col=>$terapista){
-                                    $ora=$info=$note='';
+                                    $ora=$info=$note=$id_planning='';
                                     foreach ($planning as $plan) {
                                         if($plan['row']==$i&&$plan['id_terapista']==$terapista['id']){
                                             $ora=$plan['ora'];
                                             $info=$plan['nominativo'];
                                             if(!empty($info)&&!empty($plan['trattamento']))$info.=" > {$plan['trattamento']}";
                                             $note=$plan['note'];
+                                            $id_planning=$plan['id'];
                                             break;
                                         }
                                     }
                                     ?>
+                                    <td scope="col" class="text-center border-0" id_planning="<?php echo $id_planning;?>" hidden></td>
                                     <td scope="col" class="text-center border-0" id_terapista="<?php echo $terapista['id'];?>" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>">
                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hour-target hover" type="text" value="<?php echo $ora ?? '';?>"  readonly />
                                     </td>
@@ -89,13 +91,11 @@
         </div>
     </div>
 </div>
-
 <?php component('calendar','js'); ?>
 <?php component('hour-picker','js'); ?>
 <?php component('customer-picker','js'); ?>
 <?php component('trattamenti','js'); ?>
 <script>
-
     function openCalendar(event, element) {
         const rect = event.target.getBoundingClientRect();
         fetch('component.php?name=calendar')
@@ -146,7 +146,8 @@
     }
     
     function openCustomerPicker(element) {
-        fetch('component.php?name=customer-picker')
+        let id_planning=element.closest('tr').querySelector('td[id_planning]').getAttribute('id_planning');
+        fetch('component.php?name=customer-picker&id_planning='+id_planning)
             .then(response => response.text())
             .then(data => {
                 document.querySelector('#modal-body').innerHTML = data;

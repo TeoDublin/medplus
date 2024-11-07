@@ -45,8 +45,8 @@
             break;
         case 'hour':
             $params=array_filter(['row'=>$_POST['row'],'data'=>$_POST['data'],'ora'=>$_POST['ora'],'id_terapista'=>$_POST['id_terapista']]);
-            if($id=Planning()->first(['row'=>$_POST['row'], 'id_terapista'=>$_POST['id_terapista']])['id'])Planning()->update(array_merge($params,['id'=>$id]));
-            else Planning()->insert($params);
+            if($id=Planning()->first(['row'=>$_POST['row'], 'id_terapista'=>$_POST['id_terapista']])['id'])Update('planning')->set($params)->where("id={$id}");
+            else Insert($params)->into('planning');
             break;
     }
     exit();
