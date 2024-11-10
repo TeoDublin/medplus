@@ -83,12 +83,6 @@
                         <?php echo icon('table.svg','black',31,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Prenotazioni</span></div>
-                </div>                
-                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='utenti'?'menu-active':''?>" id="users" title="Utenti">
-                    <div class="d-flex align-items-start mx-2" >
-                        <?php echo icon('person-2.svg','black',31,30);?>
-                    </div>
-                    <div class="menu-label align-self-center hide" ><span>Utenti</span></div>
                 </div>
                 <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='impostazioni'?'menu-active':''?>" id="impostazioni" title="impostazioni">
                     <div class="d-flex align-items-start mx-2" >

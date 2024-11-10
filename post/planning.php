@@ -1,14 +1,8 @@
 <?php 
     require '../includes.php';
-    function _operation(){
-        $ret=$_POST['operation'];
-        unset($_POST['operation']);
-        return $ret;
-    }
-    switch (_operation()) {
+    switch (request('operation')) {
         case 'all':
-            if($_POST['id']!="")$id_cliente=$_POST['id'];
-            else $id_cliente=Insert([
+            $params=[
                 'nominativo'=>$_POST['nominativo'],
                 'indirizzo'=>$_POST['indirizzo'],
                 'cap'=>$_POST['cap'],
@@ -23,7 +17,12 @@
                 'prestazioni_precedenti'=>$_POST['prestazioni_precedenti'],
                 'notizie_cliniche'=>$_POST['notizie_cliniche'],
                 'note_trattamento'=>$_POST['note_trattamento']
-            ])->into('clienti')->get();
+            ];
+            if($_POST['id']!=""){
+                $id_cliente=$_POST['id'];
+                Update('clienti')->set($params)->where("id={$id_cliente}");
+            }
+            else $id_cliente=Insert($params)->into('clienti')->get();
             $params=[
                 'row'=>$_POST['row'],
                 'data'=>$_POST['data'],
@@ -44,9 +43,13 @@
             else Insert($params)->into('planning');
             break;
         case 'hour':
-            $params=array_filter(['row'=>$_POST['row'],'data'=>$_POST['data'],'ora'=>$_POST['ora'],'id_terapista'=>$_POST['id_terapista']]);
-            if($id=Planning()->first(['row'=>$_POST['row'], 'id_terapista'=>$_POST['id_terapista']])['id'])Update('planning')->set($params)->where("id={$id}");
-            else Insert($params)->into('planning');
+        case 'note':
+            $_REQUEST['data']=format_date($_REQUEST['data']);
+            $id=Select('p.id')
+                ->from('planning','p')
+                ->where("`row`={$_REQUEST['row']} and `data`='{$_REQUEST['data']}' and `id_terapista`={$_REQUEST['id_terapista']}")
+                ->col('id');
+            if($id)Update('planning')->set($_REQUEST)->where("id={$id}");
+            else Insert($_REQUEST)->into('planning');
             break;
     }
-    exit();

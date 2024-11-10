@@ -37,5 +37,5 @@ function cp_success(event,_nominativo,response){
             }
         });
     }
-    else document.querySelectorAll('[name]:not(#nominativo)').forEach(item=>{ item.value='';});
+    else document.querySelectorAll('[name]:not(#nominativo) [name]:not(#sedute) [name]:not(#prezzo)').forEach(item=>{ item.value='';});
 }

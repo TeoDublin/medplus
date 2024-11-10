@@ -1,3 +1,4 @@
 <?php 
     require 'includes.php';
-    require_once "components/".cookie('name','')."/".cookie('name','').".php"; 
+    $component=request('name');
+    require_once "components/{$component}/{$component}.php"; 

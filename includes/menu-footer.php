@@ -51,7 +51,6 @@
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);
             this.exit.addEventListener('click',menuExit);
-            this.users.addEventListener('click', () => navigate('utenti.php','utenti'));
             this.impostazioni.addEventListener('click', () => navigate('impostazioni.php','impostazioni'));
             this.prenota.addEventListener('click', () => navigate('prenotazioni.php','prenotazioni'));
             this.clienti.addEventListener('click', () => navigate('clienti.php','clienti'));

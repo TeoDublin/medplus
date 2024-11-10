@@ -28,6 +28,21 @@ function openModal(id) {
     var modal = new bootstrap.Modal(document.getElementById(id));
     modal.show();
 }
+
+function success_and_refresh() {
+    sessionStorage.setItem('showSuccessToast', 'true');
+    window.location.href = window.location.href;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('showSuccessToast') === 'true') {
+        const toastLiveExample = document.getElementById('successToast');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+        toastBootstrap.show();
+        sessionStorage.removeItem('showSuccessToast');
+    }
+});
+
 function success(){
     const toastLiveExample = document.getElementById('successToast')
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
@@ -38,3 +53,10 @@ function fail(){
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
     toastBootstrap.show();
 }
+function hoverIconWarning(element) {
+    const row = element.closest('tr');
+    row.classList.add('warning');
+    element.addEventListener('mouseleave', function() {
+        row.classList.remove('warning');
+    });
+};

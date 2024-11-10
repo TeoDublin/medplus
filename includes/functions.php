@@ -1,9 +1,14 @@
 <?php
+    function request($key){
+        $ret=$_REQUEST[$key];
+        unset($_REQUEST[$key]);
+        return $ret;
+    }
     function environment():string{
         return 'prod';
     }
     function page():string{
-        $split= explode('/',strtok($_SERVER['HTTP_REFERER']??$_SERVER['REQUEST_URI'], '?'));
+        $split= explode('/',strtok($_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'], '?'));
         return str_replace('.php','',end($split));
     }
     function root_path(string $path): string {
@@ -24,17 +29,23 @@
         return $svg;
     }
     function component(string $name, string $extention): void {
-        switch ($extention) {
-            case 'js':
-                echo '<script src="'.root_path("components/{$name}/{$name}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'"></script>';
-                break;
-            case 'css':
-                echo '<link rel="stylesheet" href="'.root_path("components/{$name}/{$name}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'">';
-                break;
-            default:
-                require root("components/{$name}/{$name}.{$extention}");
-                break;
+        global $result;
+        if(file_exists("components/{$name}/{$name}.{$extention}")){
+            switch ($extention) {
+                case 'js':
+                    echo '<script src="'.root_path("components/{$name}/{$name}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'"></script>';
+                    break;
+                case 'css':
+                    echo '<link rel="stylesheet" href="'.root_path("components/{$name}/{$name}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'">';
+                    break;
+                default:
+                    require root("components/{$name}/{$name}.{$extention}");
+                    break;
+            }
         }
+    }
+    function script(String $full_path):void{
+        echo '<script src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
     }
     function root(string $path):string{
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);

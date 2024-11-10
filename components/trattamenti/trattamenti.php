@@ -1,53 +1,36 @@
-<?php 
-    $trattamenti = Select('t.*')
-        ->from('trattamenti', 't')
-        ->orderby('t.tipo, t.categoria, t.trattamento ASC')
-        ->get(); 
-    $params=$_GET['trattamenti_params'];
-?>
-<div class="mb-3 ms-2">
-    <label for="id_trattamento" class="form-label">Trattamento</label>
-    <select class="form-select" id="id_trattamento" name="id_trattamento" value="<?php echo $params['id_trattamento']??''; ?>">
-        <?php 
-            $current_tipo = $current_categoria = '';
-            echo "<option value=\"\" class=\"ps-4  bg-white\" prezzo=\"\" tipo=\"\"></option>";
-            foreach ($trattamenti as $trattamento) {
-                if ($current_categoria && $current_categoria != $trattamento['categoria']) {
-                    echo "</optgroup>";
-                    $current_categoria = '';
+<?php $result=($id=request('id'))?$result=Select('*')->from('trattamenti')->where("id={$id}")->first_or_false():false;?>
+<div class="p-2">
+    <input type="text" id="id" name="id" value="<?php echo $result['id']??'';?>" hidden/>
+    <div class="mb-3">
+        <label for="tipo" class="form-label">Categoria</label>
+        <select type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $result['categoria']??'';?>">
+            <?php 
+                echo "<option value=\"\" class=\"ps-4  bg-white\"></option>";
+                foreach(Enum('trattamenti','categoria')->list as $value){
+                    $selected = (isset($result['id']) && $result['categoria'] == $value) ? 'selected' : '';
+                    echo "<option value=\"{$value}\" class=\"ps-4  bg-white\" {$selected}>{$value}</option>";
                 }
-
-                if ($current_tipo && $current_tipo != $trattamento['tipo']) {
-                    if ($current_categoria) {
-                        echo "</optgroup>";
-                    }
-                    echo "</optgroup>";
-                    $current_tipo = '';
+            ?>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="trattamento" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="trattamento" name="trattamento" value="<?php echo $result['trattamento']??'';?>"/>
+    </div>
+    <div class="mb-3">
+        <label for="tipo" class="form-label">Tipo</label>
+        <select type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $result['tipo']??'';?>">
+            <?php 
+                echo "<option value=\"\" class=\"ps-4  bg-white\"></option>";
+                foreach(Enum('trattamenti','tipo')->list as $value){
+                    $selected = (isset($result['id']) && $result['tipo'] == $value) ? 'selected' : '';
+                    echo "<option value=\"{$value}\" class=\"ps-4  bg-white\" {$selected}>{$value}</option>";
                 }
-
-                if ($current_tipo != $trattamento['tipo']) {
-                    $current_tipo = $trattamento['tipo'];
-                    echo "<optgroup label=\"*{$trattamento['tipo']}\" class=\"fw-bold\">";
-                }
-
-                if ($current_categoria != $trattamento['categoria']) {
-                    $current_categoria = $trattamento['categoria'];
-                    echo "<optgroup label=\"-- {$trattamento['categoria']}\" class=\"ps-3 bg-primary-7\">";
-                }
-
-                $selected = (isset($params['id_trattamento']) && $params['id_trattamento'] == $trattamento['id']) ? 'selected' : '';
-                echo "<option value=\"{$trattamento['id']}\" class=\"ps-4 bg-white\" prezzo=\"{$trattamento['prezzo']}\" tipo=\"{$trattamento['tipo']}\" $selected>{$trattamento['trattamento']}</option>";            }
-
-            if ($current_categoria) echo "</optgroup>";
-            if ($current_tipo) echo "</optgroup>";
-        ?>
-    </select>
-</div>
-<div class="mb-3 ms-2" id="sedute" <?php echo $params?'':'hidden'?>>
-    <label for="sedute" class="form-label">Sedute</label>
-    <input type="number" class="form-control" id="sedute" name="sedute" value="<?php echo $params['sedute']??'1'; ?>"> 
-</div>
-<div class="mb-3 ms-2" id="prezzo" <?php echo $params?'':'hidden'?>>
-    <label for="prezzo" class="form-label" >Prezzo</label>
-    <input type="number" class="form-control" id="prezzo" name="prezzo" value="<?php echo $params['prezzo']??''; ?>"> 
+            ?>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="prezzo" class="form-label">Prezzo</label>
+        <input type="number" class="form-control" id="prezzo" name="prezzo" value="<?php echo $result['prezzo']??'';?>"/>
+    </div>
 </div>

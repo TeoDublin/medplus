@@ -7,7 +7,7 @@
             </li>
         </ul>
         <div class="p-1">
-            <?php  require cookie('tab','anagrafica').'.php';?>
+            <?php $tab=cookie('tab','anagrafica');require "{$tab}/{$tab}.php";?>
         </div>
     </div>
 </div>

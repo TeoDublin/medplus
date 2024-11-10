@@ -39,7 +39,7 @@
                 <thead>
                     <?php 
                         $rows=14;
-                        $terapisti=Terapisti()->select([]);                        
+                        $terapisti=Select('*')->from('terapisti')->get();                        
                     ?>
                     <tr class="align-middle"><?php
                         foreach($terapisti as $terapista){?>
@@ -79,8 +79,8 @@
                                     <td scope="col" class="text-center border-0" id_terapista="<?php echo $terapista['id'];?>" onclick="openCustomerPicker(this);">
                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hover" type="text" value="<?php echo $info ?? '';?>" readonly />
                                     </td>
-                                    <td scope="col" class="text-center border-0">
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hover" type="text" value="<?php echo $note ?? '';?>" />
+                                    <td scope="col" class="text-center border-0" >
+                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hover note" id_terapista="<?php echo $terapista['id'];?>" type="text" value="<?php echo $note ?? '';?>" />
                                     </td><?php
                                 }?>
                             </tr><?php
@@ -94,143 +94,8 @@
 <?php component('calendar','js'); ?>
 <?php component('hour-picker','js'); ?>
 <?php component('customer-picker','js'); ?>
-<?php component('trattamenti','js'); ?>
+<?php component('trattamenti-list','js'); ?>
+<?php script('pages/prenotazioni/planning/planning.js'); ?>
 <script>
-    function openCalendar(event, element) {
-        const rect = event.target.getBoundingClientRect();
-        fetch('component.php?name=calendar')
-            .then(response => response.text())
-            .then(data => {
-                const content = document.createElement('div');
-                content.innerHTML = data;
-                document.querySelector('.page-content').appendChild(content);
-            })
-            .then(() => {
-                calendar.start('.date-target',rect.x,rect.y);
-            })
-            .catch(error => {
-                console.error('Error fetching calendar:', error);
-            });
-    }
-    
-    function openHourPicker(event, element) {
-        document.querySelectorAll('#hourPicker').forEach((element)=>{element.remove();});
-        const id = element.id;
-        const rect = event.target.getBoundingClientRect();
-        const x = rect.x + window.scrollX;
-        const y = rect.y + window.scrollY;
-        fetch('component.php?name=hour-picker')
-            .then(response => response.text())
-            .then(data => {
-                const content = document.createElement('div');
-                content.id="hourPicker";
-                content.setAttribute('style', 'left:'+x+'px;top:'+y+'px;position:absolute;');
-                content.innerHTML = data;
-                document.querySelector('.page-content').appendChild(content);
-            })
-            .then(() => {
-                hourPicker.start('#'+id+' > input');
-                hourPicker.closeBtn.addEventListener('click',()=>{
-                const _data = {};
-                _data['operation']='hour';
-                _data['row']=element.closest('tr').getAttribute('row');
-                _data['data']=document.querySelector('.date-target').value;
-                _data['ora']=hourPicker.value.value;
-                _data['id_terapista']=element.getAttribute('id_terapista');
-                $.post('post/planning.php',_data).done(response=>{success();}).fail(error=>{fail(error);});
-            });                
-            })
-            .catch(error => {
-                console.error('Error fetching hourPicker:', error);
-            });
-    }
-    
-    function openCustomerPicker(element) {
-        let id_planning=element.closest('tr').querySelector('td[id_planning]').getAttribute('id_planning');
-        fetch('component.php?name=customer-picker&id_planning='+id_planning)
-            .then(response => response.text())
-            .then(data => {
-                document.querySelector('#modal-body').innerHTML = data;
-                const modalElement = document.getElementById('modal');
-                const modal = new bootstrap.Modal(modalElement);
-                modalElement.querySelector('.modal-title').textContent = 'Seleziona cliente';
-                modalElement.querySelector('.modal-dialog').classList.add('modal-xl');
-                const addButton = modalElement.querySelector('.btn-add');
-                addButton.replaceWith(addButton.cloneNode(true));
-                const newAddButton = modalElement.querySelector('.btn-add');                
-                modalElement.querySelector('.btn-add').addEventListener('click', () => {
-                    const input = element.querySelector('input');
-                    let nominativo = modalElement.querySelector('#nominativo').value;
-                    let trattamento = modalElement.querySelector('#id_trattamento');
-                    let options = trattamento.querySelectorAll('option');
-                    let optionText = Array.from(trattamento.options).find(opt => opt.value == trattamento.value)?.textContent;
-                    input.value = nominativo + ' > '+optionText;
-                    const _data = {};
-                    _data['operation']='all';
-                    _data['row']=element.closest('tr').getAttribute('row');
-                    _data['data']=document.querySelector('.date-target').value;
-                    _data['ora']=element.closest('tr').querySelector('.hour-target').value;
-                    _data['id_terapista']=element.getAttribute('id_terapista');
-                    modalElement.querySelectorAll('[name]').forEach((modalInput)=>{ _data[modalInput.name] = modalInput.value; });
-                    modal.hide();
-                    $.post('post/planning.php',_data).done(response=>{success();}).fail(error=>{fail();});
-                });
-                trattamenti.bind();
-                modal.show();
-            })
-            .catch(error => {
-                console.error('Error fetching customer picker:', error);
-            });
-    }
-    
-    document.addEventListener("DOMContentLoaded", () => {
-        const dateTarget = document.querySelector('.date-target');
-        var first = dateTarget.value;
-        const observer = new MutationObserver(mutations => {
-            mutations.forEach(mutation => {
-                if (mutation.type === 'attributes' && mutation.attributeName === 'value') {
-                    let current = dateTarget.value;
-                    if(current!=first){
-                        const [day, month, year] = current.split('/');
-                        setCookie('currentMonth',month - 1,1);
-                        setCookie('currentYear',year,1);
-                        setCookie('currentDay',day,1);
-                        window.location = "<?php echo url('prenotazioni.php?date=');?>"+current;
-                    }
-                }
-            });
-        });
-        observer.observe(dateTarget, { attributes: true });
-    });
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const table = document.querySelector('.resizable-table');
-        let isResizing = false;
-        let startX, startWidth, targetCell;
-        table.querySelectorAll('th, td').forEach(cell => {
-            const resizer = document.createElement('div');
-            resizer.classList.add('resizer');
-            cell.appendChild(resizer);
-            resizer.addEventListener('mousedown', (e) => {
-                isResizing = true;
-                startX = e.pageX;
-                targetCell = cell;
-                startWidth = cell.offsetWidth;
-                document.body.classList.add('resizing');
-                e.preventDefault();
-            });
-        });
-        document.addEventListener('mousemove', (e) => {
-            if (!isResizing) return;
-            const delta = e.pageX - startX;
-            targetCell.style.width = `${startWidth + delta}px`;
-        });
-        document.addEventListener('mouseup', () => {
-            if (isResizing) {
-            isResizing = false;
-            document.body.classList.remove('resizing');
-            }
-        });
-    });
-
+    sessionStorage.setItem('prenotazioni_url',"<?php echo url('prenotazioni.php?date=');?>");
 </script>
