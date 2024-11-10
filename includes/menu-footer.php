@@ -17,7 +17,7 @@
         impostazioni: document.querySelector('#impostazioni'),
         prenota: document.querySelector('#prenota'),
         clienti: document.querySelector('#clienti'),
-
+        fattura: document.querySelector('#fattura'),
         start: function(){
             if(getCookie("menu")=="show"){
                 this.menuVertical.classList.remove('hide');
@@ -53,6 +53,7 @@
             this.exit.addEventListener('click',menuExit);
             this.impostazioni.addEventListener('click', () => navigate('impostazioni.php','impostazioni'));
             this.prenota.addEventListener('click', () => navigate('prenotazioni.php','prenotazioni'));
+            this.fattura.addEventListener('click', () => navigate('fattura.php','fattura'));
             this.clienti.addEventListener('click', () => navigate('clienti.php','clienti'));
         }
     }

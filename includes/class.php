@@ -5,9 +5,6 @@
     function Sql(): Sql{
         return new Sql();
     }
-    function Base(): Base{
-        return new Base();
-    }
     function Session():Session{
         return new Session();
     }

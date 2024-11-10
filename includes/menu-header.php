@@ -84,6 +84,12 @@
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Prenotazioni</span></div>
                 </div>
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='fattura'?'menu-active':''?>" id="fattura" title="Fattura">
+                    <div class="d-flex align-items-start mx-2" >
+                        <?php echo icon('document.svg','black',31,30);?>
+                    </div>
+                    <div class="menu-label align-self-center hide" ><span>Fattura</span></div>
+                </div>
                 <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='impostazioni'?'menu-active':''?>" id="impostazioni" title="impostazioni">
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('gear.svg','black',31,30);?>
