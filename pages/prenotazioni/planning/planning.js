@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     function note(element){
         const _data = {};
         _data['skip_cookie']=true;
-        _data['operation']='note';
+        _data['operation']=(element.value===''?'clean_note':'note');
         _data['note']=element.value;
         _data['row']=element.closest('tr').getAttribute('row');
         _data['data']=document.querySelector('.date-target').value;

@@ -54,10 +54,20 @@
             break;
         case 'clean_hour':
             $_REQUEST['data']=format_date($_REQUEST['data']);
-            $id=Select('p.id')
+            $planning=Select('p.*')
                 ->from('planning','p')
                 ->where("`row`={$_REQUEST['row']} and `data`='{$_REQUEST['data']}' and `id_terapista`={$_REQUEST['id_terapista']}")
-                ->col('id');
-            if($id)Update('planning')->set($_REQUEST)->where("id={$id}");
+                ->first();
+            if($planning['note']||$planning['id_cliente']||$planning['id_trattamento']||$planning['sedute']||$planning['prezzo'])Update('planning')->set($_REQUEST)->where("id={$planning['id']}");
+            else Delete($planning['id'])->from('planning');
+            break;
+        case 'clean_note':
+            $_REQUEST['data']=format_date($_REQUEST['data']);
+            $planning=Select('p.*')
+                ->from('planning','p')
+                ->where("`row`={$_REQUEST['row']} and `data`='{$_REQUEST['data']}' and `id_terapista`={$_REQUEST['id_terapista']}")
+                ->first();
+            if($planning['ora']||$planning['id_cliente']||$planning['id_trattamento']||$planning['sedute']||$planning['prezzo'])Update('planning')->set($_REQUEST)->where("id={$planning['id']}");
+            else Delete($planning['id'])->from('planning');
             break;
     }
