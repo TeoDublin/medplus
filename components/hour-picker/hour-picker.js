@@ -17,7 +17,8 @@ const hourPicker = {
         this.enableScrollOnHover(this.minuteScroller,this.minutes,'minute');
         this.closeBtn=document.querySelector('.close-btn');
         this.closeBtn.addEventListener('click',this.close.bind(this));
-        document.querySelector('.clean-btn').addEventListener('click',this.clean.bind(this));
+        this.cleanBtn=document.querySelector('.clean-btn');
+        this.cleanBtn.addEventListener('click',this.clean.bind(this));
     },
     close(){
         this.container.remove();

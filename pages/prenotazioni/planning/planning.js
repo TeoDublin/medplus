@@ -36,10 +36,18 @@ function openHourPicker(event, element) {
                     ora: hourPicker.value.value,
                     id_terapista: element.getAttribute('id_terapista')
                 };
-                
-                $.post('post/planning.php', _data)
-                    .done(response => { success(); })
-                    .fail(error => { fail(error); });
+                $.post('post/planning.php', _data).done(response => { success(); }).fail(error => { fail(error); });
+            });
+            hourPicker.cleanBtn.addEventListener('click', () => {
+                const _data = {
+                    skip_cookie: true,
+                    operation: 'clean_hour',
+                    row: element.closest('tr').getAttribute('row'),
+                    data: document.querySelector('.date-target').value,
+                    ora: hourPicker.value.value,
+                    id_terapista: element.getAttribute('id_terapista')
+                };
+                $.post('post/planning.php', _data).done(response => { success(); }).fail(error => { fail(error); });
             });
         })
         .fail(error => {

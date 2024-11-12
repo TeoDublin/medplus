@@ -52,4 +52,12 @@
             if($id)Update('planning')->set($_REQUEST)->where("id={$id}");
             else Insert($_REQUEST)->into('planning');
             break;
+        case 'clean_hour':
+            $_REQUEST['data']=format_date($_REQUEST['data']);
+            $id=Select('p.id')
+                ->from('planning','p')
+                ->where("`row`={$_REQUEST['row']} and `data`='{$_REQUEST['data']}' and `id_terapista`={$_REQUEST['id_terapista']}")
+                ->col('id');
+            if($id)Update('planning')->set($_REQUEST)->where("id={$id}");
+            break;
     }
