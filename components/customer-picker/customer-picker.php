@@ -5,7 +5,6 @@
         ->left_join('clienti c on p.id_cliente = c.id')
         ->where("p.row={$_REQUEST['row']} and p.id_terapista = {$_REQUEST['id_terapista']} and p.data='".format_date($_REQUEST['data'])."'")
         ->first_or_false();
-        var_dump($result);
 ?>
 <div class="p-2">
     <input type="text" id="id" name="id" value="" hidden/>

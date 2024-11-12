@@ -43,11 +43,11 @@
         ?>
     </select>
 </div>
-<div class="mb-3 ms-2" id="sedute" <?php echo $result?'':'hidden'?>>
+<div class="mb-3 ms-2" id="sedute" <?php echo $result['id_trattamento']?'':'hidden'?>>
     <label for="sedute" class="form-label">Sedute</label>
     <input type="number" class="form-control" id="sedute" name="sedute" value="<?php echo $result['sedute']??'1'; ?>"> 
 </div>
-<div class="mb-3 ms-2" id="prezzo" <?php echo $result?'':'hidden'?>>
+<div class="mb-3 ms-2" id="prezzo" <?php echo $result['id_trattamento']?'':'hidden'?>>
     <label for="prezzo" class="form-label" >Prezzo</label>
     <input type="number" class="form-control" id="prezzo" name="prezzo" value="<?php echo $result['prezzo']??''; ?>"> 
 </div>
