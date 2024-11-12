@@ -45,7 +45,7 @@
                         foreach($terapisti as $terapista){?>
                             <th scope="col" class="text-center" rowspan="2">Ora</th>
                             <th scope="col" class="text-center" rowspan="2"><?php echo $terapista['terapista'];?></th>
-                            <th scope="col" class="text-center" rowspan="2">Obs</th><?php
+                            <th scope="col" class="text-center" rowspan="2">TR</th><?php
                         }?>
                     </tr>
                 </thead>
