@@ -1,5 +1,5 @@
 <div class="d-flex flex-row p-2">
-    <div class="w-15">
+    <div class="w-20">
         <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
             <div class="mx-2"><?php echo icon('cloud-add.svg','white',20,20);?></div>
             <div>Aggiungi Terapistia</div>
@@ -13,7 +13,7 @@
         </div>   
     </div>
 </div>
-<div class=" w-100 mx-1">
+<div class="w-100 mx-1">
     <div class="card p">
         <?php 
             $select=Select('*')->from('terapisti','t')->limit(14)->orderby('t.id DESC');

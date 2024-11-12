@@ -21,7 +21,7 @@
     function image(string $name): string {
         return root_path("assets/images/{$name}");
     }
-    function icon(string $name,string $color='black',int $width=16,int $height=16): string {
+    function icon(string $name,string $color='black',string $width='16',string $height='16'): string {
         $svg = file_get_contents(root("assets/icons/{$name}"));
         $svg = str_replace('width="16"', 'width="'.$width.'"', $svg);
         $svg = str_replace('height="16"', 'height="'.$height.'"', $svg);

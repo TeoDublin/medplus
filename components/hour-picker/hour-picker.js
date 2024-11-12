@@ -12,13 +12,22 @@ const hourPicker = {
         this.hours=this.createOptions(0, 23, 1);
         this.createHtml(this.hourScroller,this.hours,8,'hour');
         this.enableScrollOnHover(this.hourScroller,this.hours,'hour');
+        document.querySelector('.hour-up').addEventListener('click',()=>this.up(this.hourScroller,this.hours,'hour'));
+        document.querySelector('.hour-down').addEventListener('click',()=>this.down(this.hourScroller,this.hours,'hour'));
         this.minutes=this.createOptions(0, 45, 15);
         this.createHtml(this.minuteScroller,this.minutes,0,'minute');
         this.enableScrollOnHover(this.minuteScroller,this.minutes,'minute');
+        document.querySelector('.minute-up').addEventListener('click',()=>this.up(this.minuteScroller,this.minutes,'minute'));
+        document.querySelector('.minute-down').addEventListener('click',()=>this.down(this.minuteScroller,this.minutes,'minute'));
         this.closeBtn=document.querySelector('.close-btn');
         this.closeBtn.addEventListener('click',this.close.bind(this));
         this.cleanBtn=document.querySelector('.clean-btn');
         this.cleanBtn.addEventListener('click',this.clean.bind(this));
+        document.querySelector('.exit-btn').addEventListener('click',this.exit.bind(this));
+    },
+    exit(){
+        this.value.value='';
+        this.container.remove();
     },
     close(){
         this.container.remove();
@@ -50,6 +59,16 @@ const hourPicker = {
             h1.setAttribute('index',setValue);
             this.valueUpdate();
         }
+    },
+    up(container, arrayList, controller){
+        let index = Number(container.querySelector('h1').getAttribute('index'));
+        let next =index + 1;
+        this.createHtml(container, arrayList, next, controller);
+    },
+    down(container, arrayList, controller){
+        let index = Number(container.querySelector('h1').getAttribute('index'));
+        let next =index - 1;
+        this.createHtml(container, arrayList, next, controller);
     },
     enableScrollOnHover(container, arrayList, controller) {
         container.addEventListener("wheel", (e) => {
