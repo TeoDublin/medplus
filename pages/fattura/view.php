@@ -3,7 +3,7 @@
     <div class="flex-fill flex-column">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link <?php echo _tab('libera')?'active':'';?>" aria-current="page" href="impostazioni.php?tab=libera&pagination=0&rowId=unset">Libera</a>
+                <a class="nav-link <?php echo _tab('libera')?'active':'';?>" aria-current="page" href="impostazioni.php?tab=libera&pagination=0&rowId=unset">Fattura Libera</a>
             </li>
         </ul>
         <div class="p-1">

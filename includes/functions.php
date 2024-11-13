@@ -75,6 +75,9 @@
     function now(string $format):string{
         return date($format);
     }
+    function datetime() {
+        return date('Y-m-d H:i:s');
+    }
     function format_date(string $date):string{
         $split=explode('/',$date);
         return "{$split[2]}-{$split[1]}-{$split[0]}";
