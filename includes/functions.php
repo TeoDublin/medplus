@@ -45,7 +45,7 @@
         }
     }
     function style(String $full_path):void{
-        echo '<link rel="stylesheet" href="'.$full_path.'"?v='.filemtime(root($full_path)).'">';
+        echo '<link rel="stylesheet" href='.$full_path.'?v='.filemtime(root($full_path)).'">';
     }
     function script(String $full_path):void{
         echo '<script src="'.$full_path.'?v='.filemtime($full_path).'"></script>';

@@ -17,6 +17,17 @@
     $pdf->SetFont('Arial', 'B', 14);
     $pdf->MultiCell(0, 6, trim($_REQUEST['date']));
     $pdf->Ln();
+
+    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->Cell(90, 6, 'OGGETTO', 1, 0, 'C');
+    $pdf->Cell(90, 6, 'IMPORTI', 1, 1, 'C');
+
+    $pdf->Cell(90, 6, 'A', 1, 0, 'C');
+    $pdf->Cell(90, 6, '1', 1, 1, 'C');
+    $pdf->Cell(90, 6, 'B', 1, 0, 'C');
+    $pdf->Cell(90, 6, '2', 1, 1, 'C');
+
+    $pdf->Ln();
     $pdf->SetFont('Arial', 'B', 6);
     $pdf->MultiCell(0, 6, trim($_REQUEST['articolo']));
     $pdf->Ln();

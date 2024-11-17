@@ -4,7 +4,6 @@
         return trim(preg_replace("#\n\s+#","\n",str_replace("   ","", $txt)));
     }
 ?>
-
 <div class="p-2 card mt-2">
     <div class="d-flex flex-row">
         <div class="flex-col col-6">
@@ -54,27 +53,27 @@
     </div>
     <div class="d-flex flex-col card mx-3">
         <div class="card-body d-flex flex-row pb-0">
-            <div class="flex-col col-6">
+            <div class="flex-col col-6 oggetti">
                 <div class="card-body pe-1 pb-0 text-center"><label class="form-label">OGGETTO</label></div>
-                <div class="card-body pe-1 pb-0 pt-1" id="oggetto1"><input  class="form-control" value=""/></div>
-                <div class="card-body pe-1 pb-0 pt-1" id="oggetto2"><input  class="form-control" value="Bollo"/></div>
-                <div class="card-body pe-1 pb-0 pt-1" id="oggetto3"><input  class="form-control" value="IMPONIBILE" disabled/></div>
+                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="oggetto1"><input  class="form-control" value=""/></div>
+                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="oggetto2"><input  class="form-control" value="Bollo"/></div>
+                <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" value="IMPONIBILE" disabled/></div>
             </div>
-            <div class="flex-col col-5 ms-0">
+            <div class="flex-col col-5 ms-0 importi">
                 <div class="card-body ps-0 pe-1 pb-0 text-center"><label class="form-label">IMPORTI</label></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1" id="importi1"><input type="number" class="form-control" value=""/></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1" id="importi2"><input type="number" class="form-control" value="2.00"/></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1" id="importi3"><input type="number" class="form-control" value="2.00" disabled/></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="importo1"><input type="number" class="form-control" value=""/></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="importo2"><input type="number" class="form-control" value="2.00"/></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" class="form-control" value="2.00" disabled/></div>
             </div>
-            <div class="flex-col col-1 mx-0">
+            <div class="flex-col col-1 mx-0 btns">
                 <div class="card-body pe-1 pb-0 text-center"><label class="form-label">#</label></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1" title="ELIMINA" row="1" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);">
-                    <div class="pe-0" ><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15) ?></a></button></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA" row="1" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);">
+                    <div class="pe-0" ><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15); ?></a></button></div>
                 </div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1" title="ELIMINA" row="2" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15) ?></a></button></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA" row="2" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15) ?></a></button></div>
             </div>
         </div>
-        <div class="flex-fill ps-4 pe-2 ms-2 me-2 pb-2 pt-3"><button class="btn btn-secondary w-100">SALVA RIGA</button></div>
+        <div class="flex-fill ps-4 pe-2 ms-2 me-2 pb-2 pt-3" onclick="addBtnClick(this);"><button class="btn btn-secondary w-100">AGGIUNGI RIGA</button></div>
         <hr class="my-1">
         <div class="card-body d-flex flex-row">
             <div class="flex-col col-6">
@@ -94,7 +93,7 @@
         </div>
     </div>
     <div class="flex-col" onclick="generatePDF();">
-        <div class="flex-fill px-3"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('print.svg','white',20,20) ?></a>Genera</button></div>
+        <div class="flex-fill px-3"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('print.svg','white',20,20); ?></a>Genera</button></div>
     </div>
 </div>
 <?php script('pages/fattura/libera/libera.js'); ?>
