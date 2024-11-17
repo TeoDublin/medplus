@@ -3,13 +3,13 @@
     switch (request('operation')) {
         case 'all':
             $params=[
-                'nominativo'=>$_POST['nominativo'],
+                'nominativo'=>str_scape($_POST['nominativo']),
                 'indirizzo'=>$_POST['indirizzo'],
                 'cap'=>$_POST['cap'],
                 'citta'=>$_POST['citta'],
                 'cf'=>$_POST['cf'],
                 'telefono'=>$_POST['telefono'],
-                'celulare'=>$_POST['celulare'],
+                'cellulare'=>$_POST['cellulare'],
                 'email'=>$_POST['email'],
                 'tipo'=>$_POST['tipo'],
                 'portato_da'=>$_POST['portato_da'],

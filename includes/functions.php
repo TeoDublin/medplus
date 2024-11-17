@@ -44,6 +44,9 @@
             }
         }
     }
+    function style(String $full_path):void{
+        echo '<link rel="stylesheet" href="'.$full_path.'"?v='.filemtime(root($full_path)).'">';
+    }
     function script(String $full_path):void{
         echo '<script src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
     }
@@ -81,4 +84,7 @@
     function format_date(string $date):string{
         $split=explode('/',$date);
         return "{$split[2]}-{$split[1]}-{$split[0]}";
+    }
+    function str_scape(string $text):string{
+        return str_replace("'","\'",$text);
     }

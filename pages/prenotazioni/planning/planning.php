@@ -1,34 +1,6 @@
 <?php component('calendar','css'); ?>
 <?php component('hour-picker','css'); ?>
-<style>
-    .resizable-table th, .resizable-table td {
-        position: relative;
-        width: auto;
-        min-width: 50px;
-        white-space: nowrap;
-    }
-    .resizable-table th .resizer {
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 2px;
-        cursor: col-resize;
-        background-color: rgba(var(--base-bg-primary-rgb),0.01);
-    }
-    .resizable-table td .resizer {
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 6px;
-        cursor: col-resize;
-        background-color: rgba(var(--base-bg-primary-rgb),0.05);
-    }
-    .resizing {
-        cursor: col-resize;
-    }
-</style>
+<?php style('pages/prenotazioni/planning/planning.css'); ?>
 <div class="no-scroll">
     <div class="p-3 border my-1 d-flex flex-row" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
         <div style="overflow: auto; max-height: 100%;">
@@ -38,7 +10,7 @@
             <table class="table table-striped border-0 resizable-table">
                 <thead>
                     <?php 
-                        $rows=14;
+                        $rows=15;
                         $terapisti=Select('*')->from('terapisti')->get();                        
                     ?>
                     <tr class="align-middle"><?php

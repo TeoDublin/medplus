@@ -7,8 +7,8 @@
             <input type="text" class="form-control" id="nominativo" name="nominativo" value="<?php echo $params['nominativo']??'';?>"/>
         </div>
         <div class="mb-3 ms-2">
-            <label for="celulare" class="form-label">Celulare</label>
-            <input type="text" class="form-control" id="celulare" name="celulare" value="<?php echo $params['celulare']??'';?>">
+            <label for="cellulare" class="form-label">cellulare</label>
+            <input type="text" class="form-control" id="cellulare" name="cellulare" value="<?php echo $params['cellulare']??'';?>">
         </div>
         <div class="mb-3 ms-2">
             <label for="cf" class="form-label">CF/PIVA</label>

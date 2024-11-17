@@ -9,6 +9,7 @@ const hourPicker = {
         this.minuteScroller = document.querySelector(".minuteScroller");
         this.selectedTime = document.getElementById("selectedTime");
         this.value=document.querySelector(_target);
+        this.startingValue=this.value.value;
         this.hours=this.createOptions(0, 23, 1);
         this.createHtml(this.hourScroller,this.hours,8,'hour');
         this.enableScrollOnHover(this.hourScroller,this.hours,'hour');
@@ -26,7 +27,7 @@ const hourPicker = {
         document.querySelector('.exit-btn').addEventListener('click',this.exit.bind(this));
     },
     exit(){
-        this.value.value='';
+        this.value.value=this.startingValue;
         this.container.remove();
     },
     close(){

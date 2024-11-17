@@ -2,7 +2,7 @@
     <div class="w-20">
         <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
             <div class="mx-2"><?php echo icon('cloud-add.svg','white',20,20);?></div>
-            <div>Aggiungi Cliente</div>
+            <div>SALVA Cliente</div>
         </button>
     </div>
     <div class="">
@@ -26,7 +26,7 @@
                         <tr class="align-middle">
                             <th scope="col" class="text-center" rowspan="2">Nominativo</th>
                             <th scope="col" class="text-center" rowspan="2">CF/IVA</th>
-                            <th scope="col" class="text-center" rowspan="2">Celulare</th>
+                            <th scope="col" class="text-center" rowspan="2">cellulare</th>
                             <th scope="col" class="text-center" rowspan="2">Notizie Cliniche</th>
                             <th scope="col" class="text-center" rowspan="2">Note Trattamento</th>
                             <th scope="col" class="text-center" rowspan="2">#</th>
@@ -37,7 +37,7 @@
                             <tr class="table-row" rowId="<?php echo $row['id'];?>">
                                 <td scope="col" class="text-center"><?php echo $row['nominativo'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['cf'];?></td>
-                                <td scope="col" class="text-center"><?php echo $row['celulare'];?></td>
+                                <td scope="col" class="text-center"><?php echo $row['cellulare'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['notizie_cliniche'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['note_trattamento'];?></td>
                                 <td scope="col" class="text-center action-Elimina" title="Elimina"><?php echo icon('bin.svg');?></td>

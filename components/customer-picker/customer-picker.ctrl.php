@@ -3,6 +3,6 @@
     require "{$project}/includes.php";
     switch ($_POST['action']) {
         case 'select-nominativo':
-            echo Select('*')->from('clienti')->where("nominativo like '%{$_POST['nominativo']}%'")->json();
+            echo Select('*')->from('clienti')->where("nominativo like '%".str_scape($_POST['nominativo'])."%'")->json();
             break;
     }

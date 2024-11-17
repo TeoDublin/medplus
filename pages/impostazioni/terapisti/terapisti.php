@@ -2,7 +2,7 @@
     <div class="w-20">
         <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
             <div class="mx-2"><?php echo icon('cloud-add.svg','white',20,20);?></div>
-            <div>Aggiungi Terapistia</div>
+            <div>SALVA Terapistia</div>
         </button>
     </div>
     <div class="">

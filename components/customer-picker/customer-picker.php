@@ -15,8 +15,8 @@
         </div>
         <?php component('trattamenti-list','php'); ?>
         <div class="mb-3 ms-2">
-            <label for="celulare" class="form-label">Celulare</label>
-            <input type="text" class="form-control" id="celulare" name="celulare" value="<?php echo $result['celulare']??'';?>">
+            <label for="cellulare" class="form-label">cellulare</label>
+            <input type="text" class="form-control" id="cellulare" name="cellulare" value="<?php echo $result['cellulare']??'';?>">
         </div>
         <div class="mb-3 ms-2">
             <label for="cf" class="form-label">CF/PIVA</label>

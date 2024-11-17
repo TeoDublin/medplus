@@ -14,3 +14,30 @@
 .date-target:hover{
     cursor: pointer;
 }
+.resizable-table th, .resizable-table td {
+    position: relative;
+    width: auto;
+    min-width: 50px;
+    white-space: nowrap;
+}
+.resizable-table th .resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    cursor: col-resize;
+    background-color: rgba(var(--base-bg-primary-rgb),0.01);
+}
+.resizable-table td .resizer {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    cursor: col-resize;
+    background-color: rgba(var(--base-bg-primary-rgb),0.05);
+}
+.resizing {
+    cursor: col-resize;
+}

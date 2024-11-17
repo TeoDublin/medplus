@@ -8,7 +8,7 @@ CREATE TABLE `clienti` (
   `citta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cf` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `telefono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `celulare` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cellulare` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tipo` enum('MedPlus') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `portato_da` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -18,7 +18,7 @@ CREATE TABLE `clienti` (
   `note_trattamento` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `clienti` (`id`, `nominativo`, `indirizzo`, `cap`, `citta`, `cf`, `telefono`, `celulare`, `email`, `tipo`, `portato_da`, `data_inserimento`, `prestazioni_precedenti`, `notizie_cliniche`, `note_trattamento`) VALUES
+INSERT INTO `clienti` (`id`, `nominativo`, `indirizzo`, `cap`, `citta`, `cf`, `telefono`, `cellulare`, `email`, `tipo`, `portato_da`, `data_inserimento`, `prestazioni_precedenti`, `notizie_cliniche`, `note_trattamento`) VALUES
 (1, 'test', 'via Bobbio Scipione, 11', '80126', 'Napoli', 'GGLDNL81A31F839B', '3404006396', 'MedPlus', 'Altro', 'MedPlus', 'Altro', '2024-10-19 23:51:57', 'Altro studio Fisioterapico o Medico o Altro', 'Diagnosi ', 'Portatore PaceMaker / Paziente Oncologico'),
 (4, 'Gagliotta Danilo', 'trovatore', '80126', 'Naples', 'GGLDNL81A31F839B', '3758298897', '984555666654', 'thierrynapule@gmail.com', 'MedPlus', 'Altro', '2024-10-20 21:47:17', 'Altro studio Fisioterapico o Medico o Altro', 'fapodijfapfdoija paodijf paodijfa poija dopijafdpoaji dpoaijf paoidjf apoidj paoijdf poaijf a podijapdoi jadf aoi japodi jfapo a oijadpoifj aopedfa daoi aj', 'apodijfapd jia adpoifja podijfa  oaidjfpoaijd fa poiajdfpoaijd aop fiajdfpoaij dpaoifa podijfap oidjfapodij apoij faopdfji aopdijf apoijdfoaij dpofaijd poaijdfp oaijdf poaidjfapo dijafpo ijapdofija pdoijafdp oiajddklnaòdlknfòqeofodijjfapo   '),
 (5, 'Angela test', 'trovatore', '80126', 'Naples', 'GGLDNL81A31F839B', '3758298897', '984555666654', 'thierrynapule@gmail.com', 'MedPlus', 'Altro', '2024-10-20 21:47:17', 'Altro studio Fisioterapico o Medico o Altro', 'Notizie_cliniche', 'Note trattamento'),
