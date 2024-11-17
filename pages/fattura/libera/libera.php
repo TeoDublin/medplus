@@ -55,25 +55,23 @@
     <div class="d-flex flex-col card mx-3">
         <div class="card-body d-flex flex-row pb-0">
             <div class="flex-col col-6">
-                <div class="card-body pe-1 pb-0 text-center" id="oggetto1"><label class="form-label">OGGETTO</label><input  class="form-control" /></div>
+                <div class="card-body pe-1 pb-0 text-center"><label class="form-label">OGGETTO</label></div>
+                <div class="card-body pe-1 pb-0 pt-1" id="oggetto1"><input  class="form-control" value=""/></div>
                 <div class="card-body pe-1 pb-0 pt-1" id="oggetto2"><input  class="form-control" value="Bollo"/></div>
                 <div class="card-body pe-1 pb-0 pt-1" id="oggetto3"><input  class="form-control" value="IMPONIBILE" disabled/></div>
             </div>
             <div class="flex-col col-5 ms-0">
-                <div class="card-body ps-0 pe-1 pb-0 text-center" id="importi1">
-                    <label class="form-label">IMPORTI</label>
-                    <input type="number" class="form-control"/>
-                </div>
+                <div class="card-body ps-0 pe-1 pb-0 text-center"><label class="form-label">IMPORTI</label></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1" id="importi1"><input type="number" class="form-control" value=""/></div>
                 <div class="card-body ps-0 pe-1 pb-0 pt-1" id="importi2"><input type="number" class="form-control" value="2.00"/></div>
                 <div class="card-body ps-0 pe-1 pb-0 pt-1" id="importi3"><input type="number" class="form-control" value="2.00" disabled/></div>
             </div>
             <div class="flex-col col-1 mx-0">
-                <div class="card-body px-0 pb-0 text-center" title="ELIMINA" row="1" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);">
-                    <label class="form-label">#</label>
+                <div class="card-body pe-1 pb-0 text-center"><label class="form-label">#</label></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1" title="ELIMINA" row="1" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);">
                     <div class="pe-0" ><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15) ?></a></button></div>
                 </div>
-                <div class="card-body px-0 pb-0 pt-1" title="ELIMINA" row="2" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15) ?></a></button></div>
-                <div class="card-body px-0 pb-0 pt-1" title="ELIMINA" row="3" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15) ?></a></button></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1" title="ELIMINA" row="2" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15) ?></a></button></div>
             </div>
         </div>
         <div class="flex-fill ps-4 pe-2 ms-2 me-2 pb-2 pt-3"><button class="btn btn-secondary w-100">SALVA RIGA</button></div>
