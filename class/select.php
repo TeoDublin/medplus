@@ -24,6 +24,7 @@
             return $this;
         }
         public function where(string $where){
+            if(preg_match("#([0-9]{2})/([0-9]{2})/([0-9]{4})#",$where,$m))$where=preg_replace("#[0-9]{2}/[0-9]{2}/[0-9]{4}#","{$m[3]}-{$m[2]}-{$m[1]}",$where);
             $this->where=$where;
             return $this;
         }

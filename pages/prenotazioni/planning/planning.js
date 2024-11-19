@@ -68,6 +68,21 @@ function openCustomerPicker(element) {
         const modal = new bootstrap.Modal(modalElement);
         modalElement.querySelector('.modal-title').textContent = 'Seleziona cliente';
         modalElement.querySelector('.modal-dialog').classList.add('modal-xl');
+        const checkDelete = modalElement.querySelector('.btn-delete');
+        if(checkDelete)checkDelete.remove();
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'ELIMINA';
+        deleteBtn.className = 'btn btn-danger btn-delete';
+        deleteBtn.addEventListener('click',()=>{
+            $.post('post/first.php',{'skip_cookie':true,'select':'*','from':'planning','where':"`row`="+_data['row']+" and `data`='"+_data['data']+"' and `id_terapista`="+_data['id_terapista']})
+            .done(result=>{
+                const json_result=JSON.parse(result);
+                if(json_result.id){
+                    $.post('post/delete.php',{'skip_cookie':true,'id':json_result.id,'table':'planning'}).done(success_and_refresh);
+                }
+            })
+        });
+        modalElement.querySelector('.modal-footer').insertBefore(deleteBtn,modalElement.querySelector('.modal-footer').children[0]);
         const addButton = modalElement.querySelector('.btn-add');
         addButton.replaceWith(addButton.cloneNode(true));
         const newAddButton = modalElement.querySelector('.btn-add');                
