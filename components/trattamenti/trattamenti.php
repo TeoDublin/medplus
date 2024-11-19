@@ -3,7 +3,7 @@
     <input type="text" id="id" name="id" value="<?php echo $result['id']??'';?>" hidden/>
     <div class="mb-3">
         <label for="tipo" class="form-label">Categoria</label>
-        <select type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $result['categoria']??'';?>">
+        <select type="text" class="form-control" id="tipo" name="categoria" value="<?php echo $result['categoria']??'';?>">
             <?php 
                 echo "<option value=\"\" class=\"ps-4  bg-white\"></option>";
                 foreach(Enum('trattamenti','categoria')->list as $value){
