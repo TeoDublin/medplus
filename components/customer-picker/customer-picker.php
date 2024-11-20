@@ -29,8 +29,8 @@
         <div class="mb-3 ms-2">
             <label for="email" class="form-label">Email</label>
             <input type="text" class="form-control" id="email" name="email" value="<?php echo $result['email']??'';?>">
-        </div>                        
-    </div>               
+        </div>
+    </div>
     <div class="d-flex flex-row">
         <div class="mb-3 flex-fill">
             <label for="indirizzo" class="form-label">Indirizzo</label>
@@ -47,7 +47,7 @@
         <div class="mb-3 ms-2">
             <label for="tipo" class="form-label">Tipo</label>
             <select type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $result['tipo']??'';?>">
-                <?php 
+                <?php
                     foreach(Enum('clienti','tipo')->list as $value){
                         echo "<option>{$value}</option>";
                     }
@@ -77,6 +77,6 @@
         <div class="mb-3 ms-2 w-50">
             <label for="note_trattamento" class="form-label">Note trattamento</label>
             <textarea rows="3" class="form-control" id="note_trattamento" name="note_trattamento" value=""><?php echo $result['note_trattamento']??'';?></textarea>
-        </div>   
+        </div>
     </div>
 </div>
