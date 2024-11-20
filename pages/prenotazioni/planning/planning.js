@@ -60,9 +60,10 @@ function openCustomerPicker(element) {
         'skip_cookie':true,
         'row':element.closest('tr').getAttribute('row'),
         'data':document.querySelector('.date-target').value,
-        'id_terapista':element.getAttribute('id_terapista')
+        'id_terapista':element.getAttribute('id_terapista'),
+        'tab':'anagrafica'
     };
-    $.post('component.php', _data, function(data) {
+    $.post('component_page.php', _data, function(data) {
         document.querySelector('#modal-body').innerHTML = data;
         const modalElement = document.getElementById('modal');
         const modal = new bootstrap.Modal(modalElement);
@@ -85,7 +86,7 @@ function openCustomerPicker(element) {
         modalElement.querySelector('.modal-footer').insertBefore(deleteBtn,modalElement.querySelector('.modal-footer').children[0]);
         const addButton = modalElement.querySelector('.btn-add');
         addButton.replaceWith(addButton.cloneNode(true));
-        const newAddButton = modalElement.querySelector('.btn-add');                
+        const newAddButton = modalElement.querySelector('.btn-add');
         modalElement.querySelector('.btn-add').addEventListener('click', () => {
             const input = element.querySelector('input');
             let nominativo = modalElement.querySelector('#nominativo').value;

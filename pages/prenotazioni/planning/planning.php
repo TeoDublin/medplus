@@ -65,7 +65,7 @@
 </div>
 <?php component('calendar','js'); ?>
 <?php component('hour-picker','js'); ?>
-<?php component('customer-picker','js'); ?>
+<?php component_page('customer-picker','anagrafica','js'); ?>
 <?php component('trattamenti-list','js'); ?>
 <?php script('pages/prenotazioni/planning/planning.js'); ?>
 <script>

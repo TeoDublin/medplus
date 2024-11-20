@@ -5,7 +5,7 @@
         return $ret;
     }
     function environment():string{
-        return 'prod';
+        return 'dev';
     }
     function page():string{
         $split= explode('/',strtok($_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'], '?'));
@@ -40,6 +40,22 @@
                     break;
                 default:
                     require root("components/{$name}/{$name}.{$extention}");
+                    break;
+            }
+        }
+    }
+    function component_page(string $name,string $tab,string $extention): void {
+        global $result;
+        if(file_exists("components/{$name}/{$name}.{$extention}")){
+            switch ($extention) {
+                case 'js':
+                    echo '<script src="'.root_path("components/{$name}/{$tab}/{$tab}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'"></script>';
+                    break;
+                case 'css':
+                    echo '<link rel="stylesheet" href="'.root_path("components/{$name}/{$tab}/{$tab}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'">';
+                    break;
+                default:
+                    require root("components/{$name}/{$tab}/{$tab}.{$extention}");
                     break;
             }
         }
