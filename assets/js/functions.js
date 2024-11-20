@@ -60,3 +60,15 @@ function hoverIconWarning(element) {
         row.classList.remove('warning');
     });
 };
+
+function append_scripts(modalElement){
+    const scripts = modalElement.querySelectorAll('script');
+    scripts.forEach(script => {
+        if (script.src) {
+            const newScript = document.createElement('script');
+            newScript.src = script.src;
+            newScript.async = false;
+            document.body.appendChild(newScript);
+        }
+    });
+}

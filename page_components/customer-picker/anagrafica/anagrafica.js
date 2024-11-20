@@ -1,6 +1,5 @@
 function selectNominativo(event, _nominativo){
-    let _data={ action: 'select-nominativo', nominativo: _nominativo.value};
-    $.post({url: '/medplus/components/customer-picker/ctrl.php',data: _data,dataType:'json'}).done(response=>{cp_success(event,_nominativo,response);}).fail(error=>{fail();});
+    $.post({url: 'post/select-nominativo.php',data:{ skip_cookie:true, nominativo: _nominativo.value},dataType:'json'}).done(response=>{cp_success(event,_nominativo,response);}).fail(error=>{fail();});
 }
 function cp_success(event,_nominativo,response){
     const rect = event.target.getBoundingClientRect();

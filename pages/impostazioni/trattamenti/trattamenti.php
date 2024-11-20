@@ -1,5 +1,5 @@
 <div class="d-flex flex-row p-2">
-    <div class="w-20">
+    <div class= "w-20" onclick="modal('');">
         <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
             <div class="mx-2"><?php echo icon('cloud-add.svg','white',20,20);?></div>
             <div>Aggiungi Trattamento</div>
@@ -8,8 +8,8 @@
     <div class="">
         <div class="p-2 d-flex flex-row ms-3 w-100 bg-primary rounded">
             <div class="mx-2"><?php echo icon('search.svg','white',20,20);?></div>
-            <input  placeholder="Cerca Trattamento" class="input-search" value="<?php echo ($trattamento=request('search'))?$trattamento:'';?>" />
-            <button type="button" class="ms-2 w-100 btn-search">Cerca</button>
+            <input  placeholder="Cerca Trattamento" class="input-search" value="<?php echo ($trattamento=cookie('search',false))?$trattamento:'';?>" />
+            <button type="button" class="ms-2 w-100 btn-search" onclick="searchClick();">Cerca</button>
         </div>   
     </div>
 </div>
@@ -34,12 +34,12 @@
                     </thead>
                     <tbody><?php
                         foreach ($table->result  as $row) {?>
-                            <tr class="table-row" rowId="<?php echo $row['id'];?>">
+                            <tr class="table-row" rowId="<?php echo $row['id'];?>" onclick="editClick(this);">
                                 <td scope="col" class="text-center"><?php echo $row['categoria'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['trattamento'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['tipo'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['prezzo'];?></td>
-                                <td scope="col" class="text-center action-Elimina" title="Elimina"><?php echo icon('bin.svg');?></td>
+                                <td scope="col" class="text-center action-Elimina" title="Elimina" onclick="delClick(this);" onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?></td>
                             </tr><?php
                         }?>
                     </tbody>

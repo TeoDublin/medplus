@@ -9,6 +9,7 @@ class Insert{
         foreach ($insert as $key => $value) {
             $_insert[]="`{$key}`";
             if(preg_match('#([0-9]{2})\/([0-9]{2})\/([0-9]{4})#',$value,$m))$value="{$m[3]}-{$m[2]}-{$m[1]}";
+            $value=str_replace("'","\'",$value);
             $_values[]=$value?"'{$value}'":'NULL';
         }
         $this->insert='('.implode(',',$_insert).')';

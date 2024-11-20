@@ -4174,11 +4174,14 @@ border-top-right-radius: var(--bs-nav-tabs-border-radius);
 isolation: isolate;
 border-color: var(--bs-nav-tabs-link-hover-border-color);
 }
+.nav-item {
+    cursor: pointer;
+}
 .nav-tabs .nav-link.active,
 .nav-tabs .nav-item.show .nav-link {
-color: var(--bs-nav-tabs-link-active-color);
-background-color: var(--bs-nav-tabs-link-active-bg);
-border-color: var(--bs-nav-tabs-link-active-border-color);
+    color: var(--bs-nav-tabs-link-active-color);
+    background-color: var(--bs-nav-tabs-link-active-bg);
+    border-color: var(--bs-nav-tabs-link-active-border-color);
 }
 .nav-tabs .dropdown-menu {
 margin-top: calc(-1 * var(--bs-nav-tabs-border-width));
@@ -4223,8 +4226,8 @@ border-bottom-color: currentcolor;
 
 .nav-fill > .nav-link,
 .nav-fill .nav-item {
-flex: 1 1 auto;
-text-align: center;
+    flex: 1 1 auto;
+    text-align: center;
 }
 
 .nav-justified > .nav-link,
