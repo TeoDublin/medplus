@@ -45,14 +45,14 @@
                                     }
                                     ?>
                                     <td scope="col" class="text-center border-0" id_planning="<?php echo $id_planning;?>" hidden></td>
-                                    <td scope="col" class="text-center border-0" id_terapista="<?php echo $terapista['id'];?>" onclick="openHourPicker(event,this);" id="<?php echo "hourTargetr{$i}c{$col}";?>">
+                                    <td scope="col" class="text-center border-0" id_terapista="<?php echo $terapista['id'];?>" id="<?php echo "hourTargetr{$i}c{$col}";?>" onclick="hourClick(this);">
                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hour-target hover" type="text" value="<?php echo $ora ?? '';?>"  readonly />
                                     </td>
                                     <td scope="col" class="text-center border-0" id_terapista="<?php echo $terapista['id'];?>" onclick="openCustomerPicker(this);">
                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hover" type="text" value="<?php echo $info ?? '';?>" readonly />
                                     </td>
                                     <td scope="col" class="text-center border-0" >
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hover note" id_terapista="<?php echo $terapista['id'];?>" type="text" value="<?php echo $note ?? '';?>" />
+                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hover note" id_terapista="<?php echo $terapista['id'];?>" type="text" value="<?php echo $note ?? '';?>" onclick="noteClick(this);" />
                                     </td><?php
                                 }?>
                             </tr><?php
@@ -65,7 +65,7 @@
 </div>
 <?php component('calendar','js'); ?>
 <?php component('hour-picker','js'); ?>
-<?php component('customer-picker','js'); ?>
+<?php component_page('customer-picker','anagrafica','js'); ?>
 <?php component('trattamenti-list','js'); ?>
 <?php script('pages/prenotazioni/planning/planning.js'); ?>
 <script>

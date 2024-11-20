@@ -44,6 +44,22 @@
             }
         }
     }
+    function component_page(string $name,string $tab,string $extention): void {
+        global $result;
+        if(file_exists("components/{$name}/{$name}.{$extention}")){
+            switch ($extention) {
+                case 'js':
+                    echo '<script src="'.root_path("components/{$name}/{$tab}/{$tab}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'"></script>';
+                    break;
+                case 'css':
+                    echo '<link rel="stylesheet" href="'.root_path("components/{$name}/{$tab}/{$tab}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'">';
+                    break;
+                default:
+                    require root("components/{$name}/{$tab}/{$tab}.{$extention}");
+                    break;
+            }
+        }
+    }
     function style(String $full_path):void{
         echo '<link rel="stylesheet" href='.$full_path.'?v='.filemtime(root($full_path)).'">';
     }

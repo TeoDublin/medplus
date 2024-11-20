@@ -80,3 +80,4 @@
         </div>
     </div>
 </div>
+<?php  script('page_components/customer-picker/anagrafica/anagrafica.js');?>

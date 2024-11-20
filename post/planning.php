@@ -3,7 +3,7 @@
     switch (request('operation')) {
         case 'all':
             $params=[
-                'nominativo'=>str_scape($_POST['nominativo']),
+                'nominativo'=>$_POST['nominativo'],
                 'indirizzo'=>$_POST['indirizzo'],
                 'cap'=>$_POST['cap'],
                 'citta'=>$_POST['citta'],
@@ -26,8 +26,6 @@
             $params=[
                 'row'=>$_POST['row'],
                 'data'=>$_POST['data'],
-                'ora'=>$_POST['ora'],
-                'note'=>$_POST['note'],
                 'id_terapista'=>$_POST['id_terapista'],
                 'id_cliente'=>$id_cliente,
                 'id_trattamento'=>$_POST['id_trattamento'],
