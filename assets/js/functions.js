@@ -61,8 +61,8 @@ function hoverIconWarning(element) {
     });
 };
 
-function append_scripts(modalElement){
-    const scripts = modalElement.querySelectorAll('script');
+function append_scripts(element){
+    const scripts = element.querySelectorAll('script');
     scripts.forEach(script => {
         if (script.src) {
             const newScript = document.createElement('script');

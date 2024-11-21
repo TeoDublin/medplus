@@ -5,7 +5,7 @@
         return $ret;
     }
     function environment():string{
-        return 'prod';
+        return 'dev';
     }
     function page():string{
         $split= explode('/',strtok($_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'], '?'));

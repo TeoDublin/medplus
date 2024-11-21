@@ -5,5 +5,6 @@ function _tab(element) {
             page_component.removeChild(page_component.firstChild);
         }
         page_component.innerHTML = response;
+        append_scripts(page_component);
     });
 }

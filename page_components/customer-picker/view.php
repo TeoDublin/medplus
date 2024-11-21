@@ -11,6 +11,9 @@
             <div class="nav-item tab">
                 <div class="nav-link <?php echo _tab('fatture')?'active':'';?>" aria-current="page" target="<?php echo "page_component.php?skip_cookie=true&name=customer-picker&tab=fatture&row={$_REQUEST['row']}&id_terapista={$_REQUEST['id_terapista']}&data={$_REQUEST['data']}"; ?>" onclick="_tab(this);">Fatture</div>
             </div>
+            <div class="nav-item tab">
+                <div class="nav-link <?php echo _tab('sbarra')?'active':'';?>" aria-current="page" target="<?php echo "page_component.php?skip_cookie=true&name=customer-picker&tab=sbarra&row={$_REQUEST['row']}&id_terapista={$_REQUEST['id_terapista']}&data={$_REQUEST['data']}"; ?>" onclick="_tab(this);">Sbarra</div>
+            </div>
         </ul>
         <div class="p-1">
             <?php $tab=$_REQUEST['tab']; require "{$tab}/{$tab}.php";?>
