@@ -8,6 +8,9 @@
             <li class="nav-item">
                 <a class="nav-link <?php echo _tab('terapisti')?'active':'';?>" href="impostazioni.php?tab=terapisti&pagination=0&rowId=unset" aria-current="page">Terapisti</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo _tab('motivi')?'active':'';?>" href="impostazioni.php?tab=motivi&pagination=0&rowId=unset" aria-current="page">Motivi</a>
+            </li>
         </ul>
         <div class="p-1">
             <?php $tab=cookie('tab','trattamenti'); require "{$tab}/{$tab}.php";?>

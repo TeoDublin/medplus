@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     $.post("post/delete.php?skip_cookie=true&table=terapisti&id=" + this.closest('tr').getAttribute('rowId'))
                     .done(success_and_refresh)
                     .fail(fail);
-            };            
+            };
             const insertClick = () => modal(false);
             const editClick = event => modal(event.currentTarget.closest('tr').getAttribute('rowId'));
             const hoverIconDel = event => hoverIconWarning(event.currentTarget);

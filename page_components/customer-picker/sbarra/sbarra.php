@@ -3,10 +3,9 @@
     <div class="my-3 ms-2">
         <label for="sbarra" class="form-label">Motivo</label>
         <select class="form-select" id="sbarra" name="sbarra" onchange="test();">
-            <option value="sbarra" class="ps-4  bg-white"></option>
-            <option value="sbarra" class="ps-4  bg-white">Sbarra</option>
-            <option value="pranzo" class="ps-4  bg-white">Pranzo</option>
-            <option value="corso" class="ps-4  bg-white">Corso</option>
+            <?php foreach (Select('*')->from('motivi')->get() as $value) {
+                echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\">{$value['motivo']}</option>";
+            }?>
         </select>
     </div>
 </div>

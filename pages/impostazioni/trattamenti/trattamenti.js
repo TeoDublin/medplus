@@ -9,7 +9,7 @@ function searchClick(){
     window.location.href=window.location.href+"?search="+document.querySelector('.input-search').value;
 }
 function editClick(element){
-    if(!element.hasClass('action-Elimina')){
+    if(!element.classList.contains('warning')){
         modal(element.getAttribute('rowId'));
     }
 }

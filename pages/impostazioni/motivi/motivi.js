@@ -2,7 +2,7 @@
 
 function delClick(element){
     if(confirm('Sicuro di voler Eliminare?')){
-        $.post("post/delete.php?skip_cookie=true&table=clienti&id=" + element.closest('tr').getAttribute('rowId')).done(success_and_refresh).fail(fail);
+        $.post("post/delete.php?skip_cookie=true&table=motivi&id=" + element.closest('tr').getAttribute('rowId')).done(success_and_refresh).fail(fail);
     }
 };
 function searchClick(){
@@ -13,17 +13,18 @@ function editClick(element){
         modal(element.getAttribute('rowId'));
     }
 }
+
 function modal(id){
-    let _data={ 'name':'clienti','skip_cookie':true,'id':id };
+    let _data={ 'name':'motivi','skip_cookie':true,'id':id };
     $.post('component.php', _data, function(data) {
         document.querySelector('#modal-body').innerHTML = data;
         const modalElement = document.getElementById('modal');
         const modal = new bootstrap.Modal(modalElement);
-        modalElement.querySelector('.modal-title').textContent = 'Cliente';
-        modalElement.querySelector('.modal-dialog').classList.add('modal-xl');
+        modalElement.querySelector('.modal-title').textContent = 'Motivo';
+        modalElement.querySelector('.modal-dialog').classList.add('modal-md');
         const addButton = modalElement.querySelector('.btn-add');
         addButton.replaceWith(addButton.cloneNode(true));
-        let _data = {"skip_cookie":true,"table":"clienti"};
+        let _data = {"skip_cookie":true,"table":"motivi"};
         modalElement.querySelector('.btn-add').addEventListener('click', () => {
             modalElement.querySelectorAll('[name]').forEach((modalInput)=>{ _data[modalInput.name] = modalInput.value; });
             modal.hide();

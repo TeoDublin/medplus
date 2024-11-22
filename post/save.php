@@ -1,4 +1,4 @@
-<?php 
+<?php
     require '../includes.php';
     unset($_REQUEST['skip_cookie']);
     $id=request('id');

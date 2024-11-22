@@ -37,7 +37,7 @@
                 foreach ($matches[1] as $table) {
                     $ret=SQL()->select("SELECT CONCAT('`',GROUP_CONCAT(COLUMN_NAME SEPARATOR '`,`'),'`') as cols FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table}' AND COLUMN_NAME != 'id'");
                     $this->select=str_replace("*{$table}*",$ret[0]['cols'],$this->select);
-                }   
+                }
             }
             $query="SELECT {$this->select} FROM {$this->from}";
             if(!empty($this->left_join))$query.=implode('',$this->left_join);
@@ -45,7 +45,7 @@
             if(!empty($this->orderby))$query.=" ORDER BY {$this->orderby}";
             if(!empty($this->limit))$query.=" LIMIT {$this->limit}";
             if(!empty($this->offset))$query.=" OFFSET {$this->offset}";
-            return SQL()->select($query);
+            return SQL()->select($query) ?? [];
         }
         public function first():array{
             $ret=$this->get();
