@@ -12,7 +12,7 @@
         case 'all':
             switch($tab=request('tab')){
                 case 'anagrafica':
-                    $params=[
+                    $cliente=[
                         'nominativo'=>$_POST['nominativo'],
                         'indirizzo'=>$_POST['indirizzo'],
                         'cap'=>$_POST['cap'],
@@ -28,22 +28,30 @@
                         'notizie_cliniche'=>$_POST['notizie_cliniche'],
                         'note_trattamento'=>$_POST['note_trattamento']
                     ];
-                    if($_POST['id']!=""){
-                        $id_cliente=$_POST['id'];
-                        Update('clienti')->set($params)->where("id={$id_cliente}");
-                    }
-                    else $id_cliente=Insert($params)->into('clienti')->get();
-                    $params=[
+                    switch ($_POST['tabella_riferimento']) {
+                        case 'clienti':
+                            if($_POST['id_riferimento']!=""){
+                                $id_riferimento=$_POST['id_riferimento'];
+                                Update('clienti')->set($cliente)->where("id={$id_riferimento}");
+                            }
+                            else $id_riferimento=Insert($cliente)->into('clienti')->get();
+                            break;
+                        default:
+                            $id_riferimento=$_POST['id_riferimento'];
+                            break;
+                    }                    
+                    $planning=[
                         'row'=>$_POST['row'],
                         'data'=>$_POST['data'],
                         'id_terapista'=>$_POST['id_terapista'],
-                        'id_cliente'=>$id_cliente,
                         'id_trattamento'=>$_POST['id_trattamento'],
                         'sedute'=>$_POST['sedute'],
-                        'prezzo'=>$_POST['prezzo']
+                        'prezzo'=>$_POST['prezzo'],
+                        'id_riferimento'=>$id_riferimento,
+                        'tabella_riferimento'=>$_POST['tabella_riferimento'],
                     ];
-                    if($id=_select_planning())Update('planning')->set($params)->where("id={$id}");
-                    else Insert($params)->into('planning');
+                    if($id=_select_planning())Update('planning')->set($planning)->where("id={$id}");
+                    else Insert($planning)->into('planning');
                     break;
                 case 'fatture':
                     break;
@@ -69,7 +77,7 @@
                 ->from('planning','p')
                 ->where("`row`={$_REQUEST['row']} and `data`='{$_REQUEST['data']}' and `id_terapista`={$_REQUEST['id_terapista']}")
                 ->first();
-            if($planning['note']||$planning['id_cliente']||$planning['id_trattamento']||$planning['sedute']||$planning['prezzo'])Update('planning')->set($_REQUEST)->where("id={$planning['id']}");
+            if($planning['note']||$planning['id_riferimento']||$planning['id_trattamento']||$planning['sedute']||$planning['prezzo'])Update('planning')->set($_REQUEST)->where("id={$planning['id']}");
             else Delete($planning['id'])->from('planning');
             break;
         case 'clean_note':
@@ -78,7 +86,7 @@
                 ->from('planning','p')
                 ->where("`row`={$_REQUEST['row']} and `data`='{$_REQUEST['data']}' and `id_terapista`={$_REQUEST['id_terapista']}")
                 ->first();
-            if($planning['ora']||$planning['id_cliente']||$planning['id_trattamento']||$planning['sedute']||$planning['prezzo'])Update('planning')->set($_REQUEST)->where("id={$planning['id']}");
+            if($planning['ora']||$planning['id_riferimento']||$planning['id_trattamento']||$planning['sedute']||$planning['prezzo'])Update('planning')->set($_REQUEST)->where("id={$planning['id']}");
             else Delete($planning['id'])->from('planning');
             break;
     }

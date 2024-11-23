@@ -13,3 +13,13 @@ ALTER TABLE `motivi`
 
 ALTER TABLE `motivi`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+alter table `planning` add column `id_riferimento` int DEFAULT NULL;
+alter table `planning` add column `tabella_riferimento` enum('motivi','clienti');
+update `planning` set `id_riferimento` = id_cliente, tabella_riferimento='clienti'
+where id_cliente is not null;
+
+
+ALTER TABLE clienti DROP COLUMN prestazioni_precedenti;
+ALTER TABLE clienti DROP COLUMN note_trattamento;
+ALTER TABLE clienti DROP COLUMN tipo;

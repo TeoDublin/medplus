@@ -2,19 +2,19 @@
     $result=Select('*planning*,*terapisti*,*clienti*')
         ->from('planning','p')
         ->left_join('terapisti t on p.id_terapista = t.id')
-        ->left_join('clienti c on p.id_cliente = c.id')
+        ->left_join('clienti c on p.tabella_riferimento = "clienti" and p.id_riferimento = c.id')
         ->where("p.row={$_REQUEST['row']} and p.id_terapista = {$_REQUEST['id_terapista']} and p.data='".format_date($_REQUEST['data'])."'")
         ->first_or_false();
 ?>
 <div class="p-2">
     <input type="text" name="tab" value="anagrafica" hidden/>
-    <input type="text" id="id" name="id" value="<?php echo $result['id_cliente']??'';?>" hidden/>
+    <input type="text" id="id_riferimento" name="id_riferimento" value="<?php echo $result['id_riferimento']??'';?>" hidden/>
+    <input type="text" id="tabella_riferimento" name="tabella_riferimento" value="clienti" hidden/>
     <div class="d-flex flex-row">
         <div class="mb-3 w-35">
             <label for="nominativo" class="form-label">Nominativo</label>
             <input type="text" class="form-control" id="nominativo" name="nominativo" value="<?php echo $result['nominativo']??'';?>" oninput="selectNominativo(event,this)"/>
         </div>
-        <?php component('trattamenti-list','php'); ?>
         <div class="mb-3 ms-2">
             <label for="cellulare" class="form-label">cellulare</label>
             <input type="text" class="form-control" id="cellulare" name="cellulare" value="<?php echo $result['cellulare']??'';?>">
@@ -45,19 +45,9 @@
             <label for="citta" class="form-label">Città</label>
             <input type="text" class="form-control" id="citta" name="citta" value="<?php echo $result['citta']??'';?>">
         </div>
-        <div class="mb-3 ms-2">
-            <label for="tipo" class="form-label">Tipo</label>
-            <select type="text" class="form-control" id="tipo" name="tipo" value="<?php echo $result['tipo']??'';?>">
-                <?php
-                    foreach(Enum('clienti','tipo')->list as $value){
-                        echo "<option>{$value}</option>";
-                    }
-                ?>
-            </select>
-        </div>
     </div>
     <div class="d-flex flex-row">
-        <div class="mb-3">
+        <div class="mb-3 flex-fill">
             <label for="portato_da" class="form-label">Portato da</label>
             <input type="text" class="form-control" id="portato_da" name="portato_da" value="<?php echo $result['portato_da']??'';?>">
         </div>
@@ -65,19 +55,11 @@
             <label for="data_inserimento" class="form-label">Data Inserimento</label>
             <input disabled type="text" class="form-control" id="data_inserimento" name="data_inserimento" value="<?php echo $result['data_inserimento']??now('d/m/Y');?>">
         </div>
-        <div class="mb-3 ms-2 flex-fill">
-            <label for="prestazioni_precedenti" class="form-label">Prestazioni precedenti</label>
-            <input type="text" class="form-control" id="prestazioni_precedenti" name="prestazioni_precedenti" value="<?php echo $result['prestazioni_precedenti']??'';?>">
-        </div>
     </div>
     <div class="d-flex flex-row">
         <div class="mb-3 flex-fill">
             <label for="notizie_cliniche" class="form-label">Notizie cliniche</label>
             <textarea rows="3" class="form-control" id="notizie_cliniche" name="notizie_cliniche" value=""><?php echo $result['notizie_cliniche']??'';?></textarea>
-        </div>
-        <div class="mb-3 ms-2 w-50">
-            <label for="note_trattamento" class="form-label">Note trattamento</label>
-            <textarea rows="3" class="form-control" id="note_trattamento" name="note_trattamento" value=""><?php echo $result['note_trattamento']??'';?></textarea>
         </div>
     </div>
 </div>

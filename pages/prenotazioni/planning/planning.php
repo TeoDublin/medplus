@@ -25,7 +25,7 @@
                     <?php 
                         $planning=Select('p.*,c.nominativo,t.trattamento')
                             ->from('planning','p')
-                            ->left_join('clienti c on p.id_cliente=c.id')
+                            ->left_join('clienti c on p.tabella_riferimento = "clienti" and p.id_riferimento = c.id')
                             ->left_join('trattamenti t on p.id_trattamento=t.id')
                             ->where('p.data = "'.format_date(cookie('date',date('d/m/Y'))).'"')
                             ->get();
@@ -66,7 +66,6 @@
 <?php component('calendar','js'); ?>
 <?php component('hour-picker','js'); ?>
 <?php component_page('customer-picker','anagrafica','js'); ?>
-<?php component('trattamenti-list','js'); ?>
 <?php script('pages/prenotazioni/planning/planning.js'); ?>
 <script>
     sessionStorage.setItem('prenotazioni_url',"<?php echo url('prenotazioni.php?date=');?>");

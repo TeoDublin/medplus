@@ -23,6 +23,12 @@
     function Enum(string $table,string $column):Enum{
         return new Enum($table,$column);
     }
+    /**
+     * Creates a new Delete object with the given ID.
+     *
+     * @param string $id The ID of the record to delete.
+     * @return Delete The Delete object for chaining.
+     */
     function Delete(string $id):Delete{
         return new Delete($id);
     }

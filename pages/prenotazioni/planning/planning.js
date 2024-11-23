@@ -57,7 +57,6 @@ function openCustomerPicker(element) {
             modal.hide();
             $.post('post/planning.php',_data).done(success_and_refresh).fail(fail);
         });
-        trattamenti.bind();
         append_scripts(modalElement);
         modal.show();
     })
