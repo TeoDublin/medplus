@@ -1,46 +1,72 @@
-.c-1{
+.cc1{
     flex: 0 0 auto;
     width: 5%;
 }
-.c-2{
+.cc2{
     flex: 0 0 auto;
     width: 5%;
 }
-.c-3{
+.cc3{
+    flex: 1 1 auto;
+}
+.cc4{
+    flex: 0 0 auto;
+    width: 10%;
+}
+.cc5{
+    flex: 0 0 auto;
+    width: 10%;
+}
+.cc6{
+    flex: 0 0 auto;
+    width: 10%;
+}
+
+.cs1{
+    flex: 0 0 auto;
+    width: 5%;
+}
+.cs2{
+    flex: 0 0 auto;
+    width: 5%;
+}
+.cs3{
     flex: 0 0 auto;
     width: 30%;
 }
-.c-4{
+.cs4{
     flex: 0 0 auto;
-    width: 13.33333333%;
+    width: 30%;
 }
-.c-5{
+.cs5{
     flex: 0 0 auto;
-    width: 13.33333333%;
+    width: 30%;
 }
-.c-6{
+
+.csp1{
     flex: 0 0 auto;
-    width: 13.33333333%;
+    width: 30%;
 }
-.c-7{
+.csp2{
     flex: 0 0 auto;
-    width: 10%;
+    width: 25%;
 }
-.c-8{
+.csp3{
     flex: 0 0 auto;
-    width: 10%;
+    width: 20%;
 }
-.c-9{
+.csp4{
     flex: 0 0 auto;
-    width: 10%;
+    width: 20%;
 }
-.c-10{
+.csp5{
     flex: 0 0 auto;
-    width: 10%;
+    width: 5%;
 }
+
 .titles{
     padding-bottom:8px;
     padding-left:20px;
-    padding-right:20px;
+    padding-right:40px;
     padding-top:8px;
 }
