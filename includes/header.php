@@ -42,7 +42,6 @@
                 <div class="toast-body">Dati aggiornati con successo</div>
             </div>
         </div>
-
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="failToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" data-bs-animation="true">
                 <div class="toast-header p-0 m-0">

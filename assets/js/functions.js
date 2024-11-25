@@ -72,3 +72,17 @@ function append_scripts(element){
         }
     });
 }
+function new_modal(id) {
+    const modal_id = 'modal_'+id;
+    $.post('component.php',{skip_cookie:true, name:'modal', id: modal_id}).done(function(html){
+        const container = document.querySelector('#'+id);
+        document.querySelectorAll('#div_'+id).forEach(function(to_remove){ to_remove.remove();});
+        const div = document.createElement('div');
+        div.id = 'div_'+id;
+        div.innerHTML = html;
+        container.appendChild(div);
+        let myModal = new
+        bootstrap.Modal(document.getElementById(modal_id), {});
+        myModal.show();
+    });
+}

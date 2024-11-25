@@ -3,7 +3,7 @@
         return Select('c.id,c.ciclo,c.sedute_totale,c.sedute_da_pianificare,c.stato_sedute')
         ->from('cicli','c')
         ->where('id_cliente=40')
-        ->get();
+        ->get_or_false();
     }
     function _sedute($id_ciclo){
         return Select('s.id,s.index,s.id_trattamento,s.stato_seduta,t.trattamento')
@@ -20,11 +20,20 @@
             ->get();
     }
     style('page_components/customer-picker/trattamenti/trattamenti.css');
+    $_ciclo=_ciclo();
 ?>
-    <div class="p-2">
-        <input type="text" name="tab" value="trattamenti" hidden/>
-        <div class="container-fluid card text-center py-4">
-            <h4 class="mb-3">Prenotazioni</h4>
+<div class="p-2" id="customer-picker_trattamenti">
+    <input type="text" name="tab" value="trattamenti" hidden/>
+    <div class="container-fluid card text-center py-4">
+        <h4 class="mb-3">Prenotazioni</h4>
+        <?php if(!$_ciclo){?>
+            <div class="card">
+                <div class="card-body">
+                    <label>Non ci sono prenotazioni per questo cliente.</label>
+                </div>
+            </div><?php
+        }
+        else{ ?>
             <div class="table-responsive">
                 <div class="my-0">
                     <div class="flex-row titles w-100 d-flex">
@@ -49,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <?php foreach (_ciclo() as $ciclo) {?>
+            <?php foreach ($_ciclo as $ciclo) {?>
                 <div class="accordion" id="accordion<?php echo $ciclo['id'];?>">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -142,6 +151,9 @@
                     </div>
                 </div>
                 <p class="psm"><?php
-            }?>
-        </div>
+            }
+        }?>
+        <div class="d-flex mt-2" onclick="btnClick()"><button class="btn btn-primary  flex-fill">Nuovo Percorso Terapeutico</button></div>
     </div>
+</div>
+<?php script('page_components/customer-picker/trattamenti/trattamenti.js'); ?>
