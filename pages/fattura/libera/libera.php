@@ -4,12 +4,12 @@
         return trim(preg_replace("#\n\s+#","\n",str_replace("   ","", $txt)));
     }
 ?>
-<div class="p-2 card mt-2">
+<div class="p-2 card mt-2" head>
     <div class="d-flex flex-row">
         <div class="flex-col col-6">
             <div class="mb-1 card-body">
                 <label for="head" class="form-label">Intestazione</label>
-                <textarea  class="form-control" name="head" rows="8"><?php echo _clean("
+                <textarea  class="form-control" id="head" name="head" rows="8"><?php echo _clean("
                         Daniela Zanotti
                         Dr. in Fisioterapia
                         Specialista in Terapia Manuale
@@ -23,8 +23,8 @@
         </div>
         <div class="flex-col col-3">
             <div class="mb-1 card-body">
-                <label for="head" class="form-label">Dati</label>
-                <textarea  class="form-control" name="dati" rows="8"><?php echo _clean("
+                <label for="dati" class="form-label">Dati</label>
+                <textarea  class="form-control" id="dati" name="dati" rows="8"><?php echo _clean("
                     Spett.le
                     Aprea Ettore
                     via F. Gaelota 23
@@ -37,12 +37,12 @@
         </div>
         <div class="flex-col col-3">
             <div class="mb-1 card-body pb-4">
-                <label for="head" class="form-label">Numero e data</label>
-                <textarea  class="form-control" name="date" rows="1"><?php echo _clean("Fattura 415 del 03/10/2024");?></textarea>
+                <label for="date" class="form-label">Numero e data</label>
+                <textarea  class="form-control" id="date" name="date" rows="1"><?php echo _clean("Fattura n: 415 del ".now('d/m/Y'));?></textarea>
             </div>
             <div class="mb-1 card-body py-0">
-                <label for="head" class="form-label">Piè di pagina</label>
-                <textarea  class="form-control" name="footer" rows="4"><?php echo _clean("
+                <label for="footer" class="form-label">Piè di pagina</label>
+                <textarea  class="form-control" id="footer" name="footer" rows="4"><?php echo _clean("
                     P.IVA: 06191421210
                     C.F.ZNT DNL 64P58 F839W
                     VIA LEOPARDI N.253
@@ -51,44 +51,55 @@
             </div>
         </div>
     </div>
-    <div class="d-flex flex-col card mx-3">
+    <div class="d-flex flex-col card mx-3" body>
         <div class="card-body d-flex flex-row pb-0">
             <div class="flex-col col-6 oggetti">
-                <div class="card-body pe-1 pb-0 text-center"><label class="form-label">OGGETTO</label></div>
-                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="oggetto1"><input  class="form-control" value=""/></div>
-                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="oggetto2"><input  class="form-control" value="Bollo"/></div>
-                <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" value="IMPONIBILE" disabled/></div>
+                <div class="card-body pe-1 pb-0 text-center"><span>OGGETTO</span></div>
+                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="row1"><input id="oggetto1" class="form-control" value=""/></div>
+                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="bollo"><input id="oggettoBollo" class="form-control" value="Bollo"/></div>
+                <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" id="oggetto_imponibile" value="IMPONIBILE" disabled/></div>
             </div>
             <div class="flex-col col-5 ms-0 importi">
-                <div class="card-body ps-0 pe-1 pb-0 text-center"><label class="form-label">IMPORTI</label></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="importo1"><input type="number" class="form-control" value=""/></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="importo2"><input type="number" class="form-control" value="2.00"/></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" class="form-control" value="2.00" disabled/></div>
+                <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">IMPORTI</span></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="row1"><input type="number" id="importo1" class="form-control" value="" onchange="addTotal(this.value)"/></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="bollo"><input type="number" id="importoBollo" class="form-control" value="2.00"/></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" id="imponibile" class="form-control" value="2.00" disabled/></div>
             </div>
             <div class="flex-col col-1 mx-0 btns">
-                <div class="card-body pe-1 pb-0 text-center"><label class="form-label">#</label></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA" row="1" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);">
+                <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">AZIONI</span></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA"  id="row1" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);">
                     <div class="pe-0" ><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15); ?></a></button></div>
                 </div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA" row="2" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15) ?></a></button></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA MARCA DA BOLLO" id="bollo" onclick="stampBtnClick(this);" onmouseenter="stampBtnEnter(this);" onmouseleave="stampBtnLeave(this);">
+                    <div class="pe-0">
+                        <div class="form-check form-switch ">
+                            <input class="form-check-input" type="checkbox" role="switch" id="btnBollo" checked>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="flex-fill ps-4 pe-2 ms-2 me-2 pb-2 pt-3" onclick="addBtnClick(this);"><button class="btn btn-secondary w-100">AGGIUNGI RIGA</button></div>
+        <div class="flex-fill ps-4 pe-2 ms-2 me-2 pb-2 pt-3" onclick="addBtnClick();"><button class="btn btn-secondary w-100">AGGIUNGI RIGA</button></div>
         <hr class="my-1">
         <div class="card-body d-flex flex-row">
             <div class="flex-col col-6">
-                <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control fs-5" value="TOTALE FATTURA" disabled/></div>
+                <div class="card-body pe-1 pb-0 pt-1"><input id="input_totale_label" class="form-control fs-5" value="TOTALE FATTURA" disabled/></div>
             </div>
             <div class="flex-col col-6 ms-0">
-                <div class="card-body ps-0 pe-0 pb-0 pt-1"><input type="number" class="form-control fs-5" value="2.00" disabled/></div>
+                <div class="card-body ps-0 pe-0 pb-0 pt-1"><input type="number" id="totale" class="form-control fs-5" value="2.00" disabled/></div>
+            </div>
+        </div>
+        <div class="card-body d-flex flex-row pt-0" id="spanBollo">
+            <div class="flex-col col-12">
+                <div class="card-body pe-1 pb-0 pt-1 mt-0"><input id="spanBolloValue" class="form-control" value="Marca da bollo su originale di € 2,00 per importi superiori ad € 77,47"/></div>
             </div>
         </div>
     </div>  
-    <div class="d-flex flex-row">
+    <div class="d-flex flex-row" articolo>
         <div class="flex-col col-12">
             <div class="mb-1 card-body ">
-                <label for="head" class="form-label">Articolo</label>
-                <textarea  class="form-control" name="articolo" rows="1"><?php echo _clean("Operazione esente da Iva effettuata ai sensi dell'art. 10, DPR 633/72");?></textarea>
+                <label for="articolo" class="form-label">Articolo</label>
+                <textarea  class="form-control" id="articolo" name="articolo" rows="1"><?php echo _clean("Operazione esente da Iva effettuata ai sensi dell'art. 10, DPR 633/72");?></textarea>
             </div>
         </div>
     </div>
