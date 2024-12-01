@@ -23,7 +23,7 @@ function modal(id){
         modalElement.querySelector('.modal-dialog').classList.add('modal-xl');
         const addButton = modalElement.querySelector('.btn-add');
         addButton.replaceWith(addButton.cloneNode(true));
-        let _data = {"skip_cookie":true,"table":"clienti"};
+        let _data = {"table":"clienti"};
         modalElement.querySelector('.btn-add').addEventListener('click', () => {
             modalElement.querySelectorAll('[name]').forEach((modalInput)=>{ _data[modalInput.name] = modalInput.value; });
             modal.hide();

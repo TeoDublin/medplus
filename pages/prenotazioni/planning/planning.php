@@ -1,71 +1,95 @@
 <?php component('calendar','css'); ?>
-<?php component('hour-picker','css'); ?>
 <?php style('pages/prenotazioni/planning/planning.css'); ?>
-<div class="no-scroll">
-    <div class="p-3 border my-1 d-flex flex-row" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
-        <div style="overflow: auto; max-height: 100%;">
-            <div class="d-flex" >
-                <input onclick="openCalendar(event,this)" class="hover mx-auto card-title text-center py-2 border-0 date-target" value="<?php echo cookie('date',date('d/m/Y'));?>" readonly/>
-            </div>
-            <table class="table table-striped border-0 resizable-table">
-                <thead>
-                    <?php 
-                        $rows=15;
-                        $terapisti=Select('*')->from('terapisti')->get();                        
-                    ?>
-                    <tr class="align-middle"><?php
-                        foreach($terapisti as $terapista){?>
-                            <th scope="col" class="text-center" rowspan="2">Ora</th>
-                            <th scope="col" class="text-center" rowspan="2"><?php echo $terapista['terapista'];?></th>
-                            <th scope="col" class="text-center" rowspan="2">TR</th><?php
-                        }?>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php 
-                        $planning=Select('p.*,c.nominativo,t.trattamento')
-                            ->from('planning','p')
-                            ->left_join('clienti c on p.tabella_riferimento = "clienti" and p.id_riferimento = c.id')
-                            ->left_join('trattamenti t on p.id_trattamento=t.id')
-                            ->where('p.data = "'.format_date(cookie('date',date('d/m/Y'))).'"')
-                            ->get();
-                        for($i=1;$i<=$rows;$i++){?>
-                            <tr row="<?php echo $i;?>" row="<?php echo $i;?>"><?php
-                                foreach($terapisti as $col=>$terapista){
-                                    $ora=$info=$note=$id_planning='';
-                                    foreach ($planning as $plan) {
-                                        if($plan['row']==$i&&$plan['id_terapista']==$terapista['id']){
-                                            $ora=$plan['ora'];
-                                            $info=$plan['nominativo'];
-                                            if(!empty($info)&&!empty($plan['trattamento']))$info.=" > {$plan['trattamento']}";
-                                            $note=$plan['note'];
-                                            $id_planning=$plan['id'];
-                                            break;
+<?php 
+    $rows=17;
+    $id_terapista = cookie('id_terapista',first('terapisti')['id']);
+    $data = cookie('date',date('Y-m-d'));
+    $result=Select('*')->from('planning')->where("id_terapista={$id_terapista}")->and("data='{$data}'")->get();
+    function _ora($row){
+        $ora = new DateTime('07:00');
+        for ($i=1; $i < $row; $i++) { 
+            $ora->add(new DateInterval("PT15M"));
+        }
+        return $ora->format('H:i');
+    };
+    $_planning = function ($row)use($result){
+        $ret=['class'=>''];
+        foreach ($result as $plan) {
+            $row=(int)$row;
+            $row_inizio=(int)$plan['row_inizio'];
+            $row_fine=(int)$plan['row_fine'];
+            if($row_inizio==$row)$ret=['class'=>'sbarra_start'];
+            elseif($row>$row_inizio&&$row<$row_fine)$ret=['class'=>'sbarra_middle'];
+            elseif($row_fine==$row)$ret=['class'=>'sbarra_end'];
+        }
+        return $ret;
+    };
+?>
+<div class="no-scroll" id="panning">
+    <div class="p-3 border my-1 d-flex" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
+        <div class="d-flex flex-column flex-fill">
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-fill my-1" >
+                    <input onclick="openCalendar(event,this)" class="hover mx-auto card-title text-center py-2 border-0 date-target" id="data" value="<?php echo unformat_date($data);?>" readonly/>
+                </div>
+                <div class="d-flex mb-2">
+                    <div class="d-flex flex-fill justify-content-center ">
+                        <div class="w-35 d-flex flex-row text-center">
+                            <div class="w-75 me-1">
+                                <select type="text" class="form-control" id="terapista" name="terapista" value="<?php echo $id_terapista??'';?>">
+                                    <?php
+                                        foreach(Select('*')->from('terapisti')->get() as $value){
+                                            $selected = (isset($id_terapista) && $id_terapista == $value['id']) ? 'selected' : '';
+                                            echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\" {$selected}>{$value['terapista']}</option>";
                                         }
-                                    }
                                     ?>
-                                    <td scope="col" class="text-center border-0" id_planning="<?php echo $id_planning;?>" hidden></td>
-                                    <td scope="col" class="text-center border-0" id_terapista="<?php echo $terapista['id'];?>" id="<?php echo "hourTargetr{$i}c{$col}";?>" onclick="hourClick(this);">
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hour-target hover" type="text" value="<?php echo $ora ?? '';?>"  readonly />
+                                </select>
+                            </div>
+                            <div class="w-25">
+                                <button class="btn btn-primary w-100">PRENOTA</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex flex-column">
+                <table class="table table-striped border-0">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col" class="text-center" rowspan="2">Ora</th>
+                            <th scope="col" class="text-center w-25" rowspan="2">Impegno</th>
+                            <th scope="col" class="text-center" rowspan="2">TR</th>
+                            <th scope="col" class="text-center" rowspan="2">Ora</th>
+                            <th scope="col" class="text-center w-25" rowspan="2">Impegno</th>
+                            <th scope="col" class="text-center" rowspan="2">TR</th>
+                            <th scope="col" class="text-center" rowspan="2">Ora</th>
+                            <th scope="col" class="text-center w-25" rowspan="2">Impegno</th>
+                            <th scope="col" class="text-center" rowspan="2">TR</th>
+                        </tr>
+                    </thead>
+                    <tbody><?php 
+                        for($i=1;$i<=$rows;$i++){ ?>
+                            <tr><?php
+                                for($col=1;$col<=3;$col++){$row=$i+($rows*($col-1)); $planning=$_planning($row);?>
+                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
+                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" row="<?php echo $row;?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
                                     </td>
-                                    <td scope="col" class="text-center border-0" id_terapista="<?php echo $terapista['id'];?>" onclick="openCustomerPicker(this);">
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hover" type="text" value="<?php echo $info ?? '';?>" readonly />
+                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" row="<?php echo $row;?>" onclick="sbarraClick(this);"  onmouseenter="hoverRow(this);">
+                                        <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"></span>
                                     </td>
-                                    <td scope="col" class="text-center border-0" >
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent hover note" id_terapista="<?php echo $terapista['id'];?>" type="text" value="<?php echo $note ?? '';?>" onclick="noteClick(this);" />
+                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
+                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note"/>
                                     </td><?php
-                                }?>
+                                    }?>
                             </tr><?php
-                        }
-                    ?>
-                </tbody>
-            </table>
+                        }?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 <?php component('calendar','js'); ?>
-<?php component('hour-picker','js'); ?>
-<?php component_page('customer-picker','anagrafica','js'); ?>
 <?php script('pages/prenotazioni/planning/planning.js'); ?>
 <script>
     sessionStorage.setItem('prenotazioni_url',"<?php echo url('prenotazioni.php?date=');?>");

@@ -7,7 +7,7 @@
         ->first_or_false();
 ?>
 <div class="p-2">
-    <input type="text" name="tab" value="anagrafica" hidden/>
+    <input type="text" id="tab" value="anagrafica" hidden/>
     <input type="text" id="id_riferimento" name="id_riferimento" value="<?php echo $result['id_riferimento']??'';?>" hidden/>
     <input type="text" id="tabella_riferimento" name="tabella_riferimento" value="clienti" hidden/>
     <div class="d-flex flex-row">

@@ -1,8 +1,8 @@
 <?php
-    function request($key){
+    function request($key,$fallback=false){
         $ret=$_REQUEST[$key];
         unset($_REQUEST[$key]);
-        return $ret;
+        return $ret ?? $fallback;
     }
     function environment():string{
         return 'dev';
@@ -101,6 +101,13 @@
         $split=explode('/',$date);
         return "{$split[2]}-{$split[1]}-{$split[0]}";
     }
+    function unformat_date(string $date):string{
+        $split=explode('-',$date);
+        return "{$split[2]}/{$split[1]}/{$split[0]}";
+    }
     function str_scape(string $text):string{
         return str_replace("'","\'",$text);
+    }
+    function first($table){
+        return Select('*')->from($table)->first();
     }

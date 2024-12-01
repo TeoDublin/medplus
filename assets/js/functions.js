@@ -31,7 +31,7 @@ function openModal(id) {
 
 function success_and_refresh() {
     sessionStorage.setItem('showSuccessToast', 'true');
-    window.location.href = window.location.href;
+    window.location.reload(true);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -72,17 +72,20 @@ function append_scripts(element){
         }
     });
 }
-function new_modal(id) {
+function new_modal(id, component,_data) {
     const modal_id = 'modal_'+id;
-    $.post('component.php',{skip_cookie:true, name:'modal', id: modal_id}).done(function(html){
+    _data['skip_cookie']=true;_data['id']=modal_id;_data['component']=component;
+    $.post('modal_component.php',_data).done(function(html){
         const container = document.querySelector('#'+id);
         document.querySelectorAll('#div_'+id).forEach(function(to_remove){ to_remove.remove();});
         const div = document.createElement('div');
         div.id = 'div_'+id;
         div.innerHTML = html;
+        append_scripts(div);
         container.appendChild(div);
-        let myModal = new
-        bootstrap.Modal(document.getElementById(modal_id), {});
-        myModal.show();
+        const modalElement = document.getElementById(modal_id);
+        const newModalInstance = new bootstrap.Modal(modalElement, {});
+        modalElement.modalInstance = newModalInstance;
+        newModalInstance.show();
     });
 }

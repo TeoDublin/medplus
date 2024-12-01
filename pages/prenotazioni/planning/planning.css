@@ -4,40 +4,39 @@
 .datepicker:hover{
     cursor: pointer;
 }
-.planning-back:hover{
-    background-color: rgba(var(--base-bg-primary-rgb),0.5);
+.hovered{
+    background-color: rgba(var(--base-bg-primary-rgb),0.5)!important;
     cursor: pointer;
-}
-.planning-back:hover svg{
-    fill: white;
 }
 .date-target:hover{
     cursor: pointer;
 }
-.resizable-table th, .resizable-table td {
-    position: relative;
-    width: auto;
-    min-width: 50px;
-    white-space: nowrap;
+.sbarra_start {
+    border-top: solid rgb(115, 115, 115) 2px!important;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
-.resizable-table th .resizer {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    cursor: col-resize;
-    background-color: rgba(var(--base-bg-primary-rgb),0.01);
+.sbarra_middle {
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
-.resizable-table td .resizer {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 6px;
-    cursor: col-resize;
-    background-color: rgba(var(--base-bg-primary-rgb),0.05);
+.sbarra_end{
+    border-bottom: solid rgb(115, 115, 115) 2px!important;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
-.resizing {
-    cursor: col-resize;
+.sbarra_start.first{
+    border-left: solid rgb(115, 115, 115) 2px!important;
+}
+.sbarra_start.last{
+    border-right: solid rgb(115, 115, 115) 2px!important;
+}
+.sbarra_middle.first{
+    border-left: solid rgb(115, 115, 115) 2px!important;
+}
+.sbarra_middle.last{
+    border-right: solid rgb(115, 115, 115) 2px!important;
+}
+.sbarra_end.first{
+    border-left: solid rgb(115, 115, 115) 2px!important;
+}
+.sbarra_end.last{
+    border-right: solid rgb(115, 115, 115) 2px!important;
 }
