@@ -89,3 +89,21 @@ function new_modal(id, component,_data) {
         newModalInstance.show();
     });
 }
+
+function new_page_modal(id, component,_data) {
+    const modal_id = 'modal_'+id;
+    _data['skip_cookie']=true;_data['id']=modal_id;_data['component']=component;
+    $.post('page_component.php',_data).done(function(html){
+        const container = document.querySelector('#'+id);
+        document.querySelectorAll('#div_'+id).forEach(function(to_remove){ to_remove.remove();});
+        const div = document.createElement('div');
+        div.id = 'div_'+id;
+        div.innerHTML = html;
+        append_scripts(div);
+        container.appendChild(div);
+        const modalElement = document.getElementById(modal_id);
+        const newModalInstance = new bootstrap.Modal(modalElement, {});
+        modalElement.modalInstance = newModalInstance;
+        newModalInstance.show();
+    });
+}

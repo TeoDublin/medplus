@@ -1,10 +1,5 @@
 <?php 
-    $result=Select('*planning*,*terapisti*,*clienti*')
-        ->from('planning','p')
-        ->left_join('terapisti t on p.id_terapista = t.id')
-        ->left_join('clienti c on p.tabella_riferimento = "clienti" and p.id_riferimento = c.id')
-        ->where("p.row={$_REQUEST['row']} and p.id_terapista = {$_REQUEST['id_terapista']} and p.data='".format_date($_REQUEST['data'])."'")
-        ->first_or_false();
+    $result=[];
 ?>
 <div class="p-2">
     <input type="text" id="tab" value="anagrafica" hidden/>

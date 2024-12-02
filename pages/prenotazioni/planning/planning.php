@@ -13,16 +13,31 @@
         return $ora->format('H:i');
     };
     $_planning = function ($row)use($result){
-        $ret=['class'=>''];
+        $class='';$id='';
         foreach ($result as $plan) {
             $row=(int)$row;
             $row_inizio=(int)$plan['row_inizio'];
             $row_fine=(int)$plan['row_fine'];
-            if($row_inizio==$row)$ret=['class'=>'sbarra_start'];
-            elseif($row>$row_inizio&&$row<$row_fine)$ret=['class'=>'sbarra_middle'];
-            elseif($row_fine==$row)$ret=['class'=>'sbarra_end'];
+            if($row_inizio==$row){
+                $class='sbarra sbarra_start';
+                $id=$plan['id'];
+                $motivo=$plan['motivo'];
+                break;
+            }
+            elseif($row>$row_inizio&&$row<$row_fine){
+                $class='sbarra sbarra_middle';
+                $id=$plan['id'];
+                $motivo=$plan['motivo'];
+                break;
+            }
+            elseif($row_fine==$row){
+                $class='sbarra sbarra_end';
+                $id=$plan['id'];
+                $motivo=$plan['motivo'];
+                break;
+            }
         }
-        return $ret;
+        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo)];
     };
 ?>
 <div class="no-scroll" id="panning">
@@ -45,7 +60,7 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="w-25">
+                            <div class="w-25" onclick="clickPrenota();">
                                 <button class="btn btn-primary w-100">PRENOTA</button>
                             </div>
                         </div>
@@ -53,7 +68,7 @@
                 </div>
             </div>
             <div class="d-flex flex-column">
-                <table class="table table-striped border-0">
+                <table class="table table-striped border-0" id="planning_table">
                     <thead>
                         <tr class="align-middle">
                             <th scope="col" class="text-center" rowspan="2">Ora</th>
@@ -71,13 +86,13 @@
                         for($i=1;$i<=$rows;$i++){ ?>
                             <tr><?php
                                 for($col=1;$col<=3;$col++){$row=$i+($rows*($col-1)); $planning=$_planning($row);?>
-                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" row="<?php echo $row;?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
+                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
+                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
                                     </td>
-                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" row="<?php echo $row;?>" onclick="sbarraClick(this);"  onmouseenter="hoverRow(this);">
-                                        <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"></span>
+                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="sbarraClick(this);"  onmouseenter="hoverRow(this);">
+                                        <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
                                     </td>
-                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
+                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note"/>
                                     </td><?php
                                     }?>

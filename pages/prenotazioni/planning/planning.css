@@ -11,32 +11,47 @@
 .date-target:hover{
     cursor: pointer;
 }
+.table {
+    border-spacing: 0 0;
+}
+.table-separate{
+    border-collapse: separate;
+}
+.sbarra{
+    --sbarra-border:rgb(186, 186, 186);
+}
 .sbarra_start {
-    border-top: solid rgb(115, 115, 115) 2px!important;
+    border-top: solid var(--sbarra-border) 2px!important;
     background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
 .sbarra_middle {
     background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
 .sbarra_end{
-    border-bottom: solid rgb(115, 115, 115) 2px!important;
+    border-bottom: solid var(--sbarra-border) 2px!important;
     background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
 .sbarra_start.first{
-    border-left: solid rgb(115, 115, 115) 2px!important;
+    border-left: solid var(--sbarra-border) 2px!important;
 }
 .sbarra_start.last{
-    border-right: solid rgb(115, 115, 115) 2px!important;
+    border-right: solid var(--sbarra-border) 2px!important;
 }
 .sbarra_middle.first{
-    border-left: solid rgb(115, 115, 115) 2px!important;
+    border-left: solid var(--sbarra-border) 2px!important;
 }
 .sbarra_middle.last{
-    border-right: solid rgb(115, 115, 115) 2px!important;
+    border-right: solid var(--sbarra-border) 2px!important;
 }
 .sbarra_end.first{
-    border-left: solid rgb(115, 115, 115) 2px!important;
+    border-left: solid var(--sbarra-border) 2px!important;
 }
 .sbarra_end.last{
-    border-right: solid rgb(115, 115, 115) 2px!important;
+    border-right: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_hovered{
+    cursor: pointer;
+    background-color: rgba(var(--base-bg-primary-rgb),0.1)!important;
+    --sbarra-border:var(--base-bg-primary);
+    box-shadow: 0 0 0 2px var(--sbarra-border); 
 }

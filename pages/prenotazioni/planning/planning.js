@@ -11,7 +11,6 @@ function openCalendar(event, element) {
             console.error('Error fetching calendar:', error);
         });
 }
-
 function noteClick(element) {
     document.querySelectorAll('.note-card').forEach(card => card.remove());
     const rect = element.getBoundingClientRect();
@@ -62,7 +61,6 @@ function noteClick(element) {
     card.appendChild(row);
     document.body.appendChild(card);
 }
-
 document.addEventListener("DOMContentLoaded", () => {
     const dateTarget = document.querySelector('.date-target');
     var first = dateTarget.value;
@@ -83,14 +81,28 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(dateTarget, { attributes: true });
 });
 function hoverRow(element){
+    document.querySelector('#planning_table').classList.remove('table-separate');
+    document.querySelectorAll('.sbarra_hovered').forEach(cell=>{cell.classList.remove('sbarra_hovered');})
     document.querySelectorAll('.hovered').forEach(cell=>{cell.classList.remove('hovered');})
-    const row = element.getAttribute('row');
-    document.querySelectorAll(`[row="${row}"]`).forEach(cell => {
-        cell.classList.add('hovered');
-    });
+    if(element.classList.contains('sbarra')){
+        const planning_motivi_id = element.getAttribute('planning_motivi_id');
+        document.querySelectorAll(`[planning_motivi_id="${planning_motivi_id}"]`).forEach(cell => {
+            cell.classList.add('sbarra_hovered');
+        });
+        document.querySelector('#planning_table').classList.add('table-separate');
+    }
+    else{
+        const row = element.getAttribute('row');
+        document.querySelectorAll(`[row="${row}"]`).forEach(cell => {
+            cell.classList.add('hovered');
+        });
+    }
+
 }
 function sbarraClick(element){
-    let rowValue = element.getAttribute('row');
-    let selectedElement = document.querySelector(`.inizio[row="${rowValue}"]`).value;
-    new_modal('panning', 'sbarra', { 'id_terapista': document.querySelector('#terapista').value,'data':document.querySelector('#data').value });
+    const planning_motivi_id = element.getAttribute('planning_motivi_id');
+    new_modal('panning', 'sbarra', { 'id_terapista': document.querySelector('#terapista').value,'data':document.querySelector('#data').value, 'planning_motivi_id':planning_motivi_id,'row': element.getAttribute('row')});
+}
+function clickPrenota(){
+    new_page_modal('panning', 'customer-picker', {});
 }
