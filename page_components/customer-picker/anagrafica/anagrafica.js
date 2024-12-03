@@ -1,11 +1,13 @@
-function selectNominativo(event, _nominativo){
-    $.post({url: 'post/select-nominativo.php',data:{ skip_cookie:true, nominativo: _nominativo.value},dataType:'json'}).done(response=>{cp_success(event,_nominativo,response);}).fail(error=>{fail();});
+function selectNominativo(event, nominativo){
+    $.post({url: 'post/select-nominativo.php',data:{ skip_cookie:true, nominativo: nominativo.value},dataType:'json'})
+        .done(response=>{cp_success(event,nominativo,response);})
+        .fail(()=>fail());
 }
-function cp_success(event,_nominativo,response){
+function cp_success(event,nominativo,response){
     const rect = event.target.getBoundingClientRect();
     const x = rect.x + window.scrollX;
     const y = rect.y + window.scrollY +40;
-    const w = _nominativo.clientWidth;
+    const w = nominativo.clientWidth;
     document.querySelectorAll('#nominativo_select').forEach((element)=>{element.remove();});
     const content = document.createElement('div');
     content.id='nominativo_select';
@@ -17,7 +19,7 @@ function cp_success(event,_nominativo,response){
             div.textContent = item.nominativo;
             div.classList.add('form-control','hover','w-100','mt-1');
             div.addEventListener('click', function() {
-                _nominativo.value = item.nominativo;
+                nominativo.value = item.nominativo;
                 Object.keys(item).forEach(key => {
                     const input = document.querySelector(`[name="${key}"]`);
                     if (input) {
@@ -27,14 +29,59 @@ function cp_success(event,_nominativo,response){
                 content.remove();
             });                    
             content.appendChild(div);
+            toggleBtnSalva(nominativo);
         });
         document.body.appendChild(content);
         document.addEventListener('click', function onClickOutside(event) {
-            if (!content.contains(event.target) && event.target !== _nominativo) {
+            if (!content.contains(event.target) && event.target !== nominativo) {
                 content.remove();
                 document.removeEventListener('click', onClickOutside);
             }
+            toggleBtnSalva(nominativo);
         });
     }
-    else document.querySelectorAll('[name]:not(#nominativo) [name]:not(#sedute) [name]:not(#prezzo)').forEach(item=>{ item.value='';});
+    else{
+        document.querySelectorAll('[name]:not(meta):not(#nominativo):not(#data_inserimento)').forEach(item=>{ item.value='';});
+        toggleBtnSalva(nominativo);
+    }
+    document.querySelector('#modal_body_prenota').querySelectorAll('.nav-item:not(.anagrafica)').forEach(item=>{ 
+        if(!item.getAttribute('hidden')){
+            item.setAttribute('hidden','');
+        }
+    });
+}
+function cellulareChange(){
+    toggleBtnSalva(document.querySelector('#nominativo'));
+}
+function toggleBtnSalva(nominativo){
+    const btnSalvaCliente = document.querySelector('#btnSaveCliente');
+    if(nominativo.value!=''&&document.querySelector('#cellulare').value!=''){
+        btnSalvaCliente.classList.remove('disabled');
+    }
+    else {
+        if(!btnSalvaCliente.classList.contains('disabled')){
+            btnSalvaCliente.classList.add('disabled');
+        }
+    }
+    
+}
+function btnSalva(){
+    const _data={'table':'clienti'};
+    const _tab=document.querySelector('#modal_body_prenota');
+    const _modalBody=document.querySelector('#modal_body_prenota');
+    _tab.querySelectorAll('[name]').forEach(item=>{ _data[item.getAttribute('name')]=item.value;});
+    $.post('post/save.php',_data).done(insert_id=>{
+        _modalBody.querySelectorAll('.nav-link').forEach(nav=>{ 
+            let _target = nav.getAttribute('target');
+            if(!_target.includes('id_cliente')){
+                nav.setAttribute('target',_target+'&id_cliente='+insert_id);
+            }
+            else{
+                _target = _target.replace(/id_cliente=\d+/g, `id_cliente=${insert_id}`);
+                nav.setAttribute('target',_target);
+            }
+        });
+        _modalBody.querySelectorAll('.nav-item').forEach(item=>{ item.removeAttribute('hidden');});
+        success();
+    }).fail(()=>{fail();});
 }

@@ -1,4 +1,4 @@
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Percorso Terapeutico</h4>
@@ -9,6 +9,7 @@
                 <?php $result=[];?>
                 <div class="p-2">
                     <input type="text" id="id" name="id" value="<?php echo $result['id']??'';?>" hidden/>
+                    <input type="text" id="id_cliente" name="id_cliente" value="<?php echo $_REQUEST['id_cliente']??'';?>" hidden/>
                     <div class="mb-3">
                         <label for="percorso" class="form-label">Percorso</label>
                         <input type="text" class="form-control" id="percorso" name="percorso" value="<?php echo $result['percorso']??'';?>"/>

@@ -1,4 +1,4 @@
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Sbarra</h4>

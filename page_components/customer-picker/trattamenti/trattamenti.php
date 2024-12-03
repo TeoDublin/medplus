@@ -2,7 +2,7 @@
     function _percorso(){
         return Select('c.id,c.percorso,c.sedute_totale,c.sedute_da_pianificare,c.stato_sedute')
         ->from('percorsi','c')
-        ->where('id_cliente=40')
+        ->where("id_cliente={$_REQUEST['id_cliente']}")
         ->get_or_false();
     }
     function _sedute($id_percorso){
@@ -23,7 +23,7 @@
     $_percorso=_percorso();
 ?>
 <div class="p-2" id="customer-picker_trattamenti">
-    <input type="text" id="tab" value="trattamenti" hidden/>
+    <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
     <div class="container-fluid card text-center py-4">
         <h4 class="mb-3">Prenotazioni</h4>
         <?php if(!$_percorso){?>

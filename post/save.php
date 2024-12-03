@@ -4,4 +4,5 @@
     $id=request('id');
     $table=request('table');
     if($id&&!empty($id))Update($table)->set($_REQUEST)->where("id={$id}");
-    else Insert($_REQUEST)->into($table);
+    else $id=Insert($_REQUEST)->into($table)->get();
+    echo $id;

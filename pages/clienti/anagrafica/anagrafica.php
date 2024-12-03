@@ -31,8 +31,8 @@
                             <th scope="col" class="text-center" rowspan="2">Nominativo</th>
                             <th scope="col" class="text-center" rowspan="2">CF/IVA</th>
                             <th scope="col" class="text-center" rowspan="2">cellulare</th>
+                            <th scope="col" class="text-center" rowspan="2">Email</th>
                             <th scope="col" class="text-center" rowspan="2">Notizie Cliniche</th>
-                            <th scope="col" class="text-center" rowspan="2">Note Trattamento</th>
                             <th scope="col" class="text-center" rowspan="2">#</th>
                         </tr>
                     </thead>
@@ -42,8 +42,8 @@
                                 <td scope="col" class="text-center"><?php echo $row['nominativo'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['cf'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['cellulare'];?></td>
+                                <td scope="col" class="text-center"><?php echo $row['email'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['notizie_cliniche'];?></td>
-                                <td scope="col" class="text-center"><?php echo $row['note_trattamento'];?></td>
                                 <td scope="col" class="text-center action-Elimina" title="Elimina" onclick="delClick(this);" onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?></td>
                             </tr><?php
                         }?>

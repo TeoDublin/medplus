@@ -197,7 +197,7 @@ color-scheme: dark;
     --base-active-shadow-primary: inset 0 3px 5px rgba(0, 0, 0, 0.125);
     --base-disabled-primary: #fff;
     --base-disabled-bg-primary: #1b5175a6;
-    --base-disabled-border-primary: #124b5b;
+    --base-disabled-border-primary: #afafaf8a;
     --base-color-secondary: #fff;
     --base-bg-secondary: #2f5f72;
     --base-bg-secondary-rgb: 47, 95, 114;

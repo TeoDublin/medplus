@@ -104,5 +104,5 @@ function sbarraClick(element){
     new_modal('panning', 'sbarra', { 'id_terapista': document.querySelector('#terapista').value,'data':document.querySelector('#data').value, 'planning_motivi_id':planning_motivi_id,'row': element.getAttribute('row')});
 }
 function clickPrenota(){
-    new_page_modal('panning', 'customer-picker', {});
+    new_page_modal('panning', 'customer-picker', {'id_terapista':document.querySelector('#terapista').value,'data':document.querySelector('#data').value});
 }
