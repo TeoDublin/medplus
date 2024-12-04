@@ -1,6 +1,6 @@
 function btnSalva(){
     let _data = {table:'planning_motivi'};
-    document.querySelector('#div_panning').querySelectorAll('[name]').forEach(element=>{
+    document.querySelector('#div_planning').querySelectorAll('[name]').forEach(element=>{
         _data[element.name]=element.value;
     });
     $.post('post/save.php', _data)

@@ -80,6 +80,8 @@ function btnSalva(){
                 _target = _target.replace(/id_cliente=\d+/g, `id_cliente=${insert_id}`);
                 nav.setAttribute('target',_target);
             }
+            document.querySelector('.trattamenti').removeAttribute('hidden');
+            parent._tab(document.querySelector('[tab=trattamenti]'));
         });
         _modalBody.querySelectorAll('.nav-item').forEach(item=>{ item.removeAttribute('hidden');});
         success();

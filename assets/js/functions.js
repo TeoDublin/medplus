@@ -107,3 +107,15 @@ function new_page_modal(id, component,_data) {
         newModalInstance.show();
     });
 }
+function resize(modal_id) {
+    const modalDialog = document.querySelector(modal_id).querySelector('.modal-dialog');
+    const btnResize = document.querySelector('.btn-resize');
+    if (modalDialog.classList.contains('modal-fullscreen')) {
+        modalDialog.classList.remove('modal-fullscreen');
+        btnResize.style.setProperty('--bs-btn-resize-bg', 'var(--bs-btn-fullscreen-icon)');
+    } else {
+        modalDialog.classList.add('modal-fullscreen');
+        btnResize.style.setProperty('--bs-btn-resize-bg', 'var(--bs-btn-resize-icon)');
+    }
+}
+

@@ -9,4 +9,10 @@ function _tab(element) {
         append_scripts(page_component);
         element.classList.add('active');
     });
+    if(element.getAttribute('tab')=='anagrafica'){
+        document.querySelector('#modal_planning').querySelector('.modal-footer').removeAttribute('hidden');
+    }
+    else{
+        document.querySelector('#modal_planning').querySelector('.modal-footer').setAttribute('hidden','');
+    }
 }

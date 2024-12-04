@@ -153,7 +153,7 @@
                 <p class="psm"><?php
             }
         }?>
-        <div class="d-flex mt-2" onclick="btnClick()"><button class="btn btn-primary  flex-fill">Nuovo Percorso Terapeutico</button></div>
+        <div class="d-flex mt-2" onclick="btnPercorsoClick()"><button class="btn btn-primary  flex-fill">Nuovo Percorso Terapeutico</button></div>
     </div>
 </div>
 <?php script('page_components/customer-picker/trattamenti/trattamenti.js'); ?>
