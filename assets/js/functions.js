@@ -72,10 +72,10 @@ function append_scripts(element){
         }
     });
 }
-function new_modal(id, component,_data) {
+function modal_component(id, component,_data) {
     const modal_id = 'modal_'+id;
-    _data['skip_cookie']=true;_data['id_modal']=modal_id;_data['component']=component;
-    $.post('modal_component.php',_data).done(function(html){
+    _data['id_modal']=modal_id;_data['component']=component;
+    $.post('modal_component.php',_data).done(html=>{
         const container = document.querySelector('#'+id);
         document.querySelectorAll('#div_'+id).forEach(function(to_remove){ to_remove.remove();});
         const div = document.createElement('div');
@@ -90,10 +90,10 @@ function new_modal(id, component,_data) {
     });
 }
 
-function new_page_modal(id, component,_data) {
+function page_component(id, component,_data) {
     const modal_id = 'modal_'+id;
     _data['skip_cookie']=true;_data['id_modal']=modal_id;_data['component']=component;
-    $.post('page_component.php',_data).done(function(html){
+    $.post('page_component.php',_data).done(html=>{
         const container = document.querySelector('#'+id);
         document.querySelectorAll('#div_'+id).forEach(function(to_remove){ to_remove.remove();});
         const div = document.createElement('div');

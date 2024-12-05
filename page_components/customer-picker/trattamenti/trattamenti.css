@@ -3,21 +3,9 @@
     width: 5%;
 }
 .cc2{
-    flex: 0 0 auto;
-    width: 5%;
-}
-.cc3{
     flex: 1 1 auto;
 }
-.cc4{
-    flex: 0 0 auto;
-    width: 10%;
-}
-.cc5{
-    flex: 0 0 auto;
-    width: 10%;
-}
-.cc6{
+.cc3{
     flex: 0 0 auto;
     width: 10%;
 }

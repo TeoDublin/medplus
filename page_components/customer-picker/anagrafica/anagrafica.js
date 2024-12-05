@@ -71,6 +71,7 @@ function btnSalva(){
     const _modalBody=document.querySelector('#modal_body_prenota');
     _tab.querySelectorAll('[name]').forEach(item=>{ _data[item.getAttribute('name')]=item.value;});
     $.post('post/save.php',_data).done(insert_id=>{
+        _modalBody.querySelectorAll('.nav-item').forEach(item=>{ item.removeAttribute('hidden');});
         _modalBody.querySelectorAll('.nav-link').forEach(nav=>{ 
             let _target = nav.getAttribute('target');
             if(!_target.includes('id_cliente')){
@@ -81,9 +82,8 @@ function btnSalva(){
                 nav.setAttribute('target',_target);
             }
             document.querySelector('.trattamenti').removeAttribute('hidden');
-            parent._tab(document.querySelector('[tab=trattamenti]'));
         });
-        _modalBody.querySelectorAll('.nav-item').forEach(item=>{ item.removeAttribute('hidden');});
+        parent._tab(_tab.querySelector('[tab=trattamenti]'));
         success();
     }).fail(()=>{fail();});
 }

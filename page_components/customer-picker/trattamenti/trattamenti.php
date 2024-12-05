@@ -40,20 +40,23 @@
                         <div class="cc1 d-flex align-items-center justify-content-center text-center">
                             <label class="form-label"></label>
                         </div>
-                        <div class="cc2 d-flex align-items-center justify-content-center text-center">
+                        <div class="cc1 d-flex align-items-center justify-content-center text-center">
                             <label class="form-label"></label>
                         </div>
-                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
+                        <div class="cc2 d-flex align-items-center justify-content-center text-center">
                             <label class="form-label">Percorso Terapeutico</label>
                         </div>
-                        <div class="cc4 d-flex align-items-center justify-content-center text-center">
+                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
                             <label class="form-label">Totale</label>
                         </div>
-                        <div class="cc5 d-flex align-items-center justify-content-center text-center">
+                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
                             <label class="form-label">Da Pianificare</label>
                         </div>
-                        <div class="cc6 d-flex align-items-center justify-content-center text-center">
+                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
                             <label class="form-label">Stato Sedute</label>
+                        </div>
+                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
+                            <label class="form-label"></label>
                         </div>
                     </div>
                 </div>
@@ -62,14 +65,22 @@
                 <div class="accordion" id="accordion-percorso<?php echo $percorso['id'];?>">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <div class="accordion-button collapsed border py-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-percorso<?php echo $percorso['id'];?>" aria-expanded="false" aria-controls="collapse-percorso<?php echo $percorso['id'];?>">
+                            <div class="accordion-button collapsed border py-2" name="row_percorso" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-percorso<?php echo $percorso['id'];?>" aria-expanded="false" aria-controls="collapse-percorso<?php echo $percorso['id'];?>">
                                 <div class="d-flex flex-row w-100">
-                                    <div class="cc1 d-flex align-items-center justify-content-center text-center"><?php echo icon('edit.svg','black',16,16); ?></div>
-                                    <div class="cc2 d-flex align-items-center justify-content-center text-center"><?php echo icon('bin.svg','black',16,16); ?></div>
-                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['percorso']; ?></label></div>
-                                    <div class="cc4 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['sedute_totale']; ?></label></div>
-                                    <div class="cc5 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['sedute_da_pianificare']; ?></label></div>
-                                    <div class="cc6 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['stato_sedute']; ?></label></div>
+                                    <input value="<?php echo $percorso['id'];?>" name="id_percorso" hidden/>
+                                    <div class="cc1 d-flex align-items-center justify-content-center text-center"onclick="editClick(this)" onmouseenter="editEnter(this)" onmouseleave="editLeave(this)" >
+                                        <?php echo icon('edit.svg','black',16,16); ?>
+                                    </div>
+                                    <div class="cc1 d-flex align-items-center justify-content-center text-center" onclick="deleteClick(this)" onmouseenter="deleteEnter(this)" onmouseleave="deleteLeave(this)">
+                                        <?php echo icon('bin.svg','black',16,16); ?>
+                                    </div>
+                                    <div class="cc2 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['percorso']; ?></label></div>
+                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['sedute_totale']; ?></label></div>
+                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['sedute_da_pianificare']; ?></label></div>
+                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['stato_sedute']; ?></label></div>
+                                    <div class="cc3 d-flex align-items-center justify-content-center text-center me-2" onclick="aggiungiClick(this)" onmouseenter="aggiungiEnter(this)" onmouseleave="aggiungiLeave(this)">
+                                        <button class="btn btn-primary">AGGIUNGI</button>
+                                    </div>
                                 </div>
                             </div>
                         </h2>

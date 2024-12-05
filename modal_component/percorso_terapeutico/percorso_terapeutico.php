@@ -6,7 +6,7 @@
             </div>
             <div class="container"></div>
             <div class="modal-body">
-                <?php $result=[];?>
+                <?php $result=$_REQUEST['id']?Select('*')->from('percorsi')->where("id={$_REQUEST['id']}")->first():[];?>
                 <div class="p-2">
                     <input type="text" id="id" name="id" value="<?php echo $result['id']??'';?>" hidden/>
                     <input type="text" id="id_cliente" name="id_cliente" value="<?php echo $_REQUEST['id_cliente']??'';?>" hidden/>
@@ -16,13 +16,13 @@
                     </div>
                     <div class="mb-3">
                         <label for="note" class="form-label">Note</label>
-                        <textarea type="text" class="form-control" id="note" name="note" value="<?php echo $result['note']??'';?>"></textarea>
+                        <textarea type="text" class="form-control" id="note" name="note" value="<?php echo $result['note']??'';?>"><?php echo $result['note']??'';?></textarea>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <a href="#" data-bs-dismiss="modal" class="btn btn-secondary">Anulla</a>
-                <a href="#" class="btn btn-primary" onclick="btnSalva()">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="btnSalva('<?php echo $_REQUEST['id_modal'];?>')">Salva</a>
             </div>
         </div>
     </div>
