@@ -1,8 +1,8 @@
 function btnPercorsoClick() {
     modal_component('customer-picker_trattamenti','percorso_terapeutico',{'id_cliente':document.querySelector('#id_cliente').value});
 }
-function aggiungiClick(element){
-    console.log(element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value);
+function aggiungiSeduteClick(element){
+    modal_component('customer-picker_sedute','sedute',{'id_cliente':document.querySelector('#id_cliente').value,'id_percorso':element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value});
 }
 function aggiungiEnter(element){
     element.closest('[name=row_percorso]').removeAttribute('data-bs-toggle');

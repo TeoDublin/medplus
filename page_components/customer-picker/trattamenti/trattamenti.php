@@ -1,8 +1,9 @@
 <?php 
     function _percorso(){
-        return Select('c.id,c.percorso,c.sedute_totale,c.sedute_da_pianificare,c.stato_sedute')
-        ->from('percorsi','c')
+        return Select('*')
+        ->from('percorsi')
         ->where("id_cliente={$_REQUEST['id_cliente']}")
+        ->orderby('timestamp DESC')
         ->get_or_false();
     }
     function _sedute($id_percorso){
@@ -21,6 +22,7 @@
     }
     style('page_components/customer-picker/trattamenti/trattamenti.css');
     $_percorso=_percorso();
+    $is_first=true;
 ?>
 <div class="p-2" id="customer-picker_trattamenti">
     <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
@@ -61,11 +63,15 @@
                     </div>
                 </div>
             </div>
-            <?php foreach ($_percorso as $percorso) {?>
+            <?php foreach ($_percorso as $percorso) {
+                $sedute=_sedute($percorso['id']);
+                $show = $is_first&&count($sedute)>0;                    
+                $is_first = false;
+                ?>
                 <div class="accordion" id="accordion-percorso<?php echo $percorso['id'];?>">
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <div class="accordion-button collapsed border py-2" name="row_percorso" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-percorso<?php echo $percorso['id'];?>" aria-expanded="false" aria-controls="collapse-percorso<?php echo $percorso['id'];?>">
+                            <div class="accordion-button border py-2 <?php echo $show?'':'collapsed'; ?>" name="row_percorso" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-percorso<?php echo $percorso['id'];?>" aria-expanded="<?php echo $show; ?>" aria-controls="collapse-percorso<?php echo $percorso['id'];?>">
                                 <div class="d-flex flex-row w-100">
                                     <input value="<?php echo $percorso['id'];?>" name="id_percorso" hidden/>
                                     <div class="cc1 d-flex align-items-center justify-content-center text-center"onclick="editClick(this)" onmouseenter="editEnter(this)" onmouseleave="editLeave(this)" >
@@ -78,13 +84,13 @@
                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['sedute_totale']; ?></label></div>
                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['sedute_da_pianificare']; ?></label></div>
                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><label class="form-label"><?php echo $percorso['stato_sedute']; ?></label></div>
-                                    <div class="cc3 d-flex align-items-center justify-content-center text-center me-2" onclick="aggiungiClick(this)" onmouseenter="aggiungiEnter(this)" onmouseleave="aggiungiLeave(this)">
+                                    <div class="cc3 d-flex align-items-center justify-content-center text-center me-2" onclick="aggiungiSeduteClick(this)" onmouseenter="aggiungiEnter(this)" onmouseleave="aggiungiLeave(this)">
                                         <button class="btn btn-primary">AGGIUNGI</button>
                                     </div>
                                 </div>
                             </div>
                         </h2>
-                        <div id="collapse-percorso<?php echo $percorso['id'];?>" class="accordion-collapse collapse" data-bs-parent="#accordion-percorso<?php echo $percorso['id'];?>">
+                        <div id="collapse-percorso<?php echo $percorso['id'];?>" class="accordion-collapse collapse <?php echo $show?'show':''; ?>" data-bs-parent="#accordion-percorso<?php echo $percorso['id'];?>">
                             <div class="container-fluid card text-center py-4">
                                 <div class="table-responsive">
                                     <div class="my-0">
@@ -107,7 +113,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <?php foreach (_sedute($percorso['id']) as $seduta) {?>
+                                <?php foreach ($sedute as $seduta) {?>
                                     <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
@@ -167,4 +173,5 @@
         <div class="d-flex mt-2" onclick="btnPercorsoClick()"><button class="btn btn-primary  flex-fill">Nuovo Percorso Terapeutico</button></div>
     </div>
 </div>
+<div class="p-2" id="customer-picker_sedute"></div>
 <?php script('page_components/customer-picker/trattamenti/trattamenti.js'); ?>
