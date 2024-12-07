@@ -10,6 +10,15 @@ function aggiungiEnter(element){
 function aggiungiLeave(element){
     element.closest('[name=row_percorso]').setAttribute('data-bs-toggle','collapse');
 }
+function prenotaSeduteClick(element){
+    modal_component('customer-picker_prenota_seduta','prenota_seduta',{'id_seduta':element.closest('[name=row_percorso]').querySelector('[name=id_seduta]').value});
+}
+function prenotaEnter(element){
+    element.closest('[name=row_percorso]').removeAttribute('data-bs-toggle');
+}
+function prenotaLeave(element){
+    element.closest('[name=row_percorso]').setAttribute('data-bs-toggle','collapse');
+}
 function editClick(element){
     modal_component('customer-picker_trattamenti','percorso_terapeutico',{'id_cliente':document.querySelector('#id_cliente').value,'id':element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value});
 }
@@ -21,8 +30,7 @@ function editLeave(element){
 }
 function deleteClick(element){
     if(confirm('sicuro di voler eliminare ?')){
-        $.post('post/delete.php',{id:element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value,table:'percorsi'}).done(function(){success();}).fail(function(){fail();});
-        parent._tab(document.querySelector('[tab=trattamenti]'));
+        $.post('post/delete.php',{id:element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value,table:'percorsi'}).done(function(){success();parent._tab(document.querySelector('[tab=trattamenti]'));}).fail(function(){fail();});
     }
 }
 function deleteEnter(element){

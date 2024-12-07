@@ -1,0 +1,45 @@
+div.calendar {
+    padding: 1rem;
+    border: solid rgba(var(--base-bg-primary-rgb),0.3) 0.5px;
+    border-radius: 5px;
+    background-color: white;
+    text-align: center;
+}
+div.calendar-out{
+    background-color: rgba(var(--base-bg-primary-rgb),0.04);
+    border-bottom: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
+}
+div.calendar-in{
+    background-color: transparent;
+    border-right: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
+    border-bottom: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
+}
+div.first{
+    border-top: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
+    border-left: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
+}
+div.calendar-in:hover{
+    background-color: rgba(var(--base-bg-primary-rgb),0.2);
+    cursor:pointer;
+}
+div.calendar-current{
+    background-color: rgba(var(--base-bg-primary-rgb),0.2);
+}
+.c1{
+    flex: 0 0 auto;
+    width: 14%;
+    padding: 0.5rem;
+}
+.c2{
+    flex: 0 0 auto;
+    width: 14%;
+    padding: 0.5rem;
+}
+.day-name::after {
+    content: attr(data-full);
+}
+@media (max-width: 991.98px) {
+    .day-name::after {
+        content: attr(data-short);
+    }
+}

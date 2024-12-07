@@ -5966,14 +5966,17 @@ opacity: var(--bs-backdrop-opacity);
     border-top-right-radius: var(--bs-modal-inner-border-radius);
 }
 .modal-header .btn-close {
-    padding: calc(var(--bs-modal-header-padding-y) * 0.5) calc(var(--bs-modal-header-padding-x) * 0.5);
-    margin: calc(-0.5 * var(--bs-modal-header-padding-y)) calc(-0.5 * var(--bs-modal-header-padding-x)) calc(-0.5 * var(--bs-modal-header-padding-y)) auto;
+    position: absolute;
+    top: var(--bs-modal-header-padding-y);
+    right: calc(var(--bs-modal-header-padding-x));
+    z-index: 2;
+    padding: 0.6rem 0.6rem;
 }
 
 .modal-header .btn-resize {
     position: absolute;
     top: var(--bs-modal-header-padding-y);
-    right: calc(3*var(--bs-modal-header-padding-x));
+    right: calc(3.5*var(--bs-modal-header-padding-x));
     z-index: 2;
     padding: 0.6rem 0.6rem;
 }

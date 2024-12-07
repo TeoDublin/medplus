@@ -15,18 +15,9 @@
     width: 5%;
 }
 .cs2{
-    flex: 0 0 auto;
-    width: 5%;
+    flex: 1 1 auto;
 }
 .cs3{
-    flex: 0 0 auto;
-    width: 30%;
-}
-.cs4{
-    flex: 0 0 auto;
-    width: 30%;
-}
-.cs5{
     flex: 0 0 auto;
     width: 30%;
 }
