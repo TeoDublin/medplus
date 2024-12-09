@@ -13,3 +13,7 @@ function btnSalva(modal_id){
 function dayClick(element){
     modal_component('prenota-prenota_seduta_planning','prenota_seduta_planning',{});
 }
+function monthChange(element){
+    const modal = element.closest('.modal');
+    modal_component('customer-picker_prenota_seduta','prenota_seduta',{month: modal.querySelector('#prenota_month').value });
+}

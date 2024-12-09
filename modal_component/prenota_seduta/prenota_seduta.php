@@ -1,6 +1,6 @@
 <?php style('modal_component/prenota_seduta/prenota_seduta.css');
     $date=$_REQUEST['date']??now('Y-m-d');
-    $month=substr($date,5,2);
+    $month=$_REQUEST['month']??substr($date,5,2);
     $year=substr($date,0,4);
 ?>
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
@@ -8,21 +8,21 @@
         <div class="modal-content px-3 text-center">
             <div class="modal-header">
                 <div class="w-30 me-1">
-                    <select class="form-select" id="month"  value=""><?php
+                    <select class="form-select" id="prenota_terapista"  value=""><?php
                         foreach(Select('*')->from('terapisti')->get() as $terapista){
                             echo "<option value=\"{$terapista['id']}\" class=\"ps-4  bg-white\">{$terapista['terapista']}</option>";
                         }?>
                     </select>
                 </div>
                 <div class="w-30 me-1">
-                    <select class="form-select" id="month"  value=""><?php
+                    <select class="form-select" id="prenota_month"  value="" onchange="monthChange(this)"><?php
                         for($i=1;$i<=12;$i++){
                             echo "<option value=\"{$i}\" class=\"ps-4  bg-white\"".($i==$month?'selected':'').">".italian_month($i)."</option>";
                         }?>
                     </select>
                 </div>
                 <div class="w-30">
-                    <select class="form-select" id="year"  value=""><?php
+                    <select class="form-select" id="prenota_year"  value=""><?php
                         for($i=1;$i<=5;$i++){
                             $add_year=(int)$year-3+$i;
                             echo "<option value=\"{$add_year}\" class=\"ps-4  bg-white\"".($add_year==$year?'selected':'').">".$add_year."</option>";
@@ -34,76 +34,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body">
-                <input value="<?php echo $date;?>" hidden/>
-                <div class="p-2">
-                    <div class="">
-                        <div class="d-flex flex-row row">
-                            <div class="c1 day-name" data-full="lunedi" data-short="Lu"></div>
-                            <div class="c1 day-name" data-full="martedi" data-short="Ma"></div>
-                            <div class="c1 day-name" data-full="mercoledi" data-short="Me"></div>
-                            <div class="c1 day-name" data-full="giovedi" data-short="Gi"></div>
-                            <div class="c1 day-name" data-full="venerdi" data-short="Ve"></div>
-                            <div class="c1 day-name" data-full="sabato" data-short="Sa"></div>
-                            <div class="c1 day-name flex-fill" data-full="domenica" data-short="Do"></div>
-                        </div>
-
-                        <div id="calendar-body">
-                            <div class="d-flex flex-row row">
-                                <div class="c1 calendar-out"></div>
-                                <div class="c1 calendar-out"></div>
-                                <div class="c1 calendar-out"></div>
-                                <div class="c1 calendar-out"></div>
-                                <div class="c1 calendar-out"></div>
-                                <div class="c1 calendar-out"></div>
-                                <div class="c1 calendar-in flex-fill first" onclick="dayClick(this);">1</div>
-                            </div>
-                            <div class="d-flex flex-row row">
-                                <div class="c1 calendar-in">2</div>
-                                <div class="c1 calendar-in">3</div>
-                                <div class="c1 calendar-in">4</div>
-                                <div class="c1 calendar-in">5</div>
-                                <div class="c1 calendar-in">6</div>
-                                <div class="c1 calendar-current">7</div>
-                                <div class="c1 calendar-in flex-fill">8</div>
-                            </div>
-                            <div class="d-flex flex-row row">
-                                <div class="c1 calendar-in">9</div>
-                                <div class="c1 calendar-in">10</div>
-                                <div class="c1 calendar-in">11</div>
-                                <div class="c1 calendar-in">12</div>
-                                <div class="c1 calendar-in">13</div>
-                                <div class="c1 calendar-in">14</div>
-                                <div class="c1 calendar-in flex-fill">15</div>
-                            </div>
-                            <div class="d-flex flex-row row">
-                                <div class="c1 calendar-in">16</div>
-                                <div class="c1 calendar-in">17</div>
-                                <div class="c1 calendar-in">18</div>
-                                <div class="c1 calendar-in">19</div>
-                                <div class="c1 calendar-in">20</div>
-                                <div class="c1 calendar-in">21</div>
-                                <div class="c1 calendar-in flex-fill">22</div>
-                            </div>
-                            <div class="d-flex flex-row row">
-                                <div class="c1 calendar-in">23</div>
-                                <div class="c1 calendar-in">24</div>
-                                <div class="c1 calendar-in">25</div>
-                                <div class="c1 calendar-in">26</div>
-                                <div class="c1 calendar-in">27</div>
-                                <div class="c1 calendar-in">28</div>
-                                <div class="c1 calendar-in flex-fill">29</div>
-                            </div>
-                            <div class="d-flex flex-row row last">
-                                <div class="c2 calendar-in">30</div>
-                                <div class="c2 calendar-in">31</div>
-                                <div class="c2 calendar-out"></div>
-                                <div class="c2 calendar-out"></div>
-                                <div class="c2 calendar-out"></div>
-                                <div class="c2 calendar-out"></div>
-                                <div class="c2 calendar-out flex-fill"></div>
-                            </div>
-                        </div>
+                <input name="date" value="<?php echo $date;?>" hidden/>
+                <div class="p-2 border rounded">
+                    <div class="d-flex flex-row">
+                        <div class="c1 day-name" data-full="lunedi" data-short="Lu"></div>
+                        <div class="c1 day-name" data-full="martedi" data-short="Ma"></div>
+                        <div class="c1 day-name" data-full="mercoledi" data-short="Me"></div>
+                        <div class="c1 day-name" data-full="giovedi" data-short="Gi"></div>
+                        <div class="c1 day-name" data-full="venerdi" data-short="Ve"></div>
+                        <div class="c1 day-name" data-full="sabato" data-short="Sa"></div>
+                        <div class="c1 day-name flex-fill" data-full="domenica" data-short="Do"></div>
                     </div>
+                    <?php 
+                        $current_day = 1;
+                        $daysInMonth = (int)date('t', strtotime("$year-$month-01"));
+                        for($i=0;$i<6;$i++){?>
+                            <div class="d-flex flex-row"><?php
+                                for($j=1;$j<=7;$j++){
+                                    $day=(int)date('N', strtotime("$year-$month-$current_day"));
+                                    $last=$j==7?'flex-fill':'';
+                                    if($current_day>$daysInMonth)echo "<div class=\"c1 calendar-out $last\" onclick=\"dayClick(this);\"></div>";
+                                    else{
+                                        echo "<div class=\"c1 calendar-out $last\" onclick=\"dayClick(this);\">";
+                                        if($day==$j){
+                                            echo str_pad($current_day,2,'0',STR_PAD_LEFT);
+                                            $current_day++;
+                                        }
+                                        echo "</div>";
+                                        
+                                    }
+                                }?>
+                            </div><?php
+                            }
+                    ?>
                 </div>
             </div>
             <div class="modal-footer">

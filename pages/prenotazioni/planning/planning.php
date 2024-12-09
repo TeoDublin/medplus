@@ -60,7 +60,7 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="w-25" onclick="clickPrenota();">
+                            <div class="w-25" onclick="clickPrenota(this);">
                                 <button class="btn btn-primary w-100">PRENOTA</button>
                             </div>
                         </div>
@@ -87,13 +87,13 @@
                             <tr><?php
                                 for($col=1;$col<=3;$col++){$row=$i+($rows*($col-1)); $planning=$_planning($row);?>
                                     <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
+                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_parent_inizio_<?php echo $row;?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
                                     </td>
                                     <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="sbarraClick(this);"  onmouseenter="hoverRow(this);">
                                         <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
                                     </td>
                                     <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note"/>
+                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note" id="input_parent_note_<?php echo $row;?>"/>
                                     </td><?php
                                     }?>
                             </tr><?php

@@ -48,11 +48,11 @@ $_planning = function ($row)use($result){
             </div>
             <div class="modal-body">
                 <div class="p-2">
-                <div class="no-scroll" id="planning">
+                <div class="no-scroll">
                     <div class="p-3 border my-1 d-flex" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
                         <div class="d-flex flex-column flex-fill">
                             <div class="d-flex flex-column">
-                                <table class="table table-striped border-0" id="planning_table">
+                                <table class="table table-striped border-0" id="prenota-prenota_table">
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col" class="text-center" rowspan="2">Ora</th>
@@ -70,14 +70,14 @@ $_planning = function ($row)use($result){
                                         for($i=1;$i<=$rows;$i++){ ?>
                                             <tr><?php
                                                 for($col=1;$col<=3;$col++){$row=$i+($rows*($col-1)); $planning=$_planning($row);?>
-                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
-                                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
+                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" prenota_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
+                                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_inizio<?php echo _ora($row);?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
                                                     </td>
-                                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="sbarraClick(this);"  onmouseenter="hoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" prenota_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="prenotaSbarraClick(this);"  onmouseenter="prenotaHoverRow(this);">
                                                         <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
                                                     </td>
-                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
-                                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note"/>
+                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" prenota_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
+                                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note" id="input_note<?php echo _ora($row);?>"/>
                                                     </td><?php
                                                     }?>
                                             </tr><?php
@@ -97,5 +97,5 @@ $_planning = function ($row)use($result){
         </div>
     </div>
 </div>
-<div class="p-2" id="prenota_seduta_planning_ora"></div>
+<div class="p-2" id="planning-prenota_seduta_planning_ora"></div>
 <?php script('modal_component/prenota_seduta_planning/prenota_seduta_planning.js'); ?>

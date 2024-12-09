@@ -1,45 +1,57 @@
-div.calendar {
-    padding: 1rem;
-    border: solid rgba(var(--base-bg-primary-rgb),0.3) 0.5px;
-    border-radius: 5px;
-    background-color: white;
-    text-align: center;
+.planning-date:hover{
+    cursor: pointer;
 }
-div.calendar-out{
-    background-color: rgba(var(--base-bg-primary-rgb),0.04);
-    border-bottom: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
+.datepicker:hover{
+    cursor: pointer;
 }
-div.calendar-in{
-    background-color: transparent;
-    border-right: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
-    border-bottom: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
+.hovered{
+    background-color: rgba(var(--base-bg-primary-rgb),0.5)!important;
+    cursor: pointer;
 }
-div.first{
-    border-top: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
-    border-left: solid rgba(var(--base-bg-primary-rgb),0.2) 0.01rem;
+.date-target:hover{
+    cursor: pointer;
 }
-div.calendar-in:hover{
-    background-color: rgba(var(--base-bg-primary-rgb),0.2);
-    cursor:pointer;
+.table {
+    border-spacing: 0 0;
 }
-div.calendar-current{
-    background-color: rgba(var(--base-bg-primary-rgb),0.2);
+.table-separate{
+    border-collapse: separate;
 }
-.c1{
-    flex: 0 0 auto;
-    width: 14%;
-    padding: 0.5rem;
+.sbarra{
+    --sbarra-border:rgb(186, 186, 186);
 }
-.c2{
-    flex: 0 0 auto;
-    width: 14%;
-    padding: 0.5rem;
+.sbarra_start {
+    border-top: solid var(--sbarra-border) 2px!important;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
-.day-name::after {
-    content: attr(data-full);
+.sbarra_middle {
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
-@media (max-width: 991.98px) {
-    .day-name::after {
-        content: attr(data-short);
-    }
+.sbarra_end{
+    border-bottom: solid var(--sbarra-border) 2px!important;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
+}
+.sbarra_start.first{
+    border-left: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_start.last{
+    border-right: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_middle.first{
+    border-left: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_middle.last{
+    border-right: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_end.first{
+    border-left: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_end.last{
+    border-right: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_hovered{
+    cursor: pointer;
+    background-color: rgba(var(--base-bg-primary-rgb),0.1)!important;
+    --sbarra-border:var(--base-bg-primary);
+    box-shadow: 0 0 0 2px var(--sbarra-border); 
 }

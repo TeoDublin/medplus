@@ -15,7 +15,7 @@
                 <input type="text" name="data" value="<?php echo $_REQUEST['data']??'';?>" hidden/>
                 <div class="p-2">
                     <div class="mb-3">
-                        <label for="inizio" class="form-label">Inizio</label>
+                        <label for="row_inizio" class="form-label">Inizio</label>
                         <select type="text" class="form-control" id="row_inizio" name="row_inizio" value="<?php echo $result['row_inizio']??'';?>">
                             <?php 
                                 foreach($rows as $value){
@@ -39,7 +39,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="motivo" class="form-label">Motivo</label>
+                        <label for="id_motivo" class="form-label">Motivo</label>
                         <select type="text" class="form-control" id="id_motivo" name="id_motivo" value="<?php echo $result['id_motivo']??'';?>">
                             <?php 
                                 foreach(Select('*')->from('motivi')->get() as $value){

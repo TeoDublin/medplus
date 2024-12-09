@@ -50,7 +50,6 @@
     border-right: solid var(--sbarra-border) 2px!important;
 }
 .sbarra_hovered{
-    cursor: pointer;
     background-color: rgba(var(--base-bg-primary-rgb),0.1)!important;
     --sbarra-border:var(--base-bg-primary);
     box-shadow: 0 0 0 2px var(--sbarra-border); 
