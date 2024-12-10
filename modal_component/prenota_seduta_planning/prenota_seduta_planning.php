@@ -1,7 +1,7 @@
 <?php style('modal_component/prenota_seduta_planning/prenota_seduta_planning.css');
 $rows=17;
-$id_terapista = cookie('id_terapista',first('terapisti')['id']);
-$data = cookie('date',date('Y-m-d'));
+$id_terapista = $_REQUEST['id_terapista'] ?? first('terapisti')['id'];
+$data = $_REQUEST['date'] ??date('Y-m-d');
 $result=Select('*')->from('planning')->where("id_terapista={$id_terapista}")->and("data='{$data}'")->get();
 function _ora($row){
     $ora = new DateTime('07:00');
@@ -39,7 +39,7 @@ $_planning = function ($row)use($result){
 };
 ?>
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-xxl modal-xl modal-fullscreen">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content px-3 text-center">
             <div class="modal-header">
                 <h4>Planning</h4>

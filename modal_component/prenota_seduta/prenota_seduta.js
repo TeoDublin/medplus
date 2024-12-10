@@ -10,8 +10,13 @@ function btnSalva(modal_id){
         success();
     }).fail(function(){fail()});
 }
-function dayClick(element){
-    modal_component('prenota-prenota_seduta_planning','prenota_seduta_planning',{});
+function dayClick(element,day){
+    const modal = element.closest('.modal');
+    const _data={
+        id_terapista:modal.querySelector('#prenota_terapista').value,
+        date:modal.querySelector('#prenota_year').value+'-'+modal.querySelector('#prenota_month').value+'-'+day
+    }
+    modal_component('prenota-prenota_seduta_planning','prenota_seduta_planning',_data);
 }
 function monthChange(element){
     const modal = element.closest('.modal');

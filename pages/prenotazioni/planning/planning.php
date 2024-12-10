@@ -45,13 +45,13 @@
         <div class="d-flex flex-column flex-fill">
             <div class="d-flex flex-column">
                 <div class="d-flex flex-fill my-1" >
-                    <input onclick="openCalendar(event,this)" class="hover mx-auto card-title text-center py-2 border-0 date-target" id="data" value="<?php echo unformat_date($data);?>" readonly/>
+                    <input onclick="openCalendar(event,this)" class="hover mx-auto card-title text-center py-2 border-0 date-target" id="data" value="<?php echo unformat_date($data);?>" onchange="changeDate()"readonly/>
                 </div>
                 <div class="d-flex mb-2">
                     <div class="d-flex flex-fill justify-content-center ">
                         <div class="w-35 d-flex flex-row text-center">
                             <div class="w-75 me-1">
-                                <select type="text" class="form-control" id="terapista" name="terapista" value="<?php echo $id_terapista??'';?>">
+                                <select type="text" class="form-control" id="terapista" name="terapista" value="<?php echo $id_terapista??'';?>" onchange="changeTerapista()">
                                     <?php
                                         foreach(Select('*')->from('terapisti')->get() as $value){
                                             $selected = (isset($id_terapista) && $id_terapista == $value['id']) ? 'selected' : '';

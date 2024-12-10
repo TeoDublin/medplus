@@ -107,6 +107,10 @@ function page_component(id, component,_data) {
         newModalInstance.show();
     });
 }
+function refresh(request){
+    const params = new URLSearchParams(request);
+    window.location.href = `${window.location.pathname}?${params.toString()}`
+}
 function resize(modal_id) {
     const modalDialog = document.querySelector(modal_id).querySelector('.modal-dialog');
     const btnResize = document.querySelector('.btn-resize');

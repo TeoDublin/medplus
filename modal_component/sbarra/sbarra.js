@@ -8,3 +8,6 @@ function btnSalva(){
     .fail(function() { fail(); });
 
 }
+function btnElimina(id){
+    $.post('post/delete.php',{table:'planning_motivi',id:id}).done(function(){success_and_refresh()}).fail(function(){fail()});
+}

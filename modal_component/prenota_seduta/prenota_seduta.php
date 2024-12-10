@@ -53,17 +53,14 @@
                                 for($j=1;$j<=7;$j++){
                                     $day=(int)date('N', strtotime("$year-$month-$current_day"));
                                     $last=$j==7?'flex-fill':'';
-                                    if($current_day>$daysInMonth)echo "<div class=\"c1 calendar-out $last\" onclick=\"dayClick(this);\"></div>";
-                                    else{
-                                        echo "<div class=\"c1 calendar-out $last\" onclick=\"dayClick(this);\">";
-                                        if($day==$j){
-                                            echo str_pad($current_day,2,'0',STR_PAD_LEFT);
-                                            $current_day++;
-                                        }
-                                        echo "</div>";
-                                        
+                                    if($current_day>$daysInMonth)echo "<div class=\"c1 calendar-out $last\">-</div>";
+                                    elseif($day==$j){
+                                        $day_value=str_pad($current_day,2,'0',STR_PAD_LEFT);
+                                        echo "<div class=\"c1 calendar-out $last\" onclick=\"dayClick(this,'{$day_value}');\">{$day_value}</div>";
+                                        $current_day++;
                                     }
-                                }?>
+                                    else echo "<div class=\"c1 calendar-out $last\">-</div>";
+                                }?> 
                             </div><?php
                             }
                     ?>
