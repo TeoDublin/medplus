@@ -20,20 +20,13 @@ function prenotaHoverRow(element){
         });
     }
 }
-function btnSalva(modal_id){
-    let _data = {table:'sedute_prenotate'};
-    let div_modal = document.querySelector('#'+modal_id);
-    div_modal.querySelectorAll('[name]').forEach(element=>{
-        _data[element.name]=element.value;
-    });
-    $.post('post/save.php',_data).done(function(){
-        div_modal.modalInstance.hide();
-        parent._tab(document.querySelector('[tab=trattamenti]'));
-        success();
-    }).fail(function(){fail()});
-}
-function prenotaSbarraClick(element){
+function prenotaSedutaClick(element){
     if(!element.classList.contains('sbarra')){
-        modal_component('planning-prenota_seduta_planning_ora', 'prenota_seduta_planning_ora', { 'row':element.getAttribute('row')});
+        const modal = element.closest('.modal');
+        let _data = { 
+            'row': element.getAttribute('row')
+        };
+        modal.querySelectorAll('[name]').forEach(named=>{_data[named.getAttribute('name')]=named.value;});
+        modal_component('planning-prenota_seduta_planning_ora', 'prenota_seduta_planning_ora', _data);
     }
 }

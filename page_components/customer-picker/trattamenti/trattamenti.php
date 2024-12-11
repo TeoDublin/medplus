@@ -133,7 +133,7 @@
                                                             <div class="cs3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta['stato_seduta']; ?></span></div>
                                                             <div class="cs3 d-flex align-items-center justify-content-center text-center me-2">
                                                                 <?php if(in_array($seduta['stato_seduta'],['Da Prenotare','Assente'])){?>
-                                                                    <button class="btn btn-primary flex-fill" onclick="prenotaSeduteClick(this)" onmouseenter="prenotaEnter(this)" onmouseleave="prenotaLeave(this)">PRENOTA</button><?php
+                                                                    <button class="btn btn-primary flex-fill" onclick="prenotaSeduteClick(this,<?php echo "{$seduta['id']},{$_REQUEST['id_cliente']}"; ?>)" onmouseenter="prenotaEnter(this)" onmouseleave="prenotaLeave(this)">PRENOTA</button><?php
                                                                 }
                                                                 else{?>
                                                                     <button class="btn btn-dark flex-fill" disabled><?php echo strtoupper($seduta['stato_seduta']);?> </button><?php

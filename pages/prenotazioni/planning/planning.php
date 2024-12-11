@@ -3,7 +3,7 @@
 <?php 
     $rows=17;
     $id_terapista = cookie('id_terapista',first('terapisti')['id']);
-    $data = cookie('date',date('Y-m-d'));
+    $data = cookie('data',date('Y-m-d'));
     $result=Select('*')->from('planning')->where("id_terapista={$id_terapista}")->and("data='{$data}'")->get();
     function _ora($row){
         $ora = new DateTime('07:00');
@@ -106,6 +106,3 @@
 </div>
 <?php component('calendar','js'); ?>
 <?php script('pages/prenotazioni/planning/planning.js'); ?>
-<script>
-    sessionStorage.setItem('prenotazioni_url',"<?php echo url('prenotazioni.php?date=');?>");
-</script>

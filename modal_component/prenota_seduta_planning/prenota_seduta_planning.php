@@ -1,7 +1,7 @@
 <?php style('modal_component/prenota_seduta_planning/prenota_seduta_planning.css');
 $rows=17;
 $id_terapista = $_REQUEST['id_terapista'] ?? first('terapisti')['id'];
-$data = $_REQUEST['date'] ??date('Y-m-d');
+$data = $_REQUEST['data'] ??date('Y-m-d');
 $result=Select('*')->from('planning')->where("id_terapista={$id_terapista}")->and("data='{$data}'")->get();
 function _ora($row){
     $ora = new DateTime('07:00');
@@ -41,6 +41,10 @@ $_planning = function ($row)use($result){
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content px-3 text-center">
+            <input type="text" name="id_terapista" value="<?php echo $_REQUEST['id_terapista']; ?>" hidden/>
+            <input type="text" name="id_seduta" value="<?php echo $_REQUEST['id_seduta']; ?>" hidden/>
+            <input type="text" name="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
+            <input type="text" name="data" value="<?php echo $data; ?>" hidden/>
             <div class="modal-header">
                 <h4>Planning</h4>
                 <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
@@ -70,13 +74,13 @@ $_planning = function ($row)use($result){
                                         for($i=1;$i<=$rows;$i++){ ?>
                                             <tr><?php
                                                 for($col=1;$col<=3;$col++){$row=$i+($rows*($col-1)); $planning=$_planning($row);?>
-                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" prenota_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
                                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_inizio<?php echo _ora($row);?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
                                                     </td>
-                                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" prenota_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="prenotaSbarraClick(this);"  onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="prenotaSedutaClick(this);"  onmouseenter="prenotaHoverRow(this);">
                                                         <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
                                                     </td>
-                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" prenota_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
                                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note" id="input_note<?php echo _ora($row);?>"/>
                                                     </td><?php
                                                     }?>

@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     setCookie('currentMonth',month - 1,1);
                     setCookie('currentYear',year,1);
                     setCookie('currentDay',day,1);
-                    refresh({date:`${year}-${month}-${day}`});
+                    refresh({data:`${year}-${month}-${day}`});
                 }
             }
         });

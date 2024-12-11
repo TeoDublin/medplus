@@ -1,12 +1,15 @@
 <?php style('modal_component/prenota_seduta/prenota_seduta.css');
-    $date=$_REQUEST['date']??now('Y-m-d');
-    $month=$_REQUEST['month']??substr($date,5,2);
-    $year=substr($date,0,4);
+    $data=$_REQUEST['data']??now('Y-m-d');
+    $month=$_REQUEST['month']??substr($data,5,2);
+    $year=substr($data,0,4);
+    $today=date('Y-m-d');
 ?>
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content px-3 text-center">
             <div class="modal-header">
+                <input type="text" value="<?php echo $_REQUEST['id_seduta']; ?>" id="id_seduta" hidden/>
+                <input type="text" value="<?php echo $_REQUEST['id_cliente']; ?>" id="id_cliente" hidden/>
                 <div class="w-30 me-1">
                     <select class="form-select" id="prenota_terapista"  value=""><?php
                         foreach(Select('*')->from('terapisti')->get() as $terapista){
@@ -34,7 +37,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body">
-                <input name="date" value="<?php echo $date;?>" hidden/>
+                <input name="data" value="<?php echo $data;?>" hidden/>
                 <div class="p-2 border rounded">
                     <div class="d-flex flex-row">
                         <div class="c1 day-name" data-full="lunedi" data-short="Lu"></div>
@@ -56,7 +59,8 @@
                                     if($current_day>$daysInMonth)echo "<div class=\"c1 calendar-out $last\">-</div>";
                                     elseif($day==$j){
                                         $day_value=str_pad($current_day,2,'0',STR_PAD_LEFT);
-                                        echo "<div class=\"c1 calendar-out $last\" onclick=\"dayClick(this,'{$day_value}');\">{$day_value}</div>";
+                                        $passed = "{$year}-{$month}-{$day_value}" < $today ? 'passed' : '';
+                                        echo "<div class=\"c1 calendar-in $last $passed\" onclick=\"dayClick(this,'{$day_value}');\">{$day_value}</div>";
                                         $current_day++;
                                     }
                                     else echo "<div class=\"c1 calendar-out $last\">-</div>";

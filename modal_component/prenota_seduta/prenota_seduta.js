@@ -14,7 +14,9 @@ function dayClick(element,day){
     const modal = element.closest('.modal');
     const _data={
         id_terapista:modal.querySelector('#prenota_terapista').value,
-        date:modal.querySelector('#prenota_year').value+'-'+modal.querySelector('#prenota_month').value+'-'+day
+        data:modal.querySelector('#prenota_year').value+'-'+modal.querySelector('#prenota_month').value+'-'+day,
+        id_seduta: modal.querySelector('#id_seduta').value,
+        id_cliente: modal.querySelector('#id_cliente').value
     }
     modal_component('prenota-prenota_seduta_planning','prenota_seduta_planning',_data);
 }

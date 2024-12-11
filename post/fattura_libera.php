@@ -16,7 +16,7 @@
     $pdf->MultiCell($width +10, 6, trim($_REQUEST['dati']), 0, 'C');
     $pdf->Ln();
     $pdf->SetFont('Arial', 'B', 14);
-    $pdf->MultiCell(0, 6, trim($_REQUEST['date']));
+    $pdf->MultiCell(0, 6, trim($_REQUEST['data']));
     $pdf->Ln();
 
     $pdf->SetFont('Arial', 'B', 14);

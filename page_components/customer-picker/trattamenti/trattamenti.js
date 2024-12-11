@@ -10,8 +10,8 @@ function aggiungiEnter(element){
 function aggiungiLeave(element){
     element.closest('[name=row_percorso]').setAttribute('data-bs-toggle','collapse');
 }
-function prenotaSeduteClick(element){
-    modal_component('customer-picker_prenota_seduta','prenota_seduta',{'id_seduta':element.closest('[name=row_percorso]').querySelector('[name=id_seduta]').value});
+function prenotaSeduteClick(element,id_seduta,id_cliente){
+    modal_component('customer-picker_prenota_seduta','prenota_seduta',{'id_seduta':element.closest('[name=row_percorso]').querySelector('[name=id_seduta]').value,id_seduta:id_seduta,id_cliente:id_cliente});
 }
 function prenotaEnter(element){
     element.closest('[name=row_percorso]').removeAttribute('data-bs-toggle');
