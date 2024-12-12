@@ -3,8 +3,8 @@ function prenotaHoverRow(element){
     document.querySelectorAll('.sbarra_hovered').forEach(cell=>{cell.classList.remove('sbarra_hovered');})
     document.querySelectorAll('.hovered').forEach(cell=>{cell.classList.remove('hovered');})
     if(element.classList.contains('sbarra')){
-        const prenota_motivi_id = element.getAttribute('prenota_motivi_id');
-        document.querySelectorAll(`[prenota_motivi_id="${prenota_motivi_id}"]`).forEach(cell => {
+        const sedute_prenotate_id = element.getAttribute('sedute_prenotate_id');
+        document.querySelectorAll(`[sedute_prenotate_id="${sedute_prenotate_id}"]`).forEach(cell => {
             cell.classList.add('sbarra_hovered');
             cell.querySelectorAll('input').forEach(cellInput=>{
                 cellInput.readOnly=true;
@@ -24,7 +24,8 @@ function prenotaSedutaClick(element){
     if(!element.classList.contains('sbarra')){
         const modal = element.closest('.modal');
         let _data = { 
-            'row': element.getAttribute('row')
+            'row': element.getAttribute('row'),
+            'sedute_prenotate_id':element.getAttribute('sedute_prenotate_id')
         };
         modal.querySelectorAll('[name]').forEach(named=>{_data[named.getAttribute('name')]=named.value;});
         modal_component('planning-prenota_seduta_planning_ora', 'prenota_seduta_planning_ora', _data);

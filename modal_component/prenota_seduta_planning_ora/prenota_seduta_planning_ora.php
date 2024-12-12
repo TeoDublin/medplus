@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <?php 
-                    $result=$_REQUEST['planning_motivi_id']?Select('*')->from('planning_motivi')->where("id={$_REQUEST['planning_motivi_id']}")->first():[];
+                    $result=$_REQUEST['sedute_prenotate_id']?Select('*')->from('sedute_prenotate')->where("id={$_REQUEST['sedute_prenotate_id']}")->first():[];
                     if(empty($result)){
                         $planning=Select('*')->from('planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}'")->get();
                     }

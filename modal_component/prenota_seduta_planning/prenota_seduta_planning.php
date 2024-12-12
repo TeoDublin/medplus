@@ -16,20 +16,21 @@ $_planning = function ($row)use($result){
         $row=(int)$row;
         $row_inizio=(int)$plan['row_inizio'];
         $row_fine=(int)$plan['row_fine'];
+
         if($row_inizio==$row){
-            $class='sbarra sbarra_start';
+            $class="{$plan['origin']} {$plan['origin']}_start";
             $id=$plan['id'];
             $motivo=$plan['motivo'];
             break;
         }
         elseif($row>$row_inizio&&$row<$row_fine){
-            $class='sbarra sbarra_middle';
+            $class="{$plan['origin']} {$plan['origin']}_middle";
             $id=$plan['id'];
             $motivo=$plan['motivo'];
             break;
         }
         elseif($row_fine==$row){
-            $class='sbarra sbarra_end';
+            $class="{$plan['origin']} {$plan['origin']}_end";
             $id=$plan['id'];
             $motivo=$plan['motivo'];
             break;
@@ -45,6 +46,7 @@ $_planning = function ($row)use($result){
             <input type="text" name="id_seduta" value="<?php echo $_REQUEST['id_seduta']; ?>" hidden/>
             <input type="text" name="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
             <input type="text" name="data" value="<?php echo $data; ?>" hidden/>
+            <input type="text" name="isert_id" value="<?php echo $_REQUEST['isert_id']; ?>" hidden/>
             <div class="modal-header">
                 <h4>Planning</h4>
                 <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
@@ -74,13 +76,13 @@ $_planning = function ($row)use($result){
                                         for($i=1;$i<=$rows;$i++){ ?>
                                             <tr><?php
                                                 for($col=1;$col<=3;$col++){$row=$i+($rows*($col-1)); $planning=$_planning($row);?>
-                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
                                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_inizio<?php echo _ora($row);?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
                                                     </td>
-                                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="prenotaSedutaClick(this);"  onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="prenotaSedutaClick(this);"  onmouseenter="prenotaHoverRow(this);">
                                                         <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
                                                     </td>
-                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
                                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note" id="input_note<?php echo _ora($row);?>"/>
                                                     </td><?php
                                                     }?>
@@ -93,10 +95,6 @@ $_planning = function ($row)use($result){
                     </div>
                 </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" data-bs-dismiss="modal" class="btn btn-secondary">Anulla</a>
-                <a href="#" class="btn btn-primary" onclick="btnSalva('<?php echo $_REQUEST['id_modal'];?>')">Salva</a>
             </div>
         </div>
     </div>

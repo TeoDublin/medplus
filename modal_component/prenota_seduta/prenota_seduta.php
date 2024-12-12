@@ -1,7 +1,7 @@
 <?php style('modal_component/prenota_seduta/prenota_seduta.css');
     $data=$_REQUEST['data']??now('Y-m-d');
     $month=$_REQUEST['month']??substr($data,5,2);
-    $year=substr($data,0,4);
+    $year=$_REQUEST['year']??substr($data,0,4);
     $today=date('Y-m-d');
 ?>
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
@@ -18,14 +18,14 @@
                     </select>
                 </div>
                 <div class="w-30 me-1">
-                    <select class="form-select" id="prenota_month"  value="" onchange="monthChange(this)"><?php
+                    <select class="form-select" id="prenota_month"  value="" onchange="dateChange(this)"><?php
                         for($i=1;$i<=12;$i++){
                             echo "<option value=\"{$i}\" class=\"ps-4  bg-white\"".($i==$month?'selected':'').">".italian_month($i)."</option>";
                         }?>
                     </select>
                 </div>
                 <div class="w-30">
-                    <select class="form-select" id="prenota_year"  value=""><?php
+                    <select class="form-select" id="prenota_year"  value="" onchange="dateChange(this)"><?php
                         for($i=1;$i<=5;$i++){
                             $add_year=(int)$year-3+$i;
                             echo "<option value=\"{$add_year}\" class=\"ps-4  bg-white\"".($add_year==$year?'selected':'').">".$add_year."</option>";
