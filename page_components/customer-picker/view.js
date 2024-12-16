@@ -1,18 +1,19 @@
 function _tab(element) {
-    const page_component = document.querySelector('.page_component');
-    document.querySelectorAll('.active').forEach(active=>{ active.classList.remove('active');});
+    const modal = element.closest('.modal');
+    const page_component = modal.querySelector('.page_component');
+    modal.querySelectorAll('.active').forEach(active=>{ active.classList.remove('active');});
     $.post(element.getAttribute('target'),{skip_cookie:true,component:"customer-picker"}).done(response => {
         while (page_component.firstChild) {
             page_component.removeChild(page_component.firstChild);
         }
         page_component.innerHTML = response;
-        append_scripts(page_component);
+        append_scripts(modal);
         element.classList.add('active');
     });
     if(element.getAttribute('tab')=='anagrafica'){
-        document.querySelector('#modal_planning').querySelector('.modal-footer').removeAttribute('hidden');
+        modal.querySelector('.modal-footer').removeAttribute('hidden');
     }
     else{
-        document.querySelector('#modal_planning').querySelector('.modal-footer').setAttribute('hidden','');
+        modal.querySelector('.modal-footer').setAttribute('hidden','');
     }
 }

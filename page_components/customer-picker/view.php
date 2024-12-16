@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Prenota</h4>
                 <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="container"></div>
             <div class="modal-body" id="modal_body_prenota">

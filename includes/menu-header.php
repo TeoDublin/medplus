@@ -4,7 +4,7 @@
             <form action="post/menu.php" method="post">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="preferencesModalLabel">Preferenze</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
@@ -28,7 +28,7 @@
                     </div>            
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">ANNULLA</button>
+                    <button type="button" class="btn btn-primary">ANNULLA</button>
                     <button type="submit" class="btn btn-primary">Salva Modifiche</button>
                 </div>
             </form>

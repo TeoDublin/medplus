@@ -19,13 +19,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h1 class="modal-title fs-5" id="modalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
                     </div>
                     <div class="modal-body" id="modal-body">
                     ...
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ANNULLA</button>
+                        <button type="button" class="btn btn-secondary">ANNULLA</button>
                         <button type="button" class="btn btn-primary btn-add">SALVA</button>
                     </div>
                 </div>

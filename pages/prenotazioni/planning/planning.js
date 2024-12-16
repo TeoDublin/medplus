@@ -53,8 +53,10 @@ function hoverRow(element){
 
 }
 function sbarraClick(element){
-    const planning_motivi_id = element.getAttribute('planning_motivi_id');
-    modal_component('planning', 'sbarra', { 'id_terapista': document.querySelector('#terapista').value,'data':document.querySelector('#data').value, 'planning_motivi_id':planning_motivi_id,'row': element.getAttribute('row')});
+    if(!element.classList.contains('seduta')){
+        const planning_motivi_id = element.getAttribute('planning_motivi_id');
+        modal_component('planning', 'sbarra', { 'id_terapista': document.querySelector('#terapista').value,'data':document.querySelector('#data').value, 'planning_motivi_id':planning_motivi_id,'row': element.getAttribute('row')});
+    }
 }
 function clickPrenota(element){
     page_component('planning', 'customer-picker', {'id_terapista':document.querySelector('#terapista').value,'data':document.querySelector('#data').value});

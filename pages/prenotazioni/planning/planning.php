@@ -18,24 +18,23 @@
             $row=(int)$row;
             $row_inizio=(int)$plan['row_inizio'];
             $row_fine=(int)$plan['row_fine'];
+            $class='';
             if($row_inizio==$row){
-                $class='sbarra sbarra_start';
+                $class.=" {$plan['origin']} {$plan['origin']}_start";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
-                break;
             }
-            elseif($row>$row_inizio&&$row<$row_fine){
-                $class='sbarra sbarra_middle';
+            if($row>$row_inizio&&$row<$row_fine){
+                $class.=" {$plan['origin']} {$plan['origin']}_middle";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
-                break;
             }
-            elseif($row_fine==$row){
-                $class='sbarra sbarra_end';
+            if($row_fine==$row){
+                $class.=" {$plan['origin']} {$plan['origin']}_end";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
-                break;
             }
+            if(!empty($class))break;
         }
         return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo)];
     };
@@ -49,8 +48,8 @@
                 </div>
                 <div class="d-flex mb-2">
                     <div class="d-flex flex-fill justify-content-center ">
-                        <div class="w-35 d-flex flex-row text-center">
-                            <div class="w-75 me-1">
+                        <div class="w-35 d-flex flex-column text-center">
+                            <div class="w-100 me-1">
                                 <select type="text" class="form-control" id="terapista" name="terapista" value="<?php echo $id_terapista??'';?>" onchange="changeTerapista()">
                                     <?php
                                         foreach(Select('*')->from('terapisti')->get() as $value){
@@ -60,8 +59,8 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="w-25" onclick="clickPrenota(this);">
-                                <button class="btn btn-primary w-100">PRENOTA</button>
+                            <div class="w-100 mt-2" onclick="clickPrenota(this);">
+                                <button class="btn btn-primary w-100">PRENOTAZIONI</button>
                             </div>
                         </div>
                     </div>

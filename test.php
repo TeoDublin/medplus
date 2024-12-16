@@ -10,14 +10,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Modal title</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+          <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
         </div><div class="container"></div>
         <div class="modal-body">
           Content for the dialog / modal goes here.
          <a href="#" class="btn btn-primary" onclick="openMyModal2()">Launch (my)modal(2)</a>
         </div>
         <div class="modal-footer">
-          <a href="#" data-bs-dismiss="modal" class="btn btn-outline-dark">Close</a>
+          <a href="#" class="btn btn-outline-dark">Close</a>
         </div>
       </div>
     </div>
@@ -27,7 +27,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">2nd Modal title</h4>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+          <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
         </div><div class="container"></div>
         <div class="modal-body">
           Content for the dialog / modal goes here.
@@ -37,7 +37,7 @@
           Content for the dialog / modal goes here.
         </div>
         <div class="modal-footer">
-          <a href="#" data-bs-dismiss="modal" class="btn btn-outline-dark">Close</a>
+          <a href="#" class="btn btn-outline-dark">Close</a>
           <a href="#" class="btn btn-primary">Save changes</a>
         </div>
       </div>

@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Sbarra</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="container"></div>
             <div class="modal-body">
@@ -74,7 +74,7 @@
                 <?php if(!empty($result)) {
                     echo "<a href=\"#\" data-bs-dismiss=\"modal\" class=\"btn btn-tertiary\" onclick=\"btnElimina({$result['id']})\">Elimina</a>";
                 }?>
-                <a href="#" data-bs-dismiss="modal" class="btn btn-secondary">Anulla</a>
+                <a href="#" class="btn btn-secondary">Anulla</a>
                 <a href="#" class="btn btn-primary" onclick="btnSalva()">Salva</a>
             </div>
         </div>
