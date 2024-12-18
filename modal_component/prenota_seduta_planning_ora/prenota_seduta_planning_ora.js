@@ -5,6 +5,7 @@ function btnSalva(element){
     $.post('post/save.php',_data).done(function(){ 
         closeAllModal();
         page_component('planning', 'customer-picker', {
+            reset: true,
             tab:'trattamenti',
             id_terapista:modal.querySelector('[name=id_terapista]').value,
             data:modal.querySelector('[name=data]').value,

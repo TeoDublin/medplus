@@ -47,7 +47,15 @@ function refresh(element){
     modal_component('customer-picker_trattamenti','percorso_terapeutico',{'id_cliente':document.querySelector('#id_cliente').value,'id':element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value});
 }
 function deleteSedutaPrenotata(id,data){
-    $.post('post/delete.php',{table:'sedute_prenotate',id:id}).done(()=>{success();
+    $.post('post/delete.php',{table:'sedute_prenotate',id:id}).done(()=>{
+        success();
+        closeAllModal();
         page_component('planning', 'customer-picker', data);
     }).fail(function(){fail()});
+}
+function enterSedutaPrenotata(element){
+    element.closest('div.flex-row').classList.add('bg-danger');
+}
+function leaveSedutaPrenotata(element){
+    element.closest('div.flex-row').classList.remove('bg-danger');
 }

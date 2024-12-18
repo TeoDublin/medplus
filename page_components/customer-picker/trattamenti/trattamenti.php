@@ -174,14 +174,22 @@
                                                                         <span class="">Elimina</span>
                                                                     </div>
                                                                 </div>
-                                                                <?php foreach($sedute_prenotate as $seduta_prenotata){?>
+                                                                <?php foreach($sedute_prenotate as $seduta_prenotata){
+                                                                    $deleteSedutaData=str_replace('/r/n','',$seduta_prenotata['id'].',
+                                                                    {
+                                                                        tab:\'trattamenti\',
+                                                                        id_terapista:'.$seduta_prenotata['id_terapista'].',
+                                                                        data:\''.$seduta_prenotata['data'].'\',
+                                                                        id_cliente:'.$seduta_prenotata['id_cliente'].',
+                                                                        reset:true
+                                                                    }');?>
                                                                     <div class="flex-row titles w-100 d-flex">
                                                                         <div class="csp1 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['terapista']; ?></span></div>
                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['data']; ?></span></div>
                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
-                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['stato_prenotazione']; ?></span></div>
-                                                                        <div class="csp3 d-flex align-items-center justify-content-center text-center" onclick="deleteSedutaPrenotata(<?php echo $seduta_prenotata['id'].',{tab:\'trattamenti\',id_terapista:'.$seduta_prenotata['id_terapista'].',data:\''.$seduta_prenotata['data'].'\',id_cliente:'.$seduta_prenotata['id_cliente'].'}'; ?>)"><?php echo icon('bin.svg','black',16,16); ?></div>
+                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center statoHover"><span class=""><?php echo $seduta_prenotata['stato_prenotazione']; ?></span></div>
+                                                                        <div class="csp3 d-flex align-items-center justify-content-center text-center delHover" onclick="deleteSedutaPrenotata(<?php echo $deleteSedutaData; ?>)" onmouseenter="enterSedutaPrenotata(this);" onmouseleave="leaveSedutaPrenotata(this);"><?php echo icon('bin.svg','black',16,16); ?></div>
                                                                     </div><?php                                        
                                                                 } ?>
                                                             </div>

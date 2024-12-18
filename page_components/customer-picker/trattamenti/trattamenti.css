@@ -40,3 +40,9 @@
     padding-right:40px;
     padding-top:8px;
 }
+.delHover:hover{
+    cursor: pointer;
+}
+.statoHover:hover{
+    cursor: pointer;
+}
