@@ -1,4 +1,5 @@
 function _tab(element) {
+    console.log("got here");
     const modal = element.closest('.modal');
     const page_component = modal.querySelector('.page_component');
     modal.querySelectorAll('.active').forEach(active=>{ active.classList.remove('active');});

@@ -7,7 +7,6 @@ function setCookie(name, value, days) {
     }
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
-
 function getCookie(name) {
     const nameEQ = name + "=";
     const cookiesArray = document.cookie.split(';');
@@ -19,21 +18,17 @@ function getCookie(name) {
     }
     return null;
 }
-
 function eraseCookie(name) {   
     document.cookie = name + "=; Max-Age=-99999999; path=/";
 }
-
 function openModal(id) {
     var modal = new bootstrap.Modal(document.getElementById(id));
     modal.show();
 }
-
 function success_and_refresh() {
     sessionStorage.setItem('showSuccessToast', 'true');
     window.location.reload(true);
 }
-
 async function async_success_and_refresh(callbackName, callbackParams) {
     sessionStorage.setItem('showSuccessToast', 'true');
     sessionStorage.setItem('callbackToExecute', 'true');
@@ -41,7 +36,6 @@ async function async_success_and_refresh(callbackName, callbackParams) {
     sessionStorage.setItem('callbackName', callbackName);
     window.location.reload(true);
 }
-
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {
         const toastLiveExample = document.getElementById('successToast');
@@ -63,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
 function success(){
     const toastLiveExample = document.getElementById('successToast')
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
@@ -81,7 +74,6 @@ function hoverIconWarning(element) {
         row.classList.remove('warning');
     });
 };
-
 function append_scripts(element){
     const scripts = element.querySelectorAll('script');
     scripts.forEach(script => {
@@ -110,7 +102,6 @@ function modal_component(id, component,_data) {
         newModalInstance.show();
     });
 }
-
 function page_component(id, component,_data) {
     const modal_id = 'modal_'+id;
     _data['skip_cookie']=true;_data['id_modal']=modal_id;_data['component']=component;
@@ -125,6 +116,10 @@ function page_component(id, component,_data) {
         const modalElement = document.getElementById(modal_id);
         const newModalInstance = new bootstrap.Modal(modalElement, {});
         modalElement.modalInstance = newModalInstance;
+        const modalCookie=getCookie('#'+modal_id+'_fullscreen');
+        if(modalCookie!==null){
+            resize('#'+modal_id);
+        }
         newModalInstance.show();
     });
 }
@@ -133,17 +128,19 @@ function refresh(request){
     window.location.href = `${window.location.pathname}?${params.toString()}`
 }
 function resize(modal_id) {
+    console.log("got here");
     const modalDialog = document.querySelector(modal_id).querySelector('.modal-dialog');
     const btnResize = document.querySelector('.btn-resize');
     if (modalDialog.classList.contains('modal-fullscreen')) {
         modalDialog.classList.remove('modal-fullscreen');
         btnResize.style.setProperty('--bs-btn-resize-bg', 'var(--bs-btn-fullscreen-icon)');
+        eraseCookie(modal_id+'_fullscreen');
     } else {
         modalDialog.classList.add('modal-fullscreen');
         btnResize.style.setProperty('--bs-btn-resize-bg', 'var(--bs-btn-resize-icon)');
+        setCookie(modal_id+'_fullscreen');
     }
 }
-
 function closeModal(element) {
     const modalElement = element.closest('.modal');
     if (modalElement) {
@@ -155,7 +152,6 @@ function closeModal(element) {
         }
     }
 }
-
 function closeAllModal() {
     document.querySelectorAll('.modal').forEach(modalElement => {
         if (modalElement) {

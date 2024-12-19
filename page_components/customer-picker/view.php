@@ -34,3 +34,4 @@
     </div>
 </div>
 <?php script("page_components/{$component}/view.js"); ?>
+<script>_tab(document.querySelector('.<?php echo $tab;?>'))</script>
