@@ -55,7 +55,23 @@
     $pdf->SetY(-40);
     $pdf->MultiCell(0, 4, trim($_REQUEST['footer']),0,'C');
     
-    
-    $file=fatture_path(($_REQUEST['filename']??datetime()).'.pdf');
+    $percorso=Select('p.id, c.nominativo')->from('percorsi_pagamenti','p')->left_join('clienti c on p.id_cliente = c.id')->where("p.id_percorso={$_REQUEST['id_percorso']}")->first();
+    $link=str_replace(' ','_',$percorso['nominativo'].'_'.datetime().'.pdf');
+    $file=fatture_path($link);
     $pdf->Output('F', root($file));
-    echo url($file);
+    
+    $table='fatture';
+    $data=[
+        'link'=>$link,
+        'prezzo'=>$_REQUEST['totale']-($_REQUEST['bollo']??0),
+        'index'=>$_REQUEST['index'],
+        'data'=>json_encode($_REQUEST)
+    ];
+    
+    $id=Insert($data)->into($table)->get();
+    Insert([
+        'id_percorso_pagamenti'=>$percorso['id'],
+        'id_cliente'=>$_REQUEST['id_cliente'],
+        'id_fattura'=>$id,
+        'stato'=>'Pendente'
+    ])->into('percorsi_pagamenti_fatture')->get();

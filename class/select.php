@@ -4,6 +4,7 @@
         protected $select;
         protected $from;
         protected $left_join;
+        protected $inner_join;
         protected $where;
         protected $query;
         protected $limit;
@@ -21,6 +22,10 @@
         }
         public function left_join(string $left_join){
             $this->left_join[]=" LEFT JOIN {$left_join} ";
+            return $this;
+        }
+        public function inner_join(string $left_join){
+            $this->inner_join[]=" INNER JOIN {$left_join} ";
             return $this;
         }
         public function where(string $where){
@@ -53,6 +58,7 @@
             }
             $query="SELECT {$this->select} FROM {$this->from}";
             if(!empty($this->left_join))$query.=implode('',$this->left_join);
+            if(!empty($this->inner_join))$query.=implode('',$this->inner_join);
             if(!empty($this->where))$query.=" WHERE {$this->where}";
             if(!empty($this->orderby))$query.=" ORDER BY {$this->orderby}";
             if(!empty($this->limit))$query.=" LIMIT {$this->limit}";
@@ -98,6 +104,7 @@
             }
             $query="SELECT count({$this->alias}.id) as total FROM {$this->from}";
             if(!empty($this->left_join))$query.=implode('',$this->left_join);
+            if(!empty($this->inner_join))$query.=implode('',$this->inner_join);
             if(!empty($this->where))$query.=" WHERE {$this->where}";
             $total= SQL()->select($query)[0]['total'];
             $this->limit??=(int)cookie('limit',14);

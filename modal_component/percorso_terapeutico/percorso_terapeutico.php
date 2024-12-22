@@ -2,6 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Percorso Terapeutico</h4>
+                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>                
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="container"></div>

@@ -1,12 +1,10 @@
-function btnSalva(modal_id){
+function btnSalva(element){
     let _data = {};
-    let div_modal = document.querySelector('#'+modal_id);
-    div_modal.querySelectorAll('[name]').forEach(element=>{
-        _data[element.name]=element.value;
-    });
+    const mnodal = element.closest('.modal');
+    mnodal.querySelectorAll('[name]').forEach(element=>{ _data[element.name]=element.value;});
     $.post('post/sedute.php',_data).done(function(){
-        div_modal.modalInstance.hide();
-        parent._tab(document.querySelector('[tab=trattamenti]'));
+        closeAllModal();
+        modal_component('percorsi','percorsi',_data);
         success();
     }).fail(function(){fail()});
 }

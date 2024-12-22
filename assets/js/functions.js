@@ -74,6 +74,13 @@ function hoverIconWarning(element) {
         row.classList.remove('warning');
     });
 };
+function hoverIconAdd(element) {
+    const row = element.closest('tr');
+    row.classList.add('success');
+    element.addEventListener('mouseleave', function() {
+        row.classList.remove('success');
+    });
+};
 function append_scripts(element){
     const scripts = element.querySelectorAll('script');
     scripts.forEach(script => {
@@ -99,6 +106,10 @@ function modal_component(id, component,_data) {
         const modalElement = document.getElementById(modal_id);
         const newModalInstance = new bootstrap.Modal(modalElement, {});
         modalElement.modalInstance = newModalInstance;
+        const modalCookie=getCookie('#'+modal_id+'_fullscreen');
+        if(modalCookie!==null){
+            resize('#'+modal_id);
+        }
         newModalInstance.show();
     });
 }
@@ -128,7 +139,6 @@ function refresh(request){
     window.location.href = `${window.location.pathname}?${params.toString()}`
 }
 function resize(modal_id) {
-    console.log("got here");
     const modalDialog = document.querySelector(modal_id).querySelector('.modal-dialog');
     const btnResize = document.querySelector('.btn-resize');
     if (modalDialog.classList.contains('modal-fullscreen')) {

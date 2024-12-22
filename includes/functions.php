@@ -14,6 +14,9 @@
     function root_path(string $path): string {
         return "/".PROJECT_NAME."/{$path}";
     }
+    function fatture_path(string $filename):string{
+        return "archive/fatture/{$filename}";
+    }
     function url(string $path): string {
         $rootUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
         return $rootUrl.root_path("{$path}");

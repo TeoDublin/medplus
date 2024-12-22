@@ -1,11 +1,11 @@
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+<div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Aggiungi Trattamento</h4>
+                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
-            <div class="container"></div>
-            <div class="modal-body">
+            <div class="modal-body  overflow-auto flex-grow-1">
                 <?php 
                     $result=$_REQUEST['id']?Select('*')->from('sedute')->where("id={$_REQUEST['id']}")->first():[];
                     $trattamenti = Select('t.*')
@@ -69,17 +69,17 @@
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_tabellare" hidden>
                         <label for="prezzo_tabellare" class="form-label" >Prezzo tabellare</label>
-                        <input type="number" class="form-control" id="prezzo_tabellare" value="" read-only disabled/> 
+                        <input type="number" class="form-control" id="prezzo_tabellare" name="prezzo_tabellare" value="" read-only disabled/> 
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo" hidden>
                         <label for="prezzo" class="form-label" >Prezzo</label>
                         <input type="number" class="form-control" id="prezzo" name="prezzo" value="" onchange="changePrezzo(this);"/> 
                     </div>
             </div>
-            <div class="modal-footer">
-                <a href="#" class="btn btn-secondary">Anulla</a>
-                <a href="#" class="btn btn-primary" onclick="btnSalva('<?php echo $_REQUEST['id_modal'];?>')">Salva</a>
-            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn btn-secondary">Anulla</a>
+            <a href="#" class="btn btn-primary" onclick="btnSalva(this)">Salva</a>
         </div>
     </div>
 </div>

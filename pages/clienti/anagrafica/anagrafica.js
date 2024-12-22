@@ -9,9 +9,15 @@ function searchClick(){
     window.location.href=window.location.href+"?search="+document.querySelector('.input-search').value;
 }
 function editClick(element){
-    if(!element.classList.contains('warning')){
+    if(!element.classList.contains('warning')&&!element.classList.contains('success')){
         modal(element.getAttribute('rowId'));
     }
+}
+function addPercorso(element){
+    modal_component('percorsi','percorsi',{id_cliente:element.closest('tr').getAttribute('rowid')});
+}
+function addPercorsoPagamento(element){
+    modal_component('percorsi','percorsi_pagamenti',{id_cliente:element.closest('tr').getAttribute('rowid')});
 }
 function modal(id){
     let _data={ 'name':'clienti','skip_cookie':true,'id_cliente':id };

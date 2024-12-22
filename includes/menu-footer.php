@@ -14,10 +14,10 @@
         exit: document.querySelector('.menu-exit'),
         setup: document.querySelector('.menu-setup'),
         users: document.querySelector('#users'),
-        impostazioni: document.querySelector('#impostazioni'),
-        prenota: document.querySelector('#prenota'),
-        clienti: document.querySelector('#clienti'),
-        fattura: document.querySelector('#fattura'),
+        impostazioni: document.querySelector('#menu-impostazioni'),
+        prenota: document.querySelector('#menu-prenota'),
+        clienti: document.querySelector('#menu-clienti'),
+        fattura: document.querySelector('#menu-fattura'),
         start: function(){
             if(getCookie("menu")=="show"){
                 this.menuVertical.classList.remove('hide');

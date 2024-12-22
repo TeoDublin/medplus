@@ -59,9 +59,6 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="w-100 mt-2" onclick="clickPrenota(this);">
-                                <button class="btn btn-primary w-100">PRENOTAZIONI</button>
-                            </div>
                         </div>
                     </div>
                 </div>

@@ -3,13 +3,9 @@ function btnSalva(element){
     const modal = element.closest('.modal');
     modal.querySelectorAll('[name]').forEach(named=>{_data[named.getAttribute('name')]=named.value;});
     $.post('post/save.php',_data).done(function(){ 
+        const id_cliente = modal.querySelector('[name=id_cliente]').value;
         closeAllModal();
-        page_component('planning', 'customer-picker', {
-            reset: true,
-            tab:'trattamenti',
-            id_terapista:modal.querySelector('[name=id_terapista]').value,
-            data:modal.querySelector('[name=data]').value,
-            id_cliente:modal.querySelector('[name=id_cliente]').value
-        });
+        modal_component('percorsi','percorsi',{'id_cliente':id_cliente});
+        success();
     }).fail(function(){fail()});
 }

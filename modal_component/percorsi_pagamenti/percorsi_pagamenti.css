@@ -1,0 +1,52 @@
+.cc1{
+    flex: 0 0 auto;
+    width: 10%;
+}
+.cc2{
+    flex: 1 1 auto;
+}
+.cc3{
+    flex: 0 0 auto;
+    width: 10%;
+}
+.cc4{
+    flex: 0 0 auto;
+    width: 15%;
+}
+
+.cs1{
+    flex: 0 0 auto;
+    width: 5%;
+}
+.cs2{
+    flex: 1 1 auto;
+}
+.cs3{
+    flex: 0 0 auto;
+    width: 30%;
+}
+
+.csp1{
+    flex: 1 1 auto;
+}
+.csp2{
+    flex: 0 0 auto;
+    width: 15%;
+}
+.csp3{
+    flex: 0 0 auto;
+    width: 5%;
+}
+
+.titles{
+    padding-bottom:8px;
+    padding-left:20px;
+    padding-right:40px;
+    padding-top:8px;
+}
+.delHover:hover{
+    cursor: pointer;
+}
+.statoHover:hover{
+    cursor: pointer;
+}

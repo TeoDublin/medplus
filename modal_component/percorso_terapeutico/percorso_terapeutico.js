@@ -5,8 +5,8 @@ function btnSalva(modal_id){
         _data[element.name]=element.value;
     });
     $.post('post/save.php',_data).done(function(){
-        div_modal.modalInstance.hide();
-        parent._tab(document.querySelector('[tab=trattamenti]'));
+        closeAllModal();
+        modal_component('percorsi','percorsi',_data);
         success();
     }).fail(function(){fail()});
 }

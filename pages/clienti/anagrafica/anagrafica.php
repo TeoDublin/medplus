@@ -33,6 +33,8 @@
                             <th scope="col" class="text-center" rowspan="2">cellulare</th>
                             <th scope="col" class="text-center" rowspan="2">Email</th>
                             <th scope="col" class="text-center" rowspan="2">Notizie Cliniche</th>
+                            <th scope="col" class="text-center" rowspan="2">Percorso Terapeutico</th>
+                            <th scope="col" class="text-center" rowspan="2">Pagamenti</th>
                             <th scope="col" class="text-center" rowspan="2">#</th>
                         </tr>
                     </thead>
@@ -44,7 +46,9 @@
                                 <td scope="col" class="text-center"><?php echo $row['cellulare'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['email'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['notizie_cliniche'];?></td>
-                                <td scope="col" class="text-center action-Elimina" title="Elimina" onclick="delClick(this);" onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?></td>
+                                <td scope="col" class="text-center hover-icon" title="Percorsi" onclick="addPercorso(this);" onmouseenter="hoverIconAdd(this)";><?php echo icon('heart.svg');?></td>
+                                <td scope="col" class="text-center hover-icon" title="Pagamenti" onclick="addPercorsoPagamento(this);" onmouseenter="hoverIconAdd(this)";><?php echo icon('dollar.svg');?></td>
+                                <td scope="col" class="text-center hover-icon" title="Elimina" onclick="delClick(this);" onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?></td>
                             </tr><?php
                         }?>
                     </tbody>
@@ -54,4 +58,5 @@
         <?php html()->pagination($table);?>
     </div>
 </div>
+<div id='percorsi'></div>
 <?php script('pages/clienti/anagrafica/anagrafica.js'); ?>

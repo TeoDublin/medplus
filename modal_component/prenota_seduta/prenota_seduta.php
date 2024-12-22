@@ -10,21 +10,21 @@
             <div class="modal-header">
                 <input type="text" value="<?php echo $_REQUEST['id_seduta']; ?>" id="id_seduta" hidden/>
                 <input type="text" value="<?php echo $_REQUEST['id_cliente']; ?>" id="id_cliente" hidden/>
-                <div class="w-30 me-1">
+                <div class="w-60 me-1">
                     <select class="form-select" id="prenota_terapista"  value=""><?php
                         foreach(Select('*')->from('terapisti')->get() as $terapista){
                             echo "<option value=\"{$terapista['id']}\" class=\"ps-4  bg-white\">{$terapista['terapista']}</option>";
                         }?>
                     </select>
                 </div>
-                <div class="w-30 me-1">
+                <div class="w-15 me-1">
                     <select class="form-select" id="prenota_month"  value="" onchange="dateChange(this)"><?php
                         for($i=1;$i<=12;$i++){
                             echo "<option value=\"{$i}\" class=\"ps-4  bg-white\"".($i==$month?'selected':'').">".italian_month($i)."</option>";
                         }?>
                     </select>
                 </div>
-                <div class="w-30">
+                <div class="w-15">
                     <select class="form-select" id="prenota_year"  value="" onchange="dateChange(this)"><?php
                         for($i=1;$i<=5;$i++){
                             $add_year=(int)$year-3+$i;
@@ -73,5 +73,5 @@
         </div>
     </div>
 </div>
-<div class="p-2" id="prenota-prenota_seduta_planning"></div>
+<div class="p-2" id="prenota_seduta_planning"></div>
 <?php script('modal_component/prenota_seduta/prenota_seduta.js'); ?>

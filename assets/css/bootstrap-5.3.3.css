@@ -532,7 +532,14 @@ color-scheme: dark;
 .warning:hover > td{
     color:white!important;
 }
-.action-Elimina:hover > svg{
+.success:hover {
+    background-color: var(--base-active-bg-tertiary) !important;
+    cursor: pointer;
+}
+.success:hover > td{
+    color:white!important;
+}
+.hover-icon:hover > svg{
     fill: white;
 }
 .action-Modifica:hover > svg{
@@ -8092,11 +8099,17 @@ border-width: 5px !important;
 .w-25 {
     width: 25% !important;
 }
+.w-30 {
+    width: 30% !important;
+}
 .w-35 {
     width: 35% !important;
 }
 .w-50 {
     width: 50% !important;
+}
+.w-60 {
+    width: 60% !important;
 }
 .w-75 {
     width: 75% !important;

@@ -6,7 +6,7 @@ div.calendar {
     text-align: center;
 }
 div.calendar-out{
-    background-color: rgba(var(--base-bg-primary-rgb),0.5)!important;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
 div.calendar-in{
     background-color: transparent;
@@ -39,7 +39,7 @@ div.calendar-current{
     content: attr(data-full);
 }
 .passed{
-    background-color: rgba(var(--base-bg-primary-rgb),0.5)!important;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
 }
 @media (max-width: 991.98px) {
     .day-name::after {
