@@ -1,36 +1,22 @@
 
-
-function delClick(element){
-    if(confirm('Sicuro di voler Eliminare?')){
-        $.post("post/delete.php?skip_cookie=true&table=motivi&id=" + element.closest('tr').getAttribute('rowId')).done(success_and_refresh).fail(fail);
-    }
-};
 function searchClick(){
     window.location.href=window.location.href+"?search="+document.querySelector('.input-search').value;
 }
-function editClick(element){
-    if(!element.classList.contains('warning')){
-        modal(element.getAttribute('rowId'));
+function editClick(element,id){
+    if(element.classList.contains('warning')){
+        delClick(id);
+    }
+    else{
+        add(id);
     }
 }
-
-function modal(id){
-    let _data={ 'name':'motivi','skip_cookie':true,'id':id };
-    $.post('component.php', _data, function(data) {
-        document.querySelector('#modal-body').innerHTML = data;
-        const modalElement = document.getElementById('modal');
-        const modal = new bootstrap.Modal(modalElement);
-        modalElement.querySelector('.modal-title').textContent = 'Motivo';
-        modalElement.querySelector('.modal-dialog').classList.add('modal-md');
-        const addButton = modalElement.querySelector('.btn-add');
-        addButton.replaceWith(addButton.cloneNode(true));
-        let _data = {"table":"motivi"};
-        modalElement.querySelector('.btn-add').addEventListener('click', () => {
-            modalElement.querySelectorAll('[name]').forEach((modalInput)=>{ _data[modalInput.name] = modalInput.value; });
-            modal.hide();
-            $.post('post/save.php',_data).done(success_and_refresh).fail(fail);
-        });
-        modal.show();
-    })
-    .catch(error => { console.error('Error fetching customer picker:', error);});
+function delClick(id){
+    if(confirm('Sicuro di voler Eliminare?')){
+        $.post("post/delete.php",{id:id}).done(success_and_refresh).fail(fail);
+    }
+};
+function add(id){
+    let _data = { table:'motivi', header:'Motivi', cols:3 };
+    if(id){_data["id"]=id;}
+    modal_component('modal','modal',_data);
 }

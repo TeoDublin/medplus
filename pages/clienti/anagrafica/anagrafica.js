@@ -19,7 +19,7 @@ function editClick(element,id){
         addPercorsoPagamento(id);
     }
     else{
-        modal(id);
+        add(id);
     }
 }
 function addPercorso(id){
@@ -28,6 +28,8 @@ function addPercorso(id){
 function addPercorsoPagamento(id){
     modal_component('percorsi','percorsi_pagamenti',{id_cliente:id});
 }
-function addCliente(){
-    modal_component('cliente','modal',{table:'clienti',header:'Cliente',cols:3});
+function add(id){
+    let _data = { table:'clienti', header:'Cliente' };
+    if(id){_data["id"]=id;}
+    modal_component('modal','modal',_data);
 }

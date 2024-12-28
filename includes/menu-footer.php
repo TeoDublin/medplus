@@ -3,6 +3,7 @@
         </div>
     </div>
 </div>
+<div id="modal"></div>
 <script>
     const menu = {
         menuVertical: document.querySelector('.menu-vertical'),

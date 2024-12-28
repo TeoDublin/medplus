@@ -1,5 +1,5 @@
 <div class="d-flex flex-row p-2">
-    <div class= "w-20" onclick="modal('');">
+    <div class= "w-20" onclick="add(false);">
         <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
             <div class="mx-2"><?php echo icon('cloud-add.svg','white',20,20);?></div>
             <div>Aggiungi Motivo</div>
@@ -31,9 +31,12 @@
                     </thead>
                     <tbody><?php
                         foreach ($table->result  as $row) {?>
-                            <tr class="table-row" rowId="<?php echo $row['id'];?>" onclick="editClick(this);">
+                            <tr class="table-row" onclick="editClick(this,<?php echo $row['id'];?>);">
                                 <td scope="col" class="text-center"><?php echo $row['motivo'];?></td>
-                                <td scope="col" class="text-center action-Elimina" title="Elimina" onclick="delClick(this);" onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?></td>
+                                <td scope="col" class="text-center action-Elimina" title="Elimina" 
+                                    onmouseenter="hoverIconWarning(this)";>
+                                    <?php echo icon('bin.svg');?>
+                                </td>
                             </tr><?php
                         }?>
                     </tbody>
