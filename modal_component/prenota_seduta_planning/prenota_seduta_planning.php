@@ -100,4 +100,4 @@ $_planning = function ($row)use($result){
     </div>
 </div>
 <div class="p-2" id="planning-prenota_seduta_planning_ora"></div>
-<?php script('modal_component/prenota_seduta_planning/prenota_seduta_planning.js'); ?>
+<?php modal_script('prenota_seduta_planning'); ?>

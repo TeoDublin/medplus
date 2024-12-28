@@ -69,6 +69,10 @@
     function script(String $full_path):void{
         echo '<script src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
     }
+    function modal_script(String $component):void{
+        $full_path="modal_component/{$component}/{$component}.js";
+        echo '<script component="modal_'.$component.'" src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
+    }
     function root(string $path):string{
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }

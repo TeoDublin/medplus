@@ -16,9 +16,7 @@ function generatePDF(id_percorso,pdf_index,id_cliente) {
     _data['id_cliente']=id_cliente;
     document.querySelectorAll('textarea[name]').forEach(element =>{ _data[element.getAttribute('name')]=element.textContent });
     $.post('post/fattura.php',_data).done(()=>{
-        closeAllModal();
-        modal_component('percorsi','percorsi_pagamenti',{id_cliente:id_cliente});
-        success();
+        reload_modal_component('percorsi','percorsi_pagamenti',{id_cliente:id_cliente});
     });
     
 }

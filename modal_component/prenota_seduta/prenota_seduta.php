@@ -74,4 +74,4 @@
     </div>
 </div>
 <div class="p-2" id="prenota_seduta_planning"></div>
-<?php script('modal_component/prenota_seduta/prenota_seduta.js'); ?>
+<?php modal_script('prenota_seduta'); ?>

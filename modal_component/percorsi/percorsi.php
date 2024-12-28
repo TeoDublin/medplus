@@ -85,17 +85,26 @@
                                             <div class="accordion-button border py-2 <?php echo $show?'':'collapsed'; ?>" name="row_percorso" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-percorso<?php echo $percorso['id'];?>" aria-expanded="<?php echo $show; ?>" aria-controls="collapse-percorso<?php echo $percorso['id'];?>">
                                                 <div class="d-flex flex-row w-100">
                                                     <input value="<?php echo $percorso['id'];?>" name="id_percorso" hidden/>
-                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center"onclick="editClick(this)" onmouseenter="editEnter(this)" onmouseleave="editLeave(this)" >
+                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center"
+                                                        onclick="window.modalHandlers['percorsi'].editClick(this)" 
+                                                        onmouseenter="window.modalHandlers['percorsi'].editEnter(this)" 
+                                                        onmouseleave="window.modalHandlers['percorsi'].editLeave(this)" >
                                                         <?php echo icon('edit.svg','black',16,16); ?>
                                                     </div>
-                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center" onclick="deleteClick(this)" onmouseenter="deleteEnter(this)" onmouseleave="deleteLeave(this)">
+                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center" 
+                                                        onclick="window.modalHandlers['percorsi'].deleteClick(this)" 
+                                                        onmouseenter="window.modalHandlers['percorsi'].deleteEnter(this)" 
+                                                        onmouseleave="window.modalHandlers['percorsi'].deleteLeave(this)">
                                                         <?php echo icon('bin.svg','black',16,16); ?>
                                                     </div>
                                                     <div class="cc2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['percorso']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['sedute_totale']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['sedute_da_pianificare']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['stato_sedute']; ?></span></div>
-                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center me-2" onclick="aggiungiSeduteClick(this)" onmouseenter="aggiungiEnter(this)" onmouseleave="aggiungiLeave(this)">
+                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center me-2" 
+                                                        onclick="window.modalHandlers['percorsi'].aggiungiSeduteClick(this)" 
+                                                        onmouseenter="window.modalHandlers['percorsi'].aggiungiEnter(this)" 
+                                                        onmouseleave="window.modalHandlers['percorsi'].aggiungiLeave(this)">
                                                         <button class="btn btn-primary">AGGIUNGI</button>
                                                     </div>
                                                 </div>
@@ -142,7 +151,10 @@
                                                                             <div class="cs3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta['stato_seduta']; ?></span></div>
                                                                             <div class="cs3 d-flex align-items-center justify-content-center text-center me-2">
                                                                                 <?php if(in_array($seduta['stato_seduta'],['Da Prenotare','Assente'])){?>
-                                                                                    <button class="btn btn-primary flex-fill" onclick="prenotaSeduteClick(this,<?php echo $seduta['id'].','.$_REQUEST['id_cliente']; ?>)" onmouseenter="prenotaEnter(this)" onmouseleave="prenotaLeave(this)">PRENOTA</button><?php
+                                                                                    <button class="btn btn-primary flex-fill" 
+                                                                                    onclick="window.modalHandlers['percorsi'].prenotaSeduteClick(this,<?php echo $seduta['id'].','.$_REQUEST['id_cliente']; ?>)" 
+                                                                                    onmouseenter="window.modalHandlers['percorsi'].prenotaEnter(this)" 
+                                                                                    onmouseleave="window.modalHandlers['percorsi'].prenotaLeave(this)">PRENOTA</button><?php
                                                                                 }
                                                                                 else{?>
                                                                                     <button class="btn btn-dark flex-fill" disabled><?php echo strtoupper($seduta['stato_seduta']);?> </button><?php
@@ -199,7 +211,11 @@
                                                                                                 ?>
                                                                                             </select>
                                                                                         </div>
-                                                                                        <div class="csp3 d-flex align-items-center justify-content-center text-center delHover" onclick="deleteSedutaPrenotata(<?php echo $deleteSedutaData; ?>)" onmouseenter="enterSedutaPrenotata(this);" onmouseleave="leaveSedutaPrenotata(this);"><?php echo icon('bin.svg','black',16,16); ?></div>
+                                                                                        <div class="csp3 d-flex align-items-center justify-content-center text-center delHover" 
+                                                                                            onclick="window.modalHandlers['percorsi'].deleteSedutaPrenotata(this,<?php echo $seduta_prenotata['id']; ?>)" 
+                                                                                            onmouseenter="enterSedutaPrenotata(this);" 
+                                                                                            onmouseleave="window.modalHandlers['percorsi'].leaveSedutaPrenotata(this);">
+                                                                                            <?php echo icon('bin.svg','black',16,16); ?></div>
                                                                                     </div><?php                                        
                                                                                 } ?>
                                                                             </div>
@@ -218,7 +234,9 @@
                                 <p class="psm"><?php
                             }
                         }?>
-                        <div class="d-flex mt-2" onclick="btnPercorsoClick()"><button class="btn btn-primary  flex-fill">Nuovo Percorso Terapeutico</button></div>
+                        <div class="d-flex mt-2" 
+                            onclick="window.modalHandlers['percorsi'].btnPercorsoClick()"
+                        ><button class="btn btn-primary  flex-fill">Nuovo Percorso Terapeutico</button></div>
                     </div>
                 </div>
                 <div class="p-2" id="prenota_seduta"></div>
@@ -228,4 +246,4 @@
         </div>
     </div>
 </div>
-<?php script('modal_component/percorsi/percorsi.js'); ?>
+<?php modal_script('percorsi'); ?>

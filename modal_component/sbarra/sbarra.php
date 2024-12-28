@@ -80,4 +80,4 @@
         </div>
     </div>
 </div>
-<?php script('modal_component/sbarra/sbarra.js'); ?>
+<?php modal_script('sbarra'); ?>

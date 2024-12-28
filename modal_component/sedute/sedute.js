@@ -3,9 +3,7 @@ function btnSalva(element){
     const mnodal = element.closest('.modal');
     mnodal.querySelectorAll('[name]').forEach(element=>{ _data[element.name]=element.value;});
     $.post('post/sedute.php',_data).done(function(){
-        closeAllModal();
-        modal_component('percorsi','percorsi',_data);
-        success();
+        reload_modal_component('percorsi','percorsi',_data);
     }).fail(function(){fail()});
 }
 function changeTrattamento(element){

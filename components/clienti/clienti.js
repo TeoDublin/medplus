@@ -1,1 +1,0 @@
-function selectNominativo(event,element){}

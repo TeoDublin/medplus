@@ -539,6 +539,13 @@ color-scheme: dark;
 .success:hover > td{
     color:white!important;
 }
+.success2:hover {
+    background-color: var(--base-active-bg-secondary) !important;
+    cursor: pointer;
+}
+.success2:hover > td{
+    color:white!important;
+}
 .hover-icon:hover > svg{
     fill: white;
 }
@@ -3527,7 +3534,7 @@ box-shadow: var(--bs-btn-focus-box-shadow);
 
 .btn-dark {
 --bs-btn-color: #fff;
---bs-btn-bg: #212529;
+--bs-btn-bg: #424649;
 --bs-btn-border-color: #212529;
 --bs-btn-hover-color: #fff;
 --bs-btn-hover-bg: #424649;

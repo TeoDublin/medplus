@@ -2,7 +2,7 @@
 
 class Sql {
     private mysqli $connection;
-
+    private $db;
     public function __construct() {
         switch (environment()) {
             case 'dev':
@@ -18,6 +18,7 @@ class Sql {
                 $db='u482567801_medplus';
                 break;
         }
+        $this->db=$db;
         try {
             $this->connection = new mysqli($host, $user, $pass, $db);
         } catch (mysqli_sql_exception $e) {
@@ -42,6 +43,14 @@ class Sql {
     }    
     public function insert_id(): int {
         return $this->connection->insert_id;
+    }
+    public function columns($table){
+        return $this->raw("
+            SELECT COLUMN_NAME, COLUMN_TYPE
+            FROM INFORMATION_SCHEMA.COLUMNS
+            WHERE TABLE_NAME = '{$table}' AND TABLE_SCHEMA = '{$this->db}'
+            ORDER BY ORDINAL_POSITION;        
+        ");
     }
     public function __destruct() {
         $this->connection->close();

@@ -68,4 +68,4 @@
         </div>
     </div>
 </div>
-<?php script('modal_component/prenota_seduta_planning_ora/prenota_seduta_planning_ora.js'); ?>
+<?php modal_script('prenota_seduta_planning_ora'); ?>

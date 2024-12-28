@@ -63,7 +63,7 @@
     $table='fatture';
     $data=[
         'link'=>$link,
-        'prezzo'=>$_REQUEST['totale']-($_REQUEST['bollo']??0),
+        'prezzo'=>(int)$_REQUEST['totale']-((int)$_REQUEST['bollo']??0),
         'index'=>$_REQUEST['index'],
         'data'=>json_encode($_REQUEST)
     ];

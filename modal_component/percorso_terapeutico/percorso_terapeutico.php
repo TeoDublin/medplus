@@ -28,4 +28,4 @@
         </div>
     </div>
 </div>
-<?php script('modal_component/percorso_terapeutico/percorso_terapeutico.js'); ?>
+<?php modal_script('percorso_terapeutico'); ?>

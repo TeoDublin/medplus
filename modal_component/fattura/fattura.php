@@ -126,4 +126,4 @@
         </div>
     </div>
 </div>
-<?php script('modal_component/fattura/fattura.js'); ?>
+<?php modal_script('fattura'); ?>

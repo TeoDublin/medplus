@@ -83,4 +83,4 @@
         </div>
     </div>
 </div>
-<?php script('modal_component/sedute/sedute.js'); ?>
+<?php modal_script('sedute'); ?>

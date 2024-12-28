@@ -5,8 +5,6 @@ function btnSalva(modal_id){
         _data[element.name]=element.value;
     });
     $.post('post/save.php',_data).done(function(){
-        closeAllModal();
-        modal_component('percorsi','percorsi',_data);
-        success();
+        reload_modal_component('percorsi','percorsi',_data);
     }).fail(function(){fail()});
 }

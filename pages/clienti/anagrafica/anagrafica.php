@@ -1,5 +1,5 @@
 <div class="d-flex flex-row p-2">
-    <div class= "w-20" onclick="modal('');">
+    <div class= "w-20" onclick="addCliente();">
         <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
             <div class="mx-2"><?php echo icon('cloud-add.svg','white',20,20);?></div>
             <div>Aggiungi Cliente</div>
@@ -40,15 +40,15 @@
                     </thead>
                     <tbody><?php
                         foreach ($table->result  as $row) {?>
-                            <tr class="table-row" rowId="<?php echo $row['id'];?>" onclick="editClick(this);">
+                            <tr class="table-row" onclick="editClick(this,<?php echo $row['id'];?>);">
                                 <td scope="col" class="text-center"><?php echo $row['nominativo'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['cf'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['cellulare'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['email'];?></td>
                                 <td scope="col" class="text-center"><?php echo $row['notizie_cliniche'];?></td>
-                                <td scope="col" class="text-center hover-icon" title="Percorsi" onclick="addPercorso(this);" onmouseenter="hoverIconAdd(this)";><?php echo icon('heart.svg');?></td>
-                                <td scope="col" class="text-center hover-icon" title="Pagamenti" onclick="addPercorsoPagamento(this);" onmouseenter="hoverIconAdd(this)";><?php echo icon('dollar.svg');?></td>
-                                <td scope="col" class="text-center hover-icon" title="Elimina" onclick="delClick(this);" onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?></td>
+                                <td scope="col" class="text-center hover-icon" title="Percorsi" onmouseenter="hoverIconAdd(this,'success')";><?php echo icon('heart.svg');?></td>
+                                <td scope="col" class="text-center hover-icon" title="Pagamenti" onmouseenter="hoverIconAdd(this,'success2')";><?php echo icon('dollar.svg');?></td>
+                                <td scope="col" class="text-center hover-icon" title="Elimina" onmouseenter="hoverIconWarning(this,'warning')";><?php echo icon('bin.svg');?></td>
                             </tr><?php
                         }?>
                     </tbody>
@@ -58,5 +58,6 @@
         <?php html()->pagination($table);?>
     </div>
 </div>
-<div id='percorsi'></div>
+<div id='cliente'></div>
+<div id='percorsi'></div>   
 <?php script('pages/clienti/anagrafica/anagrafica.js'); ?>
