@@ -23,10 +23,10 @@
                     }
                     $rows=Select("id,TIME_FORMAT(ora, '%H:%i') as ora")->from('planning_row')->get();
                 ?>
-                <input type="text" name="id_cliente" value="<?php echo $_REQUEST['id_cliente']??'';?>" hidden/>
-                <input type="text" name="id_terapista" value="<?php echo $_REQUEST['id_terapista']??'';?>" hidden/>
-                <input type="text" name="id_seduta" value="<?php echo $_REQUEST['id_seduta']??'';?>" hidden/>
-                <input type="text" name="data" value="<?php echo $_REQUEST['data']??'';?>" hidden/>
+                <input type="text" name="id_cliente" value="<?php echo $_REQUEST['id_cliente'];?>" hidden/>
+                <input type="text" name="id_terapista" value="<?php echo $_REQUEST['id_terapista'];?>" hidden/>
+                <input type="text" name="id_seduta" value="<?php echo $_REQUEST['id_seduta'];?>" hidden/>
+                <input type="text" name="data" value="<?php echo $_REQUEST['data'];?>" hidden/>
                 <input type="text" name="stato_prenotazione" value="Prenotata" hidden/>
                 <div class="p-2">
                     <div class="mb-3">
@@ -62,8 +62,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-secondary">Anulla</a>
-                <a href="#" class="btn btn-primary" onclick="btnSalva(this)">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['prenota_seduta_planning_ora'].btnSalva(this)">Salva</a>
             </div>
         </div>
     </div>

@@ -76,13 +76,17 @@ $_planning = function ($row)use($result){
                                         for($i=1;$i<=$rows;$i++){ ?>
                                             <tr><?php
                                                 for($col=1;$col<=3;$col++){$row=$i+($rows*($col-1)); $planning=$_planning($row);?>
-                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" 
+                                                        onmouseenter="window.modalHandlers['prenota_seduta_planning'].prenotaHoverRow(this);">
                                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_inizio<?php echo _ora($row);?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
                                                     </td>
-                                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="prenotaSedutaClick(this);"  onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" 
+                                                        onclick="window.modalHandlers['prenota_seduta_planning'].prenotaSedutaClick(this,<?php echo $_REQUEST['id_cliente'];?>);"  
+                                                        onmouseenter="window.modalHandlers['prenota_seduta_planning'].prenotaHoverRow(this);">
                                                         <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
                                                     </td>
-                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="prenotaHoverRow(this);">
+                                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" 
+                                                        onmouseenter="window.modalHandlers['prenota_seduta_planning'].prenotaHoverRow(this);">
                                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note" id="input_note<?php echo _ora($row);?>"/>
                                                     </td><?php
                                                     }?>

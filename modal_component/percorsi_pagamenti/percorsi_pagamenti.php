@@ -51,13 +51,13 @@
                                             <span class="">Prezzo</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Saldato</span>
-                                        </div>
-                                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Pendente</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Fatturato</span>
+                                        </div>
+                                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
+                                            <span class="">Saldato</span>
                                         </div>
                                         <div class="cc4 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Situazione</span>
@@ -80,11 +80,14 @@
                                                     <div class="cc2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['percorso']; ?></span></div>
                                                     <div class="cc4 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['prezzo_tabellare']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['prezzo']; ?></span></div>
-                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['Saldato']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['Pendente']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['fatturato']??0; ?></span></div>
+                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['Saldato']; ?></span></div>
                                                     <div class="cc4 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['Pendente']>0?'PENDENTE':'SALDATO'; ?></span></div>
-                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center" onclick="aggiungiFattureClick(this,<?php echo $_REQUEST['id_cliente'];?>)" onmouseenter="aggiungiEnter(this)" onmouseleave="aggiungiLeave(this)">
+                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center" 
+                                                        onclick="window.modalHandlers['percorsi_pagamenti'].aggiungiFattureClick(this,<?php echo $_REQUEST['id_cliente'];?>)" 
+                                                        onmouseenter="window.modalHandlers['percorsi_pagamenti'].aggiungiEnter(this)" 
+                                                        onmouseleave="window.modalHandlers['percorsi_pagamenti'].aggiungiLeave(this)">
                                                         <button class="btn <?php echo ((int)$percorso['Saldato']+(int)$percorso['fatturato'])<(int)$percorso['prezzo']?'btn-primary':'btn-dark disabled';?>">FATTURA</button>
                                                     </div>
                                                 </div>
@@ -125,7 +128,8 @@
                                                                     <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $fattura['index']; ?></span></div>
                                                                     <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $fattura['prezzo']; ?></span></div>
                                                                     <div class="csp2 d-flex align-items-center justify-content-center text-center ">
-                                                                        <select type="text" class="form-control  text-center" id="stato" value="<?php echo $fattura['stato']??'';?>" onchange="changeStato(this.value,<?php echo $fattura['ppf_id'].','.$_REQUEST['id_cliente'];?>)">
+                                                                        <select type="text" class="form-control  text-center" id="stato" value="<?php echo $fattura['stato']??'';?>" 
+                                                                            onchange="window.modalHandlers['percorsi_pagamenti'].changeStato(this.value,<?php echo $fattura['ppf_id'].','.$_REQUEST['id_cliente'];?>)">
                                                                             <?php 
                                                                                 foreach(Enum('percorsi_pagamenti_fatture','stato')->list as $value){
                                                                                     $selected = (isset($fattura['stato']) && $fattura['stato'] == $value) ? 'selected' : '';
@@ -134,7 +138,11 @@
                                                                             ?>
                                                                         </select>
                                                                     </div>
-                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center delHover" onclick="deleteFattura(this,<?php echo $fattura['id']; ?>)" onmouseenter="enterFattura(this);" onmouseleave="leaveFattura(this);"><?php echo icon('bin.svg','black',16,16); ?></div>
+                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center delHover" 
+                                                                        onclick="window.modalHandlers['percorsi_pagamenti'].deleteFattura(this,<?php echo $fattura['id']; ?>)" 
+                                                                        onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterFattura(this);" 
+                                                                        onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveFattura(this);">
+                                                                        <?php echo icon('bin.svg','black',16,16); ?></div>
                                                                 </div><?php
                                                             }?>
                                                         </div>

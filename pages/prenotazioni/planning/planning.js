@@ -1,6 +1,6 @@
 function openCalendar(event, element) {
     const rect = event.target.getBoundingClientRect();
-    $.post('component.php', { name: 'calendar' })
+    $.post('component.php', { component: 'calendar' })
         .done(data => {
             const content = document.createElement('div');
             content.innerHTML = data;

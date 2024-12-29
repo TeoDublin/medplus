@@ -202,7 +202,8 @@
                                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
                                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
                                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center statoHover">
-                                                                                            <select type="text" class="form-control text-center" id="stato_prenotazione" value="<?php echo $seduta_prenotata['stato_prenotazione']??'';?>" onchange="changeStatoPrenotazione(this,<?php echo $seduta_prenotata['id'];?>)">
+                                                                                            <select type="text" class="form-control text-center" id="stato_prenotazione" value="<?php echo $seduta_prenotata['stato_prenotazione']??'';?>" 
+                                                                                                onchange="window.modalHandlers['percorsi'].changeStatoPrenotazione(this,<?php echo $seduta_prenotata['id'];?>)">
                                                                                                 <?php 
                                                                                                     foreach(Enum('sedute_prenotate','stato_prenotazione')->list as $value){
                                                                                                         $selected = (isset($seduta_prenotata['stato_prenotazione']) && $seduta_prenotata['stato_prenotazione'] == $value) ? 'selected' : '';
@@ -213,7 +214,7 @@
                                                                                         </div>
                                                                                         <div class="csp3 d-flex align-items-center justify-content-center text-center delHover" 
                                                                                             onclick="window.modalHandlers['percorsi'].deleteSedutaPrenotata(this,<?php echo $seduta_prenotata['id']; ?>)" 
-                                                                                            onmouseenter="enterSedutaPrenotata(this);" 
+                                                                                            onmouseenter="window.modalHandlers['percorsi'].enterSedutaPrenotata(this);" 
                                                                                             onmouseleave="window.modalHandlers['percorsi'].leaveSedutaPrenotata(this);">
                                                                                             <?php echo icon('bin.svg','black',16,16); ?></div>
                                                                                     </div><?php                                        

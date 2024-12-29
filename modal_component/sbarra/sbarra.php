@@ -74,7 +74,6 @@
                 <?php if(!empty($result)) {
                     echo "<a href=\"#\" data-bs-dismiss=\"modal\" class=\"btn btn-tertiary\" onclick=\"btnElimina({$result['id']})\">Elimina</a>";
                 }?>
-                <a href="#" class="btn btn-secondary">Anulla</a>
                 <a href="#" class="btn btn-primary" onclick="btnSalva()">Salva</a>
             </div>
         </div>

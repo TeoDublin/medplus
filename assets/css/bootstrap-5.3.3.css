@@ -180,6 +180,8 @@ color-scheme: dark;
 --bs-form-invalid-border-color: #ea868f;
 }
 [data-bs-theme=blue] {
+    --bs-light:#cfdce9;
+    --bs-light-rgb:207, 220, 233;
     --bs-danger:#335681e0;
     --bs-danger-hover:#396fa8e0;
     --bs-danger-active:#25405ce0;
@@ -8993,7 +8995,7 @@ color: rgba(var(--bs-light-rgb), var(--bs-text-opacity)) !important;
 }
 
 .text-dark {
---bs-text-opacity: 1;
+--bs-text-opacity: 0.8;
 color: rgba(var(--bs-dark-rgb), var(--bs-text-opacity)) !important;
 }
 

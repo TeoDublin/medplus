@@ -22,8 +22,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-secondary">Anulla</a>
-                <a href="#" class="btn btn-primary" onclick="btnSalva('<?php echo $_REQUEST['id_modal'];?>')">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['percorso_terapeutico'].btnSalva('<?php echo $_REQUEST['id_modal'];?>')">Salva</a>
             </div>
         </div>
     </div>

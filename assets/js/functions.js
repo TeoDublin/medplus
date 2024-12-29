@@ -159,3 +159,14 @@ function closeModalAndScripts(modalElement){
         delete window.modalHandlers[component];
     }
 }
+function component(component,_data){
+    let element = document.querySelector('#'+component);
+    _data['component']=component;
+    $.post('component.php', _data)
+        .done(response => {
+            element.innerHTML = '';
+            const content = document.createElement('div');
+            content.innerHTML = response;
+            element.appendChild(content);
+        });
+}

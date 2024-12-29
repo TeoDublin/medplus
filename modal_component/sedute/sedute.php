@@ -78,7 +78,6 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-secondary">Anulla</a>
             <a href="#" class="btn btn-primary" onclick="btnSalva(this)">Salva</a>
         </div>
     </div>

@@ -18,14 +18,14 @@
                     </select>
                 </div>
                 <div class="w-15 me-1">
-                    <select class="form-select" id="prenota_month"  value="" onchange="dateChange(this)"><?php
+                    <select class="form-select" id="prenota_month"  value="" onchange="window.modalHandlers['prenota_seduta'].dateChange(this)"><?php
                         for($i=1;$i<=12;$i++){
                             echo "<option value=\"{$i}\" class=\"ps-4  bg-white\"".($i==$month?'selected':'').">".italian_month($i)."</option>";
                         }?>
                     </select>
                 </div>
                 <div class="w-15">
-                    <select class="form-select" id="prenota_year"  value="" onchange="dateChange(this)"><?php
+                    <select class="form-select" id="prenota_year"  value="" onchange="window.modalHandlers['prenota_seduta'].dateChange(this)"><?php
                         for($i=1;$i<=5;$i++){
                             $add_year=(int)$year-3+$i;
                             echo "<option value=\"{$add_year}\" class=\"ps-4  bg-white\"".($add_year==$year?'selected':'').">".$add_year."</option>";
@@ -60,7 +60,7 @@
                                     elseif($day==$j){
                                         $day_value=str_pad($current_day,2,'0',STR_PAD_LEFT);
                                         $passed = "{$year}-{$month}-{$day_value}" < $today ? 'passed' : '';
-                                        echo "<div class=\"c1 calendar-in $last $passed\" onclick=\"dayClick(this,'{$day_value}');\">{$day_value}</div>";
+                                        echo "<div class=\"c1 calendar-in $last $passed\" onclick=\"window.modalHandlers['prenota_seduta'].dayClick(this,'{$day_value}','{$_REQUEST['id_cliente']}');\">{$day_value}</div>";
                                         $current_day++;
                                     }
                                     else echo "<div class=\"c1 calendar-out $last\">-</div>";
