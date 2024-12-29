@@ -86,19 +86,20 @@ function append_scripts(element){
             const newScript = document.createElement('script');
             newScript.src = script.src;
             newScript.async = false;
+            newScript.setAttribute('component',script.getAttribute('component'));
             document.body.appendChild(newScript);
         }
     });
 }
 function modal_component(id, component, _data) {
-    const modal_id = 'modal_' + id;
+    const modal_id = 'modal_' + component;
     _data['id_modal'] = modal_id;
     _data['component'] = component;
     $.post('modal_component.php', _data).done(html => {
         const container = document.querySelector('#' + id);
-        document.querySelectorAll('#div_' + id).forEach(to_remove => { to_remove.remove(); });
+        document.querySelectorAll('#div_' + component).forEach(to_remove => { to_remove.remove(); });
         const div = document.createElement('div');
-        div.id = 'div_' + id;
+        div.id = 'div_' + component;
         div.innerHTML = html;
         append_scripts(div);
         container.appendChild(div);
@@ -138,12 +139,15 @@ function closeAllModal() {
         closeModalAndScripts(modalElement);
     });
 }
-function closeModalAndScripts(modalElement){
+function closeModalAndScripts(modalElement) {
     if (modalElement) {
         const modal_id = modalElement.id;
-        const component = modal_id.replace('modal_','');
-        modalElement.classList.remove('show');
-        modalElement.style.display = 'none';
+        const component = modal_id.replace('modal_', '');
+        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (modalInstance) {
+            modalInstance.hide();
+            modalInstance.dispose();
+        }
         modalElement.remove();
         const backdrop = document.querySelector('.modal-backdrop');
         if (backdrop) {
@@ -157,8 +161,13 @@ function closeModalAndScripts(modalElement){
             delete modalElement.modalHandlers;
         }
         delete window.modalHandlers[component];
+        document.querySelectorAll('#' + modalElement.id.replace('modal_','div_')).forEach(to_remove => { to_remove.remove(); });
+    }
+    if (!document.querySelector('.modal.show')) {
+        document.body.classList.remove('modal-open');
     }
 }
+
 function component(component,_data){
     let element = document.querySelector('#'+component);
     _data['component']=component;
@@ -168,5 +177,28 @@ function component(component,_data){
             const content = document.createElement('div');
             content.innerHTML = response;
             element.appendChild(content);
+            append_scripts(element);
         });
+}
+function search_table(_data){
+    let element = document.querySelector('#search_table');
+    _data['component']='search_table';
+    $.post('post/search_table.php',_data).done(response=>{
+        _data['response']=response;
+        $.post('component.php', _data)
+            .done(search_table => {
+                element.innerHTML = '';
+                const content = document.createElement('div');
+                content.innerHTML = search_table;
+                element.appendChild(content);
+                append_scripts(element);
+                $.post('component.php', {response:response,component:'search_table_body'})
+                    .done(search_table_response => {
+                        let search_table_body = element.querySelector('#search_table_body');
+                        search_table_body.innerHTML = '';
+                        search_table_body.innerHTML = search_table_response;
+                    });
+            });
+    });
+
 }

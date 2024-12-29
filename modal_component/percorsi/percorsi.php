@@ -38,7 +38,6 @@
                 <div class="p-2">
                     <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
                     <div class="container-fluid card text-center py-4">
-                        <h4 class="mb-3">Prenotazioni</h4>
                         <?php if(!$_percorso){?>
                             <div class="card">
                                 <div class="card-body">
@@ -56,17 +55,11 @@
                                         <div class="cc1 d-flex align-items-center justify-content-center text-center">
                                             <span class=""></span>
                                         </div>
+                                        <div class="cs3 d-flex align-items-center justify-content-center text-center">
+                                            <span class="">Tipo</span>
+                                        </div>
                                         <div class="cc2 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Percorso Terapeutico</span>
-                                        </div>
-                                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Totale</span>
-                                        </div>
-                                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Da Prenotare</span>
-                                        </div>
-                                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Stato Sedute</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
                                             <span class=""></span>
@@ -97,12 +90,10 @@
                                                         onmouseleave="window.modalHandlers['percorsi'].deleteLeave(this)">
                                                         <?php echo icon('bin.svg','black',16,16); ?>
                                                     </div>
+                                                    <div class="cs3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['tipo_percorso']; ?></span></div>
                                                     <div class="cc2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['percorso']; ?></span></div>
-                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['sedute_totale']; ?></span></div>
-                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['sedute_da_pianificare']; ?></span></div>
-                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['stato_sedute']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center me-2" 
-                                                        onclick="window.modalHandlers['percorsi'].aggiungiSeduteClick(this)" 
+                                                        onclick="window.modalHandlers['percorsi'].aggiungiSeduteClick(this,'<?php echo $percorso['tipo_percorso']; ?>')" 
                                                         onmouseenter="window.modalHandlers['percorsi'].aggiungiEnter(this)" 
                                                         onmouseleave="window.modalHandlers['percorsi'].aggiungiLeave(this)">
                                                         <button class="btn btn-primary">AGGIUNGI</button>

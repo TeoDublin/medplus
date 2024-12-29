@@ -7,4 +7,6 @@
     </div>
 </div>
 <div class="w-100 mx-1" id="search_table"></div>
-<?php script('pages/impostazioni/trattamenti/trattamenti.js'); ?>
+<div id="percorsi"></div>
+<div id="percorsi_pagamenti"></div>
+<?php script('pages/mensili/trattamenti/trattamenti.js'); ?>

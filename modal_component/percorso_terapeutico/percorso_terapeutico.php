@@ -7,13 +7,39 @@
             </div>
             <div class="container"></div>
             <div class="modal-body">
-                <?php $result=$_REQUEST['id']?Select('*')->from('percorsi')->where("id={$_REQUEST['id']}")->first():[];?>
+                <?php 
+                    $result=$_REQUEST['id']?Select('p.*,pm.data_inizio,pm.scadenza')
+                        ->from('percorsi','p')
+                        ->left_join('percorsi_mensili pm on p.id = pm.id_percorso')
+                        ->where("p.id={$_REQUEST['id']}")
+                        ->first():[];
+                    $hidden=$result['tipo_percorso']!='Mensile'?'hidden':'';
+                ?>
                 <div class="p-2">
                     <input type="text" id="id" name="id" value="<?php echo $result['id']??'';?>" hidden/>
                     <input type="text" id="id_cliente" name="id_cliente" value="<?php echo $_REQUEST['id_cliente']??'';?>" hidden/>
                     <div class="mb-3">
+                        <label for="tipo_percorso" class="form-label">Tipo di Percorso</label>
+                        <select class="form-control" id="tipo_percorso" name="tipo_percorso" value="<?php echo $result['tipo_percorso']??'';?>" 
+                            onchange="window.modalHandlers['percorso_terapeutico'].changeTipoPercorso(this);"><?php                             
+                            foreach(Enum('percorsi','tipo_percorso')->list as $enum){
+                                if($result['tipo_percorso']&&$enum==$result['tipo_percorso'])echo "<option value=\"{$enum}\" selected>{$enum}</option>";
+                                else echo "<option value=\"{$enum}\">{$enum}</option>";
+                            }
+                        ?>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="percorso" class="form-label">Percorso</label>
                         <input type="text" class="form-control" id="percorso" name="percorso" value="<?php echo $result['percorso']??'';?>"/>
+                    </div>
+                    <div class="mb-3 mensile" <?php echo $hidden; ?>>
+                        <label for="data_inizio" class="form-label">Data Inizio</label>
+                        <input type="date" class="form-control" id="data_inizio" name="data_inizio" value="<?php echo $result['data_inizio']??'';?>"/>
+                    </div>
+                    <div class="mb-3 mensile" <?php echo $hidden; ?>>
+                        <label for="scadenza" class="form-label">Scadenza</label>
+                        <input type="date" class="form-control" id="scadenza" name="scadenza" value="<?php echo $result['scadenza']??'';?>"/>
                     </div>
                     <div class="mb-3">
                         <label for="note" class="form-label">Note</label>

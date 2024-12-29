@@ -39,7 +39,7 @@
         return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo)];
     };
 ?>
-<div class="no-scroll" id="planning">
+<div id="planning">
     <div class="p-3 border my-1 d-flex" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
         <div class="d-flex flex-column flex-fill">
             <div class="d-flex flex-column">

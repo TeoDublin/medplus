@@ -2,11 +2,12 @@ window.modalHandlers['percorsi'] = {
     btnPercorsoClick: function () {
         modal_component('percorso_terapeutico','percorso_terapeutico',{'id_cliente':document.querySelector('#id_cliente').value});
     },
-    aggiungiSeduteClick : function (element){
+    aggiungiSeduteClick : function (element,tipo_trattamento){
         const modal = element.closest('.modal');
         modal_component('sedute','sedute',{
             'id_cliente':modal.querySelector('#id_cliente').value,
-            'id_percorso':element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value
+            'id_percorso':element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value,
+            'tipo_trattamento':tipo_trattamento
         });
     },
     aggiungiEnter : function (element){

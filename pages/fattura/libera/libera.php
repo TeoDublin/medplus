@@ -3,8 +3,16 @@
     function _clean($txt){
         return trim(preg_replace("#\n\s+#","\n",str_replace("   ","", $txt)));
     }
+    function _index(){
+        $index=Select('max(`index`) as mx')->from('fatture')->first_or_false();
+        if(!$index['mx'])$index=Select("JSON_EXTRACT(setup, '$.first_index') as first_index")->from('setup')->where("`key`='fatture'")->col('first_index');
+        else $index=(int)$index['mx']+1;
+        return $index; 
+    }
+    $index=_index();
 ?>
-<div class="p-2 card mt-2" head>
+
+<div class="p-2 card mt-2">
     <div class="d-flex flex-row">
         <div class="flex-col col-6">
             <div class="mb-1 card-body">
@@ -38,7 +46,7 @@
         <div class="flex-col col-3">
             <div class="mb-1 card-body pb-4">
                 <label for="date" class="form-label">Numero e data</label>
-                <textarea  class="form-control" id="date" name="date" rows="1"><?php echo _clean("Fattura n: 415 del ".now('d/m/Y'));?></textarea>
+                <textarea  class="form-control" id="date" name="date" rows="1"><?php echo _clean("Fattura n: {$index} del ".now('d/m/Y'));?></textarea>
             </div>
             <div class="mb-1 card-body py-0">
                 <label for="footer" class="form-label">Piè di pagina</label>
@@ -56,14 +64,14 @@
             <div class="flex-col col-6 oggetti">
                 <div class="card-body pe-1 pb-0 text-center"><span>OGGETTO</span></div>
                 <div class="card-body pe-1 pb-0 pt-1 oggetto" id="row1"><input id="oggetto1" class="form-control" value=""/></div>
-                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="bollo"><input id="oggettoBollo" class="form-control" value="Bollo"/></div>
+                <div class="card-body pe-1 pb-0 pt-1" id=""><input id="oggettoBollo" class="form-control stampDisabled" value="Bollo"/></div>
                 <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" id="oggetto_imponibile" value="IMPONIBILE" disabled/></div>
             </div>
             <div class="flex-col col-5 ms-0 importi">
                 <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">IMPORTI</span></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="row1"><input type="number" id="importo1" class="form-control" value="" onchange="addTotal(this.value)"/></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="bollo"><input type="number" id="importoBollo" class="form-control" value="2.00"/></div>
-                <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" id="imponibile" class="form-control" value="2.00" disabled/></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo importo_row" id="row1"><input type="number" id="importo1" class="form-control" value="" onchange="addTotal()"/></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1" id="bollo"><input type="number" id="importoBollo" class="form-control stampDisabled" value="2.0"/></div>
+                <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" id="imponibile" class="form-control" value="" disabled/></div>
             </div>
             <div class="flex-col col-1 mx-0 btns">
                 <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">AZIONI</span></div>
@@ -73,7 +81,7 @@
                 <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA MARCA DA BOLLO" id="bollo" onclick="stampBtnClick(this);" onmouseenter="stampBtnEnter(this);" onmouseleave="stampBtnLeave(this);">
                     <div class="pe-0">
                         <div class="form-check form-switch ">
-                            <input class="form-check-input" type="checkbox" role="switch" id="btnBollo" checked>
+                            <input class="form-check-input pe-4 btn-dark" type="checkbox" role="switch" id="btnBollo">
                         </div>
                     </div>
                 </div>
@@ -86,7 +94,7 @@
                 <div class="card-body pe-1 pb-0 pt-1"><input id="input_totale_label" class="form-control fs-5" value="TOTALE FATTURA" disabled/></div>
             </div>
             <div class="flex-col col-6 ms-0">
-                <div class="card-body ps-0 pe-0 pb-0 pt-1"><input type="number" id="totale" class="form-control fs-5" value="2.00" disabled/></div>
+                <div class="card-body ps-0 pe-0 pb-0 pt-1"><input type="number" id="totale" class="form-control fs-5" value="" disabled/></div>
             </div>
         </div>
         <div class="card-body d-flex flex-row pt-0" id="spanBollo">
@@ -103,8 +111,9 @@
             </div>
         </div>
     </div>
-    <div class="flex-col" onclick="generatePDF();">
+    <div class="flex-col" onclick="generatePDF(<?php echo $index;?>);">
         <div class="flex-fill px-3"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('print.svg','white',20,20); ?></a>Genera</button></div>
     </div>
 </div>
+
 <?php script('pages/fattura/libera/libera.js'); ?>

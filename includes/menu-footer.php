@@ -19,6 +19,7 @@
         prenota: document.querySelector('#menu-prenota'),
         clienti: document.querySelector('#menu-clienti'),
         fattura: document.querySelector('#menu-fattura'),
+        mensili: document.querySelector('#menu-mensili'),
         start: function(){
             if(getCookie("menu")=="show"){
                 this.menuVertical.classList.remove('hide');
@@ -47,7 +48,7 @@
                 window.location.href = "index.php";
             };
             const navigate = (page, menu)=>{
-                window.location.href = "<?php echo url('') ?>"+page+"?pagination=0&openModal=unset&rowId=unset&unset=tab&menu="+menu;
+                window.location.href = "<?php echo url('') ?>"+page+"?pagination=0&unset=tab&menu="+menu;
             }
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);
@@ -56,6 +57,7 @@
             this.prenota.addEventListener('click', () => navigate('prenotazioni.php','prenotazioni'));
             this.fattura.addEventListener('click', () => navigate('fattura.php','fattura'));
             this.clienti.addEventListener('click', () => navigate('clienti.php','clienti'));
+            this.mensili.addEventListener('click', () => navigate('mensili.php','mensili'));
         }
     }
     menu.start();

@@ -3,7 +3,7 @@ class Html{
     public function alert(string $message):void{
         echo "<script>(function(){ alert('{$message}');})();</script>";
     }
-    public function pagination(ResultForTable $result):void{
+    public function pagination($result):void{
         if($result->pages>1){?>
             <div class="ms-auto flex-grow-0 me-3">
                 <nav aria-label="Page navigation example">

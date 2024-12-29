@@ -4,9 +4,10 @@
         return trim(preg_replace("#\n\s+#","\n",str_replace("   ","", $txt)));
     }
     function _index(){
-        $index=Select("JSON_EXTRACT(setup, '$.first_index') as first_index")->from('setup')->where("`key`='fatture'")->col('first_index');
-        $ct=Select('count(id) as ct')->from('fatture')->col('ct');
-        return $index + $ct; 
+        $index=Select('max(`index`) as mx')->from('fatture')->first_or_false();
+        if(!$index['mx'])$index=Select("JSON_EXTRACT(setup, '$.first_index') as first_index")->from('setup')->where("`key`='fatture'")->col('first_index');
+        else $index=(int)$index['mx']+1;
+        return $index; 
     }
     $index=_index();
 ?>
@@ -71,37 +72,48 @@
                             <div class="flex-col col-6 oggetti">
                                 <div class="card-body pe-1 pb-0 text-center"><span>OGGETTO</span></div>
                                 <div class="card-body pe-1 pb-0 pt-1 oggetto" id="row1"><input id="oggetto1" class="form-control" value=""/></div>
-                                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="bollo"><input id="oggettoBollo" class="form-control" value="Bollo"/></div>
+                                <div class="card-body pe-1 pb-0 pt-1" id=""><input id="oggettoBollo" class="form-control stampDisabled" value="Bollo"/></div>
                                 <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" id="oggetto_imponibile" value="IMPONIBILE" disabled/></div>
                             </div>
                             <div class="flex-col col-5 ms-0 importi">
                                 <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">IMPORTI</span></div>
-                                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="row1"><input type="number" id="importo1" class="form-control" value="" onchange="addTotal(this.value)"/></div>
-                                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo" id="bollo"><input type="number" id="importoBollo" class="form-control" value="2.00"/></div>
-                                <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" id="imponibile" class="form-control" value="2.00" disabled/></div>
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo importo_row" id="row1"><input type="number" id="importo1" class="form-control" value="" 
+                                    onchange="window.modalHandlers['fattura'].addTotal(this)"/>
+                                </div>
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1" id="bollo"><input type="number" id="importoBollo" class="form-control stampDisabled" value="2.0"/></div>
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" id="imponibile" class="form-control" value="" disabled/></div>
                             </div>
                             <div class="flex-col col-1 mx-0 btns">
                                 <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">AZIONI</span></div>
-                                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA"  id="row1" onclick="deleteBtnClick(this);" onmouseenter="deleteBtnEnter(this);" onmouseleave="deleteBtnLeave(this);">
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA"  id="row1" 
+                                    onclick="window.modalHandlers['fattura'].deleteBtnClick(this);" 
+                                    onmouseenter="window.modalHandlers['fattura'].deleteBtnEnter(this);" 
+                                    onmouseleave="window.modalHandlers['fattura'].deleteBtnLeave(this);">
                                     <div class="pe-0" ><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15); ?></a></button></div>
                                 </div>
-                                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA MARCA DA BOLLO" id="bollo" onclick="stampBtnClick(this);" onmouseenter="stampBtnEnter(this);" onmouseleave="stampBtnLeave(this);">
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA MARCA DA BOLLO" id="bollo" 
+                                    onclick="window.modalHandlers['fattura'].stampBtnClick(this);" 
+                                    onmouseenter="window.modalHandlers['fattura'].stampBtnEnter(this);" 
+                                    onmouseleave="window.modalHandlers['fattura'].stampBtnLeave(this);">
                                     <div class="pe-0">
                                         <div class="form-check form-switch ">
-                                            <input class="form-check-input pe-4" type="checkbox" role="switch" id="btnBollo" checked>
+                                            <input class="form-check-input pe-4 btn-dark" type="checkbox" role="switch" id="btnBollo">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex-fill ps-4 pe-2 ms-2 me-2 pb-2 pt-3" onclick="addBtnClick();"><button class="btn btn-secondary w-100">AGGIUNGI RIGA</button></div>
+                        <div class="flex-fill ps-4 pe-2 ms-2 me-2 pb-2 pt-3" 
+                            onclick="window.modalHandlers['fattura'].addBtnClick();">
+                            <button class="btn btn-secondary w-100">AGGIUNGI RIGA</button>
+                        </div>
                         <hr class="my-1">
                         <div class="card-body d-flex flex-row">
                             <div class="flex-col col-6">
                                 <div class="card-body pe-1 pb-0 pt-1"><input id="input_totale_label" class="form-control fs-5" value="TOTALE FATTURA" disabled/></div>
                             </div>
                             <div class="flex-col col-6 ms-0">
-                                <div class="card-body ps-0 pe-0 pb-0 pt-1"><input type="number" id="totale" class="form-control fs-5" value="2.00" disabled/></div>
+                                <div class="card-body ps-0 pe-0 pb-0 pt-1"><input type="number" id="totale" class="form-control fs-5" value="" disabled/></div>
                             </div>
                         </div>
                         <div class="card-body d-flex flex-row pt-0" id="spanBollo">
@@ -118,7 +130,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex-col" onclick="generatePDF(<?php echo "{$_REQUEST['id_percorso']},{$index},{$_REQUEST['id_cliente']}";?>);">
+                    <div class="flex-col" 
+                        onclick="window.modalHandlers['fattura'].generatePDF(<?php echo "{$_REQUEST['id_percorso']},{$index},{$_REQUEST['id_cliente']}";?>);">
                         <div class="flex-fill px-3"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('print.svg','white',20,20); ?></a>Genera</button></div>
                     </div>
                 </div>

@@ -19,14 +19,14 @@ window.modalHandlers['percorsi_pagamenti'] = {
             stato:stato,
             id:id
         }).done(()=>{
-            reload_modal_component('percorsi','percorsi_pagamenti',{id_cliente:id_cliente});
+            reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:id_cliente});
         }).fail(()=>{fail()});
     },
     deleteFattura:function(element,id){
         if(confirm('sicuro di voler eliminare ?')){
             $.post('post/delete.php',{table:'fatture',id:id}).done(()=>{
                 const id_cliente = element.closest('.modal').querySelector('#id_cliente').value;
-                reload_modal_component('percorsi','percorsi_pagamenti',{'id_cliente':id_cliente});
+                reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{'id_cliente':id_cliente});
             }).fail(function(){fail()});
         }
     },

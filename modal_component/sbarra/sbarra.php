@@ -1,10 +1,10 @@
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+<div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Sbarra</h4>
+                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
-            <div class="container"></div>
             <div class="modal-body">
                 <?php 
                     $data=$_REQUEST['data']?format_date($_REQUEST['data']):'';
@@ -72,9 +72,9 @@
             </div>
             <div class="modal-footer">
                 <?php if(!empty($result)) {
-                    echo "<a href=\"#\" data-bs-dismiss=\"modal\" class=\"btn btn-tertiary\" onclick=\"btnElimina({$result['id']})\">Elimina</a>";
+                    echo "<a href=\"#\" data-bs-dismiss=\"modal\" class=\"btn btn-tertiary\" onclick=\"window.modalHandlers['sbarra'].btnElimina({$result['id']})\">Elimina</a>";
                 }?>
-                <a href="#" class="btn btn-primary" onclick="btnSalva()">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['sbarra'].btnSalva()">Salva</a>
             </div>
         </div>
     </div>

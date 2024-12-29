@@ -10,6 +10,7 @@
                     $result=$_REQUEST['id']?Select('*')->from('sedute')->where("id={$_REQUEST['id']}")->first():[];
                     $trattamenti = Select('t.*')
                         ->from('trattamenti', 't')
+                        ->where("t.tipo='{$_REQUEST['tipo_trattamento']}'")
                         ->orderby('t.tipo, t.categoria, t.trattamento ASC')
                         ->get();                
                 ?>
@@ -18,7 +19,8 @@
                     <input type="text" id="id_percorso" name="id_percorso" value="<?php echo $_REQUEST['id_percorso']??'';?>" hidden/>
                     <div class="mb-3 ms-2">
                         <label for="id_trattamento" class="form-label">Trattamento</label>
-                        <select class="form-select" id="id_trattamento" name="id_trattamento" value="<?php echo $result['id_trattamento']??''; ?>" onchange="changeTrattamento(this);">
+                        <select class="form-select" id="id_trattamento" name="id_trattamento" value="<?php echo $result['id_trattamento']??''; ?>" 
+                            onchange="window.modalHandlers['sedute'].changeTrattamento(this);">
                             <?php 
                                 $current_tipo = $current_categoria = '';
                                 echo "<option value=\"\" class=\"ps-4  bg-white\" prezzo=\"\" tipo=\"\"></option>";
@@ -57,7 +59,8 @@
                     </div>
                     <div class="mb-3 ms-2" id="div_sedute" hidden>
                         <label for="sedute" class="form-label">Sedute</label>
-                        <input type="number" class="form-control" id="sedute" name="sedute" value="<?php echo $result['sedute']??'1'; ?>" onchange="changeSedute(this);"> 
+                        <input type="number" class="form-control" id="sedute" name="sedute" value="<?php echo $result['sedute']??'1'; ?>" 
+                            onchange="window.modalHandlers['sedute'].changeSedute(this);"> 
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_tabellare_a_seduta" hidden>
                         <label for="prezzo_tabellare_a_seduta" class="form-label" >Prezzo tabellare a seduta</label>
@@ -65,7 +68,8 @@
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_a_seduta"hidden>
                         <label for="prezzo_a_seduta" class="form-label" >Prezzo a seduta</label>
-                        <input type="number" class="form-control" id="prezzo_a_seduta" value="<?php echo $result['prezzo']??''; ?>" onchange="changePrezzoASeduta(this);"> 
+                        <input type="number" class="form-control" id="prezzo_a_seduta" value="<?php echo $result['prezzo']??''; ?>" 
+                            onchange="window.modalHandlers['sedute'].changePrezzoASeduta(this);"> 
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_tabellare" hidden>
                         <label for="prezzo_tabellare" class="form-label" >Prezzo tabellare</label>
@@ -73,12 +77,12 @@
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo" hidden>
                         <label for="prezzo" class="form-label" >Prezzo</label>
-                        <input type="number" class="form-control" id="prezzo" name="prezzo" value="" onchange="changePrezzo(this);"/> 
+                        <input type="number" class="form-control" id="prezzo" name="prezzo" value="" onchange="window.modalHandlers['sedute'].changePrezzo(this);"/> 
                     </div>
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#" class="btn btn-primary" onclick="btnSalva(this)">Salva</a>
+            <a href="#" class="btn btn-primary" onclick="window.modalHandlers['sedute'].btnSalva(this)">Salva</a>
         </div>
     </div>
 </div>

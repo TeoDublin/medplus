@@ -1,16 +1,4 @@
-.planning-date:hover{
-    cursor: pointer;
-}
-.datepicker:hover{
-    cursor: pointer;
-}
-.hovered{
-    background-color: rgba(var(--base-bg-primary-rgb),0.5)!important;
-    cursor: pointer;
-}
-.date-target:hover{
-    cursor: pointer;
-}
+
 .table {
     border-spacing: 0 0;
 }
@@ -49,9 +37,36 @@
 .seduta_end.last{
     border-right: solid var(--sbarra-border) 2px!important;
 }
-.seduta_hovered{
+.sbarra{
+    --sbarra-border:rgb(186, 186, 186);
     cursor: pointer;
-    background-color: rgba(var(--base-bg-tertiary-rgb),0.1)!important;
-    --sbarra-border:var(--base-bg-primary);
-    box-shadow: 0 0 0 2px var(--sbarra-border); 
+}
+.sbarra_start {
+    border-top: solid var(--sbarra-border) 2px!important;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
+}
+.sbarra_middle {
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
+}
+.sbarra_end{
+    border-bottom: solid var(--sbarra-border) 2px!important;
+    background-color: rgba(var(--base-bg-primary-rgb),0.2)!important;
+}
+.sbarra_start.first{
+    border-left: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_start.last{
+    border-right: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_middle.first{
+    border-left: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_middle.last{
+    border-right: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_end.first{
+    border-left: solid var(--sbarra-border) 2px!important;
+}
+.sbarra_end.last{
+    border-right: solid var(--sbarra-border) 2px!important;
 }

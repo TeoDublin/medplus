@@ -1,9 +1,10 @@
-function generatePDF() {
-    let _data = {};
+function generatePDF(index) {
+    let _data = {index:index};
     let table = [];
     for (let index = document.querySelectorAll('.oggetto').length; index >= 1; index--) {
         table.push({'oggetto':document.querySelector('#oggetto'+index)?.value,'importo':document.querySelector('#importo'+index)?.value});
     }
+    _data['data']=document.querySelector('#date').value;
     _data['totale']=document.querySelector('#totale').value;
     _data['imponibile']=document.querySelector('#imponibile').value;
     if(!document.querySelector('#btnBollo').classList.contains('btn-dark')){
@@ -30,15 +31,15 @@ function addBtnClick() {
     oggettoDiv.appendChild(oggettoInput);
     document.querySelector('.oggetti').insertBefore(oggettoDiv, document.querySelector('.oggetti').children[1]);
 
-    let countImporto = document.querySelectorAll('.importo').length;
+    let countImporto = document.querySelectorAll('.importo_row').length;
     const importoDiv = document.createElement('div');
-    importoDiv.className = "card-body ps-0 pe-1 pb-0 pt-1 importo";
+    importoDiv.className = "card-body ps-0 pe-1 pb-0 pt-1 importo importo_row";
     const importoInput = document.createElement('input');
     importoInput.id = 'importo' + (countImporto + 1);
     importoDiv.id = 'row' + (countImporto + 1);
     importoInput.className = 'form-control';
     importoInput.type = 'number';
-    importoInput.addEventListener('change',function(){addTotal(parseFloat(importoInput.value) || 0)});
+    importoInput.addEventListener('change',function(){addTotal()});
     importoDiv.appendChild(importoInput);
     document.querySelector('.importi').insertBefore(importoDiv, document.querySelector('.importi').children[1]);
 
@@ -88,6 +89,8 @@ function stampBtnClick(){
     const importo = document.querySelector('#importoBollo');
     const btn = document.querySelector('#btnBollo');
     const spanBollo = document.querySelector('#spanBollo');
+    const bollo = document.querySelector('#bollo');
+    console.log(bollo);
     if(btn.classList.contains('btn-dark')){
         oggetto.removeAttribute('disabled');
         oggetto.classList.remove('stampDisabled');
@@ -98,10 +101,10 @@ function stampBtnClick(){
         btn.setAttribute('title','ELIMINA MARCA DA BOLLO');
         spanBollo.removeAttribute('hidden');
         spanBollo.classList.remove('d-none');
-        addTotal(2);
+        bollo.classList.add('importo');
+        addTotal();
     }
     else{
-        addTotal(-2);
         oggetto.setAttribute('disabled',true);
         oggetto.classList.add('stampDisabled');
         importo.setAttribute('disabled',true);
@@ -111,19 +114,18 @@ function stampBtnClick(){
         btn.setAttribute('title','AGGIUNGI MARCA DA BOLLO');
         spanBollo.setAttribute('hidden','');
         spanBollo.classList.add('d-none');
+        bollo.classList.remove('importo');
+        addTotal();
     }
 }
-function addTotal(value) {
-    console.log(value);
+function addTotal() {
     const totale = document.querySelector('#totale');
     const imponibile = document.querySelector('#imponibile');
-
-    const totaleValue = parseFloat(totale.value) || 0;
-    const parsedValue = parseFloat(value) || 0;
-
-    const newValue = totaleValue + parsedValue;
-
-    totale.value = newValue.toFixed(2);
-    imponibile.value = newValue.toFixed(2);
+    let new_total = 0;
+    document.querySelectorAll('.importo').forEach(importo=>{
+        let input = importo.querySelector('input').value;
+        new_total+=parseFloat(input) || 0;
+    });
+    totale.value = parseFloat(new_total).toFixed(2);
+    imponibile.value = parseFloat(new_total).toFixed(2);
 }
-

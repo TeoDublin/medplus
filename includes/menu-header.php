@@ -1,40 +1,3 @@
-<div class="modal fade" id="preferencesModal" tabindex="-1" aria-labelledby="preferencesModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form action="post/menu.php" method="post">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="preferencesModalLabel">Preferenze</h1>
-                    <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="user" id="form113" class="form-control form-control-lg" name="user"/>
-                            <label class="form-label" for="form113">Indirizzo e-mail</label>
-                        </div>
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="password" id="form123" class="form-control form-control-lg"  name="password"/>
-                            <label class="form-label" for="form123">Password</label>
-                        </div>
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <select class="form-select" aria-label="Default select example" id="form133" name="template">
-                                <option value="blue" selected>Blue</option>
-                                <option value="pink">Pink</option>
-                                <option value="dark">Dark</option>
-                                <option value="light">Light</option>
-                            </select>
-                            <label class="form-label" for="form133">Tema</label>
-                        </div>
-                    </div>            
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">ANNULLA</button>
-                    <button type="submit" class="btn btn-primary">Salva Modifiche</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-1 w-100" style="height: 40;">
         <div class="menu-divider hide">
@@ -56,7 +19,7 @@
                     <div class="dropstart">
                         <div class="dots dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><?php echo icon('dots.svg','white',40,40);?></div>
                         <ul class="dropdown-menu" style="margin-top: 53px;margin-right:-55px">
-                            <li class="menu-setup" data-bs-toggle="modal" data-bs-target="#preferencesModal">
+                            <li class="menu-setup">
                                 <div class="d-flex align-items-center dropdown-item">
                                     <?php echo icon('person-setup.svg');?>
                                     <h6 class="p-1 mt-1 ms-1">Preferenze</h6>
@@ -88,7 +51,7 @@
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('document.svg','black',31,30);?>
                     </div>
-                    <div class="menu-label align-self-center hide" ><span>Fattura</span></div>
+                    <div class="menu-label align-self-center hide" ><span>Fatture</span></div>
                 </div>
                 <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='impostazioni'?'menu-active':''?>" id="menu-impostazioni" title="impostazioni">
                     <div class="d-flex align-items-start mx-2" >
@@ -101,7 +64,13 @@
                         <?php echo icon('person-card.svg','black',31,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Clienti</span></div>
-                </div>                
+                </div>
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='mensili'?'menu-active':''?>" id="menu-mensili" title="mensili">
+                    <div class="d-flex align-items-start mx-2" >
+                        <?php echo icon('calendar-check.svg','black',31,30);?>
+                    </div>
+                    <div class="menu-label align-self-center hide" ><span>Mensili</span></div>
+                </div>
             </div>
             <div class="page-content flex-fill pb-2 pt-0 px-2">
                 <div class="d-flex justify-content-center">

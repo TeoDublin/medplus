@@ -3,7 +3,7 @@
     <div class="flex-fill flex-column">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link <?php echo _tab('planning')?'active':'';?>" aria-current="page" href="prenotazioni.php?tab=planning&pagination=0&rowId=unset&openModal=unset">Planning</a>
+                <a class="nav-link <?php echo _tab('planning')?'active':'';?>" aria-current="page" href="prenotazioni.php?tab=planning">Planning</a>
             </li>
         </ul>
         <div class="p-1">

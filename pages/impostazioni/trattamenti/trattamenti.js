@@ -21,10 +21,5 @@ function add(id){
     modal_component('modal','modal',_data);
 }
 document.addEventListener('DOMContentLoaded',function(){
-    search(false);
+    search_table({table:'trattamenti'});
 });
-function search(text){
-    let _data={table:'trattamenti'};
-    if(text)_data['search']={key:'trattamento',value:text};
-    component('search_table',_data);
-}

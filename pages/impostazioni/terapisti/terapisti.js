@@ -21,10 +21,5 @@ function add(id){
     modal_component('modal','modal',_data);
 }
 document.addEventListener('DOMContentLoaded',function(){
-    search(false);
+    search_table({table:'terapisti'});
 });
-function search(text){
-    let _data={table:'terapisti'};
-    if(text)_data['search']={key:'terapista',value:text};
-    component('search_table',_data);
-}

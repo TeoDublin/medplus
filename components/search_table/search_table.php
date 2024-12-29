@@ -1,48 +1,34 @@
 <?php
-    $select=Select('*')->from($_REQUEST['table'])->limit(14)->orderby('id DESC');
-    if($_REQUEST['search'])$select->where("{$_REQUEST['search']['key']} like '%{$_REQUEST['search']['value']}%'");
-    $table=$select->get_table();
-    $cols=$_REQUEST['cols']??array_keys(array_diff_key($table->result[0]??[],['id'=>1]));
+    component('search_table','css');
+    component('search_table','js');
+    $response=json_decode($_REQUEST['response']);
+    $actions=$response->actions?htmlspecialchars($response->actions??[], ENT_QUOTES, 'UTF-8'):json_encode([]);
+    $cols=htmlspecialchars(json_encode($response->cols??[]), ENT_QUOTES, 'UTF-8');
 ?>
 <div class="card p">
     <div class="card-body d-flex flex-column">
-        <div class="p-2 border my-1" style="border-bottom: 0px!important;border-radius: 10px 10px 0 0;"><?php 
-            if($table->total==0)echo "<div class=\"text-center mt-3\"><h3>Non Trovato</h3></div>";
-            else{?>
-                <table class="table table-striped border-0">
-                    <thead>
-                        <tr class="align-middle"><?php 
-                            foreach ($cols as $col) if($col!='id')echo "<th scope=\"col\" class=\"text-center\" rowspan=\"2\">{$col}</th>";
-                            foreach ($_REQUEST['actions']??[] as $key=>$value)echo "<th scope=\"col\" class=\"text-center\" rowspan=\"2\">{$key}</th>";?>
-                            <th scope="col" class="text-center" rowspan="2">#</th>
-                        </tr>
-                    </thead>
-                    <tbody><?php
-                        foreach ($table->result  as $row) {?>
-                            <tr class="table-row" onclick="editClick(this,<?php echo $row['id'];?>);">
-                                <?php foreach ($cols as $col)if($col!='id')echo "<td scope=\"col\" class=\"text-center\">{$row[$col]}</td>";
-                                foreach ($_REQUEST['actions']??[] as $key => $value) {
-                                    switch ($value) {
-                                        case 'success':{
-                                            echo "<td scope=\"col\" class=\"text-center hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success')\";>".icon('heart.svg')."</td>";
-                                            break;
-                                        }
-                                        case 'success2':{
-                                            echo "<td scope=\"col\" class=\"text-center hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success2')\";>".icon('dollar.svg')."</td>";
-                                            break;
-                                        }
-                                    }
-                                }                                
-                                ?>
-                                <td scope="col" class="text-center action-Elimina" title="Elimina" 
-                                    onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?>
-                                </td>
-                            </tr><?php
-                        }?>
-                    </tbody>
-                </table><?php 
-            };?>
+        <div class="p-2 border my-1" style="border-bottom: 0px!important;border-radius: 10px 10px 0 0;">
+            <table class="table table-striped border-0">
+                <thead>
+                    <tr class="align-middle"><?php 
+                        foreach ($response->cols as $col) if($col!='id'){
+                            echo "<th scope=\"col\" class=\"text-center\" rowspan=\"2\">
+                                    <div class=\"d-flex flex-row search_row\">
+                                        <input type=\"text\" class=\"search_input text-center\" value=\"{$col}\" data-value=\"{$col}\"
+                                            onmouseenter=\"window.modalHandlers['search_table'].enterSearchInput(this);\"
+                                            onmouseleave=\"window.modalHandlers['search_table'].leaveSearchInput(this);\"
+                                            oninput=\"window.modalHandlers['search_table'].searchTableBody('{$_REQUEST['table']}','{$col}',this,{$actions},{$cols})\"
+                                        />
+                                    </div>
+                                </th>";
+                        }
+                        foreach ($_REQUEST['actions']??[] as $key=>$value)echo "<th scope=\"col\" class=\"text-center\" rowspan=\"2\">{$key}</th>";?>
+                        <th scope="col" class="text-center" rowspan="2">#</th>
+                    </tr>
+                </thead>
+                <tbody id="search_table_body"></tbody>
+            </table>
         </div>
     </div>
-    <?php html()->pagination($table);?>
+    <?php html()->pagination($response);?>
 </div>
