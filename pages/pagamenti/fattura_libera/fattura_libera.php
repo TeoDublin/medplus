@@ -1,4 +1,4 @@
-<?php style('pages/fattura/libera/libera.css'); ?>
+<?php style('pages/pagamenti/fattura_libera/fattura_libera.css'); ?>
 <?php 
     function _clean($txt){
         return trim(preg_replace("#\n\s+#","\n",str_replace("   ","", $txt)));
@@ -116,4 +116,4 @@
     </div>
 </div>
 
-<?php script('pages/fattura/libera/libera.js'); ?>
+<?php script('pages/pagamenti/fattura_libera/fattura_libera.js'); ?>

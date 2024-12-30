@@ -7,7 +7,7 @@ function set_page_cookie(string $key=null, string $value = null): array {
         if($v=='unset'){
             unset($current_cookie[$k]);
         }
-        else $merge_cookie[$k]=$v;
+        else$merge_cookie[$k]=$v;
     }
     $page_cookie = array_merge($current_cookie, $merge_cookie);
     if($key)$page_cookie[$key]=$value;
@@ -17,7 +17,7 @@ function set_page_cookie(string $key=null, string $value = null): array {
 function page_cookie():array{
     return isset($_COOKIE[page()]) ? json_decode($_COOKIE[page()], true) : [];
 }
-function cookie(string $key, string $fallback):string{
+function cookie(string $key, $fallback=false):string{
     if($_REQUEST['skip_cookie'])$ret=$_REQUEST[$key]??$fallback;
     else{
         $page_cookie=page_cookie();

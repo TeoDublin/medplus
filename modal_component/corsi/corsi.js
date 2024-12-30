@@ -1,17 +1,15 @@
-window.modalHandlers['sedute']={
+window.modalHandlers['corsi']={
     btnSalva:function(element){
         let _data = {};
         const mnodal = element.closest('.modal');
         mnodal.querySelectorAll('[name]').forEach(element=>{ _data[element.name]=element.value;});
-        $.post('post/sedute.php',_data).done(function(){
-            reload_modal_component('percorsi','percorsi',_data);
-        }).fail(function(){fail()});
+        $.post('post/save.php',_data).done(function(){ success_and_refresh();}).fail(function(){fail()});
     },
-    changeTrattamento:function(element){
+    changecorso:function(element){
         const modal_component=element.closest('.modal-content');
-        const select=modal_component.querySelector('#id_trattamento');
+        const select=modal_component.querySelector('#id_corso');
         const selected=select.querySelector('[value="'+select.value+'"]');
-        const tipo_trattamento=selected.getAttribute('tipo');
+        const tipo_corso=selected.getAttribute('tipo');
         const sedute=modal_component.querySelector('#div_sedute');
         const selected_prezzo=selected.getAttribute('prezzo');
         const prezzo=modal_component.querySelector('#div_prezzo');
@@ -19,7 +17,8 @@ window.modalHandlers['sedute']={
         const prezzo_tabellare=modal_component.querySelector('#div_prezzo_tabellare');
         const prezzo_tabellare_a_seduta=modal_component.querySelector('#div_prezzo_tabellare_a_seduta');
         
-        switch (tipo_trattamento) {
+        switch (tipo_corso) {
+            case 'Corso':
             case 'Mensile':
                 prezzo.removeAttribute('hidden');
                 prezzo.querySelector('input').value = selected_prezzo;

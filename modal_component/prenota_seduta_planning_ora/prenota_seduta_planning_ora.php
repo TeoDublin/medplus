@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['prenota_seduta_planning_ora'].btnSalva(this)">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['prenota_seduta_planning_ora'].btnSalva(this,<?php echo $_REQUEST['id_percorso'];?>)">Salva</a>
             </div>
         </div>
     </div>

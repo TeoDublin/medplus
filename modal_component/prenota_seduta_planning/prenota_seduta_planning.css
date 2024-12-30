@@ -2,6 +2,9 @@
 .table {
     border-spacing: 0 0;
 }
+.table:hover {
+    cursor: pointer;
+}
 .table-separate{
     border-collapse: separate;
 }

@@ -8,8 +8,21 @@
         return 'dev';
     }
     function page():string{
-        $split= explode('/',strtok($_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'], '?'));
-        return str_replace('.php','',end($split));
+        $url=$_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'];
+        $exceptions=[
+            'post/search_table',
+            'component'
+        ];
+        foreach ($exceptions as $exception) {
+            if($url=="/".PROJECT_NAME.'/'.$exception.'.php'){
+                $url=str_replace($_SERVER['HTTP_ORIGIN'],'',$_SERVER['HTTP_REFERER']);
+                break;
+            }
+        }
+        $split= explode('/',strtok($url, '?'));
+        $ret=str_replace('.php','',end($split));
+        if($_REQUEST['search'])$ret.='_searching';
+        return $ret;
     }
     function root_path(string $path): string {
         return "/".PROJECT_NAME."/{$path}";

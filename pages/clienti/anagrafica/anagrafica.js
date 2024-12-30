@@ -37,6 +37,6 @@ document.addEventListener('DOMContentLoaded',function(){
     search_table({
         table:'clienti',
         cols:['id','nominativo','telefono','email'],
-        actions:{Percorsi:'success',Pagamenti:'success2'}
+        actions:{ Trattamenti:'success', Pagamenti:'success2' }
     });
 });

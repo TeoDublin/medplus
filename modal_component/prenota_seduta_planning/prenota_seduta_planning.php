@@ -80,7 +80,7 @@ $_planning = function ($row)use($result){
                                                         <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_inizio<?php echo _ora($row);?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
                                                     </td>
                                                     <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" 
-                                                        onclick="window.modalHandlers['prenota_seduta_planning'].prenotaSedutaClick(this,<?php echo $_REQUEST['id_cliente'];?>);" >
+                                                        onclick="window.modalHandlers['prenota_seduta_planning'].prenotaSedutaClick(this,<?php echo $_REQUEST['id_cliente'].','.$_REQUEST['id_percorso'];?>);" >
                                                         <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
                                                     </td>
                                                     <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" sedute_prenotate_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>">

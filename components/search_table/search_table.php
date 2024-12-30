@@ -17,6 +17,7 @@
                                         <input type=\"text\" class=\"search_input text-center\" value=\"{$col}\" data-value=\"{$col}\"
                                             onmouseenter=\"window.modalHandlers['search_table'].enterSearchInput(this);\"
                                             onmouseleave=\"window.modalHandlers['search_table'].leaveSearchInput(this);\"
+                                            onclick=\"window.modalHandlers['search_table'].clickSearchInput(this);\"
                                             oninput=\"window.modalHandlers['search_table'].searchTableBody('{$_REQUEST['table']}','{$col}',this,{$actions},{$cols})\"
                                         />
                                     </div>
@@ -30,5 +31,5 @@
             </table>
         </div>
     </div>
-    <?php html()->pagination($response);?>
+    <div id="pagination" class="ms-auto flex-grow-0 me-3"></div>
 </div>

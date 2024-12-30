@@ -60,7 +60,7 @@
                                     elseif($day==$j){
                                         $day_value=str_pad($current_day,2,'0',STR_PAD_LEFT);
                                         $passed = "{$year}-{$month}-{$day_value}" < $today ? 'passed' : '';
-                                        echo "<div class=\"c1 calendar-in $last $passed\" onclick=\"window.modalHandlers['prenota_seduta'].dayClick(this,'{$day_value}','{$_REQUEST['id_cliente']}');\">{$day_value}</div>";
+                                        echo "<div class=\"c1 calendar-in $last $passed\" onclick=\"window.modalHandlers['prenota_seduta'].dayClick(this,'".$day_value."',".$_REQUEST['id_cliente'].','.$_REQUEST['id_percorso'].");\">{$day_value}</div>";
                                         $current_day++;
                                     }
                                     else echo "<div class=\"c1 calendar-out $last\">-</div>";

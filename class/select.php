@@ -107,8 +107,15 @@
             if(!empty($this->inner_join))$query.=implode('',$this->inner_join);
             if(!empty($this->where))$query.=" WHERE {$this->where}";
             $total= SQL()->select($query)[0]['total'];
-            $this->limit??=(int)cookie('limit',14);
-            $this->offset??=((int)cookie('pagination',0)*$this->limit)??0;
+            if(!$_REQUEST['search']){
+                $this->limit??=(int)cookie('limit',14);
+                $this->offset??=((int)cookie('pagination',0)*$this->limit)??0;
+            }
+            else{
+                $this->limit=$total;
+                $this->offset=0;
+            }
+
             $result=$this->get();
             return new ResultForTable($result,$total,$this->offset,$this->limit);
         }

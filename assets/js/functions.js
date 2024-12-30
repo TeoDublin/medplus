@@ -197,6 +197,15 @@ function search_table(_data){
                         let search_table_body = element.querySelector('#search_table_body');
                         search_table_body.innerHTML = '';
                         search_table_body.innerHTML = search_table_response;
+                        $.post('component.php', {response:response,component:'pagination'})
+                            .done(pagination_response => {
+                                let pagination = document.querySelector('#pagination');
+                                pagination.innerHTML = '';
+                                pagination.innerHTML = pagination_response;
+                                document.addEventListener('click', function(event) {
+                                    window.modalHandlers['search_table'].clickOutsideListener(event);
+                                });
+                            });
                     });
             });
     });

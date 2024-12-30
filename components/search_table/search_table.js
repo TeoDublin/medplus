@@ -13,8 +13,15 @@ window.modalHandlers['search_table'] = {
             element.setAttribute('placeholder','');
         }
     },
+    clickSearchInput:function(element){
+        if(!element.classList.contains('searching')){
+            element.classList.add('searching');
+        }
+        else{
+            element.classList.remove('searching');
+        }
+    },
     searchTableBody:function(table,key,element,actions,cols){
-        console.log(cols);
         let _data={
             actions:actions,
             table:table,
@@ -24,7 +31,6 @@ window.modalHandlers['search_table'] = {
             _data['search']={key:key,value:element.value};
             if(!element.classList.contains('searching'))element.classList.add('searching');
         }
-        else if(!element.value||element.value=='')element.classList.remove('searching');
         
         $.post('post/search_table.php',_data).done(response=>{
             $.post('component.php', {response:response,component:'search_table_body'})
@@ -32,7 +38,20 @@ window.modalHandlers['search_table'] = {
                     let search_table_body = document.querySelector('#search_table_body');
                     search_table_body.innerHTML = '';
                     search_table_body.innerHTML = search_table_response;
+                    $.post('component.php', {response:response,component:'pagination'})
+                        .done(pagination_response => {
+                            let pagination = document.querySelector('#pagination');
+                            pagination.innerHTML = '';
+                            pagination.innerHTML = pagination_response;
+                        });
                 });
         });
+    },
+    clickOutsideListener: function(event) {
+        document.querySelectorAll('.search_row').forEach(element=>{
+            if (!element.contains(event.target)&&element.classList.contains('searching')) {
+                element.classList.remove('searching')
+            }
+        })
     }
 };
