@@ -18,7 +18,7 @@ window.modalHandlers['percorso_terapeutico']={
         const prezzo_a_seduta=modal_component.querySelector('#div_prezzo_a_seduta');
         const prezzo_tabellare=modal_component.querySelector('#div_prezzo_tabellare');
         const prezzo_tabellare_a_seduta=modal_component.querySelector('#div_prezzo_tabellare_a_seduta');
-        
+        const scadenza=modal_component.querySelector('#scadenza');
         switch (tipo_trattamento) {
             case 'Mensile':
                 prezzo.removeAttribute('hidden');
@@ -27,9 +27,7 @@ window.modalHandlers['percorso_terapeutico']={
                 prezzo_tabellare.querySelector('input').value = selected_prezzo;
                 prezzo_tabellare_a_seduta.setAttribute('hidden','');
                 prezzo_a_seduta.setAttribute('hidden','');
-                sedute.removeAttribute('hidden');
-                sedute.classList.add('mensile');
-                sedute.querySelector('label').innerHTML='Sessioni';
+                scadenza.removeAttribute('hidden');
                 break;
             case 'Per Seduta':
                 sedute.removeAttribute('hidden');
@@ -42,7 +40,7 @@ window.modalHandlers['percorso_terapeutico']={
                 prezzo_tabellare.querySelector('input').value = selected_prezzo*sedute.querySelector('input').value;
                 prezzo_tabellare_a_seduta.removeAttribute('hidden');
                 prezzo_tabellare_a_seduta.querySelector('input').value = selected_prezzo;
-                sedute.querySelector('label').innerHTML='Sedute';
+                scadenza.setAttribute('hidden','');
                 break;
             default:
                 prezzo.setAttribute('hidden','');
@@ -51,6 +49,7 @@ window.modalHandlers['percorso_terapeutico']={
                 prezzo_tabellare_a_seduta.setAttribute('hidden','');
                 sedute.setAttribute('hidden','');
                 sedute.querySelector('label').innerHTML='Sedute';
+                scadenza.setAttribute('hidden','');
                 break;
         }
     },

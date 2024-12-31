@@ -1,10 +1,8 @@
 <?php 
     function _percorso(){
-        return Select('pt.*,t.trattamento,t.tipo')
-        ->from('percorsi_terapeutici','pt')
-        ->left_join('trattamenti t on pt.id_trattamento = t.id')
+        return Select('*')
+        ->from('view_percorsi')
         ->where("id_cliente={$_REQUEST['id_cliente']}")
-        ->orderby('timestamp DESC')
         ->get_or_false();
     }
     function _sedute($id_percorso){
@@ -14,8 +12,9 @@
             ->get();
     }
     function _sedute_prenotate($id_seduta){
-        return Select('sp.*,pri.ora as "ora_inizio", prf.ora as "ora_fine"')
+        return Select('sp.*,t.terapista,pri.ora as "ora_inizio", prf.ora as "ora_fine"')
             ->from('percorsi_terapeutici_sedute_prenotate','sp')
+            ->left_join('terapisti t on sp.id_terapista = t.id')
             ->left_join('planning_row pri on sp.row_inizio = pri.id')
             ->left_join('planning_row prf on sp.row_fine = prf.id')
             ->where("sp.id_seduta={$id_seduta}")
@@ -51,17 +50,23 @@
                                         <div class="cc1 d-flex align-items-center justify-content-center text-center">
                                             <span class=""></span>
                                         </div>
-                                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
+                                        <div class="cc4 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Tipo</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Sedute/Sessioni</span>
+                                            <span class="">Sedute</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Note</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Prezzo</span>
+                                        </div>
+                                        <div class="cc3 d-flex align-items-center justify-content-center text-center">
+                                            <span class="">Scadenza</span>
+                                        </div>
+                                        <div class="cc4 d-flex align-items-center justify-content-center text-center">
+                                            <span class="">Stato</span>
                                         </div>
                                         <div class="cc2 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Trattamento</span>
@@ -91,8 +96,8 @@
                                                         onmouseleave="window.modalHandlers['percorsi'].deleteLeave(this)">
                                                         <?php echo icon('bin.svg','black',16,16); ?>
                                                     </div>
-                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['tipo']; ?></span></div>
-                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['sedute']; ?></span></div>
+                                                    <div class="cc4 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['tipo']; ?></span></div>
+                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['sedute']??'-'; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"
                                                             title=""
                                                             data-bs-toggle="popover"
@@ -105,126 +110,207 @@
                                                         <?php echo icon('info.svg','black',20,20); ?>
                                                     </div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['prezzo']; ?></span></div>
+                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['scadenza']??'-'; ?></span></div>
+                                                    <div class="cc4 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['stato']??'-'; ?></span></div>
                                                     <div class="cc2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['trattamento']; ?></span></div>
                                                 </div>
                                             </div>
                                         </h2>
                                         <div id="collapse-percorso<?php echo $percorso['id'];?>" class="accordion-collapse collapse <?php echo $show?'show':''; ?>" data-bs-parent="#accordion-percorso<?php echo $percorso['id'];?>">
-                                            <div class="container-fluid card text-center py-4">
-                                                <?php if(empty($sedute)){?>
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <span>Non ci sono sedute per questo percorso.</span>
-                                                        </div>
-                                                    </div><?php
-                                                }
-                                                else{ ?>
-                                                    <div class="table-responsive">
-                                                        <div class="my-0">
-                                                            <div class="flex-row titles w-100 d-flex">
-                                                                <div class="cs1 d-flex align-items-center justify-content-center text-center">
-                                                                    <span class="">Seduta</span>
-                                                                </div>
-                                                                <div class="cs2 d-flex align-items-center justify-content-center text-center">
-                                                                    <span class="">Stato Seduta</span>
-                                                                </div>
-                                                                <div class="cs3 d-flex align-items-center justify-content-center text-center">
-                                                                    <span class=""></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <?php foreach ($sedute as $seduta) {
-                                                        $show_seduta=$_REQUEST['id_seduta']&&$seduta['id']==$_REQUEST['id_seduta'];
-                                                        $sedute_prenotate=_sedute_prenotate($seduta['id']);?>
-                                                        <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
-                                                            <div class="accordion-item">
-                                                                <h2 class="accordion-header">
-                                                                    <div class="accordion-button  <?php echo $show_seduta?'':'collapsed'; ?> border py-2" type="button" data-bs-toggle="collapse"  name="row_percorso" data-bs-target="#collapseSeduta<?php echo $seduta['id'];?>" aria-expanded="<?php echo $show_seduta; ?>" aria-controls="collapseSeduta<?php echo $seduta['id'];?>">
-                                                                        <input value="<?php echo $seduta['id'];?>" name="id_seduta" hidden/>
-                                                                        <div class="d-flex flex-row w-100">
-                                                                            <div class="cs1 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta['index']; ?></span></div>
-                                                                            <div class="cs2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta['stato']; ?></span></div>
-                                                                            <div class="cs3 d-flex align-items-center justify-content-center text-center me-2">
-                                                                                <?php if(in_array($seduta['stato'],['Da Prenotare','Assente','Spostata'])){?>
-                                                                                    <button class="btn btn-primary flex-fill" 
-                                                                                    onclick="window.modalHandlers['percorsi'].prenotaSeduteClick(this,<?php echo $seduta['id'].','.$_REQUEST['id_cliente'].','.$percorso['id']; ?>)" 
-                                                                                    onmouseenter="window.modalHandlers['percorsi'].prenotaEnter(this)" 
-                                                                                    onmouseleave="window.modalHandlers['percorsi'].prenotaLeave(this)">PRENOTA</button><?php
-                                                                                }
-                                                                                else{?>
-                                                                                    <button class="btn btn-dark flex-fill" disabled><?php echo strtoupper($seduta['stato']);?> </button><?php
-                                                                                }?>
+                                            <?php
+                                                switch($percorso['tipo']){
+                                                    case 'Per Seduta':{?>
+                                                        <div class="container-fluid card text-center py-4"><?php 
+                                                            if(empty($sedute)){?>
+                                                                <div class="card">
+                                                                    <div class="card-body">
+                                                                        <span>Non ci sono sedute per questo percorso.</span>
+                                                                    </div>
+                                                                </div><?php
+                                                            }
+                                                            else{ ?>
+                                                                <div class="table-responsive">
+                                                                    <div class="my-0">
+                                                                        <div class="flex-row titles w-100 d-flex">
+                                                                            <div class="cs1 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class="">Seduta</span>
                                                                             </div>
-                                                                        
+                                                                            <div class="cs2 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class="">Stato Seduta</span>
+                                                                            </div>
+                                                                            <div class="cs3 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class=""></span>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
-                                                                </h2>
-                                                                <div id="collapseSeduta<?php echo $seduta['id'];?>" class="accordion-collapse collapse <?php echo $show_seduta?'show':''; ?>" data-bs-parent="#accordionSeduta<?php echo $seduta['id'];?>">
-                                                                    <?php if(empty($sedute_prenotate)){?>
-                                                                        <div class="card">
-                                                                            <div class="card-body">
-                                                                                <span>Non ci sono sedute prenotate.</span>
-                                                                            </div>
-                                                                        </div><?php
-                                                                    }
-                                                                    else{ ?>
-                                                                        <div class="table-responsive">
-                                                                            <div class="my-0">
-                                                                                <div class="flex-row titles w-100 d-flex">
-                                                                                    <div class="csp1 d-flex align-items-center justify-content-center text-center">
-                                                                                        <span class="">Terapista</span>
-                                                                                    </div>
-                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center">
-                                                                                        <span class="">Data</span>
-                                                                                    </div>
-                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center">
-                                                                                        <span class="">Ora Inizio</span>
-                                                                                    </div>
-                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center">
-                                                                                        <span class="">Ora Fine</span>
-                                                                                    </div>
-                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center">
-                                                                                        <span class="">Stato Prenotazione</span>
-                                                                                    </div>
-                                                                                    <div class="csp3 d-flex align-items-center justify-content-center text-center">
-                                                                                        <span class="">Elimina</span>
+                                                                </div>
+                                                                <?php foreach ($sedute as $seduta) {
+                                                                    $show_seduta=$_REQUEST['id_seduta']&&$seduta['id']==$_REQUEST['id_seduta'];
+                                                                    $sedute_prenotate=_sedute_prenotate($seduta['id']);?>
+                                                                    <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
+                                                                        <div class="accordion-item">
+                                                                            <h2 class="accordion-header">
+                                                                                <div class="accordion-button  <?php echo $show_seduta?'':'collapsed'; ?> border py-2" type="button" data-bs-toggle="collapse"  name="row_percorso" data-bs-target="#collapseSeduta<?php echo $seduta['id'];?>" aria-expanded="<?php echo $show_seduta; ?>" aria-controls="collapseSeduta<?php echo $seduta['id'];?>">
+                                                                                    <input value="<?php echo $seduta['id'];?>" name="id_seduta" hidden/>
+                                                                                    <div class="d-flex flex-row w-100">
+                                                                                        <div class="cs1 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta['index']; ?></span></div>
+                                                                                        <div class="cs2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta['stato']; ?></span></div>
+                                                                                        <div class="cs3 d-flex align-items-center justify-content-center text-center me-2">
+                                                                                            <?php if(in_array($seduta['stato'],['Da Prenotare','Assente','Spostata'])){?>
+                                                                                                <button class="btn btn-primary flex-fill" 
+                                                                                                onclick="window.modalHandlers['percorsi'].prenotaSeduteClick(this,<?php echo $seduta['id'].','.$_REQUEST['id_cliente'].','.$percorso['id']; ?>)" 
+                                                                                                onmouseenter="window.modalHandlers['percorsi'].prenotaEnter(this)" 
+                                                                                                onmouseleave="window.modalHandlers['percorsi'].prenotaLeave(this)">PRENOTA</button><?php
+                                                                                            }
+                                                                                            else{?>
+                                                                                                <button class="btn btn-dark flex-fill" disabled><?php echo strtoupper($seduta['stato']);?> </button><?php
+                                                                                            }?>
+                                                                                        </div>
+                                                                                    
                                                                                     </div>
                                                                                 </div>
-                                                                                <?php foreach($sedute_prenotate as $seduta_prenotata){?>
-                                                                                    <div class="flex-row titles w-100 d-flex">
-                                                                                        <div class="csp1 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['terapista']; ?></span></div>
-                                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['data']; ?></span></div>
-                                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
-                                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
-                                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center statoHover">
-                                                                                            <select type="text" class="form-control text-center" id="stato_prenotazione" value="<?php echo $seduta_prenotata['stato_prenotazione']??'';?>" 
-                                                                                                onchange="window.modalHandlers['percorsi'].changeStatoPrenotazione(this,<?php echo $seduta_prenotata['id'].','.$seduta['id'];?>)">
-                                                                                                <?php 
-                                                                                                    foreach(Enum('percorsi_terapeutici_sedute_prenotate','stato_prenotazione')->list as $value){
-                                                                                                        $selected = (isset($seduta_prenotata['stato_prenotazione']) && $seduta_prenotata['stato_prenotazione'] == $value) ? 'selected' : '';
-                                                                                                        echo "<option value=\"{$value}\" class=\"ps-4  bg-white\" {$selected}>{$value}</option>";
-                                                                                                    }
-                                                                                                ?>
-                                                                                            </select>
+                                                                            </h2>
+                                                                            <div id="collapseSeduta<?php echo $seduta['id'];?>" class="accordion-collapse collapse <?php echo $show_seduta?'show':''; ?>" data-bs-parent="#accordionSeduta<?php echo $seduta['id'];?>">
+                                                                                <?php if(empty($sedute_prenotate)){?>
+                                                                                    <div class="card">
+                                                                                        <div class="card-body">
+                                                                                            <span>Non ci sono sedute prenotate.</span>
                                                                                         </div>
-                                                                                        <div class="csp3 d-flex align-items-center justify-content-center text-center delHover" 
-                                                                                            onclick="window.modalHandlers['percorsi'].deleteSedutaPrenotata(this,<?php echo $seduta_prenotata['id'].','.$percorso['id'].','.$seduta['id']; ?>)" 
-                                                                                            onmouseenter="window.modalHandlers['percorsi'].enterSedutaPrenotata(this);" 
-                                                                                            onmouseleave="window.modalHandlers['percorsi'].leaveSedutaPrenotata(this);">
-                                                                                            <?php echo icon('bin.svg','black',16,16); ?></div>
-                                                                                    </div><?php                                        
-                                                                                } ?>
+                                                                                    </div><?php
+                                                                                }
+                                                                                else{ ?>
+                                                                                    <div class="table-responsive">
+                                                                                        <div class="my-0">
+                                                                                            <div class="flex-row titles w-100 d-flex">
+                                                                                                <div class="csp1 d-flex align-items-center justify-content-center text-center">
+                                                                                                    <span class="">Terapista</span>
+                                                                                                </div>
+                                                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                                    <span class="">Data</span>
+                                                                                                </div>
+                                                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                                    <span class="">Ora Inizio</span>
+                                                                                                </div>
+                                                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                                    <span class="">Ora Fine</span>
+                                                                                                </div>
+                                                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                                    <span class="">Stato Prenotazione</span>
+                                                                                                </div>
+                                                                                                <div class="csp3 d-flex align-items-center justify-content-center text-center">
+                                                                                                    <span class="">Elimina</span>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <?php foreach($sedute_prenotate as $seduta_prenotata){?>
+                                                                                                <div class="flex-row titles w-100 d-flex">
+                                                                                                    <div class="csp1 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['terapista']; ?></span></div>
+                                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['data']; ?></span></div>
+                                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
+                                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
+                                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center statoHover">
+                                                                                                        <select type="text" class="form-control text-center" id="stato_prenotazione" value="<?php echo $seduta_prenotata['stato_prenotazione']??'';?>" 
+                                                                                                            onchange="window.modalHandlers['percorsi'].changeStatoPrenotazione(this,<?php echo $seduta_prenotata['id'].','.$seduta['id'];?>)">
+                                                                                                            <?php 
+                                                                                                                foreach(Enum('percorsi_terapeutici_sedute_prenotate','stato_prenotazione')->list as $value){
+                                                                                                                    $selected = (isset($seduta_prenotata['stato_prenotazione']) && $seduta_prenotata['stato_prenotazione'] == $value) ? 'selected' : '';
+                                                                                                                    echo "<option value=\"{$value}\" class=\"ps-4  bg-white\" {$selected}>{$value}</option>";
+                                                                                                                }
+                                                                                                            ?>
+                                                                                                        </select>
+                                                                                                    </div>
+                                                                                                    <div class="csp3 d-flex align-items-center justify-content-center text-center delHover" 
+                                                                                                        onclick="window.modalHandlers['percorsi'].deleteSedutaPrenotata(this,<?php echo $seduta_prenotata['id'].','.$percorso['id'].','.$seduta['id']; ?>)" 
+                                                                                                        onmouseenter="window.modalHandlers['percorsi'].enterSedutaPrenotata(this);" 
+                                                                                                        onmouseleave="window.modalHandlers['percorsi'].leaveSedutaPrenotata(this);">
+                                                                                                        <?php echo icon('bin.svg','black',16,16); ?></div>
+                                                                                                </div><?php                                        
+                                                                                            } ?>
+                                                                                        </div>
+                                                                                    </div><?php
+                                                                                }?>
                                                                             </div>
-                                                                        </div><?php
-                                                                    }?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <p class="psm"><?php
+                                                                        </div>
+                                                                    </div>
+                                                                    <p class="psm"><?php
+                                                                }
+                                                            }?>
+                                                        </div><?php
+                                                        break;
                                                     }
-                                                }?>
-                                            </div>
+                                                    case 'Mensile':{
+                                                        if(empty($sedute)){?>
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <span>Non ci sono prenotazioni.</span>
+                                                                    <div class="d-flex mt-2" 
+                                                                        onclick="window.modalHandlers['percorsi'].prenotaSeduteClick(this,<?php echo 'false,'.$_REQUEST['id_cliente'].','.$percorso['id']; ?>)"
+                                                                    ><button class="btn btn-light  flex-fill">Prenota</button></div>
+                                                                </div>
+                                                            </div><?php
+                                                        }
+                                                        else{?>
+                                                            <div class="container-fluid card text-center py-4">
+                                                                <div class="table-responsive">
+                                                                    <div class="my-0">
+                                                                        <div class="flex-row titles w-100 d-flex">
+                                                                            <div class="csp1 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class="">Terapista</span>
+                                                                            </div>
+                                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class="">Data</span>
+                                                                            </div>
+                                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class="">Ora Inizio</span>
+                                                                            </div>
+                                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class="">Ora Fine</span>
+                                                                            </div>
+                                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class="">Stato Prenotazione</span>
+                                                                            </div>
+                                                                            <div class="csp3 d-flex align-items-center justify-content-center text-center">
+                                                                                <span class="">Elimina</span>
+                                                                            </div>
+                                                                        </div><?php                                                        
+                                                                        foreach ($sedute as $seduta) {
+                                                                            $sedute_prenotate=_sedute_prenotate($seduta['id']);?>
+                                                                            <?php foreach($sedute_prenotate as $seduta_prenotata){?>
+                                                                                <div class="flex-row titles w-100 d-flex">
+                                                                                    <div class="csp1 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['terapista']; ?></span></div>
+                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['data']; ?></span></div>
+                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
+                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
+                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center statoHover">
+                                                                                        <select type="text" class="form-control text-center" id="stato_prenotazione" value="<?php echo $seduta_prenotata['stato_prenotazione']??'';?>" 
+                                                                                            onchange="window.modalHandlers['percorsi'].changeStatoPrenotazione(this,<?php echo $seduta_prenotata['id'].','.$seduta['id'];?>)">
+                                                                                            <?php 
+                                                                                                foreach(Enum('percorsi_terapeutici_sedute_prenotate','stato_prenotazione')->list as $value){
+                                                                                                    $selected = (isset($seduta_prenotata['stato_prenotazione']) && $seduta_prenotata['stato_prenotazione'] == $value) ? 'selected' : '';
+                                                                                                    echo "<option value=\"{$value}\" class=\"ps-4  bg-white\" {$selected}>{$value}</option>";
+                                                                                                }
+                                                                                            ?>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="csp3 d-flex align-items-center justify-content-center text-center delHover" 
+                                                                                        onclick="window.modalHandlers['percorsi'].deleteSedutaPrenotata(this,<?php echo $seduta_prenotata['id'].','.$percorso['id'].','.$seduta['id']; ?>)" 
+                                                                                        onmouseenter="window.modalHandlers['percorsi'].enterSedutaPrenotata(this);" 
+                                                                                        onmouseleave="window.modalHandlers['percorsi'].leaveSedutaPrenotata(this);">
+                                                                                        <?php echo icon('bin.svg','black',16,16); ?>
+                                                                                    </div>
+                                                                                </div><?php                                        
+                                                                            }
+                                                                        }?>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="d-flex mt-2" 
+                                                                    onclick="window.modalHandlers['percorsi'].prenotaSeduteClick(this,<?php echo 'false,'.$_REQUEST['id_cliente'].','.$percorso['id']; ?>)"
+                                                                ><button class="btn btn-light flex-fill">Prenota</button></div>
+                                                            </div><?php
+                                                        }?>
+                                                        <?php
+                                                    }
+                                                }
+                                            ?>
                                         </div>
                                     </div>
                                 </div>

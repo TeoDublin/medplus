@@ -6,7 +6,7 @@
                 <a class="nav-link <?php echo _tab('elenco')?'active':'';?>" aria-current="page" href="corsi.php?tab=elenco&pagination=0">Elenco</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php echo _tab('attivi')?'active':'';?>" aria-current="page" href="corsi.php?tab=attivi&pagination=0">Corsi Attivi</a>
+                <a class="nav-link <?php echo _tab('classi')?'active':'';?>" aria-current="page" href="corsi.php?tab=classi&pagination=0">Classi</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link <?php echo _tab('da_rinovare')?'active':'';?>" aria-current="page" href="corsi.php?tab=da_rinovare&pagination=0">Da rinovare</a>

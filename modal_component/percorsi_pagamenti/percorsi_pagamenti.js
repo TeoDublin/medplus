@@ -1,39 +1,29 @@
 window.modalHandlers['percorsi_pagamenti'] = {
-    aggiungiFattureClick:function(element,id_cliente){
-        if(!element.querySelector('.btn').classList.contains('disabled')){
-            modal_component('fattura','fattura',{
-                id_percorso:element.closest('.accordion-button').querySelector('#id_percorso').value,
-                id_cliente:id_cliente
+    clickRow:function(element){
+        let check = element.querySelector('#id_percorso');
+        if (check.checked) {
+            check.checked = false;
+            element.classList.remove('checked');
+        } else {
+            check.checked = true;
+            element.classList.add('checked');
+        }
+    },
+    fatturaClick:function(element,id_cliente){
+        modal = element.closest('.modal');
+        _data=[];
+        modal.querySelectorAll('.checked').forEach(checked => {
+            _data.push({
+                id_percorso:checked.querySelector('#id_percorso').value, 
+                oggetto:checked.querySelector('#trattamento').innerHTML, 
+                importo:checked.querySelector('#prezzo').innerHTML
             });
+        });
+        if(_data.length === 0){
+            alert('Seleziona qualcosa');
         }
-    },
-    aggiungiEnter:function(element){
-        element.closest('[name=row_percorso]').removeAttribute('data-bs-toggle');
-    },
-    aggiungiLeave:function(element){
-        element.closest('[name=row_percorso]').setAttribute('data-bs-toggle','collapse');
-    },
-    changeStato:function(stato,id,id_cliente){
-        $.post('post/save.php',{
-            table:'percorsi_pagamenti_fatture',
-            stato:stato,
-            id:id
-        }).done(()=>{
-            reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:id_cliente});
-        }).fail(()=>{fail()});
-    },
-    deleteFattura:function(element,id){
-        if(confirm('sicuro di voler eliminare ?')){
-            $.post('post/delete.php',{table:'fatture',id:id}).done(()=>{
-                const id_cliente = element.closest('.modal').querySelector('#id_cliente').value;
-                reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{'id_cliente':id_cliente});
-            }).fail(function(){fail()});
+        else{
+            modal_component('fattura','fattura',{id_cliente:id_cliente,oggetti:_data});
         }
-    },
-    enterFattura:function(element){
-        element.closest('div.flex-row').classList.add('bg-danger');
-    },
-    leaveFattura:function(element){
-        element.closest('div.flex-row').classList.remove('bg-danger');
     }
 }

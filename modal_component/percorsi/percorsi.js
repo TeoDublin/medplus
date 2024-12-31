@@ -4,7 +4,6 @@ window.modalHandlers['percorsi'] = {
     },
     prenotaSeduteClick: function (element,id_seduta,id_cliente,id_percorso){
         modal_component('prenota_seduta','prenota_seduta',{
-            'id_seduta':element.closest('[name=row_percorso]').querySelector('[name=id_seduta]').value,
             id_seduta:id_seduta,
             id_cliente:id_cliente,
             id_percorso:id_percorso
@@ -14,19 +13,6 @@ window.modalHandlers['percorsi'] = {
         element.closest('[name=row_percorso]').removeAttribute('data-bs-toggle');
     },
     prenotaLeave: function (element){
-        element.closest('[name=row_percorso]').setAttribute('data-bs-toggle','collapse');
-    },
-    editClick: function (element){
-        const modal = element.closest('.modal');
-        modal_component('percorso_terapeutico','percorso_terapeutico',{
-            'id_cliente':modal.querySelector('#id_cliente').value,
-            'id':element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value
-        });
-    },
-    editEnter: function (element){
-        element.closest('[name=row_percorso]').removeAttribute('data-bs-toggle');
-    },
-    editLeave: function (element){
         element.closest('[name=row_percorso]').setAttribute('data-bs-toggle','collapse');
     },
     deleteClick: function (element){

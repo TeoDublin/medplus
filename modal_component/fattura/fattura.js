@@ -1,5 +1,6 @@
 window.modalHandlers['fattura'] = {
-    generatePDF:function(id_percorso,pdf_index,id_cliente) {
+    generatePDF:function(oggetti) {
+        console.log(oggetti);
         let _data = {};
         let table = [];
         for (let index = document.querySelectorAll('.oggetto').length; index >= 1; index--) {
@@ -13,12 +14,10 @@ window.modalHandlers['fattura'] = {
             _data['spanBollo']=document.querySelector('#spanBolloValue').value;
         }
         _data['table']=table;
-        _data['index']=pdf_index;
-        _data['id_percorso']=id_percorso;
-        _data['id_cliente']=id_cliente;
+        _data['oggetti']=oggetti;
         document.querySelectorAll('textarea[name]').forEach(element =>{ _data[element.getAttribute('name')]=element.textContent });
         $.post('post/fattura.php',_data).done(()=>{
-            reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:id_cliente});
+            reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:oggetti['id_cliente']});
         });
         
     },
@@ -41,7 +40,9 @@ window.modalHandlers['fattura'] = {
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.classList.remove('deleteBtnEnter');});
     },
     deleteBtnClick:function(ele){
+        const parent = ele.closest('.card');
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.remove();});
+        window.modalHandlers['fattura'].addTotal(parent);
     },
     addBtnClick:function() {
         let countOggetto = document.querySelectorAll('.oggetto').length;
@@ -65,7 +66,6 @@ window.modalHandlers['fattura'] = {
         importoInput.addEventListener('change',function(){window.modalHandlers['fattura'].addTotal(importoInput)});
         importoDiv.appendChild(importoInput);
         document.querySelector('.importi').insertBefore(importoDiv, document.querySelector('.importi').children[1]);
-    
         let countBtn = document.querySelectorAll('.delBtn').length;
         const btnContainer  = document.createElement('div');
         btnContainer.className = 'card-body ps-0 pe-1 pb-0 pt-1 delBtn';
@@ -132,4 +132,3 @@ window.modalHandlers['fattura'] = {
         }
     }
 }
-

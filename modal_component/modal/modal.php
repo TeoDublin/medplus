@@ -117,7 +117,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['modal'].save(this,'<?php echo $_REQUEST['table'];?>')">Save changes</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['modal'].save(this,'<?php echo $_REQUEST['table'];?>')">Salva</a>
             </div>
         </div>
     </div>

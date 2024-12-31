@@ -7,4 +7,4 @@
     </div>
 </div>
 <div class="w-100 mx-1" id="search_table"></div>
-<?php script('pages/corsi/elenco/elenco.js'); ?>
+<?php script('pages/corsi/classi/classi.js'); ?>

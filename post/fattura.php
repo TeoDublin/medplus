@@ -55,23 +55,27 @@
     $pdf->SetY(-40);
     $pdf->MultiCell(0, 4, trim($_REQUEST['footer']),0,'C');
     
-    $percorso=Select('p.id, c.nominativo')->from('percorsi_pagamenti','p')->left_join('clienti c on p.id_cliente = c.id')->where("p.id_percorso={$_REQUEST['id_percorso']}")->first();
-    $link=str_replace(' ','_',$percorso['nominativo'].'_'.datetime().'.pdf');
+    $id_cliente=$_REQUEST['oggetti']['id_cliente'];
+    $cliente=Select('*')->from('clienti')->where("id={$id_cliente}")->first();
+    $link=str_replace(' ','_',$cliente['nominativo'].'_'.datetime().'.pdf');
+    $id_fattura=Insert([
+        'id_cliente'=>$id_cliente,
+        'link'=>$link,
+        'importo'=>$_REQUEST['totale'],
+        'index'=>$_REQUEST['oggetti']['index'],
+        'data'=>now('Y-m-d'),
+    ])->into('fatture')->get();
+    $totale=(int)$_REQUEST['totale'];
+    foreach($_REQUEST['oggetti']['obj'] as $obj){
+        $importo=$totale>=(int)$obj['importo']?$obj['importo']:$totale;
+        $totale-=$importo;
+        Insert([
+            'id_percorso_pagamenti'=>$obj['id_percorso'],
+            'id_cliente'=>$id_cliente,
+            'id_fattura'=>$id_fattura,
+            'importo'=>$importo
+        ])->into('percorsi_pagamenti_fatture');
+        if($totale<=0)break;
+    }
     $file=fatture_path($link);
     $pdf->Output('F', root($file));
-    
-    $table='fatture';
-    $data=[
-        'link'=>$link,
-        'prezzo'=>(int)$_REQUEST['totale']-((int)$_REQUEST['bollo']??0),
-        'index'=>$_REQUEST['index'],
-        'data'=>json_encode($_REQUEST)
-    ];
-    
-    $id=Insert($data)->into($table)->get();
-    Insert([
-        'id_percorso_pagamenti'=>$percorso['id'],
-        'id_cliente'=>$_REQUEST['id_cliente'],
-        'id_fattura'=>$id,
-        'stato'=>'Pendente'
-    ])->into('percorsi_pagamenti_fatture')->get();

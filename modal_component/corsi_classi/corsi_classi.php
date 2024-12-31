@@ -1,23 +1,28 @@
-<div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header"><h4 class="modal-title">Aggiungi corso</h4>
+<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg p-0">
+        <div class="modal-content p-0">
+            <div class="modal-header">
+                <h4>Classe</h4>
                 <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
-            <div class="modal-body  overflow-auto flex-grow-1">
+            <div class="modal-body p-3">
                 <?php 
-                    $result=$_REQUEST['id']?Select('*')->from('sedute')->where("id={$_REQUEST['id']}")->first():[];
+                    $result=$_REQUEST['id']?Select('*')->from('corsi_classi')->where("id={$_REQUEST['id']}")->first():[];
                     $corsi = Select('*')
                         ->from('corsi')
                         ->orderby('tipo, categoria, corso ASC')
                         ->get();
                 ?>
                 <div class="p-2">
+                    <input name="id" value="<?php echo $result['id']??''; ?>" hidden/>
+                    <div class="mb-3 ms-2">
+                        <label for="classe" class="form-label" >Nome</label>
+                        <input type="text" class="form-control" name="classe" value="<?php echo $result['classe']??''; ?>"/> 
+                    </div>
                     <div class="mb-3 ms-2">
                         <label for="id_corso" class="form-label">Corso</label>
-                        <select class="form-select" id="id_corso" name="id_corso" value="<?php echo $result['id_corso']??''; ?>" 
-                            onchange="window.modalHandlers['corsi'].changecorso(this);">
+                        <select class="form-select" name="id_corso" value="<?php echo $result['id_corso']??''; ?>">
                             <?php 
                                 $current_tipo = $current_categoria = '';
                                 echo "<option value=\"\" class=\"ps-4  bg-white\" prezzo=\"\" tipo=\"\"></option>";
@@ -54,34 +59,16 @@
                             ?>
                         </select>
                     </div>
-                    <div class="mb-3 ms-2" id="div_sedute" hidden>
-                        <label for="sedute" class="form-label">Sessioni</label>
-                        <input type="number" class="form-control" id="sedute" name="sedute" value="<?php echo $result['sedute']??'1'; ?>" 
-                            onchange="window.modalHandlers['corsi'].changeSedute(this);"> 
+                    <div class="mb-3 ms-2">
+                        <label for="note" class="form-label" >Note</label>
+                        <textarea rows="4" class="form-control" name="note" value="<?php echo $result['note']??''; ?>"><?php echo $result['note']??''; ?></textarea> 
                     </div>
-                    <div class="mb-3 ms-2" id="div_prezzo_tabellare_a_seduta" hidden>
-                        <label for="prezzo_tabellare_a_seduta" class="form-label" >Prezzo tabellare a seduta</label>
-                        <input type="number" class="form-control" id="prezzo_tabellare_a_seduta" value="" read-only disabled/> 
-                    </div>
-                    <div class="mb-3 ms-2" id="div_prezzo_a_seduta"hidden>
-                        <label for="prezzo_a_seduta" class="form-label" >Prezzo a seduta</label>
-                        <input type="number" class="form-control" id="prezzo_a_seduta" value="<?php echo $result['prezzo']??''; ?>" 
-                            onchange="window.modalHandlers['corsi'].changePrezzoASeduta(this);"> 
-                    </div>
-                    <div class="mb-3 ms-2" id="div_prezzo_tabellare" hidden>
-                        <label for="prezzo_tabellare" class="form-label" >Prezzo tabellare</label>
-                        <input type="number" class="form-control" id="prezzo_tabellare" name="prezzo_tabellare" value="" read-only disabled/> 
-                    </div>
-                    <div class="mb-3 ms-2" id="div_prezzo" hidden>
-                        <label for="prezzo" class="form-label" >Prezzo</label>
-                        <input type="number" class="form-control" id="prezzo" name="prezzo" value="" onchange="window.modalHandlers['corsi'].changePrezzo(this);"/> 
-                    </div>
+                </div>
             </div>
-        </div>
         <div class="modal-footer">
-                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['corsi'].save(this,'<?php echo $_REQUEST['table'];?>')">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['corsi_classi'].save(this)">Salva</a>
             </div>
         </div>
     </div>
-    <?php modal_script('corsi'); ?>
+    <?php modal_script('corsi_classi'); ?>
 </div>

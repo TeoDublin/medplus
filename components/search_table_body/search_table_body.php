@@ -13,7 +13,11 @@
                                 break;
                             }
                             case 'success2':{
-                                echo "<td scope=\"col\" class=\"text-center hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success2')\";>".icon('dollar.svg')."</td>";
+                                echo "<td scope=\"col\" class=\"text-center hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success2')\";>".icon('people-arms.svg')."</td>";
+                                break;
+                            }
+                            case 'success3':{
+                                echo "<td scope=\"col\" class=\"text-center hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success3')\";>".icon('dollar.svg')."</td>";
                                 break;
                             }
                         }

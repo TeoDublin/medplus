@@ -65,7 +65,7 @@
                         <label for="prezzo_tabellare_a_seduta" class="form-label" >Prezzo tabellare a seduta</label>
                         <input type="number" class="form-control" id="prezzo_tabellare_a_seduta" value="" read-only disabled/> 
                     </div>
-                    <div class="mb-3 ms-2" id="div_prezzo_a_seduta"hidden>
+                    <div class="mb-3 ms-2" id="div_prezzo_a_seduta" hidden>
                         <label for="prezzo_a_seduta" class="form-label" >Prezzo a seduta</label>
                         <input type="number" class="form-control" id="prezzo_a_seduta" value="<?php echo $result['prezzo']??''; ?>" 
                             onchange="window.modalHandlers['percorso_terapeutico'].changePrezzoASeduta(this);"> 
@@ -77,6 +77,10 @@
                     <div class="mb-3 ms-2" id="div_prezzo" hidden>
                         <label for="prezzo" class="form-label" >Prezzo</label>
                         <input type="number" class="form-control" id="prezzo" name="prezzo" value="" onchange="window.modalHandlers['percorso_terapeutico'].changePrezzo(this);"/> 
+                    </div>
+                    <div class="mb-3 ms-2" id="scadenza" hidden>
+                        <label for="scadenza" class="form-label" >Scadenza</label>
+                        <input type="date" class="form-control" id="scadenza" name="scadenza" value=""/> 
                     </div>
                     <div class="mb-3 ms-2" id="div_note">
                         <label for="note" class="form-label" >Note</label>

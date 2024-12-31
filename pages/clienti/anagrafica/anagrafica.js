@@ -13,19 +13,22 @@ function editClick(element,id){
         delClick(id);
     }
     else if(element.classList.contains('success')){
-        addPercorso(id);
+        percorso(id);
     }
     else if(element.classList.contains('success2')){
-        addPercorsoPagamento(id);
+        corsi(id);
+    }
+    else if(element.classList.contains('success3')){
+        percorsoPagamento(id);
     }
     else{
         add(id);
     }
 }
-function addPercorso(id){
+function percorso(id){
     modal_component('percorsi','percorsi',{id_cliente:id});
 }
-function addPercorsoPagamento(id){
+function percorsoPagamento(id){
     modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:id});
 }
 function add(id){
@@ -37,6 +40,6 @@ document.addEventListener('DOMContentLoaded',function(){
     search_table({
         table:'clienti',
         cols:['id','nominativo','telefono','email'],
-        actions:{ Trattamenti:'success', Pagamenti:'success2' }
+        actions:{ Trattamenti:'success', Corsi:'success2', Pagamenti:'success3' }
     });
 });

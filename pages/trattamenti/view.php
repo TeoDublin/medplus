@@ -8,6 +8,9 @@
             <li class="nav-item">
                 <a class="nav-link <?php echo _tab('da_prenotare')?'active':'';?>" aria-current="page" href="trattamenti.php?tab=da_prenotare&pagination=0">Da Prenotare</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo _tab('da_rinovare')?'active':'';?>" aria-current="page" href="trattamenti.php?tab=da_rinovare&pagination=0">Da Rinovare</a>
+            </li>
         </ul>
         <div class="p-1">
             <?php $tab=cookie('tab','elenco'); require "{$tab}/{$tab}.php";?>

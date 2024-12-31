@@ -180,8 +180,9 @@ color-scheme: dark;
 --bs-form-invalid-border-color: #ea868f;
 }
 [data-bs-theme=blue] {
-    --bs-light:#cfdce9;
+    --bs-light:#cfe2ff;
     --bs-light-rgb:207, 220, 233;
+    --base-bg-light:#cfe2ff;
     --bs-danger:#335681e0;
     --bs-danger-hover:#396fa8e0;
     --bs-danger-active:#25405ce0;
@@ -420,6 +421,38 @@ color-scheme: dark;
     --bs-btn-disabled-bg: var(--base-disabled-bg-tertiary);
     --bs-btn-disabled-border-color: var(--base-disabled-border-tertiary);
 }
+.btn-light {
+    --bs-btn-color: black;
+    --bs-btn-bg: var(--base-bg-light);
+    --bs-btn-border-color: var(--base-border-primary);
+    --bs-btn-hover-color: var(--base-hover-color-primary);
+    --bs-btn-hover-bg: var(--base-hover-bg-primary);
+    --bs-btn-hover-border-color: var(--base-hover-border-primary);
+    --bs-btn-focus-shadow-rgb: var(--base-focus-shadow-primary);
+    --bs-btn-active-color: var(--base-active-color-primary);
+    --bs-btn-active-bg: var(--base-active-bg-primary);
+    --bs-btn-active-border-color: var(--base-active-border-primary);
+    --bs-btn-active-shadow: var(--base-active-shadow-primary);
+    --bs-btn-disabled-color: var(--base-disabled-primary);
+    --bs-btn-disabled-bg: var(--base-disabled-bg-primary);
+    --bs-btn-disabled-border-color: var(--base-disabled-border-primary);
+}
+.btn-dark {
+    --bs-btn-color: var(--base-color-primary);
+    --bs-btn-bg: var(--base-bg-primary);
+    --bs-btn-border-color: var(--base-border-primary);
+    --bs-btn-hover-color: var(--base-hover-color-primary);
+    --bs-btn-hover-bg: var(--base-hover-bg-primary);
+    --bs-btn-hover-border-color: var(--base-hover-border-primary);
+    --bs-btn-focus-shadow-rgb: var(--base-focus-shadow-primary);
+    --bs-btn-active-color: var(--base-active-color-primary);
+    --bs-btn-active-bg: var(--base-active-bg-primary);
+    --bs-btn-active-border-color: var(--base-active-border-primary);
+    --bs-btn-active-shadow: var(--base-active-shadow-primary);
+    --bs-btn-disabled-color: var(--base-disabled-primary);
+    --bs-btn-disabled-bg: var(--base-disabled-bg-primary);
+    --bs-btn-disabled-border-color: var(--base-disabled-border-primary);
+}
 .hpx-100{
     height: 100px;
 }
@@ -534,8 +567,11 @@ color-scheme: dark;
 .warning:hover > td{
     color:white!important;
 }
+.warning:hover svg{
+    fill:white!important;
+}
 .success:hover {
-    background-color: var(--base-active-bg-tertiary) !important;
+    background-color: var(--base-active-bg-primary) !important;
     cursor: pointer;
 }
 .success:hover > td{
@@ -546,6 +582,13 @@ color-scheme: dark;
     cursor: pointer;
 }
 .success2:hover > td{
+    color:white!important;
+}
+.success3:hover {
+    background-color: var(--base-active-bg-tertiary) !important;
+    cursor: pointer;
+}
+.success3:hover > td{
     color:white!important;
 }
 .hover-icon:hover > svg{
@@ -3515,40 +3558,6 @@ box-shadow: var(--bs-btn-focus-box-shadow);
 --bs-btn-disabled-color: #fff;
 --bs-btn-disabled-bg: var(--bs-danger-active);
 --bs-btn-disabled-border-color: var(--bs-danger-active);
-}
-
-.btn-light {
---bs-btn-color: #000;
---bs-btn-bg: #f8f9fa;
---bs-btn-border-color: #f8f9fa;
---bs-btn-hover-color: #000;
---bs-btn-hover-bg: #d3d4d5;
---bs-btn-hover-border-color: #c6c7c8;
---bs-btn-focus-shadow-rgb: 211, 212, 213;
---bs-btn-active-color: #000;
---bs-btn-active-bg: #c6c7c8;
---bs-btn-active-border-color: #babbbc;
---bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
---bs-btn-disabled-color: #000;
---bs-btn-disabled-bg: #f8f9fa;
---bs-btn-disabled-border-color: #f8f9fa;
-}
-
-.btn-dark {
---bs-btn-color: #fff;
---bs-btn-bg: #424649;
---bs-btn-border-color: #212529;
---bs-btn-hover-color: #fff;
---bs-btn-hover-bg: #424649;
---bs-btn-hover-border-color: #373b3e;
---bs-btn-focus-shadow-rgb: 66, 70, 73;
---bs-btn-active-color: #fff;
---bs-btn-active-bg: #4d5154;
---bs-btn-active-border-color: #373b3e;
---bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
---bs-btn-disabled-color: #fff;
---bs-btn-disabled-bg: #212529;
---bs-btn-disabled-border-color: #212529;
 }
 
 .btn-outline-primary {
