@@ -1,8 +1,9 @@
 window.modalHandlers['sbarra'] = {
-    btnSalva:function(){
+    btnSalva:function(element){
+        const modal = element.closest('.modal');
         let _data = {table:'planning_motivi'};
-        document.querySelector('#div_planning').querySelectorAll('[name]').forEach(element=>{
-            _data[element.name]=element.value;
+        modal.querySelectorAll('[name]').forEach(named=>{
+            _data[named.name]=named.value;
         });
         $.post('post/save.php', _data)
         .done(function() { success_and_refresh(); })

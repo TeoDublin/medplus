@@ -7,4 +7,4 @@
     </div>
 </div>
 <div class="w-100 mx-1" id="search_table"></div>
-<?php script('pages/pagamenti/fatturati/fatturati.js'); ?>
+<?php script('pages/impostazioni/corsi_categorie/corsi_categorie.js'); ?>

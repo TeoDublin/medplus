@@ -30,7 +30,7 @@
                                         Dr. in Fisioterapia
                                         Specialista in Terapia Manuale
                                         Fisioterapista ISICO NAPOLI
-                                        Iscrizione Albo Nr.936
+                                        Iscrizione Albo Nr.909
                                         Tel 08119918966
                                         Email: danielazanotti@hotmail.it
                                         Iban: IT82M0301503200000002984154");?>

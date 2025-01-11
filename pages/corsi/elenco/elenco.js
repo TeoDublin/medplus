@@ -18,8 +18,8 @@ function delClick(id){
 function add(id){
     let _data = { table:'corsi', header:'Corsi' };
     if(id){_data["id"]=id;}
-    modal_component('modal','modal',_data);
+    modal_component('modal','corsi_elenco',_data);
 }
 document.addEventListener('DOMContentLoaded',function(){
-    search_table({table:'corsi'});
+    search_table({table:'view_corsi','cols':['tipo','categoria','corso','prezzo']});
 });

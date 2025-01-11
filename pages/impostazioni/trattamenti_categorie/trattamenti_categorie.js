@@ -12,14 +12,14 @@ function editClick(element,id){
 }
 function delClick(id){
     if(confirm('Sicuro di voler Eliminare?')){
-        $.post("post/delete.php",{table:'trattamenti',id:id}).done(success_and_refresh).fail(fail);
+        $.post("post/delete.php",{table:'trattamenti_categorie',id:id}).done(success_and_refresh).fail(fail);
     }
 };
 function add(id){
-    let _data = { table:'trattamenti', header:'trattamenti' };
+    let _data = { table:'trattamenti_categorie', header:'Categorie Trattamenti' };
     if(id){_data["id"]=id;}
-    modal_component('modal','trattamenti_elenco',_data);
+    modal_component('modal','modal',_data);
 }
 document.addEventListener('DOMContentLoaded',function(){
-    search_table({table:'view_trattamenti','cols':['tipo','categoria','trattamento','prezzo']});
+    search_table({table:'trattamenti_categorie'});
 });

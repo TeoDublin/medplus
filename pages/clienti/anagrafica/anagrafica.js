@@ -13,7 +13,7 @@ function editClick(element,id){
         delClick(id);
     }
     else if(element.classList.contains('success')){
-        percorso(id);
+        trattamenti(id);
     }
     else if(element.classList.contains('success2')){
         corsi(id);
@@ -25,7 +25,7 @@ function editClick(element,id){
         add(id);
     }
 }
-function percorso(id){
+function trattamenti(id){
     modal_component('percorsi','percorsi',{id_cliente:id});
 }
 function percorsoPagamento(id){

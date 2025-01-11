@@ -21,5 +21,5 @@ function add(id){
     modal_component('modal','modal',_data);
 }
 document.addEventListener('DOMContentLoaded',function(){
-    search_table({table:'motivi'});
+    search_table({table:'fatture'});
 });
