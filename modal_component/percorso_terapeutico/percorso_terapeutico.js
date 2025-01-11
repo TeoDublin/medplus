@@ -1,57 +1,44 @@
 window.modalHandlers['percorso_terapeutico']={
-    btnSalva:function(element){
+    btnSalva:function(element,caller){
         let _data = {};
         const mnodal = element.closest('.modal');
         mnodal.querySelectorAll('[name]').forEach(element=>{ _data[element.name]=element.value;});
-        $.post('post/percorso_terapeutico.php',_data).done(function(){
-            reload_modal_component('percorsi','percorsi',_data);
-        }).fail(function(){fail()});
+        switch (caller) {
+            case 'percorsi_pagamenti':
+                $.post('post/percorsi_pagamenti.php',_data).done(function(){
+                    reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',_data);
+                }).fail(function(){fail()});     
+                break;
+        
+            default:
+                $.post('post/percorso_terapeutico.php',_data).done(function(){
+                    reload_modal_component('percorsi','percorsi',_data);
+                }).fail(function(){fail()});                
+                break;
+        }
     },
     changeTrattamento:function(element){
         const modal_component=element.closest('.modal-content');
         const select=modal_component.querySelector('#id_trattamento');
         const selected=select.querySelector('[value="'+select.value+'"]');
-        const tipo_trattamento=selected.getAttribute('tipo');
         const sedute=modal_component.querySelector('#div_sedute');
         const selected_prezzo=selected.getAttribute('prezzo');
         const prezzo=modal_component.querySelector('#div_prezzo');
         const prezzo_a_seduta=modal_component.querySelector('#div_prezzo_a_seduta');
         const prezzo_tabellare=modal_component.querySelector('#div_prezzo_tabellare');
         const prezzo_tabellare_a_seduta=modal_component.querySelector('#div_prezzo_tabellare_a_seduta');
-        const scadenza=modal_component.querySelector('#scadenza');
-        switch (tipo_trattamento) {
-            case 'Mensile':
-                prezzo.removeAttribute('hidden');
-                prezzo.querySelector('input').value = selected_prezzo;
-                prezzo_tabellare.removeAttribute('hidden');
-                prezzo_tabellare.querySelector('input').value = selected_prezzo;
-                prezzo_tabellare_a_seduta.setAttribute('hidden','');
-                prezzo_a_seduta.setAttribute('hidden','');
-                scadenza.removeAttribute('hidden');
-                break;
-            case 'Per Seduta':
-                sedute.removeAttribute('hidden');
-                sedute.classList.remove('mensile');
-                prezzo.removeAttribute('hidden');
-                prezzo.querySelector('input').value = selected_prezzo*sedute.querySelector('input').value;
-                prezzo_a_seduta.removeAttribute('hidden');
-                prezzo_a_seduta.querySelector('input').value = selected_prezzo;
-                prezzo_tabellare.removeAttribute('hidden');
-                prezzo_tabellare.querySelector('input').value = selected_prezzo*sedute.querySelector('input').value;
-                prezzo_tabellare_a_seduta.removeAttribute('hidden');
-                prezzo_tabellare_a_seduta.querySelector('input').value = selected_prezzo;
-                scadenza.setAttribute('hidden','');
-                break;
-            default:
-                prezzo.setAttribute('hidden','');
-                prezzo_a_seduta.setAttribute('hidden','');
-                prezzo_tabellare.setAttribute('hidden','');
-                prezzo_tabellare_a_seduta.setAttribute('hidden','');
-                sedute.setAttribute('hidden','');
-                sedute.querySelector('label').innerHTML='Sedute';
-                scadenza.setAttribute('hidden','');
-                break;
-        }
+        
+        sedute.removeAttribute('hidden');
+        sedute.classList.remove('mensile');
+        prezzo.removeAttribute('hidden');
+        prezzo.querySelector('input').value = selected_prezzo*sedute.querySelector('input').value;
+        prezzo_a_seduta.removeAttribute('hidden');
+        prezzo_a_seduta.querySelector('input').value = selected_prezzo;
+        prezzo_tabellare.removeAttribute('hidden');
+        prezzo_tabellare.querySelector('input').value = selected_prezzo*sedute.querySelector('input').value;
+        prezzo_tabellare_a_seduta.removeAttribute('hidden');
+        prezzo_tabellare_a_seduta.querySelector('input').value = selected_prezzo;
+
     },
     changeSedute:function(element){
         const modal_component=element.closest('.modal-content');

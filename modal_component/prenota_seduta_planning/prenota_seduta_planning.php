@@ -40,7 +40,7 @@ $_planning = function ($row)use($result){
 };
 ?>
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xxl">
         <div class="modal-content px-3 text-center">
             <input type="text" name="id_terapista" value="<?php echo $_REQUEST['id_terapista']; ?>" hidden/>
             <input type="text" name="id_seduta" value="<?php echo $_REQUEST['id_seduta']; ?>" hidden/>
