@@ -70,7 +70,7 @@
         $importo=$totale>=(int)$obj['importo']?$obj['importo']:$totale;
         $totale-=$importo;
         Insert([
-            'id_percorso_pagamenti'=>$obj['id_percorso'],
+            'id_percorso'=>$obj['id_percorso'],
             'id_cliente'=>$id_cliente,
             'id_fattura'=>$id_fattura,
             'importo'=>$importo

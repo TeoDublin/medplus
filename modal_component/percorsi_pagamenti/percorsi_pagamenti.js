@@ -32,7 +32,7 @@ window.modalHandlers['percorsi_pagamenti'] = {
             _data.push({
                 id_percorso:checked.querySelector('#id_percorso').value, 
                 oggetto:checked.querySelector('#trattamento').innerHTML, 
-                importo:checked.querySelector('#prezzo').innerHTML
+                importo:checked.querySelector('#non_fatturato').innerHTML
             });
         });
         if(_data.length === 0){

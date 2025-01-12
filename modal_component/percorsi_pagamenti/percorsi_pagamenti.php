@@ -1,17 +1,9 @@
 <?php 
     function _percorso(){
         return Select('*')
-        ->from('view_percorsi')
+        ->from('view_percorsi_pagamenti')
         ->where("id_cliente={$_REQUEST['id_cliente']}")
         ->get_or_false();
-    }
-    function _fatture($id_percorso){
-        return Select('f.*,p.stato,p.id as ppf_id')
-            ->from('percorsi_pagamenti_fatture','p')
-            ->left_join('fatture f ON p.id_fattura = f.id')
-            ->left_join('percorsi_pagamenti pp ON p.id_percorso_pagamenti = pp.id')
-            ->where("pp.id_percorso={$id_percorso}")
-            ->get();
     }
     style('modal_component/percorsi_pagamenti/percorsi_pagamenti.css');
     $_percorso=_percorso();
@@ -53,7 +45,13 @@
                                             <span class="">Prezzo</span>
                                         </div>
                                         <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Situazione</span>
+                                            <span class="">Saldato</span>
+                                        </div>
+                                        <div class="cc4 d-flex align-items-center justify-content-center text-center">
+                                            <span class="">Fatturato</span>
+                                        </div>
+                                        <div class="cc4 d-flex align-items-center justify-content-center text-center">
+                                            <span class="">Non Fatturato</span>
                                         </div>
                                     </div>
                                 </div>
@@ -69,7 +67,7 @@
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
                                                     onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
                                                     onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"                                            
+                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"             
                                                 >
                                                 <span id="trattamento"><?php echo $percorso['trattamento'];?></span>
                                             </div>
@@ -90,10 +88,24 @@
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
                                                     onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
                                                     onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"  
+                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"
                                                 >
-                                                <span class=""><?php echo $percorso['stato'];?></span>
+                                                <span id="saldato"><?php echo $percorso['saldato'];?></span>
                                             </div>
+                                            <div class="cc4 d-flex align-items-center justify-content-center text-center"
+                                                    onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
+                                                    onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
+                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"
+                                                >
+                                                <span id="fatturato"><?php echo $percorso['fatturato'];?></span>
+                                            </div>
+                                            <div class="cc4 d-flex align-items-center justify-content-center text-center"
+                                                    onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
+                                                    onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
+                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"
+                                                >
+                                                <span id="non_fatturato"><?php echo $percorso['non_fatturato'];?></span>
+                                            </div>                                           
                                         </div>
                                     </div>
                                 </div>                                
