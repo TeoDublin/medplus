@@ -21,6 +21,9 @@ function editClick(element,id){
     else if(element.classList.contains('success3')){
         percorsoPagamento(id);
     }
+    else if(element.classList.contains('success4')){
+        percorsoFatture(id);
+    }
     else{
         add(id);
     }
@@ -31,6 +34,9 @@ function trattamenti(id){
 function percorsoPagamento(id){
     modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:id});
 }
+function percorsoFatture(id){
+    modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id});
+}
 function add(id){
     let _data = { table:'clienti', header:'Cliente' };
     if(id){_data["id"]=id;}
@@ -40,6 +46,6 @@ document.addEventListener('DOMContentLoaded',function(){
     search_table({
         table:'clienti',
         cols:['id','nominativo','telefono','email'],
-        actions:{ Trattamenti:'success', Corsi:'success2', Pagamenti:'success3' }
+        actions:{ Trattamenti:'success', Corsi:'success2', Pagamenti:'success3', Fatture:'success4' }
     });
 });

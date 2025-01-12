@@ -2,7 +2,7 @@
     function _percorso(){
         return Select('*')
         ->from('view_percorsi_pagamenti')
-        ->where("id_cliente={$_REQUEST['id_cliente']}")
+        ->where("id_cliente={$_REQUEST['id_cliente']} AND non_fatturato > 0")
         ->get_or_false();
     }
     style('modal_component/percorsi_pagamenti/percorsi_pagamenti.css');
@@ -24,7 +24,7 @@
                         <?php if(!$_percorso){?>
                             <div class="card">
                                 <div class="card-body">
-                                    <span>Non ci sono percorsi per questo cliente.</span>
+                                    <span>Non ci sono percorsi pendenti per questo cliente.</span>
                                 </div>
                             </div><?php
                         }
@@ -62,7 +62,7 @@
                                     <div class="my-0">
                                         <div class="flex-row titles w-100 d-flex fattura_row" >
                                             <div class="cc1 d-flex align-items-center justify-content-center text-center">
-                                                <input class="form-check-input" type="checkbox" id="id_percorso" value="<?php echo $percorso['id'];?>" disabled/>
+                                                <input class="form-check-input" type="checkbox" id="id_percorso" value="<?php echo $percorso['id_percorso'];?>" disabled/>
                                             </div>
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
                                                     onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
@@ -112,8 +112,20 @@
                                 <p class="psm"><?php
                             }
                         }?>
-                        <div class="d-flex flex-fill mt-3" onclick="window.modalHandlers['percorsi_pagamenti'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>)"><button class="btn btn-primary flex-fill">Fattura</button></div>
-                        <div class="d-flex flex-fill mt-2" onclick="window.modalHandlers['percorsi_pagamenti'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>)"><button class="btn btn-primary flex-fill">Pagamento senza Fattura</button></div>
+                        <div class="d-flex flex-fill mt-3">
+                            <div class= "d-flex w-50" onclick="window.modalHandlers['percorsi_pagamenti'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                                <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
+                                    <div class="mx-2"><?php echo icon('document.svg','white',20,17);?></div>
+                                    <div>Fattura</div>
+                                </button>
+                            </div>
+                            <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pagamenti'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                                <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
+                                    <div class="mx-2"><?php echo icon('coin.svg','white',20,25);?></div>
+                                    <div>Senza Fattura</div>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

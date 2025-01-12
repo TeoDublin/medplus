@@ -79,3 +79,4 @@
     }
     $file=fatture_path($link);
     $pdf->Output('F', root($file));
+    echo fatture_path($link);

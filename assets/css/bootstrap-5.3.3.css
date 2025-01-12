@@ -235,6 +235,7 @@ color-scheme: dark;
     --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
     --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
     --bs-link-color:rgb(74, 74, 74);
+    --base-active-bg-quarternary: #217992;
 }
 [data-bs-theme=green] {
     --bs-danger:#6c8133e0;
@@ -563,14 +564,39 @@ color-scheme: dark;
 .warning:hover {
     background-color: red !important;
     cursor: pointer;
+    color:white!important;
+}
+.warning:hover *{
+    background-color: red !important;
+    cursor: pointer;
+    color:white!important;
 }
 .warning:hover > td{
+    color:white!important;
+}
+.warning:hover a{
     color:white!important;
 }
 .warning:hover svg{
     fill:white!important;
 }
+select.successSingle:hover {
+    background-color: var(--base-active-bg-primary) !important;
+    cursor: pointer;
+    color: white !important;
+}
+
+select.successSingle option {
+    background-color: white !important; /* Default background for options */
+    color: black !important; /* Default color for text */
+}
+
 .success:hover {
+    background-color: var(--base-active-bg-primary) !important;
+    cursor: pointer;
+    color:white!important;
+}
+.success:hover *{
     background-color: var(--base-active-bg-primary) !important;
     cursor: pointer;
     color:white!important;
@@ -578,7 +604,15 @@ color-scheme: dark;
 .success:hover > td{
     color:white!important;
 }
+.success:hover a{
+    color:white!important;
+}
 .success2:hover {
+    background-color: var(--base-active-bg-secondary) !important;
+    cursor: pointer;
+    color:white!important;
+}
+.success2:hover *{
     background-color: var(--base-active-bg-secondary) !important;
     cursor: pointer;
     color:white!important;
@@ -586,12 +620,39 @@ color-scheme: dark;
 .success2:hover > td{
     color:white!important;
 }
+.success2:hover a{
+    color:white!important;
+}
 .success3:hover {
     background-color: var(--base-active-bg-tertiary) !important;
     cursor: pointer;
     color:white!important;
 }
+.success3:hover *{
+    background-color: var(--base-active-bg-tertiary) !important;
+    cursor: pointer;
+    color:white!important;
+}
 .success3:hover > td{
+    color:white!important;
+}
+.success3:hover a{
+    color:white!important;
+}
+.success4:hover {
+    background-color: var(--base-active-bg-quarternary) !important;
+    cursor: pointer;
+    color:white!important;
+}
+.success4:hover *{
+    background-color: var(--base-active-bg-quarternary) !important;
+    cursor: pointer;
+    color:white!important;
+}
+.success4:hover > td{
+    color:white!important;
+}
+.success4:hover a{
     color:white!important;
 }
 .hover-icon:hover > svg{

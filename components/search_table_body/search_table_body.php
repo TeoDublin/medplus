@@ -20,6 +20,10 @@
                                 echo "<td scope=\"col\" class=\"text-center hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success3')\";>".icon('dollar.svg')."</td>";
                                 break;
                             }
+                            case 'success4':{
+                                echo "<td scope=\"col\" class=\"text-center hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success4')\";>".icon('document.svg')."</td>";
+                                break;
+                            }
                         }
                     }   
                 }?>
