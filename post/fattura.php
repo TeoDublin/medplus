@@ -78,5 +78,6 @@
         if($totale<=0)break;
     }
     $file=fatture_path($link);
-    $pdf->Output('F', root($file));
-    echo fatture_path($link);
+    echo $file;
+    // $pdf->Output('F', root($file));
+    // echo fatture_path($link);
