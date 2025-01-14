@@ -13,9 +13,9 @@ class Sql {
                 break;
             case 'prod':
                 $host='localhost';
-                $user='u482567801_medplus';
-                $pass='Medplus2024'; 
-                $db='u482567801_medplus';
+                $user='u482567801_medplus_prod';
+                $pass='U482567801_medplus_prod'; 
+                $db='u482567801_medplus_prod';
                 break;
         }
         $this->db=$db;
