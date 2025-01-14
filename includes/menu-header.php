@@ -1,40 +1,3 @@
-<div class="modal fade" id="preferencesModal" tabindex="-1" aria-labelledby="preferencesModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <form action="post/menu.php" method="post">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="preferencesModalLabel">Preferenze</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="user" id="form113" class="form-control form-control-lg" name="user"/>
-                            <label class="form-label" for="form113">Indirizzo e-mail</label>
-                        </div>
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <input type="password" id="form123" class="form-control form-control-lg"  name="password"/>
-                            <label class="form-label" for="form123">Password</label>
-                        </div>
-                        <div data-mdb-input-init class="form-outline mb-4">
-                            <select class="form-select" aria-label="Default select example" id="form133" name="template">
-                                <option value="blue" selected>Blue</option>
-                                <option value="pink">Pink</option>
-                                <option value="dark">Dark</option>
-                                <option value="light">Light</option>
-                            </select>
-                            <label class="form-label" for="form133">Tema</label>
-                        </div>
-                    </div>            
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">ANNULLA</button>
-                    <button type="submit" class="btn btn-primary">Salva Modifiche</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <div class="d-flex flex-column">
     <div class="d-flex flex-row mb-1 w-100" style="height: 40;">
         <div class="menu-divider hide">
@@ -56,7 +19,7 @@
                     <div class="dropstart">
                         <div class="dots dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><?php echo icon('dots.svg','white',40,40);?></div>
                         <ul class="dropdown-menu" style="margin-top: 53px;margin-right:-55px">
-                            <li class="menu-setup" data-bs-toggle="modal" data-bs-target="#preferencesModal">
+                            <li class="menu-setup">
                                 <div class="d-flex align-items-center dropdown-item">
                                     <?php echo icon('person-setup.svg');?>
                                     <h6 class="p-1 mt-1 ms-1">Preferenze</h6>
@@ -78,30 +41,42 @@
     <div class="d-flex flex-fill">
         <div class="d-flex flex-fill flex-row">
             <div class="menu-vertical h-100 d-flex flex-column p-2 hide">
-                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='prenotazioni'?'menu-active':''?>" id="prenota" title="Prenotazioni">
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page','prenotazioni')=='prenotazioni'?'menu-active':''?>" id="menu-prenota" title="Prenotazioni">
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('table.svg','black',31,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Prenotazioni</span></div>
                 </div>
-                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='fattura'?'menu-active':''?>" id="fattura" title="Fattura">
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page','prenotazioni')=='pagamenti'?'menu-active':''?>" id="menu-pagamenti" title="pagamenti">
                     <div class="d-flex align-items-start mx-2" >
-                        <?php echo icon('document.svg','black',31,30);?>
+                        <?php echo icon('coin.svg','black',31,30);?>
                     </div>
-                    <div class="menu-label align-self-center hide" ><span>Fattura</span></div>
+                    <div class="menu-label align-self-center hide" ><span>Pagamenti</span></div>
                 </div>
-                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='impostazioni'?'menu-active':''?>" id="impostazioni" title="impostazioni">
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page','prenotazioni')=='impostazioni'?'menu-active':''?>" id="menu-impostazioni" title="impostazioni">
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('gear.svg','black',31,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Impostazioni</span></div>
                 </div>
-                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu','prenotazioni')=='clienti'?'menu-active':''?>" id="clienti" title="clienti">
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page','prenotazioni')=='clienti'?'menu-active':''?>" id="menu-clienti" title="clienti">
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('person-card.svg','black',31,30);?>
                     </div>
                     <div class="menu-label align-self-center hide" ><span>Clienti</span></div>
-                </div>                
+                </div>
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page','prenotazioni')=='trattamenti'?'menu-active':''?>" id="menu-trattamenti" title="trattamenti">
+                    <div class="d-flex align-items-start mx-2" >
+                        <?php echo icon('heart.svg','black',31,30);?>
+                    </div>
+                    <div class="menu-label align-self-center hide" ><span>Trattamenti</span></div>
+                </div>
+                <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page','prenotazioni')=='corsi'?'menu-active':''?>" id="menu-corsi" title="corsi">
+                    <div class="d-flex align-items-start mx-2" >
+                        <?php echo icon('people-arms.svg','black',31,30);?>
+                    </div>
+                    <div class="menu-label align-self-center hide" ><span>Corsi</span></div>
+                </div>
             </div>
             <div class="page-content flex-fill pb-2 pt-0 px-2">
                 <div class="d-flex justify-content-center">

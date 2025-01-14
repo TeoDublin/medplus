@@ -1,18 +1,34 @@
 <?php
-    function request($key){
+    function request($key,$fallback=false){
         $ret=$_REQUEST[$key];
         unset($_REQUEST[$key]);
-        return $ret;
+        return $ret ?? $fallback;
     }
     function environment():string{
         return 'prod';
     }
     function page():string{
-        $split= explode('/',strtok($_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'], '?'));
-        return str_replace('.php','',end($split));
+        $url=$_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'];
+        $exceptions=[
+            'post/search_table',
+            'component'
+        ];
+        foreach ($exceptions as $exception) {
+            if($url=="/".PROJECT_NAME.'/'.$exception.'.php'){
+                $url=str_replace($_SERVER['HTTP_ORIGIN'],'',$_SERVER['HTTP_REFERER']);
+                break;
+            }
+        }
+        $split= explode('/',strtok($url, '?'));
+        $ret=str_replace('.php','',end($split));
+        if($_REQUEST['search'])$ret.='_searching';
+        return $ret;
     }
     function root_path(string $path): string {
         return "/".PROJECT_NAME."/{$path}";
+    }
+    function fatture_path(string $filename):string{
+        return "archive/fatture/{$filename}";
     }
     function url(string $path): string {
         $rootUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
@@ -66,6 +82,10 @@
     function script(String $full_path):void{
         echo '<script src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
     }
+    function modal_script(String $component):void{
+        $full_path="modal_component/{$component}/{$component}.js";
+        echo '<script component="modal_'.$component.'" src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
+    }
     function root(string $path):string{
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }
@@ -101,6 +121,29 @@
         $split=explode('/',$date);
         return "{$split[2]}-{$split[1]}-{$split[0]}";
     }
+    function unformat_date(string $date):string{
+        $split=explode('-',$date);
+        return "{$split[2]}/{$split[1]}/{$split[0]}";
+    }
     function str_scape(string $text):string{
         return str_replace("'","\'",$text);
+    }
+    function first($table){
+        return Select('*')->from($table)->first();
+    }
+    function italian_month($month){
+        return match((int)$month){
+            1=>'Gennaio',
+            2=>'Febbraio',
+            3=>'Marzo',
+            4=>'Aprile',
+            5=>'Maggio',
+            6=>'Giugno',
+            7=>'Luglio',
+            8=>'Agosto',
+            9=>'Settembre',
+            10=>'Ottobre',
+            11=>'Novembre',
+            12=>'Dicembre'
+        };
     }

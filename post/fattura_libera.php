@@ -1,6 +1,5 @@
 <?php
     require '../includes.php';
-
     $pdf = new FPDF();
     define('EURO',chr(128));
     $pdf->AddPage();
@@ -16,7 +15,7 @@
     $pdf->MultiCell($width +10, 6, trim($_REQUEST['dati']), 0, 'C');
     $pdf->Ln();
     $pdf->SetFont('Arial', 'B', 14);
-    $pdf->MultiCell(0, 6, trim($_REQUEST['date']));
+    $pdf->MultiCell(0, 6, trim($_REQUEST['data']));
     $pdf->Ln();
 
     $pdf->SetFont('Arial', 'B', 14);
@@ -57,6 +56,6 @@
     $pdf->MultiCell(0, 4, trim($_REQUEST['footer']),0,'C');
     
     
-    $file="arquive/fatture/".datetime().'.pdf';
+    $file=fatture_path(($_REQUEST['filename']??datetime()).'.pdf');
     $pdf->Output('F', root($file));
     echo url($file);

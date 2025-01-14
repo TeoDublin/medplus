@@ -14,23 +14,6 @@
         <title>MedPlus</title>
     </head>
     <body data-bs-theme="<?php echo theme();?>" class="maybe-flex">
-        <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body" id="modal-body">
-                    ...
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ANNULLA</button>
-                        <button type="button" class="btn btn-primary btn-add">SALVA</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="successToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="1500" data-bs-animation="true">
                 <div class="toast-header p-0 m-0">
@@ -42,7 +25,6 @@
                 <div class="toast-body">Dati aggiornati con successo</div>
             </div>
         </div>
-
         <div class="toast-container position-fixed bottom-0 end-0 p-3">
             <div id="failToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false" data-bs-animation="true">
                 <div class="toast-header p-0 m-0">

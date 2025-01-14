@@ -3,6 +3,7 @@
         </div>
     </div>
 </div>
+<div id="modal"></div>
 <script>
     const menu = {
         menuVertical: document.querySelector('.menu-vertical'),
@@ -14,10 +15,12 @@
         exit: document.querySelector('.menu-exit'),
         setup: document.querySelector('.menu-setup'),
         users: document.querySelector('#users'),
-        impostazioni: document.querySelector('#impostazioni'),
-        prenota: document.querySelector('#prenota'),
-        clienti: document.querySelector('#clienti'),
-        fattura: document.querySelector('#fattura'),
+        impostazioni: document.querySelector('#menu-impostazioni'),
+        prenota: document.querySelector('#menu-prenota'),
+        clienti: document.querySelector('#menu-clienti'),
+        pagamenti: document.querySelector('#menu-pagamenti'),
+        trattamenti: document.querySelector('#menu-trattamenti'),
+        corsi: document.querySelector('#menu-corsi'),
         start: function(){
             if(getCookie("menu")=="show"){
                 this.menuVertical.classList.remove('hide');
@@ -46,15 +49,17 @@
                 window.location.href = "index.php";
             };
             const navigate = (page, menu)=>{
-                window.location.href = "<?php echo url('') ?>"+page+"?pagination=0&openModal=unset&rowId=unset&unset=tab&menu="+menu;
+                window.location.href = "<?php echo url('') ?>"+page+"?pagination=0&unset=tab&menu_page="+menu;
             }
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);
             this.exit.addEventListener('click',menuExit);
             this.impostazioni.addEventListener('click', () => navigate('impostazioni.php','impostazioni'));
             this.prenota.addEventListener('click', () => navigate('prenotazioni.php','prenotazioni'));
-            this.fattura.addEventListener('click', () => navigate('fattura.php','fattura'));
+            this.pagamenti.addEventListener('click', () => navigate('pagamenti.php','pagamenti'));
             this.clienti.addEventListener('click', () => navigate('clienti.php','clienti'));
+            this.trattamenti.addEventListener('click', () => navigate('trattamenti.php','trattamenti'));
+            this.corsi.addEventListener('click', () => navigate('corsi.php','corsi'));
         }
     }
     menu.start();

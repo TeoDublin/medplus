@@ -4,6 +4,7 @@
         protected $select;
         protected $from;
         protected $left_join;
+        protected $inner_join;
         protected $where;
         protected $query;
         protected $limit;
@@ -23,6 +24,10 @@
             $this->left_join[]=" LEFT JOIN {$left_join} ";
             return $this;
         }
+        public function inner_join(string $left_join){
+            $this->inner_join[]=" INNER JOIN {$left_join} ";
+            return $this;
+        }
         public function where(string $where){
             if(preg_match("#([0-9]{2})/([0-9]{2})/([0-9]{4})#",$where,$m))$where=preg_replace("#[0-9]{2}/[0-9]{2}/[0-9]{4}#","{$m[3]}-{$m[2]}-{$m[1]}",$where);
             $this->where=$where;
@@ -35,17 +40,30 @@
         public function get(): array{
             if (preg_match_all("#\*(.+?)\*#", $this->select, $matches)) {
                 foreach ($matches[1] as $table) {
-                    $ret=SQL()->select("SELECT CONCAT('`',GROUP_CONCAT(COLUMN_NAME SEPARATOR '`,`'),'`') as cols FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table}' AND COLUMN_NAME != 'id'");
-                    $this->select=str_replace("*{$table}*",$ret[0]['cols'],$this->select);
-                }   
+                    if(preg_match('#([a-zA-Z]+)\..*#',$table,$alias)){
+                        $table_no_alias=str_replace("{$alias[1]}.",'',$table);
+                        $cols=[];
+                        foreach(SQL()->select("SELECT COLUMN_NAME as col FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table_no_alias}' AND COLUMN_NAME != 'id'") as $col){
+                            $cols[]="{$alias[1]}.{$col['col']}";
+                        }
+                        $ret=implode(',',$cols);
+                        $this->select=str_replace("*{$table}*",$ret,$this->select);
+                    }
+                    else{
+                        $ret=SQL()->select("SELECT CONCAT('`',GROUP_CONCAT(COLUMN_NAME SEPARATOR '`,`'),'`') as cols FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = '{$table}' AND COLUMN_NAME != 'id'");
+                        $this->select=str_replace("*{$table}*",$ret[0]['cols'],$this->select);
+                    }
+                    
+                }
             }
             $query="SELECT {$this->select} FROM {$this->from}";
             if(!empty($this->left_join))$query.=implode('',$this->left_join);
+            if(!empty($this->inner_join))$query.=implode('',$this->inner_join);
             if(!empty($this->where))$query.=" WHERE {$this->where}";
             if(!empty($this->orderby))$query.=" ORDER BY {$this->orderby}";
             if(!empty($this->limit))$query.=" LIMIT {$this->limit}";
             if(!empty($this->offset))$query.=" OFFSET {$this->offset}";
-            return SQL()->select($query);
+            return SQL()->select($query) ?? [];
         }
         public function first():array{
             $ret=$this->get();
@@ -86,10 +104,18 @@
             }
             $query="SELECT count({$this->alias}.id) as total FROM {$this->from}";
             if(!empty($this->left_join))$query.=implode('',$this->left_join);
+            if(!empty($this->inner_join))$query.=implode('',$this->inner_join);
             if(!empty($this->where))$query.=" WHERE {$this->where}";
             $total= SQL()->select($query)[0]['total'];
-            $this->limit??=(int)cookie('limit',14);
-            $this->offset??=((int)cookie('pagination',0)*$this->limit)??0;
+            if(!$_REQUEST['search']){
+                $this->limit??=(int)cookie('limit',14);
+                $this->offset??=((int)cookie('pagination',0)*$this->limit)??0;
+            }
+            else{
+                $this->limit=$total;
+                $this->offset=0;
+            }
+
             $result=$this->get();
             return new ResultForTable($result,$total,$this->offset,$this->limit);
         }
