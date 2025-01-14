@@ -5,7 +5,7 @@
         return $ret ?? $fallback;
     }
     function environment():string{
-        return 'dev';
+        return 'prod';
     }
     function page():string{
         $url=$_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'];
