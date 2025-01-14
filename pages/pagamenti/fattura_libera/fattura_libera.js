@@ -90,7 +90,6 @@ function stampBtnClick(){
     const btn = document.querySelector('#btnBollo');
     const spanBollo = document.querySelector('#spanBollo');
     const bollo = document.querySelector('#bollo');
-    console.log(bollo);
     if(btn.classList.contains('btn-dark')){
         oggetto.removeAttribute('disabled');
         oggetto.classList.remove('stampDisabled');

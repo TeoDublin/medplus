@@ -1,6 +1,5 @@
 window.modalHandlers['fattura'] = {
     generatePDF:function(oggetti) {
-        console.log(oggetti);
         let _data = {};
         let table = [];
         for (let index = document.querySelectorAll('.oggetto').length; index >= 1; index--) {
@@ -17,8 +16,9 @@ window.modalHandlers['fattura'] = {
         _data['oggetti']=oggetti;
         document.querySelectorAll('textarea[name]').forEach(element =>{ _data[element.getAttribute('name')]=element.textContent });
         $.post('post/fattura.php',_data).done(response=>{
-            window.open(response,'_blank');
-            reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:oggetti['id_cliente']});
+            console.log(response);
+            // window.open(response,'_blank');
+            // reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:oggetti['id_cliente']});
         });
         
     },

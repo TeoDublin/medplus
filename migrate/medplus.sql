@@ -1,8 +1,3 @@
--- MySQL dump 10.13  Distrib 8.0.40, for Linux (x86_64)
---
--- Host: localhost    Database: medplus
--- ------------------------------------------------------
--- Server version	8.0.40-0ubuntu0.20.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -14,11 +9,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-
---
--- Table structure for table `clienti`
---
-
 DROP TABLE IF EXISTS `clienti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -39,20 +29,11 @@ CREATE TABLE `clienti` (
 ) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `clienti`
---
-
 LOCK TABLES `clienti` WRITE;
 /*!40000 ALTER TABLE `clienti` DISABLE KEYS */;
 INSERT INTO `clienti` VALUES (68,'testb','trovatore','80126','test','teataeta','3758298897','adfafda','teodublin@gmail.com','adfadf','2024-12-27 23:00:00','aaffdadfafdadfadfadfadfadf'),(69,'xxxxxx','trovatore','80126','teatafda','adfafd','3758298897','adfadf','teodublin@gmail.com','adfafd','2024-12-27 23:00:00','adfafdafd'),(71,'Joseph test','trovatore','80126','Napoli','98916519835','3758298897','946598463168','teodublin@gmail.com','test','2024-12-27 23:00:00','adfadfadf asdfadfadf'),(72,'ciro massimo',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2025-01-01 23:00:00',NULL);
 /*!40000 ALTER TABLE `clienti` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `corsi`
---
-
 DROP TABLE IF EXISTS `corsi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -67,20 +48,11 @@ CREATE TABLE `corsi` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `corsi`
---
-
 LOCK TABLES `corsi` WRITE;
 /*!40000 ALTER TABLE `corsi` DISABLE KEYS */;
 INSERT INTO `corsi` VALUES (6,'Mensile',1,'test',300.00);
 /*!40000 ALTER TABLE `corsi` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `corsi_categorie`
---
-
 DROP TABLE IF EXISTS `corsi_categorie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -91,20 +63,11 @@ CREATE TABLE `corsi_categorie` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `corsi_categorie`
---
-
 LOCK TABLES `corsi_categorie` WRITE;
 /*!40000 ALTER TABLE `corsi_categorie` DISABLE KEYS */;
 INSERT INTO `corsi_categorie` VALUES (1,'Palestra');
 /*!40000 ALTER TABLE `corsi_categorie` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `corsi_classi`
---
-
 DROP TABLE IF EXISTS `corsi_classi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -119,20 +82,11 @@ CREATE TABLE `corsi_classi` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `corsi_classi`
---
-
 LOCK TABLES `corsi_classi` WRITE;
 /*!40000 ALTER TABLE `corsi_classi` DISABLE KEYS */;
 INSERT INTO `corsi_classi` VALUES (5,1,'Ginnastica','test','2024-12-31 11:33:05');
 /*!40000 ALTER TABLE `corsi_classi` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `fatture`
---
-
 DROP TABLE IF EXISTS `fatture`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -150,20 +104,11 @@ CREATE TABLE `fatture` (
 ) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `fatture`
---
-
 LOCK TABLES `fatture` WRITE;
 /*!40000 ALTER TABLE `fatture` DISABLE KEYS */;
 INSERT INTO `fatture` VALUES (91,72,'ciro_massimo_2025-01-12_16:36:42.pdf',60,415,'2025-01-12','Saldata','2025-01-12 16:36:42'),(93,72,'ciro_massimo_2025-01-12_17:28:12.pdf',60,416,'2025-01-12','Saldata','2025-01-12 17:28:12');
 /*!40000 ALTER TABLE `fatture` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `motivi`
---
-
 DROP TABLE IF EXISTS `motivi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -174,20 +119,11 @@ CREATE TABLE `motivi` (
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `motivi`
---
-
 LOCK TABLES `motivi` WRITE;
 /*!40000 ALTER TABLE `motivi` DISABLE KEYS */;
 INSERT INTO `motivi` VALUES (2,'Pranzo'),(3,'Corso'),(4,'Malatia'),(8,'ferie');
 /*!40000 ALTER TABLE `motivi` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `percorsi_pagamenti`
---
-
 DROP TABLE IF EXISTS `percorsi_pagamenti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -203,20 +139,11 @@ CREATE TABLE `percorsi_pagamenti` (
 ) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `percorsi_pagamenti`
---
-
 LOCK TABLES `percorsi_pagamenti` WRITE;
 /*!40000 ALTER TABLE `percorsi_pagamenti` DISABLE KEYS */;
 INSERT INTO `percorsi_pagamenti` VALUES (40,118,72,420,420);
 /*!40000 ALTER TABLE `percorsi_pagamenti` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `percorsi_pagamenti_fatture`
---
-
 DROP TABLE IF EXISTS `percorsi_pagamenti_fatture`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -234,20 +161,11 @@ CREATE TABLE `percorsi_pagamenti_fatture` (
 ) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `percorsi_pagamenti_fatture`
---
-
 LOCK TABLES `percorsi_pagamenti_fatture` WRITE;
 /*!40000 ALTER TABLE `percorsi_pagamenti_fatture` DISABLE KEYS */;
 INSERT INTO `percorsi_pagamenti_fatture` VALUES (86,118,72,91,60.00,'2025-01-12 16:36:42'),(88,118,72,93,60.00,'2025-01-12 17:28:12');
 /*!40000 ALTER TABLE `percorsi_pagamenti_fatture` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `percorsi_pagamenti_senza_fattura`
---
-
 DROP TABLE IF EXISTS `percorsi_pagamenti_senza_fattura`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -260,20 +178,11 @@ CREATE TABLE `percorsi_pagamenti_senza_fattura` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `percorsi_pagamenti_senza_fattura`
---
-
 LOCK TABLES `percorsi_pagamenti_senza_fattura` WRITE;
 /*!40000 ALTER TABLE `percorsi_pagamenti_senza_fattura` DISABLE KEYS */;
 INSERT INTO `percorsi_pagamenti_senza_fattura` VALUES (7,72,118,300.00);
 /*!40000 ALTER TABLE `percorsi_pagamenti_senza_fattura` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `percorsi_terapeutici`
---
-
 DROP TABLE IF EXISTS `percorsi_terapeutici`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -293,20 +202,11 @@ CREATE TABLE `percorsi_terapeutici` (
 ) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `percorsi_terapeutici`
---
-
 LOCK TABLES `percorsi_terapeutici` WRITE;
 /*!40000 ALTER TABLE `percorsi_terapeutici` DISABLE KEYS */;
 INSERT INTO `percorsi_terapeutici` VALUES (118,72,56,3,420.00,420.00,NULL,'2025-01-12 11:34:34');
 /*!40000 ALTER TABLE `percorsi_terapeutici` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `percorsi_terapeutici_sedute`
---
-
 DROP TABLE IF EXISTS `percorsi_terapeutici_sedute`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -326,20 +226,11 @@ CREATE TABLE `percorsi_terapeutici_sedute` (
 ) ENGINE=InnoDB AUTO_INCREMENT=352 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `percorsi_terapeutici_sedute`
---
-
 LOCK TABLES `percorsi_terapeutici_sedute` WRITE;
 /*!40000 ALTER TABLE `percorsi_terapeutici_sedute` DISABLE KEYS */;
 INSERT INTO `percorsi_terapeutici_sedute` VALUES (349,1,72,118,56,'2025-01-12 11:34:34'),(350,2,72,118,56,'2025-01-12 11:34:34'),(351,3,72,118,56,'2025-01-12 11:34:34');
 /*!40000 ALTER TABLE `percorsi_terapeutici_sedute` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `percorsi_terapeutici_sedute_prenotate`
---
-
 DROP TABLE IF EXISTS `percorsi_terapeutici_sedute_prenotate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -364,19 +255,10 @@ CREATE TABLE `percorsi_terapeutici_sedute_prenotate` (
 ) ENGINE=InnoDB AUTO_INCREMENT=145 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `percorsi_terapeutici_sedute_prenotate`
---
-
 LOCK TABLES `percorsi_terapeutici_sedute_prenotate` WRITE;
 /*!40000 ALTER TABLE `percorsi_terapeutici_sedute_prenotate` DISABLE KEYS */;
 /*!40000 ALTER TABLE `percorsi_terapeutici_sedute_prenotate` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Temporary view structure for view `planning`
---
-
 DROP TABLE IF EXISTS `planning`;
 /*!50001 DROP VIEW IF EXISTS `planning`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -390,11 +272,6 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `data`,
  1 AS `motivo`*/;
 SET character_set_client = @saved_cs_client;
-
---
--- Table structure for table `planning_motivi`
---
-
 DROP TABLE IF EXISTS `planning_motivi`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -413,20 +290,11 @@ CREATE TABLE `planning_motivi` (
 ) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `planning_motivi`
---
-
 LOCK TABLES `planning_motivi` WRITE;
 /*!40000 ALTER TABLE `planning_motivi` DISABLE KEYS */;
 INSERT INTO `planning_motivi` VALUES (41,1,3,11,'2024-12-28',1),(43,25,29,11,'2024-12-30',4),(44,12,15,11,'2024-12-30',3),(46,19,19,11,'2024-12-29',2),(47,13,17,11,'2025-01-02',3),(48,21,29,12,'2025-01-03',2);
 /*!40000 ALTER TABLE `planning_motivi` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `planning_row`
---
-
 DROP TABLE IF EXISTS `planning_row`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -437,20 +305,11 @@ CREATE TABLE `planning_row` (
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `planning_row`
---
-
 LOCK TABLES `planning_row` WRITE;
 /*!40000 ALTER TABLE `planning_row` DISABLE KEYS */;
 INSERT INTO `planning_row` VALUES (1,'07:00:00'),(2,'07:15:00'),(3,'07:30:00'),(4,'07:45:00'),(5,'08:00:00'),(6,'08:15:00'),(7,'08:30:00'),(8,'08:45:00'),(9,'09:00:00'),(10,'09:15:00'),(11,'09:30:00'),(12,'09:45:00'),(13,'10:00:00'),(14,'10:15:00'),(15,'10:30:00'),(16,'10:45:00'),(17,'11:00:00'),(18,'11:15:00'),(19,'11:30:00'),(20,'11:45:00'),(21,'12:00:00'),(22,'12:15:00'),(23,'12:30:00'),(24,'12:45:00'),(25,'13:00:00'),(26,'13:15:00'),(27,'13:30:00'),(28,'13:45:00'),(29,'14:00:00'),(30,'14:15:00'),(31,'14:30:00'),(32,'14:45:00'),(33,'15:00:00'),(34,'15:15:00'),(35,'15:30:00'),(36,'15:45:00'),(37,'16:00:00'),(38,'16:15:00'),(39,'16:30:00'),(40,'16:45:00'),(41,'17:00:00'),(42,'17:15:00'),(43,'17:30:00'),(44,'17:45:00'),(45,'18:00:00'),(46,'18:15:00'),(47,'18:30:00'),(48,'18:45:00'),(49,'19:00:00'),(50,'19:15:00'),(51,'19:30:00');
 /*!40000 ALTER TABLE `planning_row` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `setup`
---
-
 DROP TABLE IF EXISTS `setup`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -462,20 +321,11 @@ CREATE TABLE `setup` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `setup`
---
-
 LOCK TABLES `setup` WRITE;
 /*!40000 ALTER TABLE `setup` DISABLE KEYS */;
 INSERT INTO `setup` VALUES (1,'fatture','{\"first_index\":415}');
 /*!40000 ALTER TABLE `setup` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `terapisti`
---
-
 DROP TABLE IF EXISTS `terapisti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -486,20 +336,11 @@ CREATE TABLE `terapisti` (
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `terapisti`
---
-
 LOCK TABLES `terapisti` WRITE;
 /*!40000 ALTER TABLE `terapisti` DISABLE KEYS */;
 INSERT INTO `terapisti` VALUES (11,'Daniela Zanotti'),(12,'Giancarlo Di Bonito'),(13,'Claudia Mancusi'),(14,'Enrica Marinucci');
 /*!40000 ALTER TABLE `terapisti` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `trattamenti`
---
-
 DROP TABLE IF EXISTS `trattamenti`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -514,20 +355,11 @@ CREATE TABLE `trattamenti` (
 ) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `trattamenti`
---
-
 LOCK TABLES `trattamenti` WRITE;
 /*!40000 ALTER TABLE `trattamenti` DISABLE KEYS */;
 INSERT INTO `trattamenti` VALUES (37,'Per Seduta',0,'Magneto domiciliare',120.00),(38,'Per Seduta',0,'Magneto ambulatoriale',10.00),(39,'Per Seduta',0,'Ultrasuoni',10.00),(40,'Per Seduta',0,'Tens',10.00),(41,'Per Seduta',0,'Ionoforesi',10.00),(42,'Per Seduta',0,'Elettrostimolazione',10.00),(43,'Per Seduta',0,'Laser',30.00),(44,'Per Seduta',0,'Tecar',30.00),(45,'Per Seduta',0,'Onde durto',50.00),(46,'Per Seduta',0,'Radiofrequenza',40.00),(47,'Per Seduta',0,'Fisio-TT',35.00),(48,'Per Seduta',0,'Rieducazione motoria',40.00),(49,'Per Seduta',0,'Esercizi propriocettivi',40.00),(50,'Per Seduta',0,'Rieducazione al passo',40.00),(51,'Per Seduta',0,'Mezieres',50.00),(53,'Per Seduta',0,'Trattamento S.E.A.S.',40.00),(56,'Per Seduta',0,'Isico',140.00);
 /*!40000 ALTER TABLE `trattamenti` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `trattamenti_categorie`
---
-
 DROP TABLE IF EXISTS `trattamenti_categorie`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
@@ -538,20 +370,11 @@ CREATE TABLE `trattamenti_categorie` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `trattamenti_categorie`
---
-
 LOCK TABLES `trattamenti_categorie` WRITE;
 /*!40000 ALTER TABLE `trattamenti_categorie` DISABLE KEYS */;
 INSERT INTO `trattamenti_categorie` VALUES (2,'test 2');
 /*!40000 ALTER TABLE `trattamenti_categorie` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Temporary view structure for view `view_corsi`
---
-
 DROP TABLE IF EXISTS `view_corsi`;
 /*!50001 DROP VIEW IF EXISTS `view_corsi`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -564,11 +387,6 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `prezzo`,
  1 AS `categoria`*/;
 SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `view_fatture`
---
-
 DROP TABLE IF EXISTS `view_fatture`;
 /*!50001 DROP VIEW IF EXISTS `view_fatture`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -584,11 +402,6 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `timestamp`,
  1 AS `nominativo`*/;
 SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `view_percorsi`
---
-
 DROP TABLE IF EXISTS `view_percorsi`;
 /*!50001 DROP VIEW IF EXISTS `view_percorsi`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -606,11 +419,6 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `tipo`,
  1 AS `stato`*/;
 SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `view_percorsi_pagamenti`
---
-
 DROP TABLE IF EXISTS `view_percorsi_pagamenti`;
 /*!50001 DROP VIEW IF EXISTS `view_percorsi_pagamenti`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -625,11 +433,6 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `fatturato`,
  1 AS `non_fatturato`*/;
 SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `view_sedute`
---
-
 DROP TABLE IF EXISTS `view_sedute`;
 /*!50001 DROP VIEW IF EXISTS `view_sedute`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -642,11 +445,6 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `id_trattamento`,
  1 AS `stato`*/;
 SET character_set_client = @saved_cs_client;
-
---
--- Temporary view structure for view `view_trattamenti`
---
-
 DROP TABLE IF EXISTS `view_trattamenti`;
 /*!50001 DROP VIEW IF EXISTS `view_trattamenti`*/;
 SET @saved_cs_client     = @@character_set_client;
@@ -659,11 +457,6 @@ SET @saved_cs_client     = @@character_set_client;
  1 AS `prezzo`,
  1 AS `categoria`*/;
 SET character_set_client = @saved_cs_client;
-
---
--- Final view structure for view `planning`
---
-
 /*!50001 DROP VIEW IF EXISTS `planning`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -677,11 +470,6 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `view_corsi`
---
-
 /*!50001 DROP VIEW IF EXISTS `view_corsi`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -695,11 +483,6 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `view_fatture`
---
-
 /*!50001 DROP VIEW IF EXISTS `view_fatture`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -713,11 +496,6 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `view_percorsi`
---
-
 /*!50001 DROP VIEW IF EXISTS `view_percorsi`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -731,11 +509,6 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `view_percorsi_pagamenti`
---
-
 /*!50001 DROP VIEW IF EXISTS `view_percorsi_pagamenti`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -749,11 +522,6 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `view_sedute`
---
-
 /*!50001 DROP VIEW IF EXISTS `view_sedute`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -767,11 +535,6 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
-
---
--- Final view structure for view `view_trattamenti`
---
-
 /*!50001 DROP VIEW IF EXISTS `view_trattamenti`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -795,4 +558,3 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-14 14:50:38

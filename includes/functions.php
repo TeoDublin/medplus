@@ -5,7 +5,7 @@
         return $ret ?? $fallback;
     }
     function environment():string{
-        return 'prod';
+        return $_SERVER['HTTP_HOST']=='127.0.0.1:8080'?'dev':'prod';
     }
     function page():string{
         $url=$_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'];
