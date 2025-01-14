@@ -77,6 +77,7 @@
         ])->into('percorsi_pagamenti_fatture');
         if($totale<=0)break;
     }
-    $file=fatture_path($link);
-    $pdf->Output('F', root($file));
-    echo json_encode(error_get_last());
+    echo "got here";
+    // $file=fatture_path($link);
+    // $pdf->Output('F', root($file));
+    // echo fatture_path($link);
