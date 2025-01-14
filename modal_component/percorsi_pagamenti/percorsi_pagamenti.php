@@ -2,7 +2,7 @@
     function _percorso(){
         return Select('*')
         ->from('view_percorsi_pagamenti')
-        ->where("id_cliente={$_REQUEST['id_cliente']} AND non_fatturato > 0")
+        ->where("id_cliente={$_REQUEST['id_cliente']} AND saldato < prezzo")
         ->get_or_false();
     }
     style('modal_component/percorsi_pagamenti/percorsi_pagamenti.css');
