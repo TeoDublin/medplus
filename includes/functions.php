@@ -87,6 +87,10 @@
         echo '<script component="modal_'.$component.'" src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
     }
     function root(string $path):string{
+        switch(environment()){
+            case 'dev':return $_SERVER['DOCUMENT_ROOT'].root_path($path);
+            case 'prod':return $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($path, '/');
+        }
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }
     function theme():string{
