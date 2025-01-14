@@ -16,9 +16,8 @@ window.modalHandlers['fattura'] = {
         _data['oggetti']=oggetti;
         document.querySelectorAll('textarea[name]').forEach(element =>{ _data[element.getAttribute('name')]=element.textContent });
         $.post('post/fattura.php',_data).done(response=>{
-            console.log(response);
-            // window.open(response,'_blank');
-            // reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:oggetti['id_cliente']});
+            window.open(response,'_blank');
+            reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:oggetti['id_cliente']});
         });
         
     },

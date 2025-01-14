@@ -77,7 +77,6 @@
         ])->into('percorsi_pagamenti_fatture');
         if($totale<=0)break;
     }
-    echo "got here";
-    // $file=fatture_path($link);
-    // $pdf->Output('F', root($file));
-    // echo fatture_path($link);
+    $file=fatture_path($link);
+    $pdf->Output('F', root($file));
+    echo fatture_path($link);
