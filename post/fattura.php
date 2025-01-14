@@ -57,7 +57,7 @@
     
     $id_cliente=$_REQUEST['oggetti']['id_cliente'];
     $cliente=Select('*')->from('clienti')->where("id={$id_cliente}")->first();
-    $link=str_replace(' ','_',$cliente['nominativo'].'_'.datetime().'.pdf');
+    $link=str_replace([' ',':'],'_',$cliente['nominativo'].'_'.datetime().'.pdf');
     $id_fattura=Insert([
         'id_cliente'=>$id_cliente,
         'link'=>$link,
@@ -78,6 +78,5 @@
         if($totale<=0)break;
     }
     $file=fatture_path($link);
-    echo $file;
-    // $pdf->Output('F', root($file));
-    // echo fatture_path($link);
+    $pdf->Output('F', root($file));
+    echo fatture_path($link);
