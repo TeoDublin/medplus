@@ -91,7 +91,6 @@
             case 'dev':return $_SERVER['DOCUMENT_ROOT'].root_path($path);
             case 'prod':return $_SERVER['DOCUMENT_ROOT'] . '/' . ltrim($path, '/');
         }
-        return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }
     function theme():string{
         return Session()->get('template')->theme ?? 'blue';
