@@ -12593,4 +12593,14 @@ p.psm {
     margin-bottom: 5px;
 
 }
+
+.disabled {
+    opacity: 0.8 !important;
+    pointer-events: none !important;
+    cursor: not-allowed !important;
+}
+
+.disabled * {
+    pointer-events: none !important;
+}
 /*# sourceMappingURL=bootstrap.css.map */

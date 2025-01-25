@@ -2,13 +2,16 @@
     border: solid rgba(128, 128, 128, 0.501) 1px;
     border-radius: 5px;
 }
+
 .fattura_row{
     padding: 10px;
     height: 50px!important;
 }
+
 .fattura_row.checked{
     background-color: var(--base-bg-light);
 }
+
 .titles > .cc1,
 .flex-row > .cc1 {
     width: 5%;

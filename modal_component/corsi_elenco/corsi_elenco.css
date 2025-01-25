@@ -1,0 +1,7 @@
+.table-responsive:not(.title) {
+    border: solid rgba(128, 128, 128, 0.501) 1px;
+    border-radius: 5px;
+    min-height: 50px;
+    text-align: center;
+    padding: 5px;
+}

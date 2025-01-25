@@ -4,7 +4,7 @@
 }
 .fattura_row{
     padding: 10px;
-    height: 50px!important;
+    min-height: 50px!important;
 }
 .fattura_row.checked{
     background-color: var(--base-bg-light);
@@ -19,6 +19,12 @@
 .flex-row > .cc2 {
     flex: 0 0 auto;
     width: 15%;
+}
+
+.titles > .cc3,
+.flex-row > .cc3 {
+    flex: 0 0 auto;
+    width: 25%;
 }
 
 .titles > .cc4,

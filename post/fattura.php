@@ -37,6 +37,12 @@
             $pdf->Cell(90, 10, '', 'R', 1, 'C');
         }
     }
+    if($_REQUEST['bollo']){
+        $pdf->SetFont('Arial', 'B', 14);
+        $pdf->Cell(90, 12, '  Bollo', 'LR', 0, 'L');
+        $pdf->Cell(90, 12, EURO." ".number_format($_REQUEST['bollo'], 2, ',', '.'), 'R', 1, 'C');
+    
+    }
     $pdf->SetFont('Arial', 'B', 14);
     $pdf->Cell(90, 12, '  IMPONIBILE', 'LR', 0, 'L');
     $pdf->Cell(90, 12, EURO." ".number_format($_REQUEST['imponibile'], 2, ',', '.'), 'R', 1, 'C');
@@ -66,6 +72,7 @@
         'data'=>now('Y-m-d'),
     ])->into('fatture')->get();
     $totale=(int)$_REQUEST['totale'];
+    $totale-=(int)$_REQUEST['bollo'];
     foreach($_REQUEST['oggetti']['obj'] as $obj){
         $importo=$totale>=(int)$obj['importo']?$obj['importo']:$totale;
         $totale-=$importo;

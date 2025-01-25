@@ -12,7 +12,7 @@
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header"><h4 class="modal-title">Non Fatturati</h4>
+            <div class="modal-header"><h4 class="modal-title">Pendenze</h4>
                 <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>                
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
@@ -60,7 +60,7 @@
                             <?php foreach ($_percorso as $percorso) {?>
                                 <div class="table-responsive">
                                     <div class="my-0">
-                                        <div class="flex-row titles w-100 d-flex fattura_row" >
+                                        <div class="flex-row titles w-100 d-flex fattura_row <?php echo (int)$percorso['non_fatturato']==0?'disabled bg-light':''; ?>">
                                             <div class="cc1 d-flex align-items-center justify-content-center text-center">
                                                 <input class="form-check-input" type="checkbox" id="id_percorso" value="<?php echo $percorso['id_percorso'];?>" disabled/>
                                             </div>
@@ -81,7 +81,7 @@
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
                                                     onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterPrezzo(this)"
                                                     onmouseleave="window.modalHandlers['percorsi_pagamenti'].leavePrezzo(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickPrezzo(<?php echo $percorso['id'].','.$percorso['id_cliente']; ?>)"
+                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickPrezzo(<?php echo $percorso['id_percorso'].','.$percorso['id_cliente']; ?>)"
                                                 >
                                                 <span id="prezzo"><?php echo $percorso['prezzo'];?></span>
                                             </div>
@@ -110,9 +110,8 @@
                                     </div>
                                 </div>                                
                                 <p class="psm"><?php
-                            }
-                        }?>
-                        <div class="d-flex flex-fill mt-3">
+                            }?>
+                            <div class="d-flex flex-fill mt-3">
                             <div class= "d-flex w-50" onclick="window.modalHandlers['percorsi_pagamenti'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
                                 <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
                                     <div class="mx-2"><?php echo icon('document.svg','white',20,17);?></div>
@@ -125,7 +124,8 @@
                                     <div>Senza Fattura</div>
                                 </button>
                             </div>
-                        </div>
+                        </div><?php
+                        }?>
                     </div>
                 </div>
             </div>

@@ -48,7 +48,7 @@ window.modalHandlers['percorsi_pagamenti'] = {
         modal.querySelectorAll('.checked').forEach(checked => {
             _data.push({
                 id_percorso:checked.querySelector('#id_percorso').value, 
-                importo:checked.querySelector('#prezzo').innerHTML
+                non_fatturato:checked.querySelector('#non_fatturato').innerHTML
             });
         });
         if(_data.length === 0){

@@ -46,6 +46,6 @@ document.addEventListener('DOMContentLoaded',function(){
     search_table({
         table:'clienti',
         cols:['id','nominativo','telefono','email'],
-        actions:{ Trattamenti:'success', Corsi:'success2', Pagamenti:'success3', Fatture:'success4' }
+        actions:{ Trattamenti:'success', Corsi:'success2', Pendenze:'success3', Pagamenti:'success4' }
     });
 });

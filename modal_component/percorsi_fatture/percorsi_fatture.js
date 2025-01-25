@@ -14,6 +14,13 @@ window.modalHandlers['percorsi_fatture']={
     leaveDelete:function(element){
         element.closest('.fattura_row').classList.remove('warning');
     },
+    clickDelete:function(id,id_cliente,table){
+        if(confirm('sicuro di voler eliminare ?')){
+            $.post('post/delete.php',{table:table,id:id}).done(()=>{
+                reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id_cliente});
+            }).fail(()=>{fail()});
+        }
+    },
     enterStato:function(element){
         element.classList.add('successSingle');
     },
@@ -22,12 +29,5 @@ window.modalHandlers['percorsi_fatture']={
     },
     changeStato:function(stato,id){
         $.post('post/save.php',{table:'fatture',stato:stato,id:id}).done(()=>{success()}).fail(()=>{fail()});
-    },
-    clickDelete:function(id,id_cliente){
-        if(confirm('sicuro di voler eliminare ?')){
-            $.post('post/delete.php',{table:'fatture',id:id}).done(()=>{
-                reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id_cliente});
-            }).fail(()=>{fail()});
-        }
     },
 }

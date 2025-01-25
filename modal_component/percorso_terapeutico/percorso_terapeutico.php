@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Aggiungi Trattamento</h4>
-                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
+                <button type="button" class="btn-resize" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="modal-body  overflow-auto flex-grow-1">
@@ -72,10 +72,10 @@
                             ?>
                         </select>
                     </div>
-                    <div class="mb-3 ms-2" id="div_sedute" <?php echo $hidden; ?>>
+                    <div class="mb-3 ms-2" id="div_sedute" <?php echo "{$hidden}"; ?>>
                         <label for="sedute" class="form-label">Sedute</label>
                         <input type="number" class="form-control" id="sedute" name="sedute" value="<?php echo $result['sedute']??'1'; ?>" 
-                            onchange="window.modalHandlers['percorso_terapeutico'].changeSedute(this);"> 
+                            onchange="window.modalHandlers['percorso_terapeutico'].changeSedute(this);" <?php echo "{$disabled}"; ?>> 
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_tabellare_a_seduta"  <?php echo $hidden; ?>>
                         <label for="prezzo_tabellare_a_seduta" class="form-label" >Prezzo tabellare a seduta</label>

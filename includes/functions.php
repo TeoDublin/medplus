@@ -122,7 +122,8 @@
         return "{$split[2]}-{$split[1]}-{$split[0]}";
     }
     function unformat_date(string $date):string{
-        $split=explode('-',$date);
+        $split_date=explode(' ',$date);
+        $split=explode('-',$split_date[0]);
         return "{$split[2]}/{$split[1]}/{$split[0]}";
     }
     function str_scape(string $text):string{
