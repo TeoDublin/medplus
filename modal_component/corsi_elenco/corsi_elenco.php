@@ -51,26 +51,32 @@
                                             <div class="w-30 mx-2"><span>Orario</span></div>
                                             <div class="w-10"><span>#</span></div>
                                         </div>
-                                    </div><?php 
-                                    if($giorni){?>
-                                        <div class="table-responsive" id="table-body"><?php
-                                            $is_first=true;
-                                            foreach($giorni as $giorno){
-                                                $_REQUEST['giorno']=$giorno['giorno'];
-                                                $_REQUEST['ora']=$giorno['ora'];
-                                                if($is_first){
-                                                    $is_first=false;
-                                                    $mt='';
+                                    </div>
+                                    <div class="table-responsive" id="table-body"><?php 
+                                        if($giorni){?>
+                                            <?php
+                                                $is_first=true;
+                                                foreach($giorni as $giorno){
+                                                    $_REQUEST['giorno']=$giorno['giorno'];
+                                                    $_REQUEST['ora']=$giorno['ora'];
+                                                    if($is_first){
+                                                        $is_first=false;
+                                                        $mt='';
+                                                    }
+                                                    else $mt='mt-2';
+                                                    echo "<div class=\"d-flex flex-row w-100 giorno_row {$mt}\">";
+                                                        require __DIR__ . '/../../post/aggiungi_giorno.php';
+                                                    echo "</div>";
                                                 }
-                                                else $mt='mt-2';
-                                                echo "<div class=\"d-flex flex-row w-100 giorno_row {$mt}\">";
-                                                    require __DIR__ . '/../../post/aggiungi_giorno.php';
-                                                echo "</div>";
-                                            }
-                                            ?>
-                                        </div><?php
-                                    }?>
-                                    
+                                                ?>
+                                            <?php
+                                        }
+                                        else{
+                                            echo "<div class=\"d-flex flex-row w-100 giorno_row {$mt}\">";
+                                                require __DIR__ . '/../../post/aggiungi_giorno.php';
+                                            echo "</div>";
+                                        }?>
+                                    </div>
                                     <div class="my-3">
                                         <button class="btn btn-primary w-100" onclick="window.modalHandlers['corsi_elenco'].aggiungiGiorno(this)">AGGIUNGI GIORNO</button>
                                     </div>
@@ -82,7 +88,7 @@
                 </div>
         </div>
         <div class="modal-footer">
-                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['corsi_elenco'].btnSalva(this,'<?php echo $_REQUEST['table'];?>')">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['corsi_elenco'].btnSalva(this)">Salva</a>
             </div>
         </div>
     </div>

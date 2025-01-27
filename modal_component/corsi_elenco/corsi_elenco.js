@@ -1,16 +1,23 @@
 window.modalHandlers['corsi_elenco']={
-    btnSalva:function(element,table){
-        let _data = {table:table};
-        const mnodal = element.closest('.modal');
-        mnodal.querySelectorAll('[name]').forEach(element=>{ _data[element.name]=element.value;});
-        $.post('post/save.php',_data).done(function(){ success_and_refresh();}).fail(function(){fail()});
+    btnSalva:function(element) {
+        let _data = { days: [] };
+        const modal = element.closest('.modal');
+        modal.querySelectorAll('[name]').forEach(input => { _data[input.name] = input.value;});
+        modal.querySelectorAll('.giorno_row').forEach(row => {
+            _data['days'].push({
+                giorno: row.querySelector('.giorno').value,
+                ora: row.querySelector('.ora').value
+            });
+        });
+        $.post('post/corsi_elenco.php', _data).done(() => success_and_refresh()).fail(() => fail());
     },
     aggiungiGiorno(element){
         $.post('post/aggiungi_giorno.php').done(response =>{
             let div = document.createElement('div');
             div.classList = 'd-flex flex-row w-100 mt-2 giorno_row';
             div.innerHTML = response;
-            element.closest('.modal').querySelector('#table-body').append(div);
+            element.closest('.modal').querySelector('div#table-body').append(div);
+            this.bindBtn();
         });
     },
     delEnter(element){
@@ -22,4 +29,13 @@ window.modalHandlers['corsi_elenco']={
     delClick(element){
         element.closest('div.giorno_row').remove();
     },
+    bindBtn() {
+        document.querySelectorAll('.del-btn:not([data-bound])').forEach(btn => {
+            btn.addEventListener('mouseenter', () => this.delEnter(btn));
+            btn.addEventListener('mouseleave', () => this.delLeave(btn));
+            btn.addEventListener('click', () => this.delClick(btn));
+            btn.setAttribute('data-bound', 'true');
+        });
+    }
 } 
+window.modalHandlers['corsi_elenco'].bindBtn();

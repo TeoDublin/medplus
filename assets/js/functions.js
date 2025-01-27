@@ -91,7 +91,7 @@ function append_scripts(element){
         }
     });
 }
-function modal_component(id, component, _data) {
+function modal_component(id, component, _data, callback=false) {
     const modal_id = 'modal_' + component;
     _data['id_modal'] = modal_id;
     _data['component'] = component;
