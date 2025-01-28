@@ -4,6 +4,7 @@
     $id=request('id');
     $corso=[
         'id_categoria'=>$_REQUEST['id_categoria'],
+        'id_terapista'=>$_REQUEST['id_terapista'],
         'corso'=>$_REQUEST['corso'],
         'prezzo'=>$_REQUEST['prezzo'],
         'scadenza'=>$_REQUEST['scadenza']
@@ -15,3 +16,9 @@
     foreach ($_REQUEST['days'] as $day) {
         Insert(['id_corso'=>$id,'giorno'=>$day['giorno'],'ora'=>$day['ora']])->into('corsi_giorni');
     }
+
+    Delete($id)->from('corsi_classi','id_corso');
+    foreach ($_REQUEST['clienti'] as $cliente) {
+        Insert(['id_corso'=>$id,'id_cliente'=>$cliente['cliente'],'prezzo'=>$cliente['prezzo']])->into('corsi_classi');
+    }
+

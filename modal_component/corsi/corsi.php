@@ -10,7 +10,7 @@
                     $result=$_REQUEST['id']?Select('*')->from('sedute')->where("id={$_REQUEST['id']}")->first():[];
                     $corsi = Select('*')
                         ->from('corsi')
-                        ->orderby('tipo, categoria, corso ASC')
+                        ->orderby('categoria, corso ASC')
                         ->get();
                 ?>
                 <div class="p-2">

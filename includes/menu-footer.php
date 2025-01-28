@@ -15,7 +15,7 @@
         exit: document.querySelector('.menu-exit'),
         setup: document.querySelector('.menu-setup'),
         users: document.querySelector('#users'),
-        impostazioni: document.querySelector('#menu-impostazioni'),
+        terapisti: document.querySelector('#menu-terapisti'),
         prenota: document.querySelector('#menu-prenota'),
         clienti: document.querySelector('#menu-clienti'),
         pagamenti: document.querySelector('#menu-pagamenti'),
@@ -54,7 +54,7 @@
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);
             this.exit.addEventListener('click',menuExit);
-            this.impostazioni.addEventListener('click', () => navigate('impostazioni.php','impostazioni'));
+            this.terapisti.addEventListener('click', () => navigate('terapisti.php','terapisti'));
             this.prenota.addEventListener('click', () => navigate('prenotazioni.php','prenotazioni'));
             this.pagamenti.addEventListener('click', () => navigate('pagamenti.php','pagamenti'));
             this.clienti.addEventListener('click', () => navigate('clienti.php','clienti'));

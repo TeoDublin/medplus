@@ -7,4 +7,4 @@
     </div>
 </div>
 <div class="w-100 mx-1" id="search_table"></div>
-<?php script('pages/impostazioni/terapisti/terapisti.js'); ?>
+<?php script('pages/corsi/corsi_categorie/corsi_categorie.js'); ?>

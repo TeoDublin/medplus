@@ -5,6 +5,9 @@
             <li class="nav-item">
                 <a class="nav-link <?php echo _tab('planning')?'active':'';?>" aria-current="page" href="prenotazioni.php?tab=planning">Planning</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link <?php echo _tab('motivi')?'active':'';?>" aria-current="page" href="prenotazioni.php?tab=motivi&pagination=0">Motivi</a>
+            </li>
         </ul>
         <div class="p-1">
             <?php 
