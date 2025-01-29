@@ -19,6 +19,6 @@
 
     Delete($id)->from('corsi_classi','id_corso');
     foreach ($_REQUEST['clienti'] as $cliente) {
-        Insert(['id_corso'=>$id,'id_cliente'=>$cliente['cliente'],'prezzo'=>$cliente['prezzo']])->into('corsi_classi');
+        Insert(['id_corso'=>$id,'id_cliente'=>$cliente['cliente'],'prezzo'=>$cliente['prezzo'],'data_inizio'=>$cliente['data_inizio']])->into('corsi_classi');
     }
 

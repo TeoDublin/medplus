@@ -12,7 +12,8 @@ window.modalHandlers['corsi_elenco']={
         modal.querySelectorAll('.cliente_row').forEach(row => {
             _data['clienti'].push({
                 cliente: row.querySelector('.cliente').value,
-                prezzo: row.querySelector('.prezzo').value
+                prezzo: row.querySelector('.prezzo').value,
+                data_inizio: row.querySelector('.data_inizio').value
             });
         });
         $.post('post/corsi_elenco.php', _data).done(() => success_and_refresh()).fail(() => fail());

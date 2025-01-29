@@ -8,4 +8,4 @@
     echo "</select>";?>
 </div>
 <div class="w-30 mx-2"><input class="form-control text-center ora" type="time" value="<?php echo $_REQUEST['ora']??'08:00';?>"/></div>
-<div class="w-10 pt-1 del-btn" ><?php echo icon('bin.svg'); ?></div>
+<div class="w-5 pt-1 del-btn" ><?php echo icon('bin.svg'); ?></div>

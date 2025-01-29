@@ -21,5 +21,5 @@ function add(id){
     modal_component('modal','corsi_elenco',_data);
 }
 document.addEventListener('DOMContentLoaded',function(){
-    search_table({table:'view_corsi','cols':['categoria','corso','terapista','prezzo','scadenza']});
+    search_table({table:'view_corsi','cols':['categoria','corso','terapista','prezzo_tabellare','scadenza','giorni']});
 });

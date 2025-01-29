@@ -42,7 +42,7 @@
                         </div>
                         <div class="ms-2 w-20">
                             <label for="prezzo" class="form-label" >Prezzo</label>
-                            <input type="number" class="form-control text-center" id="prezzo_tabellare" name="prezzo" placeholder="Costo mensile" value="<?php echo $corso['prezzo']??''; ?>"/> 
+                            <input type="number" class="form-control text-center" id="prezzo_tabellare" name="prezzo" placeholder="Costo mensile" value="<?php echo $corso['prezzo_tabellare']??''; ?>"/> 
                         </div>
                         <div class="ms-2 w-20">
                             <label for="scadenza" class="form-label" >Scadenza</label>
@@ -60,7 +60,7 @@
                                         <div class="d-flex flex-row w-100">
                                             <div class="flex-fill"><span>Giorno</span></div>
                                             <div class="w-30 mx-2"><span>Orario</span></div>
-                                            <div class="w-10"><span>#</span></div>
+                                            <div class="w-5"><span>#</span></div>
                                         </div>
                                     </div>
                                     <div class="table-responsive" id="table-body"><?php 
@@ -106,8 +106,9 @@
                                     <div class="table-responsive mb-2 title">
                                         <div class="d-flex flex-row w-100">
                                             <div class="flex-fill"><span>Cliente</span></div>
-                                            <div class="w-30 mx-2"><span>Prezzo</span></div>
-                                            <div class="w-10"><span>#</span></div>
+                                            <div class="w-20 mx-2"><span>Prezzo</span></div>
+                                            <div class="w-20 mx-2"><span>Inizio</span></div>
+                                            <div class="w-5"><span>#</span></div>
                                         </div>
                                     </div>
                                     <div class="table-responsive" id="table-body-clienti"><?php 
@@ -118,7 +119,8 @@
                                                 foreach($clienti as $cliente){
                                                     $_REQUEST['cliente']=$cliente['id_cliente'];
                                                     $_REQUEST['prezzo']=$cliente['prezzo'];
-                                                    
+                                                    $_REQUEST['data_inizio']=$cliente['data_inizio'];
+
                                                     if($is_first){
                                                         $is_first=false;
                                                         $mt='';

@@ -10,4 +10,5 @@
 <div id="percorsi"></div>
 <div id="percorsi_pagamenti"></div>
 <div id="percorsi_fatture"></div>
+<div id="percorsi_corsi"></div>
 <?php script('pages/clienti/anagrafica/anagrafica.js'); ?>
