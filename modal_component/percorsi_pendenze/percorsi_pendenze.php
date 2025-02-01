@@ -5,7 +5,7 @@
         ->where("id_cliente={$_REQUEST['id_cliente']} AND saldato < prezzo")
         ->get_or_false();
     }
-    style('modal_component/percorsi_pagamenti/percorsi_pagamenti.css');
+    style('modal_component/percorsi_pendenze/percorsi_pendenze.css');
     $_percorso=_percorso();
     $is_first=true;
 ?>
@@ -65,44 +65,44 @@
                                                 <input class="form-check-input" type="checkbox" id="id_percorso" value="<?php echo $percorso['id_percorso'];?>" disabled/>
                                             </div>
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                    onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
-                                                    onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"             
+                                                    onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
+                                                    onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
+                                                    onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"             
                                                 >
                                                 <span id="trattamento"><?php echo $percorso['trattamento'];?></span>
                                             </div>
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                    onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
-                                                    onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"
+                                                    onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
+                                                    onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
+                                                    onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
                                                 >
                                                 <span class=""><?php echo $percorso['prezzo_tabellare'];?></span>
                                             </div>
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                    onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterPrezzo(this)"
-                                                    onmouseleave="window.modalHandlers['percorsi_pagamenti'].leavePrezzo(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickPrezzo(<?php echo $percorso['id_percorso'].','.$percorso['id_cliente']; ?>)"
+                                                    onmouseenter="window.modalHandlers['percorsi_pendenze'].enterPrezzo(this)"
+                                                    onmouseleave="window.modalHandlers['percorsi_pendenze'].leavePrezzo(this)"
+                                                    onclick="window.modalHandlers['percorsi_pendenze'].clickPrezzo(<?php echo $percorso['id_percorso'].','.$percorso['id_cliente']; ?>)"
                                                 >
                                                 <span id="prezzo"><?php echo $percorso['prezzo'];?></span>
                                             </div>
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                    onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
-                                                    onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"
+                                                    onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
+                                                    onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
+                                                    onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
                                                 >
                                                 <span id="saldato"><?php echo $percorso['saldato'];?></span>
                                             </div>
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                    onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
-                                                    onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"
+                                                    onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
+                                                    onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
+                                                    onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
                                                 >
                                                 <span id="fatturato"><?php echo $percorso['fatturato'];?></span>
                                             </div>
                                             <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                    onmouseenter="window.modalHandlers['percorsi_pagamenti'].enterRow(this)"
-                                                    onmouseleave="window.modalHandlers['percorsi_pagamenti'].leaveRow(this)"
-                                                    onclick="window.modalHandlers['percorsi_pagamenti'].clickRow(this)"
+                                                    onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
+                                                    onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
+                                                    onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
                                                 >
                                                 <span id="non_fatturato"><?php echo $percorso['non_fatturato'];?></span>
                                             </div>                                           
@@ -112,13 +112,13 @@
                                 <p class="psm"><?php
                             }?>
                             <div class="d-flex flex-fill mt-3">
-                            <div class= "d-flex w-50" onclick="window.modalHandlers['percorsi_pagamenti'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                            <div class= "d-flex w-50" onclick="window.modalHandlers['percorsi_pendenze'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
                                 <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
                                     <div class="mx-2"><?php echo icon('document.svg','white',20,17);?></div>
                                     <div>Fattura</div>
                                 </button>
                             </div>
-                            <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pagamenti'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                            <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
                                 <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
                                     <div class="mx-2"><?php echo icon('coin.svg','white',20,25);?></div>
                                     <div>Senza Fattura</div>
@@ -136,4 +136,4 @@
 <div id="fattura"></div>
 <div id="senza_fattura"></div>
 <div id="percorso_terapeutico"></div>
-<?php modal_script('percorsi_pagamenti'); ?>
+<?php modal_script('percorsi_pendenze'); ?>

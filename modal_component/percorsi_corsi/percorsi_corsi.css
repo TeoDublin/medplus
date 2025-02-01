@@ -1,0 +1,6 @@
+.percorsi-row{
+    min-height: 50px;
+    padding-top: 13px;
+    border: solid rgba(128, 128, 128, 0.501) 1px;
+    border-radius: 5px;
+}

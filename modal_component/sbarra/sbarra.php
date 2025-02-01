@@ -10,10 +10,10 @@
                     $data=$_REQUEST['data']?format_date($_REQUEST['data']):'';
                     $result=$_REQUEST['planning_motivi_id']?Select('*')->from('planning_motivi')->where("id={$_REQUEST['planning_motivi_id']}")->first():[];
                     if(empty($result)){
-                        $planning=Select('*')->from('planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$data}'")->get();
+                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$data}'")->get();
                     }
                     else{
-                        $planning=Select('*')->from('planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$data}' and id<> {$result['id']}")->get();
+                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$data}' and id<> {$result['id']}")->get();
                     }
                     $planning_busy=[];
                     foreach ($planning as $plan) {

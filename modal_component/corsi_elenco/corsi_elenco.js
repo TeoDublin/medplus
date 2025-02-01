@@ -6,7 +6,8 @@ window.modalHandlers['corsi_elenco']={
         modal.querySelectorAll('.giorno_row').forEach(row => {
             _data['days'].push({
                 giorno: row.querySelector('.giorno').value,
-                ora: row.querySelector('.ora').value
+                inizio: row.querySelector('.inizio').value,
+                fine: row.querySelector('.fine').value
             });
         });
         modal.querySelectorAll('.cliente_row').forEach(row => {
@@ -21,7 +22,7 @@ window.modalHandlers['corsi_elenco']={
     aggiungiGiorno(element){
         $.post('post/aggiungi_giorno.php').done(response =>{
             let div = document.createElement('div');
-            div.classList = 'd-flex flex-row w-100 mt-2 giorno_row';
+            div.classList = 'd-flex flex-row w-100 giorno_row py-1';
             div.innerHTML = response;
             element.closest('.modal').querySelector('div#table-body').append(div);
             this.bindBtn();

@@ -4,9 +4,9 @@ window.modalHandlers['percorso_terapeutico']={
         const mnodal = element.closest('.modal');
         mnodal.querySelectorAll('[name]').forEach(element=>{ _data[element.name]=element.value;});
         switch (caller) {
-            case 'percorsi_pagamenti':
-                $.post('post/percorsi_pagamenti.php',_data).done(function(){
-                    reload_modal_component('percorsi_pagamenti','percorsi_pagamenti',_data);
+            case 'percorsi_pendenze':
+                $.post('post/percorsi_pendenze.php',_data).done(function(){
+                    reload_modal_component('percorsi_pendenze','percorsi_pendenze',_data);
                 }).fail(function(){fail()});     
                 break;
         

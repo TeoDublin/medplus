@@ -35,7 +35,7 @@ function percorsoCorso(id){
     modal_component('percorsi_corsi','percorsi_corsi',{id_cliente:id});
 }
 function percorsoPagamento(id){
-    modal_component('percorsi_pagamenti','percorsi_pagamenti',{id_cliente:id});
+    modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:id});
 }
 function percorsoFatture(id){
     modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id});

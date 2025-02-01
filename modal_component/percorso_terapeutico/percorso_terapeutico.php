@@ -8,7 +8,7 @@
             <div class="modal-body  overflow-auto flex-grow-1">
                 <?php 
                     switch ($_REQUEST['caller']??'default') {
-                        case 'percorsi_pagamenti':
+                        case 'percorsi_pendenze':
                             if($_REQUEST['id_percorso']){
                                 $result=Select('*')->from('percorsi_terapeutici')->where("id={$_REQUEST['id_percorso']}")->first();
                                 $result['prezzo_tabellare_a_seduta']=(int)$result['prezzo_tabellare']/(int)$result['sedute'];

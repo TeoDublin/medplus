@@ -1,4 +1,4 @@
-window.modalHandlers['percorsi_pagamenti'] = {
+window.modalHandlers['percorsi_pendenze'] = {
     enterRow:function(element){
         element.closest('div.fattura_row').classList.add('success');
     },
@@ -23,7 +23,7 @@ window.modalHandlers['percorsi_pagamenti'] = {
         element.classList.remove('success');
     },
     clickPrezzo:function(id_percorso,id_cliente){
-        modal_component('percorso_terapeutico','percorso_terapeutico',{id_cliente:id_cliente,caller:'percorsi_pagamenti',id_percorso:id_percorso});
+        modal_component('percorso_terapeutico','percorso_terapeutico',{id_cliente:id_cliente,caller:'percorsi_pendenze',id_percorso:id_percorso});
     },
     fatturaClick:function(element,id_cliente){
         modal = element.closest('.modal');

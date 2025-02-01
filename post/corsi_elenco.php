@@ -14,7 +14,7 @@
     
     Delete($id)->from('corsi_giorni','id_corso');
     foreach ($_REQUEST['days'] as $day) {
-        Insert(['id_corso'=>$id,'giorno'=>$day['giorno'],'ora'=>$day['ora']])->into('corsi_giorni');
+        Insert(['id_corso'=>$id,'giorno'=>$day['giorno'],'inizio'=>$day['inizio'],'fine'=>$day['fine']])->into('corsi_giorni');
     }
 
     Delete($id)->from('corsi_classi','id_corso');

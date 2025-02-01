@@ -10,10 +10,10 @@
                 <?php 
                     $result=$_REQUEST['sedute_prenotate_id']?Select('*')->from('sedute_prenotate')->where("id={$_REQUEST['sedute_prenotate_id']}")->first():[];
                     if(empty($result)){
-                        $planning=Select('*')->from('planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}'")->get();
+                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}'")->get();
                     }
                     else{
-                        $planning=Select('*')->from('planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}' and id<> {$result['id']}")->get();
+                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}' and id<> {$result['id']}")->get();
                     }
                     $planning_busy=[];
                     foreach ($planning as $plan) {

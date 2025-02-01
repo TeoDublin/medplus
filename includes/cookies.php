@@ -25,7 +25,7 @@ function cookie(string $key, $fallback=false):string{
     }
     return $ret;
 }
-if(!request('skip_cookie')){
+if(!request('skip_cookie')&&strpos('/jobs/',$_SERVER['REQUEST_URI']== false)){
     if(($_SERVER['REQUEST_URI']!=strtok($_SERVER['REQUEST_URI'], '?'))&&empty($_POST)){
         $page_cookie = set_page_cookie();   
         redirect(strtok($_SERVER['REQUEST_URI'], '?'));

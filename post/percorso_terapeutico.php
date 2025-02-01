@@ -37,6 +37,6 @@
         'id_cliente'=>$_REQUEST['id_cliente'],
         'prezzo_tabellare'=>$_REQUEST['prezzo_tabellare'],
         'prezzo'=>$_REQUEST['prezzo']
-    ])->into('percorsi_pagamenti');
+    ])->into('percorsi_pendenze');
     
     

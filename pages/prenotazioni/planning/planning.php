@@ -4,7 +4,7 @@
     $rows=17;
     $id_terapista = cookie('id_terapista',first('terapisti')['id']);
     $data = cookie('data',date('Y-m-d'));
-    $result=Select('*')->from('planning')->where("id_terapista={$id_terapista}")->and("data='{$data}'")->get();
+    $result=Select('*')->from('view_planning')->where("id_terapista={$id_terapista}")->and("data='{$data}'")->get();
     function _ora($row){
         $ora = new DateTime('07:00');
         for ($i=1; $i < $row; $i++) { 

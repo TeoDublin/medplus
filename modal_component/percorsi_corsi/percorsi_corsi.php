@@ -1,4 +1,5 @@
 <?php 
+    style('modal_component/percorsi_corsi/percorsi_corsi.css');
     $corsi=Select('*')->from('view_classi')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
@@ -6,7 +7,7 @@
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Corsi</h4>
                 <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
-                <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
+                <button type="button" class="btn-close" onclick="closeModal(this);" aria-span="Close"></button>
             </div>
             <div class="modal-body"><?php
                 if(!$corsi){?>
@@ -16,32 +17,39 @@
                         </div>
                     </div><?php
                 }
-                else{
-                    foreach ($corsi as $corso) {?>
-                        <div class="p-2 d-flex flex-row">
-                            <div class="m-2">
-                                <label for="corso" class="form-label" >Corso</label>
-                                <input class="form-control" name="corso" value="<?php echo $corso['corso']; ?>" readonly/> 
-                            </div>
-                            <div class="m-2">
-                                <label for="terapista" class="form-label" >Terapista</label>
-                                <input class="form-control" name="terapista" value="<?php echo $corso['terapista']; ?>" readonly/> 
-                            </div>
-                            <div class="m-2">
-                                <label for="data_inizio" class="form-label" >Inizio</label>
-                                <input class="form-control" name="data_inizio" value="<?php echo $corso['data_inizio']; ?>" readonly/> 
-                            </div>
-                            <div class="m-2">
-                                <label for="prezzo_tabellare" class="form-label" >Prezzo Tabellare</label>
-                                <input class="form-control" name="prezzo_tabellare" value="<?php echo $corso['prezzo_tabellare']; ?>" readonly/> 
-                            </div>
-                            <div class="m-2">
-                                <label for="prezzo" class="form-label" >Prezzo</label>
-                                <input class="form-control" name="prezzo" value="<?php echo $corso['prezzo']; ?>" readonly/> 
-                            </div>
+                else{?>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="container-fluid text-center">
+                            <div class="table-responsive">
+                                <div class="d-flex flex-row percorsi-row w-100 titles mb-2">
+                                    <div class="flex-fill"><span>Corso</span></div>
+                                    <div class="w-20"><span>Terapista</span></div>
+                                    <div class="w-20"><span>Inizio</span></div>
+                                    <div class="w-20"><span>Prezzo Tabellare</span></div>
+                                    <div class="w-20"><span>Prezzo</span></div>
+                                    <div class="w-5 last"><span>#</span></div>
+                                </div>
+                            </div><?php
+                            foreach ($corsi as $corso) {?>
+                                <div class="table-responsive">
+                                    <div class="d-flex flex-row percorsi-row w-100 mb-2">
+                                        <div class="flex-fill"><span><?php echo $corso['corso']; ?></span></div>
+                                        <div class="w-20"><span><?php echo $corso['terapista']; ?></span></div>
+                                        <div class="w-20"><span><?php echo $corso['data_inizio']; ?></span></div>
+                                        <div class="w-20"><span><?php echo $corso['prezzo_tabellare']; ?></span></div>
+                                        <div class="w-20"><span><?php echo $corso['prezzo']; ?></span></div>
+                                        <div class="w-5 last"
+                                            onmouseenter="window.modalHandlers['percorsi_corsi'].delEnter(this)"
+                                            onmouseleave="window.modalHandlers['percorsi_corsi'].delLeave(this)"
+                                            onclick="window.modalHandlers['percorsi_corsi'].delClick(<?php echo $corso['id'].','.$_REQUEST['id_cliente']; ?>)"
+                                        ><span><?php echo icon('bin.svg'); ?></span></div>
+                                    </div>
+                                </div><?php
+                            }?>
                         </div>
-                        <?php
-                    }
+                    </div>
+                </div><?php
                 }?>
             </div>
         </div>
