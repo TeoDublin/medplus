@@ -148,3 +148,8 @@
             12=>'Dicembre'
         };
     }
+    function _print($msg){
+        echo $msg ."\n".'</br>';
+        @ob_flush();
+        @flush();
+    }

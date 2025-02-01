@@ -12,7 +12,7 @@ function editClick(element,id){
 }
 function delClick(id){
     if(confirm('Sicuro di voler Eliminare?')){
-        $.post("post/delete.php",{table:'corsi',id:id}).done(success_and_refresh).fail(fail);
+        $.post("post/corsi_delete.php",{id:id}).done(success_and_refresh).fail(fail);
     }
 };
 function add(id){

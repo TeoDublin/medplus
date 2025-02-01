@@ -1,3 +1,3 @@
 <?php 
     require '../includes.php';
-    Delete($_REQUEST['id'])->from($_REQUEST['table']);
+    Delete()->from($_REQUEST['table'])->where("id={$_REQUEST['id']}");

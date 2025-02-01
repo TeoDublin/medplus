@@ -24,4 +24,7 @@ class Insert{
     public function get(){
         return $this->sql->insert_id();
     }
+    public function flush(){
+        $this->sql->flush();
+    }
 }

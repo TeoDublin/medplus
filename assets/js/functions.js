@@ -40,8 +40,8 @@ async function async_success_and_refresh(callbackName, callbackParams) {
 }
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {
-        const toastLiveExample = document.getElementById('successToast');
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+        const toastLive = document.getElementById('successToast');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
         toastBootstrap.show();
         sessionStorage.removeItem('showSuccessToast');
     }
@@ -56,13 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 function success(){
-    const toastLiveExample = document.getElementById('successToast')
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    const toastLive = document.getElementById('successToast')
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
     toastBootstrap.show();
 }
 function fail(){
-    const toastLiveExample = document.getElementById('failToast')
-    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample);
+    const toastLive = document.getElementById('failToast')
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
     toastBootstrap.show();
 }
 function hoverIconWarning(element) {

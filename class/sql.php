@@ -3,6 +3,7 @@
 class Sql {
     private mysqli $connection;
     private $db;
+    private $query;
     public function __construct() {
         switch (environment()) {
             case 'dev':
@@ -26,16 +27,19 @@ class Sql {
         }
     }
     public function select(string $query):array {
+        $this->query=$query;
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
     public function query(string $query):void {
+        $this->query=$query;
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
     }
     public function raw(string $query):array {
+        $this->query=$query;
         $stmt = $this->connection->prepare($query);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -54,6 +58,9 @@ class Sql {
     }
     public function __destruct() {
         $this->connection->close();
+    }
+    public function flush(){
+        _print($this->query);
     }
 }
 

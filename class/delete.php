@@ -1,10 +1,11 @@
 <?php 
     class Delete{
-        private $id;
-        public function __construct(string $id){
-            $this->id=$id;
+        private $table;
+        public function from(string $table){
+            $this->table=$table;
+            return $this;
         }
-        public function from(string $table, $alias='id'){
-            SQL()->query("DELETE FROM {$table} WHERE {$alias}={$this->id}");
+        public function where($where){
+            SQL()->query("DELETE FROM {$this->table} WHERE {$where}");
         }
     }
