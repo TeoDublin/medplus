@@ -124,6 +124,10 @@
 }
 
 @media (max-width: 768px) {
+    .table {
+        margin-bottom: 0!important;
+    }
+
     .card{
         padding: 2%!important;
     } 
