@@ -1,13 +1,3 @@
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-    -webkit-appearance: inner-spin-button;
-    opacity: 1;
-}
-
 .page-content {
     margin-left:240px!important;
     width: calc(100vw - 240.5px)!important;
