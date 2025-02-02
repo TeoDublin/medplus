@@ -1,3 +1,6 @@
+table,td{
+    cursor: pointer;
+}
 .table-container {
     display: flex;
     flex-wrap: wrap;
@@ -5,6 +8,14 @@
 }
 .planning-table {
     width: 100%;
+}
+tr,td{
+    height: 50px!important;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    padding: 0;
 }
 .planning-date:hover{
     cursor: pointer;

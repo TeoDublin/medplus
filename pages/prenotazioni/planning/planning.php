@@ -1,10 +1,13 @@
 <?php 
-    $rows=12;$total_rows=51;$groups=ceil($total_rows/$rows);
+    $rows = cookie('rows',17);
+    $total_rows=51;$groups=ceil($total_rows/$rows);
     style('pages/prenotazioni/planning/planning.css'); 
     echo "<style>
-        @media (min-width: 1200px) {
+        @media (min-width: 768px) {
             .planning-table {
-                width: ".(100/$groups)."%;
+                width: ".(99/$groups)."%;
+                max-width: ".(99/$groups)."%;
+                
             }
         }
     </style>";
@@ -30,7 +33,7 @@
             <tbody><?php 
                 for($i=1; $i<=$rows; $i++){
                     $row = $i + $rows*$table_index; $planning = $_planning($row); ?>
-                    <tr>
+                    <tr class="planning-tr">
                         <td 
                             scope="col" 
                             class="text-center border-0 border-end <?php echo $planning['class'];?> first w-15" 
@@ -89,8 +92,8 @@
 <div id="planning">
     <div class="p-3 border my-1 d-flex" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
         <div class="w-100">
-            <div class="mx-auto d-flex flex-row p-3">
-                <div class="w-30 me-2 text-center">
+            <div class="mx-auto d-flex flex-column flex-md-row p-3">
+                <div class="w-md-30 me-2 mb-2 text-center">
                     <label class="form-label" for="data">Data</label>
                     <input
                         type="date"
@@ -101,7 +104,7 @@
                         onchange="change()"
                     />
                 </div>
-                <div class="flex-fill text-center">
+                <div class="flex-fill text-center mb-2">
                     <label class="form-label" for="terapista">Terapista</label>
                     <select
                         id="terapista" 
@@ -117,6 +120,17 @@
                             }
                         ?>
                     </select>
+                </div>
+                <div class="d-w-20 ms-2 text-center">
+                    <label class="form-label" for="rows">Righe</label>
+                    <input
+                        type="number"
+                        id="rows" 
+                        name="rows" 
+                        class="form-control text-center"
+                        value="<?php echo $rows;?>" 
+                        onchange="change()"
+                    />
                 </div>
             </div>
             <div class="table-container"><?php
