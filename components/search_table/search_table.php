@@ -29,7 +29,11 @@
                                     </div>
                                 </th>";
                         }
-                        foreach ($_REQUEST['actions']??[] as $key=>$value)echo "<th scope=\"col\" class=\"text-center\" rowspan=\"2\">{$key}</th>";?>
+                        foreach ($_REQUEST['actions']??[] as $key=>$value){
+                            $left=substr($key,0,3);
+                            $right=substr($key,4,strlen($key)-3);
+                            echo "<th scope=\"col\" class=\"text-center\" rowspan=\"2\"><span class=\"me-1\">{$left}</span><span class=\"d-none d-md-table-cell\">{$right}</span></th>";   
+                        }?>
                         <th scope="col" class="text-center" rowspan="2">#</th>
                     </tr>
                 </thead>
