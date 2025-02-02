@@ -12,7 +12,7 @@
             case 'enum':{
                 $enums=str_replace("'",'',explode(',',$m[2]));
                 $value=$select[$col['COLUMN_NAME']]??'';
-                $ret.="<div class=\"m-2 ".($is_last?'flex-fill':'w-50')."\">";
+                $ret.="<div class=\"m-1 ".($is_last?'flex-fill':'w-50')."\">";
                 $ret.="<label for=\"{$name}\" class=\"form-label \">{$name}</label>";
                 $ret.="<select class=\"form-control text-center\" id=\"{$name}\" name=\"{$name}\" value=\"{$value}\">";
                     foreach($enums as $enum)$ret.="<option value=\"{$enum}\">{$enum}</option>";
@@ -26,7 +26,7 @@
                 elseif($chars>50)$chars=60;
                 else $chars= $chars+10;
                 $value=$select[$col['COLUMN_NAME']]??'';
-                $ret.="<div class=\"m-2 ".($is_last?'flex-fill':'')."\" style=\"width:{$chars}%\">";
+                $ret.="<div class=\"m-1 ".($is_last?'flex-fill':'')."\" style=\"width:{$chars}%\">";
                 $ret.="<label for=\"{$name}\" class=\"form-label \">{$name}</label>";
                 $ret.="<input type=\"text\" class=\"form-control text-center\" id=\"{$name}\" name=\"{$name}\" value=\"{$value}\">";
                 $ret.="</div>";
@@ -34,7 +34,7 @@
             }
             case 'double':{
                 $value=$select[$col['COLUMN_NAME']]??'';
-                $ret.="<div class=\"m-2 ".($is_last?'flex-fill':'w-30')."\">";
+                $ret.="<div class=\"m-1 ".($is_last?'flex-fill':'w-30')."\">";
                 $ret.="<label for=\"{$name}\" class=\"form-label \">{$name}</label>";
                 $ret.="<input type=\"number\" class=\"form-control text-center\" id=\"{$name}\" name=\"{$name}\" value=\"{$value}\">";
                 $ret.="</div>";
@@ -43,7 +43,7 @@
             case 'timestamp':{
                 $value=$select[$col['COLUMN_NAME']]??now('Y-m-d');
                 $label=unformat_date($value);
-                $ret.="<div class=\"m-2 ".($is_last?'flex-fill':'w-20')."\">";
+                $ret.="<div class=\"m-1 ".($is_last?'flex-fill':'w-20')."\">";
                 $ret.="<label for=\"{$name}\" class=\"form-label \">{$name}</label>";
                 $ret.="<input type=\"text\" class=\"form-control text-center\" id=\"{$name}\" name=\"{$name}\" value=\"{$value}\" hidden/>";
                 $ret.="<input type=\"text\" class=\"form-control text-center\" value=\"{$label}\" readonly disabled/>";
@@ -52,7 +52,7 @@
             }
             case 'longtext':{
                 $value=$select[$col['COLUMN_NAME']]??'';
-                $ret.="<div class=\"m-2 ".($is_last?'flex-fill':'w-60')."\">";
+                $ret.="<div class=\"m-1 ".($is_last?'flex-fill':'w-60')."\">";
                 $ret.="<label for=\"{$name}\" class=\"form-label \">{$name}</label>";
                 $ret.="<textarea rows=\"1\" type=\"text\" class=\"form-control text-center\" id=\"{$name}\" name=\"{$name}\" value=\"{$value}\">{$value}</textarea>";
                 $ret.="</div>";
@@ -60,7 +60,7 @@
             }
             default:{
                 $value=$select[$col['COLUMN_NAME']]??'';
-                $ret.="<div class=\"m-2 ".($is_last?'flex-fill':'')."\">";
+                $ret.="<div class=\"m-1 ".($is_last?'flex-fill':'')."\">";
                 $ret.="<label for=\"{$name}\" class=\"form-label \">{$name}</label>";
                 $ret.="<input type=\"text\" class=\"form-control text-center\" id=\"{$name}\" name=\"{$name}\" value=\"{$value}\">";
                 $ret.="</div>";
