@@ -1,7 +1,15 @@
-<?php component('calendar','css'); ?>
-<?php style('pages/prenotazioni/planning/planning.css'); ?>
 <?php 
-    $rows=17;
+    $rows=12;$total_rows=51;$groups=ceil($total_rows/$rows);
+    style('pages/prenotazioni/planning/planning.css'); 
+    echo "<style>
+        @media (min-width: 1200px) {
+            .planning-table {
+                width: ".(100/$groups)."%;
+            }
+        }
+    </style>";
+?>
+<?php 
     $id_terapista = cookie('id_terapista',first('terapisti')['id']);
     $data = cookie('data',date('Y-m-d'));
     $result=Select('*')->from('view_planning')->where("id_terapista={$id_terapista}")->and("data='{$data}'")->get();
@@ -12,8 +20,44 @@
         }
         return $ora->format('H:i');
     };
+    $_table = function($table_index)use(&$_planning,&$rows){
+        $th_class=$table_index>0?'sm-hidden':'';
+        ?>
+        <table class="planning-table table table-striped border-0">
+            <thead class="<?php echo $th_class; ?>">
+                <tr><th class="text-center">Ora</th><th class="text-center">Motivo</th></tr>
+            </thead>
+            <tbody><?php 
+                for($i=1; $i<=$rows; $i++){
+                    $row = $i + $rows*$table_index; $planning = $_planning($row); ?>
+                    <tr>
+                        <td 
+                            scope="col" 
+                            class="text-center border-0 border-end <?php echo $planning['class'];?> first w-15" 
+                            planning_motivi_id="<?php echo $planning['id'];?>" 
+                            row="<?php echo $row;?>" 
+                            onclick="rowClick(this,'<?php echo $planning['origin']; ?>');"  
+                            onmouseenter="enterRow(this,'<?php echo $planning['origin']; ?>');"
+                            >
+                            <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_parent_inizio_<?php echo $row;?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
+                        </td>
+                        <td 
+                            scope="col" 
+                            class="text-center border-0 border-end impegno <?php echo $planning['class'];?> last" 
+                            planning_motivi_id="<?php echo $planning['id'];?>" 
+                            row="<?php echo $row;?>" 
+                            onclick="rowClick(this,'<?php echo $planning['origin']; ?>');"  
+                            onmouseenter="enterRow(this,'<?php echo $planning['origin']; ?>');"
+                            >
+                            <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
+                        </td>
+                    </tr><?php
+                }?>
+            </tbody>
+        </table><?php
+    };
     $_planning = function ($row)use($result){
-        $class='';$id='';
+        $class='';$id='';$origin='empty';
         foreach ($result as $plan) {
             $row=(int)$row;
             $row_inizio=(int)$plan['row_inizio'];
@@ -23,79 +67,58 @@
                 $class.=" {$plan['origin']} {$plan['origin']}_start";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
+                $origin=$plan['origin'];
             }
             if($row>$row_inizio&&$row<$row_fine){
                 $class.=" {$plan['origin']} {$plan['origin']}_middle";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
+                $origin=$plan['origin'];
             }
             if($row_fine==$row){
                 $class.=" {$plan['origin']} {$plan['origin']}_end";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
+                
             }
             if(!empty($class))break;
         }
-        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo)];
+        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo), 'origin'=>$origin];
     };
 ?>
 <div id="planning">
     <div class="p-3 border my-1 d-flex" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
-        <div class="d-flex flex-column flex-fill">
-            <div class="d-flex flex-column">
-                <div class="d-flex flex-fill my-1" >
-                    <input onclick="openCalendar(event,this)" class="hover mx-auto card-title text-center py-2 border-0 date-target" id="data" value="<?php echo unformat_date($data);?>" onchange="changeDate()"readonly/>
+        <div class="w-100">
+            <div class="mx-auto d-flex flex-row p-3">
+                <div class="w-30 me-2 text-center">
+                    <label class="form-label" for="data">Data</label>
+                    <input
+                        name="data" 
+                        class="form-control text-center"
+                        value="<?php echo unformat_date($data);?>" 
+                        onchange="changeDate()"
+                    />
                 </div>
-                <div class="d-flex mb-2">
-                    <div class="d-flex flex-fill justify-content-center ">
-                        <div class="w-35 d-flex flex-column text-center">
-                            <div class="w-100 me-1">
-                                <select type="text" class="form-control" id="terapista" name="terapista" value="<?php echo $id_terapista??'';?>" onchange="changeTerapista()">
-                                    <?php
-                                        foreach(Select('*')->from('terapisti')->get() as $value){
-                                            $selected = (isset($id_terapista) && $id_terapista == $value['id']) ? 'selected' : '';
-                                            echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\" {$selected}>{$value['terapista']}</option>";
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+                <div class="flex-fill text-center">
+                    <label class="form-label" for="terapista">Terapista</label>
+                    <select 
+                        name="terapista" 
+                        class="form-select text-center" 
+                        value="<?php echo $id_terapista??'';?>" 
+                        onchange="changeTerapista()"
+                        >
+                        <?php
+                            foreach(Select('*')->from('terapisti')->get() as $value){
+                                $selected = (isset($id_terapista) && $id_terapista == $value['id']) ? 'selected' : '';
+                                echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\" {$selected}>{$value['terapista']}</option>";
+                            }
+                        ?>
+                    </select>
                 </div>
             </div>
-            <div class="d-flex flex-column">
-                <table class="table table-striped border-0" id="planning_table">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="text-center" rowspan="2">Ora</th>
-                            <th scope="col" class="text-center w-25" rowspan="2">Impegno</th>
-                            <th scope="col" class="text-center" rowspan="2">TR</th>
-                            <th scope="col" class="text-center" rowspan="2">Ora</th>
-                            <th scope="col" class="text-center w-25" rowspan="2">Impegno</th>
-                            <th scope="col" class="text-center" rowspan="2">TR</th>
-                            <th scope="col" class="text-center" rowspan="2">Ora</th>
-                            <th scope="col" class="text-center w-25" rowspan="2">Impegno</th>
-                            <th scope="col" class="text-center" rowspan="2">TR</th>
-                        </tr>
-                    </thead>
-                    <tbody><?php 
-                        for($i=1;$i<=$rows;$i++){ ?>
-                            <tr><?php
-                                for($col=1;$col<=3;$col++){$row=$i+($rows*($col-1)); $planning=$_planning($row);?>
-                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> first" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_parent_inizio_<?php echo $row;?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
-                                    </td>
-                                    <td scope="col" class="text-center border-0 border-end impegno <?php echo $planning['class'];?>" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onclick="sbarraClick(this);"  onmouseenter="hoverRow(this);">
-                                        <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
-                                    </td>
-                                    <td scope="col" class="text-center border-0 border-end <?php echo $planning['class'];?> last" planning_motivi_id="<?php echo $planning['id'];?>" row="<?php echo $row;?>" onmouseenter="hoverRow(this);">
-                                        <input class="w-100 p-0 m-0 text-center border-0 bg-transparent note" id="input_parent_note_<?php echo $row;?>"/>
-                                    </td><?php
-                                    }?>
-                            </tr><?php
-                        }?>
-                    </tbody>
-                </table>
+            <div class="table-container"><?php
+                for($i=0;$i<$groups;$i++)$_table($i);
+                ?>
             </div>
         </div>
     </div>

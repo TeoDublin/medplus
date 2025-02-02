@@ -21,5 +21,5 @@ function add(id){
     modal_component('modal','trattamenti_elenco',_data);
 }
 document.addEventListener('DOMContentLoaded',function(){
-    search_table({table:'view_trattamenti','cols':['tipo','categoria','trattamento','prezzo']});
+    search_table({table:'view_trattamenti','cols':['trattamento','categoria','prezzo']});
 });

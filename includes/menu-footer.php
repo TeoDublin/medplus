@@ -26,6 +26,7 @@
                 this.menuVertical.classList.remove('hide');
                 this.menuDivider.classList.remove('hide');
                 this.menuLabel.forEach(label => label.classList.remove('hide'));
+                this.pageContent.classList.remove('menu-hidden');
             }
         },
         listen: function() {
@@ -36,12 +37,14 @@
                     this.menuVertical.classList.remove('hide');
                     this.menuDivider.classList.remove('hide');
                     this.menuLabel.forEach(label => label.classList.remove('hide'));
+                    this.pageContent.classList.remove('menu-hidden');
                 }
                 else {
                     setCookie("menu", "hide", 365);
                     this.menuVertical.classList.add('hide');
                     this.menuDivider.classList.add('hide');
                     this.menuLabel.forEach(label => label.classList.add('hide'));
+                    this.pageContent.classList.add('menu-hidden');
                 }
             };
             const menuExit = () => {

@@ -12,15 +12,6 @@
                 <div class="p-2">
                     <input name="id" value="<?php echo $_REQUEST['id']??'';?>" hidden/>
                     <div class="m-2">
-                        <label for="tipo" class="form-label">Tipo</label><?php 
-                        echo "<select class=\"form-control text-center\" name=\"tipo\" value=\"{$result['tipo']}\">";
-                            foreach(Enum('trattamenti','tipo')->list as $enum){
-                                $selected=$result['tipo']==$enum?'selected':'';
-                                echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
-                            }
-                        echo "</select>";?>
-                    </div>
-                    <div class="m-2">
                         <label for="id_categoria" class="form-label">Categoria</label><?php 
                         echo "<select class=\"form-control text-center\" name=\"id_categoria\" value=\"{$result['id_categoria']}\">";
                             foreach(Select('*')->from('trattamenti_categorie')->get() as $enum){

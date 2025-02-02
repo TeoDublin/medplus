@@ -1,3 +1,5 @@
+let origins = ['sbarra','corso','seduta'];
+
 function openCalendar(event, element) {
     const rect = event.target.getBoundingClientRect();
     $.post('component.php', { component: 'calendar' })
@@ -33,28 +35,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     observer.observe(dateTarget, { attributes: true });
 });
-function hoverRow(element){
-    document.querySelector('#planning_table').classList.remove('table-separate');
-    document.querySelectorAll('.sbarra_hovered').forEach(cell=>{cell.classList.remove('sbarra_hovered');})
-    document.querySelectorAll('.hovered').forEach(cell=>{cell.classList.remove('hovered');})
-    if(element.classList.contains('sbarra')){
+function enterRow(element,origin){
+    cleanHovered();
+    if(origin!=='empty'){
+        const row_class = origin+'_hovered';
+        document.querySelectorAll('.'+row_class).forEach(cell=>{cell.classList.remove(row_class);})
+        document.querySelectorAll('.hovered').forEach(cell=>{cell.classList.remove('hovered');})
         const planning_motivi_id = element.getAttribute('planning_motivi_id');
         document.querySelectorAll(`[planning_motivi_id="${planning_motivi_id}"]`).forEach(cell => {
-            cell.classList.add('sbarra_hovered');
-        });
-        document.querySelector('#planning_table').classList.add('table-separate');
-    }
-    else{
-        const row = element.getAttribute('row');
-        document.querySelectorAll(`[row="${row}"]`).forEach(cell => {
-            cell.classList.add('hovered');
+            cell.classList.add(row_class);
         });
     }
-
+    
 }
-function sbarraClick(element){
-    if(!element.classList.contains('seduta')){
-        const planning_motivi_id = element.getAttribute('planning_motivi_id');
-        modal_component('modal', 'sbarra', { 'id_terapista': document.querySelector('#terapista').value,'data':document.querySelector('#data').value, 'planning_motivi_id':planning_motivi_id,'row': element.getAttribute('row')});
+function cleanHovered(){
+    origins.forEach(origin=>{
+        document.querySelectorAll('.'+origin).forEach(cell=>{cell.classList.remove(origin+'_hovered');})
+    });
+}
+function rowClick(element,origin){
+    const planning_motivi_id = element.getAttribute('planning_motivi_id');
+    switch (origin) {
+        case 'sbarra':
+            modal_component('modal', 'sbarra', { 'id_terapista': document.querySelector('#terapista').value,'data':document.querySelector('#data').value, 'planning_motivi_id':planning_motivi_id,'row': element.getAttribute('row')});
+            break;
+    
+        default:
+            console.log(origin);
+            break;
     }
 }

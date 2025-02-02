@@ -38,23 +38,6 @@ async function async_success_and_refresh(callbackName, callbackParams) {
     sessionStorage.setItem('callbackName', callbackName);
     window.location.reload(true);
 }
-document.addEventListener('DOMContentLoaded', () => {
-    if (sessionStorage.getItem('showSuccessToast') === 'true') {
-        const toastLive = document.getElementById('successToast');
-        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
-        toastBootstrap.show();
-        sessionStorage.removeItem('showSuccessToast');
-    }
-    if (sessionStorage.getItem('callbackToExecute') === 'true') {
-        sessionStorage.removeItem('callbackToExecute');
-        const callbackName = sessionStorage.getItem('callbackName');
-        if (callbackName) {
-            const callbackParams = JSON.parse(sessionStorage.getItem('callbackParams'));
-            sessionStorage.removeItem('callbackName');
-            sessionStorage.removeItem('callbackParams');
-        }
-    }
-});
 function success(){
     const toastLive = document.getElementById('successToast')
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
@@ -167,7 +150,6 @@ function closeModalAndScripts(modalElement) {
         document.body.classList.remove('modal-open');
     }
 }
-
 function component(component,_data){
     let element = document.querySelector('#'+component);
     _data['component']=component;
@@ -211,3 +193,20 @@ function search_table(_data){
     });
 
 }
+document.addEventListener('DOMContentLoaded', () => {
+    if (sessionStorage.getItem('showSuccessToast') === 'true') {
+        const toastLive = document.getElementById('successToast');
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
+        toastBootstrap.show();
+        sessionStorage.removeItem('showSuccessToast');
+    }
+    if (sessionStorage.getItem('callbackToExecute') === 'true') {
+        sessionStorage.removeItem('callbackToExecute');
+        const callbackName = sessionStorage.getItem('callbackName');
+        if (callbackName) {
+            const callbackParams = JSON.parse(sessionStorage.getItem('callbackParams'));
+            sessionStorage.removeItem('callbackName');
+            sessionStorage.removeItem('callbackParams');
+        }
+    }
+});

@@ -1,5 +1,10 @@
+td, th {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .search_row {
-    padding-left: 20px;
+    padding-left: 0;
     display: flex;
     align-items: center;
     justify-content: center;

@@ -25,7 +25,7 @@
                     }
                     $trattamenti = Select('t.*')
                         ->from('view_trattamenti', 't')
-                        ->orderby('t.tipo, t.categoria, t.trattamento ASC')
+                        ->orderby('t.categoria, t.trattamento ASC')
                         ->get();                
                 ?>
                 <div class="p-2">
@@ -37,25 +37,11 @@
                             onchange="window.modalHandlers['percorso_terapeutico'].changeTrattamento(this);"
                             <?php echo $disabled; ?>>
                             <?php 
-                                $current_tipo = $current_categoria = '';
-                                echo "<option value=\"\" class=\"ps-4  bg-white\" prezzo=\"\" tipo=\"\"></option>";
+                                echo "<option value=\"\" class=\"ps-4  bg-white\" prezzo=\"\"></option>";
                                 foreach ($trattamenti as $trattamento) {
                                     if ($current_categoria && $current_categoria != $trattamento['categoria']) {
                                         echo "</optgroup>";
                                         $current_categoria = '';
-                                    }
-
-                                    if ($current_tipo && $current_tipo != $trattamento['tipo']) {
-                                        if ($current_categoria) {
-                                            echo "</optgroup>";
-                                        }
-                                        echo "</optgroup>";
-                                        $current_tipo = '';
-                                    }
-
-                                    if ($current_tipo != $trattamento['tipo']) {
-                                        $current_tipo = $trattamento['tipo'];
-                                        echo "<optgroup label=\"*{$trattamento['tipo']}\" class=\"fw-bold\">";
                                     }
 
                                     if ($current_categoria != $trattamento['categoria']) {
@@ -64,11 +50,10 @@
                                     }
 
                                     $selected = (isset($result['id_trattamento']) && $result['id_trattamento'] == $trattamento['id']) ? 'selected' : '';
-                                    echo "<option value=\"{$trattamento['id']}\" class=\"ps-4 bg-white\" prezzo=\"{$trattamento['prezzo']}\" tipo=\"{$trattamento['tipo']}\" $selected>{$trattamento['trattamento']}</option>";            
+                                    echo "<option value=\"{$trattamento['id']}\" class=\"ps-4 bg-white\" prezzo=\"{$trattamento['prezzo']}\" $selected>{$trattamento['trattamento']}</option>";            
                                 }
 
                                 if ($current_categoria) echo "</optgroup>";
-                                if ($current_tipo) echo "</optgroup>";
                             ?>
                         </select>
                     </div>
@@ -83,7 +68,7 @@
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_a_seduta"  <?php echo $hidden; ?>>
                         <label for="prezzo_a_seduta" class="form-label" >Prezzo a seduta</label>
-                        <input type="number" class="form-control" id="prezzo_a_seduta" value="<?php echo $result['prezzo']??''; ?>" 
+                        <input type="number" class="form-control" id="prezzo_a_seduta" value="<?php echo $result['prezzo']/$result['sedute']??''; ?>" 
                             onchange="window.modalHandlers['percorso_terapeutico'].changePrezzoASeduta(this);"> 
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_tabellare"  <?php echo $hidden; ?>>

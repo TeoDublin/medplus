@@ -1,5 +1,5 @@
 <div class="d-flex flex-column">
-    <div class="d-flex flex-row mb-1 w-100" style="height: 40;">
+    <div class="d-flex flex-row mb-1 w-100 sticky-top" style="height: 40;">
         <div class="menu-divider hide">
             <div class="d-flex w-100 justify-content-end">
                 <div class="p-3 d-flex align-items-end pe-4 menu-icon-back" >
@@ -9,8 +9,9 @@
         </div>
         <nav class="navbar w-100 p-0 m-0 bg-primary shadow-lg" >
             <div class="d-flex  w-100">
-                <div class="p-2 d-flex justify-content-center align-items-center menu-icon" >
-                    <?php echo icon('menu.svg','white',30,30);?>
+                <div class="p-2 justify-content-center align-items-center menu-icon" 
+                    onclick="">
+                    <?php echo icon('menu.svg','white',41,41);?>
                 </div>
                 <div class="p-2 pt-3 d-flex justify-content-center align-items-center">
                     <img src="<?php echo image("logo-".theme().".svg");?>" alt="Medplus" height="40">
@@ -39,8 +40,8 @@
         </nav>
     </div>
     <div class="d-flex flex-fill">
-        <div class="d-flex flex-fill flex-row">
-            <div class="menu-vertical h-100 d-flex flex-column p-2 hide">
+        <div class="d-flex flex-fill flex-column flex-md-row">
+            <div class="menu-vertical hide">
                 <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page','prenotazioni')=='prenotazioni'?'menu-active':''?>" id="menu-prenota" title="Prenotazioni">
                     <div class="d-flex align-items-start mx-2" >
                         <?php echo icon('table.svg','black',31,30);?>
@@ -78,5 +79,5 @@
                     <div class="menu-label align-self-center hide" ><span>Corsi</span></div>
                 </div>
             </div>
-            <div class="page-content flex-fill pb-2 pt-0 px-2">
-                <div class="d-flex justify-content-center">
+            <div class="page-content menu-hidden">
+                <div class="justify-content-center">

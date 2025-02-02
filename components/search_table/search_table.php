@@ -4,6 +4,7 @@
     $response=json_decode($_REQUEST['response']);
     $actions=$response->actions?htmlspecialchars($response->actions??[], ENT_QUOTES, 'UTF-8'):json_encode([]);
     $cols=htmlspecialchars(json_encode($response->cols??[]), ENT_QUOTES, 'UTF-8');
+    $is_first=true;
 ?>
 <div class="card p">
     <div class="card-body d-flex flex-column">
@@ -12,7 +13,12 @@
                 <thead>
                     <tr class="align-middle"><?php 
                         foreach ($response->cols as $col) if($col!='id'){
-                            echo "<th scope=\"col\" class=\"text-center\" rowspan=\"2\">
+                            if($is_first){
+                                $is_first=false;
+                                $tr_class='';
+                            }
+                            else $tr_class='d-none d-md-table-cell';
+                            echo "<th scope=\"col\" class=\"text-center {$tr_class}\" rowspan=\"2\">
                                     <div class=\"d-flex flex-row search_row\">
                                         <input type=\"text\" class=\"search_input text-center\" value=\"{$col}\" data-value=\"{$col}\"
                                             onmouseenter=\"window.modalHandlers['search_table'].enterSearchInput(this);\"
