@@ -13,8 +13,11 @@ function openCalendar(event, element) {
             console.error('Error fetching calendar:', error);
         });
 }
-function changeTerapista(){
-    refresh({id_terapista:document.querySelector('#terapista').value});
+function change(){
+    refresh({
+        id_terapista:document.querySelector('#terapista').value,
+        data:document.querySelector('#data').value
+    });
 }
 document.addEventListener("DOMContentLoaded", () => {
     const dateTarget = document.querySelector('#data');

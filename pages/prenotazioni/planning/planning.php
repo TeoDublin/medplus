@@ -93,19 +93,22 @@
                 <div class="w-30 me-2 text-center">
                     <label class="form-label" for="data">Data</label>
                     <input
+                        type="date"
+                        id="data" 
                         name="data" 
                         class="form-control text-center"
-                        value="<?php echo unformat_date($data);?>" 
-                        onchange="changeDate()"
+                        value="<?php echo $data;?>" 
+                        onchange="change()"
                     />
                 </div>
                 <div class="flex-fill text-center">
                     <label class="form-label" for="terapista">Terapista</label>
-                    <select 
-                        name="terapista" 
+                    <select
+                        id="terapista" 
+                        name="terapista"
                         class="form-select text-center" 
                         value="<?php echo $id_terapista??'';?>" 
-                        onchange="changeTerapista()"
+                        onchange="change()"
                         >
                         <?php
                             foreach(Select('*')->from('terapisti')->get() as $value){
