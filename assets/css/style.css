@@ -128,9 +128,13 @@
         margin-bottom: 0!important;
     }
 
-    .card{
+    .card,.card-body{
         padding: 2%!important;
     } 
+
+    .container-fluid{
+        padding: 0!important;
+    }
 
     .modal-body{
         padding: 2%!important;

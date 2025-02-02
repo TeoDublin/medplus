@@ -14,5 +14,5 @@ function delClick(id){
 };
 
 document.addEventListener('DOMContentLoaded',function(){
-    search_table({table:'view_classi','cols':['categoria','corso','terapista','nominativo','prezzo_tabellare','prezzo','scadenza','giorni']});
+    search_table({table:'view_classi','cols':['nominativo','categoria','corso','terapista','prezzo_tabellare','prezzo','scadenza','giorni']});
 });

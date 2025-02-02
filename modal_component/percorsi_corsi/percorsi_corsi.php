@@ -22,24 +22,24 @@
                     <div class="card-body">
                         <div class="container-fluid text-center">
                             <div class="table-responsive">
-                                <div class="d-flex flex-row percorsi-row w-100 titles mb-2">
+                                <div class="d-flex flex-row w-100 mb-2">
                                     <div class="flex-fill"><span>Corso</span></div>
-                                    <div class="w-20"><span>Terapista</span></div>
-                                    <div class="w-20"><span>Inizio</span></div>
-                                    <div class="w-20"><span>Prezzo Tabellare</span></div>
+                                    <div class="w-30"><span>Terapista</span></div>
+                                    <div class="d-none d-md-block w-20"><span>Inizio</span></div>
+                                    <div class="d-none d-md-block w-20"><span>Prezzo Tabellare</span></div>
                                     <div class="w-20"><span>Prezzo</span></div>
-                                    <div class="w-5 last"><span>#</span></div>
+                                    <div class="w-10 last"><span>#</span></div>
                                 </div>
                             </div><?php
                             foreach ($corsi as $corso) {?>
                                 <div class="table-responsive">
                                     <div class="d-flex flex-row percorsi-row w-100 mb-2">
                                         <div class="flex-fill"><span><?php echo $corso['corso']; ?></span></div>
-                                        <div class="w-20"><span><?php echo $corso['terapista']; ?></span></div>
-                                        <div class="w-20"><span><?php echo $corso['data_inizio']; ?></span></div>
-                                        <div class="w-20"><span><?php echo $corso['prezzo_tabellare']; ?></span></div>
+                                        <div class="w-30"><span><?php echo $corso['terapista']; ?></span></div>
+                                        <div class="d-none d-md-block w-20"><span><?php echo unformat_date($corso['data_inizio']); ?></span></div>
+                                        <div class="d-none d-md-block w-20"><span><?php echo $corso['prezzo_tabellare']; ?></span></div>
                                         <div class="w-20"><span><?php echo $corso['prezzo']; ?></span></div>
-                                        <div class="w-5 last"
+                                        <div class="w-10 last"
                                             onmouseenter="window.modalHandlers['percorsi_corsi'].delEnter(this)"
                                             onmouseleave="window.modalHandlers['percorsi_corsi'].delLeave(this)"
                                             onclick="window.modalHandlers['percorsi_corsi'].delClick(<?php echo $corso['id'].','.$_REQUEST['id_cliente']; ?>)"
