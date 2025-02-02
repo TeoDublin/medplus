@@ -68,7 +68,7 @@
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_a_seduta"  <?php echo $hidden; ?>>
                         <label for="prezzo_a_seduta" class="form-label" >Prezzo a seduta</label>
-                        <input type="number" class="form-control" id="prezzo_a_seduta" value="<?php echo $result['prezzo']/$result['sedute']??''; ?>" 
+                        <input type="number" class="form-control" id="prezzo_a_seduta" value="<?php echo $result['prezzo']&&$result['sedute']?$result['prezzo']/$result['sedute']:''; ?>" 
                             onchange="window.modalHandlers['percorso_terapeutico'].changePrezzoASeduta(this);"> 
                     </div>
                     <div class="mb-3 ms-2" id="div_prezzo_tabellare"  <?php echo $hidden; ?>>
