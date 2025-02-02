@@ -142,7 +142,7 @@
                 </div>
         </div>
         <div class="modal-footer">
-                <a href="#" class="btn btn-primary w-10" onclick="window.modalHandlers['corsi_elenco'].btnSalva(this)">Salva</a>
+                <a href="#" class="btn btn-primary w-md-20" onclick="window.modalHandlers['corsi_elenco'].btnSalva(this)">Salva</a>
             </div>
         </div>
     </div>
