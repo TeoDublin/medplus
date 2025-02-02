@@ -45,7 +45,7 @@
             </div>
             <div class="container"></div>
             <div class="modal-body">
-                <div class="p-2">
+                <div class="p-md-2">
                     <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
                     <div class="container-fluid card text-center py-4">
                         <?php if(!$_percorso){?>
@@ -181,7 +181,7 @@
                                                                                     <div class="csp2 d-flex align-items-center justify-content-center text-center">
                                                                                         <span class="">Inizio</span>
                                                                                     </div>
-                                                                                    <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                                    <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center">
                                                                                         <span class="">Fine</span>
                                                                                     </div>
                                                                                     <div class="csp4 d-flex align-items-center justify-content-center text-center">
@@ -192,11 +192,11 @@
                                                                                     </div>
                                                                                 </div>
                                                                                 <?php foreach($sedute_prenotate as $seduta_prenotata){?>
-                                                                                    <div class="flex-row seduta-titles w-100 d-flex">
+                                                                                    <div class="flex-row seduta-titles w-100 d-flex ">
                                                                                         <div class="csp1 d-flex align-items-center justify-content-center text-center"><?php _nome_terapista($seduta_prenotata['terapista']); ?></div>
                                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['data']; ?></span></div>
                                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
-                                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
+                                                                                        <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
                                                                                         <div class="csp4 d-flex align-items-center justify-content-center text-center statoHover">
                                                                                             <select type="text" class="form-control text-center" id="stato_prenotazione" value="<?php echo $seduta_prenotata['stato_prenotazione']??'';?>" 
                                                                                                 onchange="window.modalHandlers['percorsi'].changeStatoPrenotazione(this,<?php echo $seduta_prenotata['id'].','.$seduta['id'];?>)">
@@ -236,9 +236,9 @@
                         ><button class="btn btn-primary  flex-fill">Nuovo Trattamento</button></div>
                     </div>
                 </div>
-                <div class="p-2" id="prenota_seduta"></div>
-                <div class="p-2" id="percorso_terapeutico"></div>
-                <div class="p-2" id="sedute"></div>
+                <div class="p-md-2" id="prenota_seduta"></div>
+                <div class="p-md-2" id="percorso_terapeutico"></div>
+                <div class="p-md-2" id="sedute"></div>
             </div>
         </div>
     </div>

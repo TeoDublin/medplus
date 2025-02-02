@@ -28,7 +28,7 @@
                         ->orderby('t.categoria, t.trattamento ASC')
                         ->get();                
                 ?>
-                <div class="p-2">
+                <div class="p-md-2">
                     <input type="text" id="id_cliente" name="id_cliente" value="<?php echo $_REQUEST['id_cliente']??'';?>" hidden/>
                     <input type="text" id="id_percorso" name="id_percorso" value="<?php echo $_REQUEST['id_percorso']??'';?>" hidden/>
                     <div class="mb-3 ms-2">

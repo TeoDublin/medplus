@@ -124,6 +124,14 @@
 }
 
 @media (max-width: 768px) {
+    .card{
+        padding: 2%!important;
+    } 
+
+    .modal-body{
+        padding: 2%!important;
+        border: none!important;
+    }
 
     .w-md-20,.w-md-30,.w-md-50,.w-md-60{
         width: 100% !important;
