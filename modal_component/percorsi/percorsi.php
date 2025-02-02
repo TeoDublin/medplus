@@ -66,10 +66,11 @@
                                             <span class="">Trattamento</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Prezzo</span>
+                                            <span class="d-none d-md-block">Prezzo</span>
+                                            <span class="d-md-none">$</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Note</span>
+                                            <span>N</span><span class="d-none d-md-block">ote</span>
                                         </div>
                                     </div>
                                 </div>
