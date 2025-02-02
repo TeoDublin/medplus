@@ -121,7 +121,7 @@
                         ?>
                     </select>
                 </div>
-                <div class="d-w-20 ms-2 text-center">
+                <div class="d-w-20 ms-2 text-center d-none d-md-block">
                     <label class="form-label" for="rows">Righe</label>
                     <input
                         type="number"
