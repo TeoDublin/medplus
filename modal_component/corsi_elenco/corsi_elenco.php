@@ -14,7 +14,7 @@
                 ?>
                 <div class="p-2">
                     <input name="id" value="<?php echo $_REQUEST['id']??'';?>" hidden/>
-                    <div class="d-flex flex-row mb-3">
+                    <div class="d-flex flex-column flex-md-row mb-3">
                         <div class="flex-fill">
                             <label for="id_categoria" class="form-label">Categoria</label><?php 
                             echo "<select class=\"form-control text-center\" name=\"id_categoria\" value=\"{$corso['id_categoria']}\">";
@@ -24,13 +24,13 @@
                                 }
                             echo "</select>";?>
                         </div>
-                        <div class="w-50 ms-2">
+                        <div class="w-md-50 ms-2">
                             <label for="corso" class="form-label" >Corso</label>
                             <input type="text" class="form-control text-center" placeholder="Di un nome al corso" name="corso" value="<?php echo $corso['corso']??''; ?>"/> 
                         </div>
                         
                     </div>
-                    <div class="d-flex flex-row mb-3">
+                    <div class="d-flex flex-column flex-md-row mb-3">
                         <div class="flex-fill">
                             <label for="id_terapista" class="form-label">Terapista</label><?php 
                             echo "<select class=\"form-control text-center\" name=\"id_terapista\" value=\"{$corso['id_terapista']}\">";
@@ -40,11 +40,11 @@
                                 }
                             echo "</select>";?>
                         </div>
-                        <div class="ms-2 w-20">
+                        <div class="ms-2 w-md-20">
                             <label for="prezzo" class="form-label" >Prezzo</label>
                             <input type="number" class="form-control text-center" id="prezzo_tabellare" name="prezzo" placeholder="Costo mensile" value="<?php echo $corso['prezzo_tabellare']??''; ?>"/> 
                         </div>
-                        <div class="ms-2 w-20">
+                        <div class="ms-2 w-md-20">
                             <label for="scadenza" class="form-label" >Scadenza</label>
                             <input type="number" class="form-control text-center" name="scadenza" placeholder="Giorno di scadenza ogni mese" value="<?php echo $corso['scadenza']??''; ?>"/> 
                         </div>
@@ -59,9 +59,9 @@
                                     <div class="table-responsive mb-2 title">
                                         <div class="d-flex flex-row w-100">
                                             <div class="flex-fill"><span>Giorno</span></div>
-                                            <div class="w-10 ms-2"><span>Inizio</span></div>
-                                            <div class="w-10 ms-2"><span>Fine</span></div>
-                                            <div class="w-5"><span>#</span></div>
+                                            <div class="w-20 ms-2"><span>Inizio</span></div>
+                                            <div class="w-20 ms-2"><span>Fine</span></div>
+                                            <div class="w-10"><span>#</span></div>
                                         </div>
                                     </div>
                                     <div class="table-responsive" id="table-body"><?php 
@@ -105,7 +105,7 @@
                                             <div class="flex-fill"><span>Cliente</span></div>
                                             <div class="w-20 mx-2"><span>Prezzo</span></div>
                                             <div class="w-20 mx-2"><span>Dt.Inizio</span></div>
-                                            <div class="w-5"><span>#</span></div>
+                                            <div class="w-10"><span>#</span></div>
                                         </div>
                                     </div>
                                     <div class="table-responsive" id="table-body-clienti"><?php 
