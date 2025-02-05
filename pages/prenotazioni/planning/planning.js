@@ -6,7 +6,14 @@ function bind_modal_functions(){
             case 'empty':
                 modal_component('sbarra', 'sbarra', { 'id_terapista': document.querySelector('#terapista').value,'data':document.querySelector('#data').value, 'planning_motivi_id':planning_motivi_id,'row': element.getAttribute('row')});
                 break;
-        
+            case 'corso':
+                modal_component('sbarra', 'sposta_corso', { 
+                    'id_terapista': document.querySelector('#terapista').value,
+                    'data':document.querySelector('#data').value, 
+                    'id_corso':planning_motivi_id,
+                    'row': element.getAttribute('row')
+                });
+                break;
             default:
                 console.log(origin);
                 break;
