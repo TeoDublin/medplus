@@ -1,6 +1,7 @@
 window.modalHandlers['sposta_corso'] = {
     btnSalva:function(element){
-        $.post('post/save.php',this._data(element)).done(function(){ 
+        const _data=this._data(element);
+        $.post('post/save.php',_data).done(function(){ 
             refresh({data:_data.data,id_terapista:_data.id_terapista});
         }).fail(function(){fail()});
     },
@@ -10,15 +11,13 @@ window.modalHandlers['sposta_corso'] = {
     },
     _data(element){
         const modal = element.closest('.modal');
-        const { idCorso, idTerapista } = element.dataset;
+        const { idCorso } = element.dataset;
         let _data = { 
             table:'corsi_planning',
-            id:idCorso,
-            id_terapista:idTerapista,
+            id:idCorso
         };
         
         modal.querySelectorAll('[name]').forEach(named=>{_data[named.name]=named.value;});
-        _data['row']=_data['row_inizio'];
         return _data;
     }
 };

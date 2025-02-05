@@ -1,7 +1,9 @@
 <?php 
-    function attr_data(){
-        return "data-id-corso=\"{$_REQUEST['id_corso']}\" data-id-terapista=\"{$_REQUEST['id_terapista']}\"";
+    function attr_data($id_corso){
+        return "data-id-corso=\"{$id_corso}\"";
     }
+    $row=$_REQUEST['row']??$_REQUEST['row_inizio'];
+    $id_corso=$_REQUEST['id_corso']??$_REQUEST['id'];
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog">
@@ -12,7 +14,7 @@
             </div>
             <div class="modal-body">
                 <?php 
-                    $result=$_REQUEST['id_corso']?Select('*')->from('corsi_planning')->where("id={$_REQUEST['id_corso']}")->first():[];
+                    $result=$id_corso?Select('*')->from('corsi_planning')->where("id={$id_corso}")->first():[];
                     if(empty($result)){
                         $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}'")->get();
                     }
@@ -30,7 +32,7 @@
                 <div class="p-2">
                     <div class="mb-3">
                         <label for="terapista" class="form-label">Terapista</label>
-                        <select type="text" <?php echo attr_data();?> class="form-control text-center" value="<?php echo $_REQUEST['id_terapista']??'';?>" 
+                        <select type="text"  name="id_terapista" <?php echo attr_data($id_corso);?> class="form-control text-center" value="<?php echo $_REQUEST['id_terapista']??'';?>" 
                             onchange="window.modalHandlers['sposta_corso'].change(this)">
                             <?php 
                                 foreach(Select('*')->from('terapisti')->get() as $value){
@@ -42,7 +44,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="data" class="form-label">Data</label>
-                        <input type="date" class="form-control text-center" name="data" value="<?php echo $_REQUEST['data']; ?>" <?php echo attr_data();?> 
+                        <input type="date" class="form-control text-center" name="data" value="<?php echo $_REQUEST['data']; ?>" <?php echo attr_data($id_corso);?> 
                             onchange="window.modalHandlers['sposta_corso'].change(this)"
                         />
                     </div>
@@ -51,8 +53,8 @@
                         <select type="text" class="form-control" id="row_inizio" name="row_inizio" value="<?php echo $result['row_inizio']??'';?>">
                             <?php 
                                 foreach($rows as $value){
-                                    if(!in_array($value['id'],$planning_busy)&&(!empty($result)||$value['id']>=$_REQUEST['row'])){
-                                        if(empty($result)) $selected = $value['id']==$_REQUEST['row'] ? 'selected' : '';
+                                    if(!in_array($value['id'],$planning_busy)&&(!empty($result)||$value['id']>=$row)){
+                                        if(empty($result)) $selected = $value['id']==$row ? 'selected' : '';
                                         else $selected = (isset($result['row_inizio']) && $result['row_inizio'] == $value['id']) ? 'selected' : '';
                                         echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\" {$selected}>{$value['ora']}</option>";
                                     }
@@ -66,8 +68,8 @@
                         <select type="text" class="form-control" id="row_fine" name="row_fine" value="<?php echo $result['row_fine']??'';?>">
                             <?php 
                                 foreach($rows as $value){
-                                    if(!in_array($value['id'],$planning_busy)&&(!empty($result)||$value['id']>=$_REQUEST['row'])){                                        
-                                        if(empty($result)) $selected = $value['id']==$_REQUEST['row'] ? 'selected' : '';
+                                    if(!in_array($value['id'],$planning_busy)&&(!empty($result)||$value['id']>=$row)){                                        
+                                        if(empty($result)) $selected = $value['id']==$row ? 'selected' : '';
                                         else $selected = (isset($result['row_fine']) && $result['row_fine'] == $value['id']) ? 'selected' : '';
                                         echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\" {$selected}>{$value['ora']}</option>";
                                     }
@@ -79,7 +81,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary" <?php echo attr_data();?>onclick="window.modalHandlers['sposta_corso'].btnSalva(this)"
+                <a href="#" class="btn btn-primary" <?php echo attr_data($id_corso);?>onclick="window.modalHandlers['sposta_corso'].btnSalva(this)"
                 >Salva</a>
             </div>
         </div>
