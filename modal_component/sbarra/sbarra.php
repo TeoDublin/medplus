@@ -1,19 +1,18 @@
-<div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+<div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Sbarra</h4>
-                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
+                <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <?php 
-                    $data=$_REQUEST['data']?format_date($_REQUEST['data']):'';
                     $result=$_REQUEST['planning_motivi_id']?Select('*')->from('planning_motivi')->where("id={$_REQUEST['planning_motivi_id']}")->first():[];
                     if(empty($result)){
-                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$data}'")->get();
+                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}'")->get();
                     }
                     else{
-                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$data}' and id<> {$result['id']}")->get();
+                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}' and id<> {$result['id']}")->get();
                     }
                     $planning_busy=[];
                     foreach ($planning as $plan) {
@@ -25,7 +24,7 @@
                 ?>
                 <input type="text" name="id" value="<?php echo $_REQUEST['planning_motivi_id']??'';?>" hidden/>
                 <input type="text" name="id_terapista" value="<?php echo $_REQUEST['id_terapista']??'';?>" hidden/>
-                <input type="text" name="data" value="<?php echo $data;?>" hidden/>
+                <input type="text" name="data" value="<?php echo $_REQUEST['data'];?>" hidden/>
                 <div class="p-2">
                     <div class="mb-3">
                         <label for="row_inizio" class="form-label">Inizio</label>

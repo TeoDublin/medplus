@@ -44,9 +44,14 @@
         $svg = str_replace('fill="black"', 'fill="'.$color.'"', $svg);
         return $svg;
     }
-    function component(string $name, string $extention): void {
+    function component(string $name, string $extention='all'): void {
         global $result;
-        if(file_exists("components/{$name}/{$name}.{$extention}")){
+        if($extention=='all'){
+            component($name, 'css');
+            component($name, 'php');
+            component($name, 'js');
+        }
+        elseif(file_exists("components/{$name}/{$name}.{$extention}")){
             switch ($extention) {
                 case 'js':
                     echo '<script src="'.root_path("components/{$name}/{$name}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'"></script>';
@@ -54,8 +59,9 @@
                 case 'css':
                     echo '<link rel="stylesheet" href="'.root_path("components/{$name}/{$name}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'">';
                     break;
-                default:
+                case 'php':
                     require root("components/{$name}/{$name}.{$extention}");
+                default:
                     break;
             }
         }

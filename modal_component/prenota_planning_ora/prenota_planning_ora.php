@@ -1,20 +1,13 @@
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content px-3 text-center">
-            <div class="modal-header">
-                <h4>Prenota</h4>
-                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
+<div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><h4 class="modal-title">Prenota orario</h4>
+                <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <?php 
-                    $result=$_REQUEST['sedute_prenotate_id']?Select('*')->from('sedute_prenotate')->where("id={$_REQUEST['sedute_prenotate_id']}")->first():[];
-                    if(empty($result)){
-                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}'")->get();
-                    }
-                    else{
-                        $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}' and id<> {$result['id']}")->get();
-                    }
+                    $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}'")->get();
                     $planning_busy=[];
                     foreach ($planning as $plan) {
                         for($i=$plan['row_inizio'];$i<=$plan['row_fine'];$i++){
@@ -23,11 +16,6 @@
                     }
                     $rows=Select("id,TIME_FORMAT(ora, '%H:%i') as ora")->from('planning_row')->get();
                 ?>
-                <input type="text" name="id_cliente" value="<?php echo $_REQUEST['id_cliente'];?>" hidden/>
-                <input type="text" name="id_terapista" value="<?php echo $_REQUEST['id_terapista'];?>" hidden/>
-                <input type="text" name="id_seduta" value="<?php echo $_REQUEST['id_seduta'];?>" hidden/>
-                <input type="text" name="data" value="<?php echo $_REQUEST['data'];?>" hidden/>
-                <input type="text" name="stato_prenotazione" value="Prenotata" hidden/>
                 <div class="p-2">
                     <div class="mb-3">
                         <label for="row_inizio" class="form-label">Inizio</label>
@@ -62,9 +50,16 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['prenota_seduta_planning_ora'].btnSalva(this,<?php echo $_REQUEST['id_percorso'];?>)">Salva</a>
+                <a href="#" class="btn btn-primary" 
+                    data-id-percorso="<?php echo $_REQUEST['id_percorso']; ?>"
+                    data-id-seduta="<?php echo $_REQUEST['id_seduta']; ?>"
+                    data-id-cliente="<?php echo $_REQUEST['id_cliente']; ?>"
+                    data-id-terapista="<?php echo $_REQUEST['id_terapista']; ?>"
+                    data-id-date="<?php echo $_REQUEST['data']; ?>"
+                    onclick="window.modalHandlers['prenota_planning_ora'].btnSalva(this)"
+                >Salva</a>
             </div>
         </div>
     </div>
 </div>
-<?php modal_script('prenota_seduta_planning_ora'); ?>
+<?php modal_script('prenota_planning_ora'); ?>

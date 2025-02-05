@@ -2,8 +2,8 @@ window.modalHandlers['percorsi'] = {
     btnPercorsoClick: function (id_cliente) {
         modal_component('percorso_terapeutico','percorso_terapeutico',{id_cliente:id_cliente});
     },
-    prenotaSeduteClick: function (element,id_seduta,id_cliente,id_percorso){
-        modal_component('prenota_seduta','prenota_seduta',{
+    prenotaSeduteClick: function (id_seduta,id_cliente,id_percorso){
+        modal_component('prenota_planning','prenota_planning',{
             id_seduta:id_seduta,
             id_cliente:id_cliente,
             id_percorso:id_percorso

@@ -11,18 +11,18 @@
     }
     $index=_index();
 ?>
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content px-3 text-center">
             <div class="modal-header">
                 <h4>Prenota</h4>
-                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
+                <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="p-2 card mt-2">
-                    <div class="d-flex flex-row">
-                        <div class="flex-col col-6">
+                    <div class="d-flex flex-column flex-md-row">
+                        <div class="flex-col w-md-50">
                             <div class="mb-1 card-body">
                                 <label for="head" class="form-label">Intestazione</label>
                                 <textarea  class="form-control" id="head" name="head" rows="8"><?php echo _clean("
@@ -37,7 +37,7 @@
                                 </textarea>
                             </div>
                         </div>
-                        <div class="flex-col col-3">
+                        <div class="flex-col w-md-25">
                             <div class="mb-1 card-body">
                                 <label for="dati" class="form-label">Dati</label>
                                 <textarea  class="form-control" id="dati" name="dati" rows="8"><?php echo _clean("
@@ -51,7 +51,7 @@
                             </div>
                             
                         </div>
-                        <div class="flex-col col-3">
+                        <div class="flex-col w-md-25">
                             <div class="mb-1 card-body pb-4">
                                 <label for="date" class="form-label">Numero e data</label>
                                 <textarea  class="form-control" id="date" name="date" rows="1"><?php echo _clean("Fattura n: {$index} del ".now('d/m/Y'));?></textarea>
@@ -68,8 +68,8 @@
                         </div>
                     </div>
                     <div class="d-flex flex-col card mx-3" body>
-                        <div class="card-body d-flex flex-row pb-0">
-                            <div class="flex-col col-6 oggetti">
+                        <div class="card-body flex-row pb-0">
+                            <div class="flex-col w-md-50 oggetti">
                                 <div class="card-body pe-1 pb-0 text-center"><span>OGGETTO</span></div><?php
                                     if($_REQUEST['oggetti']){
                                         $count=1;
@@ -83,7 +83,7 @@
                                 <div class="card-body pe-1 pb-0 pt-1" id=""><input id="oggettoBollo" class="form-control stampDisabled" value="Bollo"/></div>
                                 <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" id="oggetto_imponibile" value="IMPONIBILE" disabled/></div>
                             </div>
-                            <div class="flex-col col-5 ms-0 importi">
+                            <div class="flex-col w-md-41 ms-0 importi">
                                 <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">IMPORTI</span></div>
                                 <?php
                                     if($_REQUEST['oggetti']){
@@ -142,21 +142,21 @@
                         </div>
                         <hr class="my-1">
                         <div class="card-body d-flex flex-row">
-                            <div class="flex-col col-6">
+                            <div class="flex-col w-md-50">
                                 <div class="card-body pe-1 pb-0 pt-1"><input id="input_totale_label" class="form-control fs-5" value="TOTALE FATTURA" disabled/></div>
                             </div>
-                            <div class="flex-col col-6 ms-0">
+                            <div class="flex-col w-md-50 ms-0">
                                 <div class="card-body ps-0 pe-0 pb-0 pt-1"><input type="number" id="totale" class="form-control fs-5" value="<?php echo $_REQUEST['oggetti']?$total:0;?>" disabled/></div>
                             </div>
                         </div>
                         <div class="card-body d-flex flex-row pt-0" id="spanBollo">
-                            <div class="flex-col col-12">
+                            <div class="flex-col">
                                 <div class="card-body pe-1 pb-0 pt-1 mt-0"><input id="spanBolloValue" class="form-control" value="Marca da bollo su originale di € 2,00 per importi superiori ad € 77,47"/></div>
                             </div>
                         </div>
                     </div>  
                     <div class="d-flex flex-row" articolo>
-                        <div class="flex-col col-12">
+                        <div class="flex-col">
                             <div class="mb-1 card-body ">
                                 <label for="articolo" class="form-label">Articolo</label>
                                 <textarea  class="form-control" id="articolo" name="articolo" rows="1"><?php echo _clean("Operazione esente da Iva effettuata ai sensi dell'art. 10, DPR 633/72");?></textarea>

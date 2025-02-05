@@ -36,11 +36,11 @@
     $_percorso=_percorso();
     $is_first=true;
 ?>
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Trattamenti</h4>
-                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
+                <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="container"></div>
@@ -148,7 +148,7 @@
                                                                             <div class="cs2 d-flex align-items-center justify-content-center text-center">
                                                                                 <?php if(in_array($seduta['stato'],['Da Prenotare','Assente','Spostata'])){?>
                                                                                     <button class="btn btn-primary flex-fill" 
-                                                                                    onclick="window.modalHandlers['percorsi'].prenotaSeduteClick(this,<?php echo $seduta['id'].','.$_REQUEST['id_cliente'].','.$percorso['id']; ?>)" 
+                                                                                    onclick="window.modalHandlers['percorsi'].prenotaSeduteClick(<?php echo $seduta['id'].','.$_REQUEST['id_cliente'].','.$percorso['id']; ?>)" 
                                                                                     onmouseenter="window.modalHandlers['percorsi'].prenotaEnter(this)" 
                                                                                     onmouseleave="window.modalHandlers['percorsi'].prenotaLeave(this)">PRENOTA</button><?php
                                                                                 }
@@ -236,7 +236,7 @@
                         ><button class="btn btn-primary  flex-fill">Nuovo Trattamento</button></div>
                     </div>
                 </div>
-                <div class="p-md-2" id="prenota_seduta"></div>
+                <div class="p-md-2" id="prenota_planning"></div>
                 <div class="p-md-2" id="percorso_terapeutico"></div>
                 <div class="p-md-2" id="sedute"></div>
             </div>

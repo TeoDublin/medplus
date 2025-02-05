@@ -9,11 +9,11 @@
     $_percorso=_percorso();
     $is_first=true;
 ?>
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" aria-hidden="true">
+<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Pendenze</h4>
-                <button type="button" class="btn-resize" aria-hidden="true" onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>                
+                <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>                
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="container"></div>
@@ -36,22 +36,27 @@
                                             <span class="">#</span>
                                         </div>
                                         <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Percorso Terapeutico</span>
+                                            <span class="d-none d-md-block">Percorso Terapeutico</span>
+                                            <span class="d-md-none">Trattamento</span>
                                         </div>
-                                        <div class="cc4 d-flex align-items-center justify-content-center text-center">
+                                        <div class="cc4 d-none d-md-flex align-items-center justify-content-center text-center">
                                             <span class="">Prezzo Tabellare</span>
                                         </div>
                                         <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Prezzo</span>
+                                            <span class="d-none d-md-block">Prezzo</span>
+                                            <span class="d-md-none">Imp.</span>
                                         </div>
                                         <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Saldato</span>
+                                            <span class="d-none d-md-block">Saldato</span>
+                                            <span class="d-md-none">Sald.</span>
                                         </div>
                                         <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Fatturato</span>
+                                            <span class="d-none d-md-block">Fatturato</span>
+                                            <span class="d-md-none">Fat.</span>
                                         </div>
                                         <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                            <span class="">Non Fatturato</span>
+                                            <span class="d-none d-md-block">Non Fatturato</span>
+                                            <span class="d-md-none">N.Fat.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +76,7 @@
                                                 >
                                                 <span id="trattamento"><?php echo $percorso['trattamento'];?></span>
                                             </div>
-                                            <div class="cc4 d-flex align-items-center justify-content-center text-center"
+                                            <div class="cc4 d-none d-md-flex align-items-center justify-content-center text-center"
                                                     onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
                                                     onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
                                                     onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"

@@ -96,6 +96,12 @@ function reload_modal_component(id, component,_data){
     modal_component(id, component,_data);
     success();
 }
+function reload_modal_component_tree(params){
+    closeAllModal();
+    params.forEach(param=>{
+        modal_component(param.id, param.component,param.data);
+    });
+}
 function refresh(request){
     const params = new URLSearchParams(request);
     window.location.href = `${window.location.pathname}?${params.toString()}`

@@ -11,4 +11,5 @@
 <div id="percorsi_pendenze"></div>
 <div id="percorsi_fatture"></div>
 <div id="percorsi_corsi"></div>
+<div id="prenota_planning"></div>
 <?php script('pages/clienti/anagrafica/anagrafica.js'); ?>
