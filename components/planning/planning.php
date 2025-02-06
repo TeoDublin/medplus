@@ -82,7 +82,7 @@
                 $class.=" {$plan['origin']} {$plan['origin']}_end";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
-                
+                $origin=$plan['origin'];
             }
             if(!empty($class))break;
         }

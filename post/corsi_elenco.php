@@ -2,6 +2,7 @@
     $_REQUEST['skip_cookie']=true;
     require '../includes.php';
     $id=request('id');
+    $first_date=now('Y-m-d');
     $corso=[
         'id_categoria'=>$_REQUEST['id_categoria'],
         'id_terapista'=>$_REQUEST['id_terapista'],
@@ -19,8 +20,9 @@
 
     Delete()->from('corsi_classi')->where("id_corso={$id}");
     foreach ($_REQUEST['clienti'] as $cliente) {
+        if($cliente['data_inizio']<$first_date)$first_date=$cliente['data_inizio'];
         Insert(['id_corso'=>$id,'id_cliente'=>$cliente['cliente'],'prezzo'=>$cliente['prezzo'],'data_inizio'=>$cliente['data_inizio']])->into('corsi_classi');
     }
     $_REQUEST['id_corso']=$id;
-    $_REQUEST['data_inizio']=now('Y-m-d');
+    $_REQUEST['data_inizio']=$first_date;
     require __DIR__.'/../jobs/corsi_planning.php';

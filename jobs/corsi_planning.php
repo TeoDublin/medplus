@@ -14,32 +14,34 @@
             END AS num")->from('corsi_giorni')->where("id_corso={$id_corso}"
         )->get_or_false();
     }
-    if($_REQUEST['id_corso']&&$_REQUEST['data_inizio']){
-        $corso=Select('*')->from('corsi')->where("id={$_REQUEST['id_corso']}")->first();
-        $now=now('Y-m-d');
-        Delete()->from('corsi_planning')->where("id_corso={$corso['id']} AND data >= '{$now}'");
-        if(($giorni=giorni($_REQUEST['id_corso']))){
+    function is_a_new_corse(){
+        return $_REQUEST['id_corso'] && $_REQUEST['data_inizio'] && $_REQUEST['scadenza'];
+    }
+    if (is_a_new_corse()) {
+        $corso = Select('*')->from('corsi')->where("id={$_REQUEST['id_corso']}")->first();
+        $now = now('Y-m-d');
+        $future_date = (new DateTime($now))->add(new DateInterval('P30D'))->format('Y-m-d');
+        Delete()->from('corsi_planning')->where("id_corso={$corso['id']} AND data >= '{$_REQUEST['data_inizio']}' AND data <= '{$future_date}'");
+        if (($giorni = giorni($_REQUEST['id_corso']))) {
             $start = new DateTime($_REQUEST['data_inizio']);
-            $end = clone $start;
-            $end->add(new DateInterval('P30D'));
+            $end = new DateTime($future_date);
             $interval = new DateInterval('P1D');
-            $period = new DatePeriod($start, $interval, $end);
-            foreach ($period as $date) {
-                foreach($giorni as $day){
-                    if ((int)$date->format('N') == $day['num']) { 
-                        Insert([
-                            'id_corso'=>$corso['id'],
-                            'row_inizio'=>$day['inizio'],
-                            'row_fine'=>$day['fine'],
-                            'id_terapista'=>$corso['id_terapista'],
-                            'data'=>$date->format('Y-m-d'),
-                            'motivo'=>$corso['corso']
-                        ])->into('corsi_planning')->flush();
-                    }
-                }
-                
+            $period = new DatePeriod($start, $interval, $end->add($interval));
+            Corsiplanning::insert_corsi_planning($period,$giorni,$corso);
+            foreach ($_REQUEST['clienti'] as $cliente) {
+                Corsiplanning::insert_corsi_pagamenti(
+                    $cliente['data_inizio'],
+                    now("Y-m-{$_REQUEST['scadenza']}"),
+                    $_REQUEST['scadenza'],
+                    [
+                        'id_cliente'=>$cliente['cliente'],
+                        'id_corso'=>$_REQUEST['id_corso'],
+                        'prezzo_tabellare'=>$_REQUEST['prezzo'],
+                        'prezzo'=>$cliente['prezzo'],
+                    ]
+                );
             }
-        }    
+        }
     }
     else{
         foreach(Select('*')->from('corsi')->where('deleted=0')->get() as $corso){
@@ -49,29 +51,7 @@
                 $end->add(new DateInterval('P30D'));
                 $interval = new DateInterval('P1D');
                 $period = new DatePeriod($start, $interval, $end);
-                foreach ($period as $date) {
-                    foreach($giorni as $day){
-                        if ((int)$date->format('N') == $day['num']) { 
-                            $data=$date->format('Y-m-d');
-                            if(!Select('*')->from('corsi_planning')->where("
-                                id_corso={$corso['id']} AND
-                                row_inizio={$day['inizio']} AND
-                                row_fine={$day['fine']} AND
-                                id_terapista={$corso['id_terapista']} AND
-                                data='{$data}'
-                            ")->get_or_false()){
-                                Insert([
-                                    'id_corso'=>$corso['id'],
-                                    'row_inizio'=>$day['inizio'],
-                                    'row_fine'=>$day['fine'],
-                                    'id_terapista'=>$corso['id_terapista'],
-                                    'data'=>$data,
-                                    'motivo'=>$corso['corso']
-                                ])->into('corsi_planning')->flush();
-                            }
-                        }
-                    }
-                }
+                Corsiplanning::insert_corsi_planning($period,$giorni,$corso);
             }
         }
     }

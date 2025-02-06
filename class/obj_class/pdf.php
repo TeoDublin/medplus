@@ -1,5 +1,5 @@
 <?php
-require 'fpdf186/fpdf.php';
+require __DIR__.'/../libraries/fpdf186/fpdf.php';
 
 class PDF extends FPDF
 {

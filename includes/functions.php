@@ -4,6 +4,13 @@
         unset($_REQUEST[$key]);
         return $ret ?? $fallback;
     }
+    function parse_where($where):string{
+        return implode(' AND ', array_map(
+            fn($key, $value) => is_numeric($value) ? "$key=$value" : "$key='$value'",
+            array_keys($where),
+            $where
+        ));        
+    }
     function environment():string{
         return $_SERVER['HTTP_HOST']=='127.0.0.1:8080'?'dev':'prod';
     }
