@@ -134,6 +134,10 @@
         $split=explode('/',$date);
         return "{$split[2]}-{$split[1]}-{$split[0]}";
     }
+    function format(String $date, String $format):String{
+        $date_value=new DateTime(date($date));
+        return $date_value->format($format);
+    }
     function unformat_date(string $date):string{
         $split_date=explode(' ',$date);
         $split=explode('-',$split_date[0]);
