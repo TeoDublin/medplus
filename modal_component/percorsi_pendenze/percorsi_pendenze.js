@@ -30,6 +30,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         _data=[];
         modal.querySelectorAll('.checked').forEach(checked => {
             _data.push({
+                origine:checked.querySelector('#id_percorso').getAttribute('origine'),
                 id_percorso:checked.querySelector('#id_percorso').value, 
                 oggetto:checked.querySelector('#trattamento').innerHTML, 
                 importo:checked.querySelector('#non_fatturato').innerHTML

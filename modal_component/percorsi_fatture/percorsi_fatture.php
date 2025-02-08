@@ -1,7 +1,7 @@
 <?php 
     style('modal_component/percorsi_fatture/percorsi_fatture.css');
     $fatture=Select('*')->from('view_fatture')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
-    $senza_fattura=Select('*')->from('percorsi_pagamenti_senza_fattura')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
+    $senza_fattura=Select('*')->from('pagamenti_senza_fattura')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
@@ -158,7 +158,7 @@
                                                         <div class="cc1 d-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickDelete(<?php echo $senza['id'].','.$_REQUEST['id_cliente'].',\'percorsi_pagamenti_senza_fattura\'';?>)"             
+                                                                onclick="window.modalHandlers['percorsi_fatture'].clickDelete(<?php echo $senza['id'].','.$_REQUEST['id_cliente'].',\'pagamenti_senza_fattura\'';?>)"             
                                                             >
                                                             <span><?php echo icon('bin.svg');?></span>
                                                         </div>

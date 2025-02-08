@@ -20,7 +20,7 @@
     if (is_a_new_corse()) {
         $corso = Select('*')->from('corsi')->where("id={$_REQUEST['id_corso']}")->first();
         $now = now('Y-m-d');
-        $future_date = (new DateTime($now))->add(new DateInterval('P30D'))->format('Y-m-d');
+        $future_date = (new DateTime($now))->add(new DateInterval('P60D'))->format('Y-m-d');
         Delete()->from('corsi_planning')->where("id_corso={$corso['id']} AND data >= '{$_REQUEST['data_inizio']}' AND data <= '{$future_date}'");
         if (($giorni = giorni($_REQUEST['id_corso']))) {
             $start = new DateTime($_REQUEST['data_inizio']);
@@ -29,9 +29,11 @@
             $period = new DatePeriod($start, $interval, $end->add($interval));
             Corsiplanning::insert_corsi_planning($period,$giorni,$corso);
             foreach ($_REQUEST['clienti'] as $cliente) {
+                $data = new DateTime(date(now("Y-m-{$_REQUEST['scadenza']}")));
+                $data->modify('+30 days');
                 Corsiplanning::insert_corsi_pagamenti(
                     $cliente['data_inizio'],
-                    now("Y-m-{$_REQUEST['scadenza']}"),
+                    $data->format('Y-m-d'),
                     $_REQUEST['scadenza'],
                     [
                         'id_cliente'=>$cliente['cliente'],
@@ -44,7 +46,7 @@
         }
     }
     else{
-        foreach(Select('*')->from('corsi')->where('deleted=0')->get() as $corso){
+        foreach(Select('*')->from('corsi')->where('deleted=0')->get_n_flush() as $corso){
             if(($giorni=giorni($corso['id']))){
                 $start = new DateTime(now('Y-m-d'));
                 $end = clone $start;
@@ -52,6 +54,21 @@
                 $interval = new DateInterval('P1D');
                 $period = new DatePeriod($start, $interval, $end);
                 Corsiplanning::insert_corsi_planning($period,$giorni,$corso);
+                foreach(Select('*')->from('corsi_classi')->where("id_corso={$corso['id']}")->get_n_flush() as $cliente){
+                    $data = new DateTime(date("Y-m-{$corso['scadenza']}"));
+                    $data->modify("+30 days");
+                    Corsiplanning::insert_corsi_pagamenti(
+                        $cliente['data_inizio'],
+                        $data->format("Y-m-d"),
+                        $corso['scadenza'],
+                        [
+                            'id_cliente'=>$cliente['id_cliente'],
+                            'id_corso'=>$cliente['id_corso'],
+                            'prezzo_tabellare'=>$corso['prezzo'],
+                            'prezzo'=>$cliente['prezzo'],
+                        ]
+                    );
+                }
             }
         }
     }

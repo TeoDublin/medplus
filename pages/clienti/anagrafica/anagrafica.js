@@ -19,7 +19,7 @@ function editClick(element,id){
         percorsoCorso(id);
     }
     else if(element.classList.contains('success3')){
-        percorsoPagamento(id);
+        pendenze(id);
     }
     else if(element.classList.contains('success4')){
         percorsoFatture(id);
@@ -34,7 +34,7 @@ function trattamenti(id){
 function percorsoCorso(id){
     modal_component('percorsi_corsi','percorsi_corsi',{id_cliente:id});
 }
-function percorsoPagamento(id){
+function pendenze(id){
     modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:id});
 }
 function percorsoFatture(id){

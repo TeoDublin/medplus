@@ -5,6 +5,7 @@ class Insert{
     private string $insert;
     private string $values;
     public function __construct(array $insert){
+        $this->sql=SQL();
         $_insert=$_values=[];
         foreach ($insert as $key => $value) {
             $_insert[]="`{$key}`";
@@ -17,7 +18,6 @@ class Insert{
     }
     public function into($table){
         $this->into=$table;
-        $this->sql=SQL();
         $this->sql->query("INSERT INTO `{$this->into}` {$this->insert} VALUES {$this->values}");
         return $this;
     }
