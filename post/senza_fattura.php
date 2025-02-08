@@ -6,11 +6,12 @@
         if($valore>0){
             $debit=(int)$percorso['non_fatturato']<=$valore?(int)$percorso['non_fatturato']:$valore;
             Insert([
-                'id_percorso'=>$percorso['id_percorso'],
+                'origine'=>$percorso['origine'],
+                'id_origine'=>$percorso['id_percorso'],
                 'id_cliente'=>$_REQUEST['_data']['id_cliente'],
                 'valore'=>$debit,
                 'note'=>$_REQUEST['_data']['note']?:'-'
-            ])->into('percorsi_pagamenti_senza_fattura')->get();
+            ])->into('pagamenti_senza_fattura')->get();
             $valore-=$debit;
         }
     }

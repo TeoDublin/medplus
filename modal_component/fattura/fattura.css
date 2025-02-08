@@ -7,16 +7,12 @@
 .stampDisabled{
     text-decoration: line-through;
 }
-.form-check-input {
-    cursor: pointer;
-    padding: 2px;
-    margin: 2px;
-    width: 5rem!important;
-    height: 2rem;
-}
-
-.form-check-input:checked {
-    border: none;
-    background-size: 2rem 2rem;
+.checkbox{
+    width: 30px;
+    height: 30px;
     background-color: var(--base-bg-primary);
+}
+.btn > a > svg{
+    width: 1rem!important;
+    height: 1rem!important;
 }

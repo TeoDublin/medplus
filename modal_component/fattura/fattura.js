@@ -103,7 +103,7 @@ window.modalHandlers['fattura'] = {
         const importo = document.querySelector('#importoBollo');
         const btn = document.querySelector('#btnBollo');
         const spanBollo = document.querySelector('#spanBollo');
-        const bollo = document.querySelector('#bollo');
+        const bollo = document.querySelector('.bollo');
         if(btn.classList.contains('btn-dark')){
             oggetto.removeAttribute('disabled');
             oggetto.classList.remove('stampDisabled');

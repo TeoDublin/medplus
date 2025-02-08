@@ -68,9 +68,12 @@
                         </div>
                     </div>
                     <div class="d-flex flex-col card mx-3" body>
-                        <div class="card-body flex-row pb-0">
+                        <div class="card-body d-flex flex-row pb-0">
                             <div class="flex-col w-md-50 oggetti">
-                                <div class="card-body pe-1 pb-0 text-center"><span>OGGETTO</span></div><?php
+                                <div class="card-body pe-1 pb-0 text-center">
+                                    <span class="d-none d-md-block">OGGETTO</span>
+                                    <span class="d-md-none">OG.</span>
+                                </div><?php
                                     if($_REQUEST['oggetti']){
                                         $count=1;
                                         foreach($_REQUEST['oggetti'] as $obj){
@@ -80,11 +83,14 @@
                                     }
                                     else echo "<div class=\"card-body pe-1 pb-0 pt-1 oggetto\" id=\"row1\"><input id=\"oggetto1\" class=\"form-control\" value=\"\"/></div>";
                                 ?>
-                                <div class="card-body pe-1 pb-0 pt-1" id=""><input id="oggettoBollo" class="form-control stampDisabled" value="Bollo"/></div>
+                                <div class="card-body pe-1 pb-0 pt-1" id="row_bollo"><input id="oggettoBollo" class="form-control stampDisabled" value="Bollo"/></div>
                                 <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" id="oggetto_imponibile" value="IMPONIBILE" disabled/></div>
                             </div>
                             <div class="flex-col w-md-41 ms-0 importi">
-                                <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">IMPORTI</span></div>
+                                <div class="card-body ps-0 pe-1 pb-0 text-center">
+                                    <span class="d-none d-md-block">IMPORTI</span>
+                                    <span class="d-md-none">IMP.</span>
+                                </div>
                                 <?php
                                     if($_REQUEST['oggetti']){
                                         $count=1;$total=0;
@@ -94,13 +100,13 @@
                                             $count++;
                                         }
                                     }
-                                    else echo "<div class=\"card-body ps-0 pe-1 pb-0 pt-1 importo importo_row\" id=\"row1\"><input type=\"number\" id=\"importo1\" class=\"form-control\" value=\"\" onchange=\"window.modalHandlers['fattura'].addTotal(this)\"/></div>";
+                                    else echo "<div class=\"card-body ps-0 pe-1 pb-0 pt-1 importo importo_row\" id=\"row1\"><input type=\"number\" id=\"importo1\" class=\"form-control \" value=\"\" onchange=\"window.modalHandlers['fattura'].addTotal(this)\"/></div>";
                                 ?>
-                                <div class="card-body ps-0 pe-1 pb-0 pt-1" id="bollo"><input type="number" id="importoBollo" class="form-control stampDisabled" value="2.0"/></div>
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1 bollo" id="row_bollo"><input type="number" id="importoBollo" class="form-control stampDisabled" value="2.0"/></div>
                                 <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" id="imponibile" class="form-control" value="<?php echo $_REQUEST['oggetti']?$total:0;?>" disabled/></div>
                             </div>
-                            <div class="flex-col col-1 mx-0 btns">
-                                <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">AZIONI</span></div>
+                            <div class="flex-col w-md-41 ms-0 importi">
+                                <div class="card-body ps-0 pe-1 pb-0 text-center"><span class="">#</span></div>
                                 <?php
                                 if($_REQUEST['oggetti']){
                                         $count=1;
@@ -109,7 +115,11 @@
                                                 onclick="window.modalHandlers['fattura'].deleteBtnClick(this);" 
                                                 onmouseenter="window.modalHandlers['fattura'].deleteBtnEnter(this);" 
                                                 onmouseleave="window.modalHandlers['fattura'].deleteBtnLeave(this);">
-                                                <div class="pe-0" ><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15); ?></a></button></div>
+                                                <div class="pe-0" >
+                                                    <button class="btn btn-primary w-100">
+                                                        <a class=""><?php echo icon('bin.svg','white',15,15); ?></a>
+                                                    </button>
+                                                </div>
                                             </div><?php
                                             $count++;
                                         }
@@ -119,19 +129,23 @@
                                             onclick="window.modalHandlers['fattura'].deleteBtnClick(this);" 
                                             onmouseenter="window.modalHandlers['fattura'].deleteBtnEnter(this);" 
                                             onmouseleave="window.modalHandlers['fattura'].deleteBtnLeave(this);">
-                                            <div class="pe-0" ><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('bin.svg','white',15,15); ?></a></button></div>
+                                            <div class="pe-0" >
+                                                <button class="btn btn-primary w-100">
+                                                    <a class=""><?php echo icon('bin.svg','white',15,15); ?></a>
+                                                </button>
+                                            </div>
                                         </div><?php
                                     }
                                 ?>
                                 
-                                <div class="card-body ps-0 pe-1 pb-0 pt-1" title="ELIMINA MARCA DA BOLLO" id="bollo" 
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1" title="ELIMINA MARCA DA BOLLO" id="row_bollo" 
                                     onclick="window.modalHandlers['fattura'].stampBtnClick(this);" 
                                     onmouseenter="window.modalHandlers['fattura'].stampBtnEnter(this);" 
                                     onmouseleave="window.modalHandlers['fattura'].stampBtnLeave(this);">
                                     <div class="pe-0">
-                                        <div class="form-check form-switch ">
-                                            <input class="form-check-input pe-4 btn-dark" type="checkbox" role="switch" id="btnBollo">
-                                        </div>
+                                        <button class="btn btn-dark w-100" id="btnBollo">
+                                            <a class=""><?php echo icon('check.svg','white',15,15); ?></a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -150,17 +164,15 @@
                             </div>
                         </div>
                         <div class="card-body d-flex flex-row pt-0" id="spanBollo">
-                            <div class="flex-col">
-                                <div class="card-body pe-1 pb-0 pt-1 mt-0"><input id="spanBolloValue" class="form-control" value="Marca da bollo su originale di € 2,00 per importi superiori ad € 77,47"/></div>
+                            <div class="card-body pe-1 pb-0 pt-1 mt-0 d-flex flex-fill">
+                                <input id="spanBolloValue" class="form-control  d-flex flex-fill" value="Marca da bollo su originale di € 2,00 per importi superiori ad € 77,47"/>
                             </div>
                         </div>
                     </div>  
                     <div class="d-flex flex-row" articolo>
-                        <div class="flex-col">
-                            <div class="mb-1 card-body ">
-                                <label for="articolo" class="form-label">Articolo</label>
-                                <textarea  class="form-control" id="articolo" name="articolo" rows="1"><?php echo _clean("Operazione esente da Iva effettuata ai sensi dell'art. 10, DPR 633/72");?></textarea>
-                            </div>
+                        <div class="mb-1 card-body ">
+                            <label for="articolo" class="form-label">Articolo</label>
+                            <textarea  class="form-control" id="articolo" name="articolo" rows="1"><?php echo _clean("Operazione esente da Iva effettuata ai sensi dell'art. 10, DPR 633/72");?></textarea>
                         </div>
                     </div>
                     <?php 

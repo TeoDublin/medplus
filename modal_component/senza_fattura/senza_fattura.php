@@ -7,7 +7,6 @@
             </div>
             <div class="modal-body  overflow-auto flex-grow-1">
                 <?php 
-                    $result=$_REQUEST['id']?Select('*')->from('view_corsi')->where("id={$_REQUEST['id']}")->first():[];
                     $_data=str_replace('"',"'",json_encode($_REQUEST['_data']??[]));
                 ?>
                 <div class="p-2">

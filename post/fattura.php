@@ -77,11 +77,12 @@
         $importo=$totale>=(int)$obj['importo']?$obj['importo']:$totale;
         $totale-=$importo;
         Insert([
-            'id_percorso'=>$obj['id_percorso'],
+            'origine'=>$obj['origine'],
+            'id_origine'=>$obj['id_percorso'],
             'id_cliente'=>$id_cliente,
             'id_fattura'=>$id_fattura,
             'importo'=>$importo
-        ])->into('percorsi_pagamenti_fatture');
+        ])->into('pagamenti_fatture');
         if($totale<=0)break;
     }
     $file=fatture_path($link);

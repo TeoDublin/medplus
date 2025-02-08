@@ -239,6 +239,21 @@
 	--bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
 	--bs-link-color: rgb(74, 74, 74);
 	--base-active-bg-quarternary: #217992;
+
+	--base-color-dark:#3e3f3f;
+	--base-bg-dark:#3e3f3f;
+	--base-border-dark:#3e3f3f;
+	--base-hover-color-dark:#3e3f3f;
+	--base-hover-bg-dark:#3e3f3f;
+	--base-hover-border-dark:#3e3f3f;
+	--base-focus-shadow-dark:#3e3f3f;
+	--base-active-color-dark:#3e3f3f;
+	--base-active-bg-dark:#3e3f3f;
+	--base-active-border-dark:#3e3f3f;
+	--base-active-shadow-dark:#3e3f3f;
+	--base-disabled-dark:#3e3f3f;
+	--base-disabled-bg-dark:#3e3f3f;
+	--base-disabled-border-dark:#3e3f3f;
 }
 
 [data-bs-theme=green] {
@@ -457,20 +472,20 @@
 }
 
 .btn-dark {
-	--bs-btn-color: var(--base-color-primary);
-	--bs-btn-bg: var(--base-bg-primary);
-	--bs-btn-border-color: var(--base-border-primary);
-	--bs-btn-hover-color: var(--base-hover-color-primary);
-	--bs-btn-hover-bg: var(--base-hover-bg-primary);
-	--bs-btn-hover-border-color: var(--base-hover-border-primary);
-	--bs-btn-focus-shadow-rgb: var(--base-focus-shadow-primary);
-	--bs-btn-active-color: var(--base-active-color-primary);
-	--bs-btn-active-bg: var(--base-active-bg-primary);
-	--bs-btn-active-border-color: var(--base-active-border-primary);
-	--bs-btn-active-shadow: var(--base-active-shadow-primary);
-	--bs-btn-disabled-color: var(--base-disabled-primary);
-	--bs-btn-disabled-bg: var(--base-disabled-bg-primary);
-	--bs-btn-disabled-border-color: var(--base-disabled-border-primary);
+	--bs-btn-color: var(--base-color-dark);
+	--bs-btn-bg: var(--base-bg-dark);
+	--bs-btn-border-color: var(--base-border-dark);
+	--bs-btn-hover-color: var(--base-hover-color-dark);
+	--bs-btn-hover-bg: var(--base-hover-bg-dark);
+	--bs-btn-hover-border-color: var(--base-hover-border-dark);
+	--bs-btn-focus-shadow-rgb: var(--base-focus-shadow-dark);
+	--bs-btn-active-color: var(--base-active-color-dark);
+	--bs-btn-active-bg: var(--base-active-bg-dark);
+	--bs-btn-active-border-color: var(--base-active-border-dark);
+	--bs-btn-active-shadow: var(--base-active-shadow-dark);
+	--bs-btn-disabled-color: var(--base-disabled-dark);
+	--bs-btn-disabled-bg: var(--base-disabled-bg-dark);
+	--bs-btn-disabled-border-color: var(--base-disabled-border-dark);
 }
 
 .hpx-100 {

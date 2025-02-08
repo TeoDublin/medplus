@@ -27,7 +27,12 @@
             while ($start <= $end) {
                 $date=$start->format("Y-m-{$scadenza}");
                 $corso_columns['scadenza']=$date;
-                if(!Select('*')->from('corsi_pagamenti')->where(parse_where($corso_columns))->first_or_false()){
+                if(!Select('*')->from('corsi_pagamenti')->where(parse_where([
+                        'id_cliente'=>$corso_columns['id_cliente'],
+                        'id_corso'=>$corso_columns['id_corso'],
+                        'scadenza'=>$corso_columns['scadenza'],
+                    ]))->first_or_false()
+                ){
                     Insert($corso_columns)->into('corsi_pagamenti')->flush();
                 }
                 $start->modify('+1 month');

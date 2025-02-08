@@ -22,16 +22,20 @@ window.modalHandlers['percorsi_pendenze'] = {
     leavePrezzo:function(element){
         element.classList.remove('success');
     },
-    clickPrezzo:function(id_percorso,id_cliente){
+    clickPrezzoTrattamenti:function(id_percorso,id_cliente){
         modal_component('percorso_terapeutico','percorso_terapeutico',{id_cliente:id_cliente,caller:'percorsi_pendenze',id_percorso:id_percorso});
+    },
+    clickPrezzoCorsi:function(id,prezzo_tabellare,prezzo,id_cliente){
+        modal_component('prezzo_corso','prezzo_corso',{id:id,prezzo_tabellare:prezzo_tabellare,prezzo:prezzo,id_cliente:id_cliente});
     },
     fatturaClick:function(element,id_cliente){
         modal = element.closest('.modal');
         _data=[];
         modal.querySelectorAll('.checked').forEach(checked => {
             _data.push({
+                origine:checked.getAttribute('origine'),
                 id_percorso:checked.querySelector('#id_percorso').value, 
-                oggetto:checked.querySelector('#trattamento').innerHTML, 
+                oggetto:checked.querySelector('#trattamento').value, 
                 importo:checked.querySelector('#non_fatturato').innerHTML
             });
         });
@@ -47,6 +51,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         _data=[];
         modal.querySelectorAll('.checked').forEach(checked => {
             _data.push({
+                origine:checked.getAttribute('origine'),
                 id_percorso:checked.querySelector('#id_percorso').value, 
                 non_fatturato:checked.querySelector('#non_fatturato').innerHTML
             });
