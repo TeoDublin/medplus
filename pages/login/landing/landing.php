@@ -7,8 +7,8 @@
     </div>
     <div class="w-md-50 d-flex align-items-center justify-content-center bg-body-tertiary">
         <div class="card w-md-90">
-            <div class="card-image">
-                <img class="img-fluid" src="<?php echo image('logo-blue.svg'); ?>" alt="">
+            <div class="mx-auto w-20">
+                <img class="img-fluid" src="<?php echo image('logo.svg'); ?>" alt="">
             </div>
             <div class="card-body">
                 <div class="d-flex flex-column">
@@ -19,6 +19,9 @@
                     <div class="mb-2">
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control"/>
+                    </div>
+                    <div class="mt-2">
+                        <button class="btn btn-primary w-100">Avvanti</button>
                     </div>
                 </div>
             </div>
