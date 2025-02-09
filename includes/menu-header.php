@@ -35,9 +35,9 @@
     <div class="d-flex flex-fill">
         <div class="d-flex flex-fill flex-column flex-md-row">
             <div class="menu-vertical hide"><?php 
-                $home=$session->get('home');
                 $session??=Session();
                 $elementi??=$session->get('elementi')??[];
+                $home=$session->get('home');
                 if(in_array('menu_prenotazioni',$elementi)){?>
                     <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page',$home)=='prenotazioni'?'menu-active':''?>" id="menu-prenota" title="Prenotazioni">
                         <div class="d-flex align-items-start mx-2" >
