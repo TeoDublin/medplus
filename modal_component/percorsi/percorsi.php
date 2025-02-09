@@ -65,6 +65,9 @@
                                         <div class="cc2 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Trattamento</span>
                                         </div>
+                                        <div class="cc2 d-flex align-items-center justify-content-center text-center d-none d-md-block">
+                                            <span class="">Inizio</span>
+                                        </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
                                             <span class="d-none d-md-block">Prezzo</span>
                                             <span class="d-md-none">$</span>
@@ -98,6 +101,7 @@
                                                         <?php echo icon('bin.svg','black',16,16); ?>
                                                     </div>
                                                     <div class="cc2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['trattamento']; ?></span></div>
+                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center d-none d-md-block"><span class=""><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['prezzo']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"
                                                             title=""

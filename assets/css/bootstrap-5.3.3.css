@@ -251,7 +251,7 @@
 	--base-active-bg-dark:#3e3f3f;
 	--base-active-border-dark:#3e3f3f;
 	--base-active-shadow-dark:#3e3f3f;
-	--base-disabled-dark:#3e3f3f;
+	--base-disabled-dark:#fff;
 	--base-disabled-bg-dark:#3e3f3f;
 	--base-disabled-border-dark:#3e3f3f;
 }

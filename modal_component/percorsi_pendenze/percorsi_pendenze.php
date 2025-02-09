@@ -41,6 +41,7 @@
             <div class="modal-body">
                 <div class="p-2">
                     <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
+                    <div class="text-end"><h6 class="d-none" id="sum-selected"></h6></div>
                     <div class="container-fluid card text-center py-4">
                         <?php if(!$_trattamenti&&!$_corsi){?>
                             <div class="card">

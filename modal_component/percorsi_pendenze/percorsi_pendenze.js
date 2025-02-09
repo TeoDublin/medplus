@@ -15,6 +15,20 @@ window.modalHandlers['percorsi_pendenze'] = {
             check.checked = true;
             row.classList.add('checked');
         }
+        const modal = element.closest('.modal');
+        let sum_selected = 0;
+        modal.querySelectorAll('.checked').forEach(checked_div=>{
+            sum_selected+=parseFloat(checked_div.querySelector('#non_fatturato').innerHTML) || 0;
+        });
+        let span_Sum_selected = modal.querySelector('#sum-selected');
+        if(sum_selected===0){
+            span_Sum_selected.classList.add('d-none');
+        }
+        else{
+            span_Sum_selected.classList.remove('d-none');
+            let formattedSum = sum_selected.toFixed(2).replace('.', ',');
+            span_Sum_selected.innerHTML='SELEZIONATO: '+formattedSum;
+        }
     },
     enterPrezzo:function(element){
         element.classList.add('success');

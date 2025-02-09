@@ -58,3 +58,6 @@
 .statoHover:hover{
     cursor: pointer;
 }
+.accordion-button{
+    min-height: 50px!important;
+}
