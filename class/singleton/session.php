@@ -64,6 +64,7 @@ class Session
                 $home??=$view_elementi['home'];
             }
             $this->set('elementi',$elementi);
+            $this->set('home',$home);
             return true;
         }
         else return false;
