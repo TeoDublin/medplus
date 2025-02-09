@@ -1,5 +1,5 @@
 <?php 
-    require '../includes.php';
+    require_once '../includes.php';
     $set=[];
     if(!empty($_POST['user']))$set['user']=$_POST['user'];
     if(!empty($_POST['pasword']))$set['pasword']=$_POST['password'];

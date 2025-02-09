@@ -73,7 +73,7 @@
                                                     $_REQUEST['inizio']=$giorno['inizio'];
                                                     $_REQUEST['fine']=$giorno['fine'];
                                                     echo "<div class=\"d-flex flex-row w-100 py-1 giorno_row\">";
-                                                        require __DIR__ . '/../../post/aggiungi_giorno.php';
+                                                        require_once __DIR__ . '/../../post/aggiungi_giorno.php';
                                                     echo "</div>";
                                                 }
                                                 ?>
@@ -81,7 +81,7 @@
                                         }
                                         else{
                                             echo "<div class=\"d-flex flex-row w-100 py-1 giorno_row\">";
-                                                require __DIR__ . '/../../post/aggiungi_giorno.php';
+                                                require_once __DIR__ . '/../../post/aggiungi_giorno.php';
                                             echo "</div>";
                                         }?>
                                     </div>
@@ -124,7 +124,7 @@
                                                     }
                                                     else $mt='mt-2';
                                                     echo "<div class=\"d-flex flex-row w-100 cliente_row {$mt}\">";
-                                                        require __DIR__ . '/../../post/aggiungi_cliente.php';
+                                                        require_once __DIR__ . '/../../post/aggiungi_cliente.php';
                                                     echo "</div>";
                                                 }
                                                 ?>

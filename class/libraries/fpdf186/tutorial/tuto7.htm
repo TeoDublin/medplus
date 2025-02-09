@@ -111,7 +111,7 @@ la variabile <code>$file</code> del file .php di conseguenza.
 Esempio:
 <div class="source">
 <pre><code>&lt;?php
-<span class="kw">require(</span><span class="str">'makefont/makefont.php'</span><span class="kw">);
+<span class="kw">require_once(</span><span class="str">'makefont/makefont.php'</span><span class="kw">);
 
 </span>MakeFont<span class="kw">(</span><span class="str">'C:\\Windows\\Fonts\\comic.ttf'</span><span class="kw">,</span><span class="str">'cp1252'</span><span class="kw">);
 </span>?&gt;</code></pre>
@@ -154,7 +154,7 @@ Ora proviamo un esempio completo. Sarà usato il font <a href="https://fonts.goo
 Il primo passo è la generazione dei file del font:
 <div class="source">
 <pre><code>&lt;?php
-<span class="kw">require(</span><span class="str">'makefont/makefont.php'</span><span class="kw">);
+<span class="kw">require_once(</span><span class="str">'makefont/makefont.php'</span><span class="kw">);
 
 </span>MakeFont<span class="kw">(</span><span class="str">'CevicheOne-Regular.ttf'</span><span class="kw">,</span><span class="str">'cp1252'</span><span class="kw">);
 </span>?&gt;</code></pre>
@@ -177,7 +177,7 @@ o utilizzando il generatore online.
 Ora è possibile copiare i due file generati nella cartella font e scrivere lo script:
 <div class="source">
 <pre><code>&lt;?php
-<span class="kw">require(</span><span class="str">'fpdf.php'</span><span class="kw">);
+<span class="kw">require_once(</span><span class="str">'fpdf.php'</span><span class="kw">);
 
 </span>$pdf <span class="kw">= new </span>FPDF<span class="kw">();
 </span>$pdf<span class="kw">-&gt;</span>AddFont<span class="kw">(</span><span class="str">'CevicheOne'</span><span class="kw">,</span><span class="str">''</span><span class="kw">,</span><span class="str">'CevicheOne-Regular.php'</span><span class="kw">);

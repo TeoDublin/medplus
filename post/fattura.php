@@ -1,5 +1,5 @@
 <?php
-    require '../includes.php';
+    require_once '../includes.php';
     $pdf = new FPDF();
     define('EURO',chr(128));
     $pdf->AddPage();

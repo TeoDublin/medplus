@@ -1,8 +1,9 @@
 <?php 
-require 'includes.php';
-require 'pages/corsi/ctrl.php';
-require 'includes/header.php';
-require 'includes/menu-header.php';
-require 'pages/corsi/view.php';
-require 'includes/menu-footer.php';
-require 'includes/footer.php';
+require_once 'includes.php';
+require_once 'includes/session.php';
+require_once 'pages/corsi/ctrl.php';
+require_once 'includes/header.php';
+require_once 'includes/menu-header.php';
+require_once 'pages/corsi/view.php';
+require_once 'includes/menu-footer.php';
+require_once 'includes/footer.php';

@@ -165,7 +165,7 @@ Semplicemente, testa il numero di pagina:
 <p><b>13.</b> <span class='question'>Vorrei poter utilizzare estensioni rese disponibili tramite diversi script. Come posso combinarle?</span></p>
 Utilizza un'ereditarietà a catena. Se hai due classi, diciamo A in a.php:
 <div class="doc-source">
-<pre><code>require('fpdf.php');
+<pre><code>require_once('fpdf.php');
 
 class A extends FPDF
 {
@@ -174,7 +174,7 @@ class A extends FPDF
 </div>
 e B in b.php:
 <div class="doc-source">
-<pre><code>require('fpdf.php');
+<pre><code>require_once('fpdf.php');
 
 class B extends FPDF
 {
@@ -183,7 +183,7 @@ class B extends FPDF
 </div>
 poi, effettua B extend A:
 <div class="doc-source">
-<pre><code>require('a.php');
+<pre><code>require_once('a.php');
 
 class B extends A
 {
@@ -192,7 +192,7 @@ class B extends A
 </div>
 e la tua classe extend B:
 <div class="doc-source">
-<pre><code>require('b.php');
+<pre><code>require_once('b.php');
 
 class PDF extends B
 {

@@ -1,5 +1,5 @@
 <?php 
-    require '../includes.php';
+    require_once '../includes.php';
     unset($_REQUEST['skip_cookie']);
     $select=Select($_POST['select'])->from($_POST['table']??$_POST['from']);
     if($_POST['where'])$select->where($_POST['where']);

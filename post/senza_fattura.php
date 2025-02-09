@@ -1,6 +1,6 @@
 <?php
     $_REQUEST['skip_cookie']=true;
-    require '../includes.php';
+    require_once '../includes.php';
     $valore=(int)$_REQUEST['_data']['valore'];
     foreach ($_REQUEST['percorsi'] as $percorso) {
         if($valore>0){

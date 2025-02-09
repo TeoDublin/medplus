@@ -16,7 +16,7 @@
             </li>
         </ul>
         <div class="p-1">
-            <?php $tab=cookie('tab','fattura_libera'); require "{$tab}/{$tab}.php";?>
+            <?php $tab=cookie('tab','fattura_libera'); require_once "{$tab}/{$tab}.php";?>
         </div>
     </div>
 </div>

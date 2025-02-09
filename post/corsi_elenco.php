@@ -1,6 +1,6 @@
 <?php
     $_REQUEST['skip_cookie']=true;
-    require '../includes.php';
+    require_once '../includes.php';
     $id=request('id');
     $first_date=now('Y-m-d');
     $corso=[
@@ -25,4 +25,4 @@
     }
     $_REQUEST['id_corso']=$id;
     $_REQUEST['data_inizio']=$first_date;
-    require __DIR__.'/../jobs/corsi_planning.php';
+    require_once __DIR__.'/../jobs/corsi_planning.php';

@@ -9,7 +9,7 @@
         <div class="p-1">
             <?php 
                 $tab=cookie('tab','elenco'); 
-                require "{$tab}/{$tab}.php";?>
+                require_once "{$tab}/{$tab}.php";?>
         </div>
     </div>
 </div>

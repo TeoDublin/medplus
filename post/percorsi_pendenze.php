@@ -1,6 +1,6 @@
 <?php
     $_REQUEST['skip_cookie']=true;
-    require '../includes.php';
+    require_once '../includes.php';
     if($_REQUEST['id_percorso']){
         Update('percorsi_terapeutici')
         ->set(['prezzo'=>$_REQUEST['prezzo'],'note'=>$_REQUEST['note']])

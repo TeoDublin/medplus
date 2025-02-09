@@ -3694,14 +3694,14 @@ class Dropdown extends BaseComponent {
     _getConfig(config) {
     config = super._getConfig(config);
     if (typeof config.reference === 'object' && !isElement$1(config.reference) && typeof config.reference.getBoundingClientRect !== 'function') {
-        // Popper virtual elements require a getBoundingClientRect method
+        // Popper virtual elements require_once a getBoundingClientRect method
         throw new TypeError(`${NAME$a.toUpperCase()}: Option "reference" provided type "object" without a required "getBoundingClientRect" method.`);
     }
     return config;
     }
     _createPopper() {
     if (typeof Popper === 'undefined') {
-        throw new TypeError('Bootstrap\'s dropdowns require Popper (https://popper.js.org)');
+        throw new TypeError('Bootstrap\'s dropdowns require_once Popper (https://popper.js.org)');
     }
     let referenceElement = this._element;
     if (this._config.reference === 'parent') {
@@ -5066,7 +5066,7 @@ const DefaultType$3 = {
 class Tooltip extends BaseComponent {
     constructor(element, config) {
     if (typeof Popper === 'undefined') {
-        throw new TypeError('Bootstrap\'s tooltips require Popper (https://popper.js.org)');
+        throw new TypeError('Bootstrap\'s tooltips require_once Popper (https://popper.js.org)');
     }
     super(element, config);
 

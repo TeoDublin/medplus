@@ -10,7 +10,7 @@
             </li>
         </ul>
         <div class="p-1">
-            <?php $tab=cookie('tab','elenco'); require "{$tab}/{$tab}.php";?>
+            <?php $tab=cookie('tab','elenco'); require_once "{$tab}/{$tab}.php";?>
         </div>
     </div>
 </div>

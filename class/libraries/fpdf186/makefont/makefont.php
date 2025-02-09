@@ -7,7 +7,7 @@
 * Author:  Olivier PLATHEY                                                     *
 *******************************************************************************/
 
-require('ttfparser.php');
+require_once('ttfparser.php');
 
 function Message($txt, $severity='')
 {

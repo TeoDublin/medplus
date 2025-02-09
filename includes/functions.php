@@ -67,7 +67,7 @@
                     echo '<link rel="stylesheet" href="'.root_path("components/{$name}/{$name}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'">';
                     break;
                 case 'php':
-                    require root("components/{$name}/{$name}.{$extention}");
+                    require_once root("components/{$name}/{$name}.{$extention}");
                 default:
                     break;
             }
@@ -84,7 +84,7 @@
                     echo '<link rel="stylesheet" href="'.root_path("components/{$name}/{$tab}/{$tab}.{$extention}").'?v='.filemtime(root("components/{$name}/{$name}.{$extention}")).'">';
                     break;
                 default:
-                    require root("components/{$name}/{$tab}/{$tab}.{$extention}");
+                    require_once root("components/{$name}/{$tab}/{$tab}.{$extention}");
                     break;
             }
         }
@@ -103,17 +103,11 @@
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }
     function theme():string{
-        return Session()->get('template')->theme ?? 'blue';
+        return 'blue';
     }
     function is_submit():bool{
         $ret=!empty($_POST)&&isset($_POST['submit']);
         return $ret;
-    }
-    function was_logged():bool{
-        return Session()->get('is_logged') ?? false;
-    }
-    function is_logged():bool{
-        return !empty($_SESSION)&&Session()->get('is_logged');
     }
     function redirect(string $page):void{
         header("Location: {$page}". (str_ends_with($page,'.php')?'':'.php'));

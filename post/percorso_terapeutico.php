@@ -1,6 +1,6 @@
 <?php
     $_REQUEST['skip_cookie']=true;
-    require '../includes.php';
+    require_once '../includes.php';
     $id_percorso=Insert([
         'id_cliente'=>$_REQUEST['id_cliente'],
         'id_trattamento'=>$_REQUEST['id_trattamento'],

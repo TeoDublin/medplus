@@ -1,3 +1,3 @@
 <?php 
-require 'includes.php';
-require $_POST['url'];
+require_once 'includes.php';
+require_once $_POST['url'];

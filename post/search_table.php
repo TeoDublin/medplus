@@ -1,6 +1,6 @@
 <?php
     $_REQUEST['skip_cookie']=true;
-    require '../includes.php';
+    require_once '../includes.php';
     $select=Select('*')->from($_REQUEST['table'])->limit(14)->orderby('id DESC');
     if($_REQUEST['search'])$select->where("{$_REQUEST['search']['key']} like '%{$_REQUEST['search']['value']}%'");
     $table=$select->get_table();

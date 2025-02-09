@@ -5,9 +5,6 @@
     function Sql(): Sql{
         return new Sql();
     }
-    function Session():Session{
-        return new Session();
-    }
     function Template($key): Template{
         return new Template($key);
     }

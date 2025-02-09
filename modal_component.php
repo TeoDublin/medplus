@@ -1,5 +1,5 @@
 <?php
     $_REQUEST['skip_cookie']=true;
-    require 'includes.php';
+    require_once 'includes.php';
     $component=request('component');
     require_once "modal_component/{$component}/{$component}.php";
