@@ -136,6 +136,10 @@
     width: 60%!important;
 }
 
+.w-md-90{
+    width: 90%!important;
+}
+
 @media (max-width: 768px) {
     .table {
         margin-bottom: 0!important;
@@ -154,7 +158,7 @@
         border: none!important;
     }
 
-    .w-md-10,.w-md-20,.w-md-25,.w-md-30,.w-md-41,.w-md-50,.w-md-60{
+    .w-md-10,.w-md-20,.w-md-25,.w-md-30,.w-md-41,.w-md-50,.w-md-60,.w-md-90{
         width: 100% !important;
     }
 

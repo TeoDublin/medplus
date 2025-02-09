@@ -6,13 +6,20 @@
         
     </div>
     <div class="w-md-50 d-flex align-items-center justify-content-center bg-body-tertiary">
-        <div class="card">
-            <div class="card-header">
-                <h6>Login</h6>
+        <div class="card w-md-90">
+            <div class="card-image">
+                <img class="img-fluid" src="<?php echo image('logo-blue.svg'); ?>" alt="">
             </div>
             <div class="card-body">
                 <div class="d-flex flex-column">
-                    <div></div>
+                    <div class="mb-2">
+                        <label for="user" class="form-label">Username</label>
+                        <input type="text" class="form-control"/>
+                    </div>
+                    <div class="mb-2">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control"/>
+                    </div>
                 </div>
             </div>
         </div>
