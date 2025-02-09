@@ -54,26 +54,29 @@ class Session
         session_unset();
         session_destroy();
     }
-    public function login($username, $password)
+    public function login($username,$password,$user)
     {
-        if ($username === 'user' && $password === 'password') {
+        if(password_verify($password,$user['password'])){
             $this->set('user', $username);
+            $elementi = [];$home=false;
+            foreach(Select('*')->from('view_elementi')->where("id_utente={$user['id']}")->get() as $view_elementi){
+                $elementi[]=$view_elementi['elemento'];
+                $home??=$view_elementi['home'];
+            }
+            $this->set('elementi',$elementi);
             return true;
         }
-        return false;
+        else return false;
     }
 
     public function isLoggedIn()
     {
         return $this->exists('user');
     }
-    public function isLoginIn(){
-        return $this->exists('isLoginIn');
-    }
 
     public function logout()
     {
-        $this->unset('isLoginIn');
+        $this->unset('user');
         $this->destroy();
     }
 }

@@ -36,6 +36,6 @@
                     </div>
                     
                 </div>
-                <div class="toast-body">Dati non aggiornati. Riprova</div>
+                <div class="toast-body">Riprova</div>
             </div>
         </div>

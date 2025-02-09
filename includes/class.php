@@ -23,3 +23,9 @@
     function Delete():Delete{
         return new Delete();
     }
+    function Jwt():Jwt{
+        return new Jwt();
+    }
+    function Session(){
+        return Session::getInstance();
+    }

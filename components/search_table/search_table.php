@@ -5,6 +5,7 @@
     $actions=$response->actions?htmlspecialchars($response->actions??[], ENT_QUOTES, 'UTF-8'):json_encode([]);
     $cols=htmlspecialchars(json_encode($response->cols??[]), ENT_QUOTES, 'UTF-8');
     $is_first=true;
+    $session??=Session();
 ?>
 <div class="card p">
     <div class="card-body d-flex flex-column">
@@ -33,8 +34,10 @@
                             $left=substr($key,0,1);
                             $right=substr($key,1,strlen($key)-1);
                             echo "<th scope=\"col\" class=\"text-center\" rowspan=\"2\"><span class=\"\">{$left}</span><span class=\"d-none d-md-inline\">{$right}</span></th>";   
+                        }
+                        if(in_array('btn_delete_search_table',$session->get('elementi')??[])){?>
+                            <th scope="col" class="text-center" rowspan="2">#</th><?php
                         }?>
-                        <th scope="col" class="text-center" rowspan="2">#</th>
                     </tr>
                 </thead>
                 <tbody id="search_table_body"></tbody>

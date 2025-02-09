@@ -1,5 +1,8 @@
 window.modalHandlers = {};
 
+function redirect(page){
+    window.location.href = '/medplus/'+page;
+}
 function setCookie(name, value, days) {
     let expires = "";
     if (days) {

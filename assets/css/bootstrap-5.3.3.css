@@ -1040,12 +1040,6 @@ select:disabled {
 	display: none !important;
 }
 
-button,
-[type=button],
-[type=reset],
-[type=submit] {
-	-webkit-appearance: button;
-}
 
 button:not(:disabled),
 [type=button]:not(:disabled),
@@ -1103,10 +1097,6 @@ legend+* {
 	height: auto;
 }
 
-[type=search] {
-	-webkit-appearance: textfield;
-	outline-offset: -2px;
-}
 
 /* rtl:raw:
 [type="tel"],
@@ -1125,11 +1115,6 @@ direction: ltr;
 }
 
 ::-webkit-file-upload-button {
-	font: inherit;
-	-webkit-appearance: button;
-}
-
-::file-selector-button {
 	font: inherit;
 	-webkit-appearance: button;
 }
@@ -3300,7 +3285,6 @@ textarea.form-control-lg {
 	background-size: contain;
 	border: var(--bs-border-width) solid var(--bs-border-color);
 	-webkit-print-color-adjust: exact;
-	color-adjust: exact;
 	print-color-adjust: exact;
 }
 

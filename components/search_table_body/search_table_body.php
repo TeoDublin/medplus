@@ -35,10 +35,12 @@
                             }
                         }
                     }   
+                }
+                if(in_array('btn_delete_search_table',Session()->get('elementi')??[])){?>
+                    <td scope="col" class="text-center action-Elimina" title="Elimina" 
+                        onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?>
+                    </td><?php
                 }?>
-                <td scope="col" class="text-center action-Elimina" title="Elimina" 
-                    onmouseenter="hoverIconWarning(this)";><?php echo icon('bin.svg');?>
-                </td>
             </tr><?php
         }
     }

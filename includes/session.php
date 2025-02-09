@@ -1,6 +1,7 @@
 <?php
-global $session; 
-$session = Session::getInstance();
+global $session,$elementi; 
+$session = Session();
 if (!$session->isLoggedIn()) {
     redirect('login.php');
 }
+else $elementi=$session->get('elementi');
