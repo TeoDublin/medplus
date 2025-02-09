@@ -57,25 +57,7 @@
             }
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);
-            this.exit.addEventListener('click',menuExit);<?php
-            if(in_array('menu_prenotazioni',$elementi)){?>
-                this.prenota.addEventListener('click', () => navigate('prenotazioni.php','prenotazioni'));<?php
-            }
-            if(in_array('menu_pagamenti',$elementi)){?>
-                this.pagamenti.addEventListener('click', () => navigate('pagamenti.php','pagamenti'));<?php
-            }
-            if(in_array('menu_terapisti',$elementi)){?>
-                this.terapisti.addEventListener('click', () => navigate('terapisti.php','terapisti'));<?php
-            }
-            if(in_array('menu_clienti',$elementi)){?>
-                this.clienti.addEventListener('click', () => navigate('clienti.php','clienti'));<?php
-            }
-            if(in_array('menu_trattamenti',$elementi)){?>
-                this.trattamenti.addEventListener('click', () => navigate('trattamenti.php','trattamenti'));<?php
-            }
-            if(in_array('menu_corsi',$elementi)){?>
-                this.corsi.addEventListener('click', () => navigate('corsi.php','corsi'));<?php
-            }?>
+            this.exit.addEventListener('click',menuExit);
         }
     }
     menu.start();
