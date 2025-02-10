@@ -56,6 +56,13 @@
                             </div><?php
                         }
                         else{ ?>
+                            <div id="del-sedute" class="d-flex w-100 justify-content-end d-none">
+                                <div class="d-flex flex-row w-100 gap-3">
+                                    <button class="btn btn-warning w-100 d-flex flex-row align-items-center justify-content-center"
+                                        onclick="window.modalHandlers['percorsi'].deleteSeduteClick(this,<?php echo $_REQUEST['id_cliente']; ?>);"
+                                    ><?php echo icon('bin.svg',25,25); ?><span class="text-center">Elimina Sedute</span></button>
+                                </div>
+                            </div>                        
                             <div class="table-responsive">
                                 <div class="my-0">
                                     <div class="flex-row titles w-100 d-flex">
@@ -130,6 +137,9 @@
                                                     <div class="table-responsive">
                                                         <div class="my-0">
                                                             <div class="flex-row titles w-100 d-flex">
+                                                                <div class="cs3 d-flex align-items-center justify-content-center text-center">
+                                                                    <span>#</span>
+                                                                </div>
                                                                 <div class="cs1 d-flex align-items-center justify-content-center text-center">
                                                                     <span>Seduta</span>
                                                                 </div>
@@ -141,16 +151,30 @@
                                                     </div>
                                                     <?php foreach ($sedute as $seduta) {
                                                         $show_seduta=$_REQUEST['id_seduta']&&$seduta['id']==$_REQUEST['id_seduta'];
-                                                        $sedute_prenotate=_sedute_prenotate($seduta['id']);?>
+                                                        $sedute_prenotate=_sedute_prenotate($seduta['id']);
+                                                        $abble=in_array($seduta['stato'],['Da Prenotare','Assente','Spostata']);?>
                                                         <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
                                                             <div class="accordion-item">
                                                                 <h2 class="accordion-header">
                                                                     <div class="accordion-button  <?php echo $show_seduta?'':'collapsed'; ?> border py-2" type="button" data-bs-toggle="collapse"  name="row_percorso" data-bs-target="#collapseSeduta<?php echo $seduta['id'];?>" aria-expanded="<?php echo $show_seduta; ?>" aria-controls="collapseSeduta<?php echo $seduta['id'];?>">
                                                                         <input value="<?php echo $seduta['id'];?>" name="id_seduta" hidden/>
                                                                         <div class="d-flex flex-row w-100">
+                                                                            <div class="cs3 d-flex align-items-center justify-content-center text-center">
+                                                                                <?php 
+                                                                                    if($abble){?>
+                                                                                        <input type="checkbox" class="form-check w-100"
+                                                                                            onclick="window.modalHandlers['percorsi'].check(this)"
+                                                                                        ><?php
+                                                                                    }
+                                                                                    else{?>
+                                                                                        <input type="checkbox" class="form-check w-100" disabled><?php
+                                                                                    }
+                                                                                ?>
+                                                                                
+                                                                            </div>
                                                                             <div class="cs1 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta['index']; ?></span></div>
                                                                             <div class="cs2 d-flex align-items-center justify-content-center text-center">
-                                                                                <?php if(in_array($seduta['stato'],['Da Prenotare','Assente','Spostata'])){?>
+                                                                                <?php if($abble){?>
                                                                                     <button class="btn btn-primary flex-fill" 
                                                                                     onclick="window.modalHandlers['percorsi'].prenotaSeduteClick(<?php echo $seduta['id'].','.$_REQUEST['id_cliente'].','.$percorso['id']; ?>)" 
                                                                                     onmouseenter="window.modalHandlers['percorsi'].prenotaEnter(this)" 
@@ -226,7 +250,12 @@
                                                             </div>
                                                         </div>
                                                         <p class="psm"><?php
-                                                    }
+                                                    }?>
+                                                    <div class="d-flex flex-row w-100 gap-3">
+                                                        <button class="btn btn-dark w-100 d-flex flex-row align-items-center justify-content-center gap-3"
+                                                            onclick="window.modalHandlers['percorsi'].addSeduteClick(<?php echo $_REQUEST['id_cliente'].','.$percorso['id'].','.$percorso['id_trattamento']; ?>);"
+                                                        ><span class="text-center">Aggiungi Sedute</span></button>
+                                                    </div> <?php                                                   
                                                 }?>
                                             </div>
                                         </div>
@@ -243,6 +272,7 @@
                 <div class="p-md-2" id="prenota_planning"></div>
                 <div class="p-md-2" id="percorso_terapeutico"></div>
                 <div class="p-md-2" id="sedute"></div>
+                <div class="p-md-2" id="add_sedute"></div>
             </div>
         </div>
     </div>

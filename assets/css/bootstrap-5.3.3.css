@@ -240,20 +240,20 @@
 	--bs-link-color: rgb(74, 74, 74);
 	--base-active-bg-quarternary: #217992;
 
-	--base-color-dark:#3e3f3f;
-	--base-bg-dark:#3e3f3f;
-	--base-border-dark:#3e3f3f;
-	--base-hover-color-dark:#3e3f3f;
-	--base-hover-bg-dark:#3e3f3f;
-	--base-hover-border-dark:#3e3f3f;
-	--base-focus-shadow-dark:#3e3f3f;
-	--base-active-color-dark:#3e3f3f;
-	--base-active-bg-dark:#3e3f3f;
-	--base-active-border-dark:#3e3f3f;
-	--base-active-shadow-dark:#3e3f3f;
+	--base-color-dark:#ffffff;
+	--base-bg-dark:#767676;
+	--base-border-dark:#767676;
+	--base-hover-color-dark:#ffffff;
+	--base-hover-bg-dark:#b3b3b3;
+	--base-hover-border-dark:#b3b3b3;
+	--base-focus-shadow-dark:#b3b3b3;
+	--base-active-color-dark:#ffffff;
+	--base-active-bg-dark:#b3b3b3;
+	--base-active-border-dark:#b3b3b3;
+	--base-active-shadow-dark:#b3b3b3;
 	--base-disabled-dark:#fff;
-	--base-disabled-bg-dark:#3e3f3f;
-	--base-disabled-border-dark:#3e3f3f;
+	--base-disabled-bg-dark:#767676;
+	--base-disabled-border-dark:#767676;
 }
 
 [data-bs-theme=green] {

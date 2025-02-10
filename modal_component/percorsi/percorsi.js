@@ -76,5 +76,38 @@ window.modalHandlers['percorsi'] = {
         if (popover) {
             popover.hide();
         }
+    },
+    check:function(element){
+        const modal = element.closest('.modal');
+        let btn = modal.querySelector('#del-sedute');
+        if(element.classList.contains('checked')){
+            element.classList.remove('checked');
+        }
+        else element.classList.add('checked');
+        if(modal.querySelectorAll('.checked').length >0){
+            if(btn.classList.contains('d-none')){
+                btn.classList.remove('d-none');
+            }
+        }
+        else btn.classList.add('d-none');
+    },
+    deleteSeduteClick:function(element,id_cliente){
+        const modal = element.closest('.modal');
+        const checked = modal.querySelectorAll('.checked');
+        let ids = [];
+        if(checked.length >0){
+            checked.forEach(check=>{
+                ids.push(check.closest('.accordion-button').querySelector('[name=id_seduta]').value);
+            });
+            $.post('post/delete_sedute.php',{ids:ids}).done(()=>{
+                reload_modal_component('percorsi','percorsi',{id_cliente:id_cliente});
+            }).fail(()=>{
+                fail();
+            });
+        }
+        else alert("Seleziona qualcosa");
+    },
+    addSeduteClick:function(id_cliente,id_percorso,id_trattamento){
+        modal_component('add_sedute','add_sedute',{id_cliente:id_cliente,id_percorso:id_percorso,id_trattamento:id_trattamento});
     }
 }

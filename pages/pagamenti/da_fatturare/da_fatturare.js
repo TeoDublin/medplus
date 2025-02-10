@@ -16,7 +16,7 @@ function delClick(id){
     }
 };
 function add(id){
-    let _data = { table:'motivi', header:'Motivi' };
+    let _data = { table:'view_pagamenti', header:'Pendenze' };
     if(id){_data["id"]=id;}
     modal_component('modal','modal',_data);
 }
