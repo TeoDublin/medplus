@@ -168,6 +168,15 @@
                                 <input id="spanBolloValue" class="form-control  d-flex flex-fill" value="Marca da bollo su originale di € 2,00 per importi superiori ad € 77,47"/>
                             </div>
                         </div>
+                        <div class="card-body d-flex flex-row pt-0">
+                            <div class="card-body pe-1 pb-0 pt-1 mt-0 d-flex flex-column align-items-baseline">
+                                <label for="metodo_pagamento" class="form-label">Metodo di Pagamento</label> 
+                                <select class="form-select w-100" value="Carta" name="metodo_pagamento" id="metodo_pagamento">
+                                    <option value="Carta">Carta</option>
+                                    <option value="Contanti">Contanti</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>  
                     <div class="d-flex flex-row" articolo>
                         <div class="mb-1 card-body ">

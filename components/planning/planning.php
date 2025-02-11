@@ -31,6 +31,8 @@
                 <tr><th class="text-center">Ora</th><th class="text-center">Motivo</th></tr>
             </thead>
             <tbody><?php 
+                $session=Session();
+                $elementi=$session->get('elementi')??[];
                 for($i=1; $i<=$rows; $i++){
                     $row = $i + $rows*$table_index; $planning = $_planning($row); ?>
                     <tr class="planning-tr">
@@ -39,7 +41,11 @@
                             class="text-center border-0 border-end <?php echo $planning['class'];?> first w-15" 
                             planning_motivi_id="<?php echo $planning['id'];?>" 
                             row="<?php echo $row;?>" 
-                            onclick="window.modalHandlers['planning'].rowClick(this,'<?php echo $planning['origin']; ?>');"  
+                            <?php 
+                                if(in_array('row_click_planning',$elementi)){?>
+                                    onclick="window.modalHandlers['planning'].rowClick(this,'<?php echo $planning['origin']; ?>');"<?php
+                                }
+                            ?>
                             onmouseenter="window.modalHandlers['planning'].enterRow(this,'<?php echo $planning['origin']; ?>');"
                             >
                             <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_parent_inizio_<?php echo $row;?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
@@ -49,7 +55,11 @@
                             class="text-center border-0 border-end impegno <?php echo $planning['class'];?> last" 
                             planning_motivi_id="<?php echo $planning['id'];?>" 
                             row="<?php echo $row;?>" 
-                            onclick="window.modalHandlers['planning'].rowClick(this,'<?php echo $planning['origin']; ?>');"  
+                            <?php 
+                                if(in_array('row_click_planning',$elementi)){?>
+                                    onclick="window.modalHandlers['planning'].rowClick(this,'<?php echo $planning['origin']; ?>');"<?php
+                                }
+                            ?>
                             onmouseenter="window.modalHandlers['planning'].enterRow(this,'<?php echo $planning['origin']; ?>');"
                             >
                             <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
@@ -131,6 +141,17 @@
                         value="<?php echo $rows;?>" 
                         onchange="window.modalHandlers['planning'].change(this)"
                     />
+                </div>
+            </div>
+            <div class="d-flex flex-row gap-3 ms-3">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="color-box bg-colorfull2 me-2"></span> Sbarrato
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <span class="color-box bg-colorfull3 me-2"></span> Trattamento
+                </div>
+                <div class="d-flex align-items-center mb-2">
+                    <span class="color-box bg-colorfull me-2"></span> Corso
                 </div>
             </div>
             <div class="table-container"><?php

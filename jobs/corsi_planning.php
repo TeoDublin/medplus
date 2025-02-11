@@ -14,10 +14,10 @@
             END AS num")->from('corsi_giorni')->where("id_corso={$id_corso}"
         )->get_or_false();
     }
-    function is_a_new_corse(){
+    function is_not_the_cron(){
         return $_REQUEST['id_corso'] && $_REQUEST['data_inizio'] && $_REQUEST['scadenza'];
     }
-    if (is_a_new_corse()) {
+    if (is_not_the_cron()) {
         $corso = Select('*')->from('corsi')->where("id={$_REQUEST['id_corso']}")->first();
         $now = now('Y-m-d');
         $future_date = (new DateTime($now))->add(new DateInterval('P60D'))->format('Y-m-d');

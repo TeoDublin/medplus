@@ -254,6 +254,10 @@
 	--base-disabled-dark:#fff;
 	--base-disabled-bg-dark:#767676;
 	--base-disabled-border-dark:#767676;
+
+	--base-bg-colorfull: #32ffbb;
+	--base-bg-colorfull2: #5d7fff;
+	--base-bg-colorfull3: #56ebf7;
 }
 
 [data-bs-theme=green] {
@@ -495,6 +499,19 @@
 .border-radius-10 {
 	border-radius: 10px;
 }
+
+.bg-colorfull {
+	background-color: var(--base-bg-colorfull);
+}
+
+.bg-colorfull2 {
+	background-color: var(--base-bg-colorfull2);
+}
+
+.bg-colorfull3 {
+	background-color: var(--base-bg-colorfull3);
+}
+
 
 .bg-primary {
 	background-color: var(--base-bg-primary);

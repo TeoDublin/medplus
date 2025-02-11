@@ -14,6 +14,14 @@ function bind_modal_functions(){
                     'row': element.getAttribute('row')
                 });
                 break;
+            case 'seduta':
+                modal_component('sbarra', 'sposta_seduta', { 
+                    'id_terapista': document.querySelector('#terapista').value,
+                    'data':document.querySelector('#data').value, 
+                    'id_seduta':planning_motivi_id,
+                    'row': element.getAttribute('row')
+                });
+                break;
             default:
                 console.log(origin);
                 break;

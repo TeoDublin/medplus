@@ -55,6 +55,10 @@
 
     $pdf->Ln();
     $pdf->MultiCell(0, 10, trim($_REQUEST['articolo']));
+    $pdf->SetFont('Arial', 'B', 10);
+    $pdf->MultiCell(0, 10, trim("Metodo di Pagamento: {$_REQUEST['metodo_pagamento']}"));
+    $pdf->Ln();
+    $pdf->Ln();
     $pdf->Ln();
 
     $pdf->SetFont('Arial', 'B', 8);
@@ -70,6 +74,7 @@
         'importo'=>$_REQUEST['totale'],
         'index'=>$_REQUEST['oggetti']['index'],
         'data'=>now('Y-m-d'),
+        'metodo'=>$_REQUEST['metodo_pagamento']
     ])->into('fatture')->get();
     $totale=(int)$_REQUEST['totale'];
     $totale-=(int)$_REQUEST['bollo'];

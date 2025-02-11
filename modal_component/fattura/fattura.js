@@ -6,6 +6,7 @@ window.modalHandlers['fattura'] = {
             table.push({'oggetto':document.querySelector('#oggetto'+index)?.value,'importo':document.querySelector('#importo'+index)?.value});
         }
         _data['data']=document.querySelector('#date').value;
+        _data['metodo_pagamento']=document.querySelector('#metodo_pagamento').value;
         _data['totale']=document.querySelector('#totale').value;
         _data['imponibile']=document.querySelector('#imponibile').value;
         if(!document.querySelector('#btnBollo').classList.contains('btn-dark')){

@@ -124,7 +124,7 @@
                                                     }
                                                     else $mt='mt-2';
                                                     echo "<div class=\"d-flex flex-row w-100 cliente_row {$mt}\">";
-                                                        require_once __DIR__ . '/../../post/aggiungi_cliente.php';
+                                                        include __DIR__ . '/../../post/aggiungi_cliente.php';
                                                     echo "</div>";
                                                 }
                                                 ?>
