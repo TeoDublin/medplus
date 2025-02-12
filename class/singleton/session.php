@@ -58,7 +58,7 @@ class Session
     {
         if(password_verify($password,$user['password'])){
             $this->set('user', $username);
-            $elementi = [];$home=false;
+            $elementi = [];$home=null;
             foreach(Select('*')->from('view_elementi')->where("id_utente={$user['id']}")->get() as $view_elementi){
                 $elementi[]=$view_elementi['elemento'];
                 $home??=$view_elementi['home'];

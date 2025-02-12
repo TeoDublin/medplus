@@ -1,25 +1,20 @@
+const floatingMenu = document.querySelector('.floating-menu');
+const floatingMenuBtn = document.querySelector('.floating-menu-btn');
 
-function searchClick(){
-    window.location.href=window.location.href+"?search="+document.querySelector('.input-search').value;
-}
-function editClick(element,id){
-    if(element.classList.contains('warning')){
-        delClick(id);
-    }
-    else{
-        add(id);
-    }
-}
-function delClick(id){
-    if(confirm('Sicuro di voler Eliminare?')){
-        $.post("post/delete.php",{table:'motivi',id:id}).done(success_and_refresh).fail(fail);
-    }
-};
-function add(id){
-    let _data = { table:'view_pagamenti', header:'Pendenze' };
-    if(id){_data["id"]=id;}
-    modal_component('modal','modal',_data);
-}
-document.addEventListener('DOMContentLoaded',function(){
-    search_table({table:'motivi'});
+floatingMenuBtn.addEventListener('click', () => {
+    floatingMenu.classList.toggle('open');
+    floatingMenuBtn.classList.toggle('open');
 });
+
+function btnFiltra(){
+    const id_cliente = document.querySelector('#id_cliente').value;
+    const origine = document.querySelector('#origine').value;
+    let url = "pagamenti.php?skip_cookie=true&pagination=0&";
+    if(id_cliente!=null && id_cliente!="")url+='id_cliente='+id_cliente+'&';
+    if(origine!=null && origine!="")url+='origine='+origine+'&';
+    window.document.location = url;
+}
+
+function btnClean(){
+    window.document.location = 'pagamenti.php?pagination=0';
+}

@@ -122,7 +122,7 @@
             $total= $this->sql->select($query)[0]['total'];
             if(!$_REQUEST['search']){
                 $this->limit??=(int)cookie('limit',14);
-                $this->offset??=((int)cookie('pagination',0)*$this->limit)??0;
+                $this->offset??=(Html()->offset()*$this->limit)??0;
             }
             else{
                 $this->limit=$total;
