@@ -81,8 +81,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary" <?php echo attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnSalva(this)"
-                >Salva</a>
+                <a href="#" class="btn btn-secondary" <?php echo attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnPresente(this,<?php echo $_REQUEST['id_terapista'].",'{$_REQUEST['data']}'"; ?>)">Presente</a>
+                <a href="#" class="btn btn-dark" <?php echo attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnAssente(this,<?php echo $_REQUEST['id_terapista'].",'{$_REQUEST['data']}'"; ?>)">Assente</a>
+                <a href="#" class="btn btn-primary" <?php echo attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnSalva(this)">Sposta Seduta</a>
             </div>
         </div>
     </div>

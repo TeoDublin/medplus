@@ -81,6 +81,16 @@ input:disabled {
     box-shadow: 0 0 0 2px var(--seduta-border); 
 }
 
+.Assente {
+    opacity: 0.5;
+}
+
+.Conclusa {
+    --bg-color: 0, 76, 255;
+    background: linear-gradient(135deg, rgba(var(--bg-color), 0.2) 25%, transparent 25%, transparent 50%, rgba(var(--bg-color), 0.2) 50%, rgba(var(--bg-color), 0.2) 75%, transparent 75%, transparent);
+    background-size: 10px 10px;
+}
+
 .corso{
     --corso-border:white;
     cursor: pointer;

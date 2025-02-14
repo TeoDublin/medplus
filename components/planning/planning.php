@@ -75,28 +75,29 @@
             $row=(int)$row;
             $row_inizio=(int)$plan['row_inizio'];
             $row_fine=(int)$plan['row_fine'];
+            $stato=$plan['stato']=='-'?'':$plan['stato'];
             $class='';
             if($row_inizio==$row){
-                $class.=" {$plan['origin']} {$plan['origin']}_start";
+                $class.=" {$plan['origin']} {$plan['origin']}_start {$stato}";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
                 $origin=$plan['origin'];
             }
             if($row>$row_inizio&&$row<$row_fine){
-                $class.=" {$plan['origin']} {$plan['origin']}_middle";
+                $class.=" {$plan['origin']} {$plan['origin']}_middle {$stato}";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
                 $origin=$plan['origin'];
             }
             if($row_fine==$row){
-                $class.=" {$plan['origin']} {$plan['origin']}_end";
+                $class.=" {$plan['origin']} {$plan['origin']}_end {$stato}";
                 $id=$plan['id'];
                 $motivo=$plan['motivo'];
                 $origin=$plan['origin'];
             }
             if(!empty($class))break;
         }
-        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo), 'origin'=>$origin];
+        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo),'origin'=>$origin];
     };
 ?>
 <div>
