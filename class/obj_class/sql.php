@@ -5,20 +5,8 @@ class Sql {
     private $db;
     private $query;
     public function __construct() {
-        switch (environment()) {
-            case 'dev':
-                $host='127.0.0.1';
-                $user='medplus';
-                $pass='123testes'; 
-                $db='medplus';
-                break;
-            case 'prod':
-                $host='localhost';
-                $user='u482567801_medplus_prod';
-                $pass='U482567801_medplus_prod'; 
-                $db='u482567801_medplus_prod';
-                break;
-        }
+        $sql_request=true;
+        require __DIR__ . '/../../env.php';
         $this->db=$db;
         try {
             $this->connection = new mysqli($host, $user, $pass, $db);
