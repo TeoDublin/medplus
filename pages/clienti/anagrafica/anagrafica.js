@@ -48,7 +48,7 @@ function add(id){
 document.addEventListener('DOMContentLoaded',function(){
     search_table({
         table:'clienti',
-        orderby:'nominativo ASC'
+        orderby:'nominativo ASC',
         cols:['id','nominativo','telefono','email'],
         actions:{ Trattamenti:'success', Corsi:'success2', Pendenze:'success3', Pagamenti:'success4' }
     });
