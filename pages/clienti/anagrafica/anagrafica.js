@@ -41,9 +41,7 @@ function percorsoFatture(id){
     modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id});
 }
 function add(id){
-    let _data = { table:'clienti', header:'Cliente' };
-    if(id){_data["id"]=id;}
-    modal_component('modal','modal',_data);
+    modal_component('add_cliente','add_cliente',{id_cliente:id});
 }
 document.addEventListener('DOMContentLoaded',function(){
     search_table({
