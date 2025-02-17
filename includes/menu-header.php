@@ -57,7 +57,7 @@
                 if(in_array('menu_terapisti',$elementi)){?>
                     <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page',$home)=='terapisti'?'menu-active':''?>" id="menu-terapisti" title="terapisti">
                         <div class="d-flex align-items-start mx-2" >
-                            <?php echo icon('person-square.svg','black',31,30);?>
+                            <?php echo icon('stetoscope.svg','black',31,30);?>
                         </div>
                         <div class="menu-label align-self-center hide" ><span>terapisti</span></div>
                     </div><?php                     
