@@ -76,5 +76,22 @@ window.modalHandlers['percorsi_pendenze'] = {
         else{
             modal_component('senza_fattura','senza_fattura',{id_cliente:id_cliente,_data:_data});
         }
+    },
+    arubaClick:function(element,id_cliente){
+        modal = element.closest('.modal');
+        _data=[];
+        modal.querySelectorAll('.checked').forEach(checked => {
+            _data.push({
+                origine:checked.getAttribute('origine'),
+                id_percorso:checked.querySelector('#id_percorso').value, 
+                non_fatturato:checked.querySelector('#non_fatturato').innerHTML
+            });
+        });
+        if(_data.length === 0){
+            alert('Seleziona qualcosa');
+        }
+        else{
+            modal_component('fatturato_aruba','fatturato_aruba',{id_cliente:id_cliente,_data:_data});
+        }
     }
 }

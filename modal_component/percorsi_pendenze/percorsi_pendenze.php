@@ -266,11 +266,11 @@
                                         <div>Fattura</div>
                                     </button>
                                 </div>
-                                <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                                <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].arubaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
                                     <button type="button" class="btn btn-primary p-2 d-flex flex-fill btn-insert w-100 h-100">
                                         <div class="mx-2"><?php echo icon('bill-check.svg','white',20,25);?></div>
-                                        <div class="d-none d-md-block">Fatturato Arruba</div>
-                                        <div class="d-md-none">Arruba</div>
+                                        <div class="d-none d-md-block">Fatturato Aruba</div>
+                                        <div class="d-md-none">Aruba</div>
                                     </button>
                                 </div>
                                 <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
@@ -291,6 +291,7 @@
 </div>
 <div id="fattura"></div>
 <div id="senza_fattura"></div>
+<div id="fatturato_aruba"></div>
 <div id="percorso_terapeutico"></div>
 <div id="prezzo_corso"></div>
 <?php modal_script('percorsi_pendenze'); ?>
