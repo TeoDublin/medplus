@@ -44,21 +44,57 @@ window.modalHandlers['percorsi_pendenze'] = {
     },
     fatturaClick:function(element,id_cliente){
         modal = element.closest('.modal');
-        _data=[];
-        modal.querySelectorAll('.checked').forEach(checked => {
-            _data.push({
-                origine:checked.getAttribute('origine'),
-                id_percorso:checked.querySelector('#id_percorso').value, 
-                oggetto:checked.querySelector('#trattamento').value, 
-                importo:checked.querySelector('#non_fatturato').innerHTML
-            });
-        });
-        if(_data.length === 0){
-            alert('Seleziona qualcosa');
+        let oggetti=[];
+        const { idNominativo, idIndirizzo, idCap, idCitta, idCf } = element.dataset;
+        let error = 'Per generare la fattura devi inserire i dati:\n\n';
+        let hasError=false;
+        if(!idNominativo||idNominativo==''){
+            hasError=true;
+            error+='- Nominativo\n';
+        }
+        if(!idIndirizzo||idIndirizzo==''){
+            hasError=true;
+            error+='- Indirizzo\n';
+        }
+        if(!idCap||idCap==''){
+            hasError=true;
+            error+='- Cap\n';
+        }
+        if(!idCitta||idCitta==''){
+            hasError=true;
+            error+='- Citta\n';
+        }
+        if(!idCf||idCf==''){
+            hasError=true;
+            error+='- Codice fiscale\n';
+        }
+        if(hasError){
+            alert(error);
         }
         else{
-            modal_component('fattura','fattura',{id_cliente:id_cliente,oggetti:_data});
+            modal.querySelectorAll('.checked').forEach(checked => {
+                oggetti.push({
+                    origine:checked.getAttribute('origine'),
+                    id_percorso:checked.querySelector('#id_percorso').value, 
+                    oggetto:checked.querySelector('#trattamento').value, 
+                    importo:checked.querySelector('#non_fatturato').innerHTML
+                });
+            });
+            const cliente = {
+                nominativo:idNominativo,
+                indirizzo:idIndirizzo,
+                cap:idCap,
+                citta:idCitta,
+                cf:idCf
+            }
+            if(oggetti.length === 0){
+                alert('Seleziona qualcosa');
+            }
+            else{
+                modal_component('fattura','fattura',{id_cliente:id_cliente,oggetti:oggetti,cliente:cliente});
+            }
         }
+        
     },
     senzaFatturaClick:function(element,id_cliente){
         modal = element.closest('.modal');

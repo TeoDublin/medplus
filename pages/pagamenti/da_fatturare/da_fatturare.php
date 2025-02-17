@@ -1,10 +1,10 @@
 <?php style('pages/pagamenti/da_fatturare/da_fatturare.css'); ?><?php 
-function has_filters(){
+function _has_filters(){
     return $_REQUEST['id_cliente']||$_REQUEST['origine'];
 }
 $where='vp.non_fatturato > 0';
 $url='pagamenti.php';
-if(has_filters()){
+if(_has_filters()){
     $url.='?skip_cookie=true&';
     if($_REQUEST['id_cliente']){
         $where.=" AND id_cliente = {$_REQUEST['id_cliente']}";
@@ -25,7 +25,7 @@ $view_pagamenti = Select('vp.*,c.nominativo')
     ->get_table();?>
 
 <div class="filter-labels d-flex flex-row align-items-center <?php echo $class;?> p-2"><?php
-    if(has_filters()){?>
+    if(_has_filters()){?>
         <span class="fw-bold">FILTRI APPLICATI:</span>
         <?php if($_REQUEST['id_cliente']) echo "<div class=\"filter-label bg-colorfull2\"><span >Cliente: ".Select('*')->from('clienti')->where("id={$_REQUEST['id_cliente']}")->col('nominativo')."</span></div>"; ?>
         <?php if($_REQUEST['origine']) echo "<div class=\"filter-label bg-tertiary\"><span >Tipo: {$_REQUEST['origine']}</span></div>"; ?>

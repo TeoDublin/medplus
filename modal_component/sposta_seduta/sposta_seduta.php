@@ -1,5 +1,5 @@
 <?php 
-    function attr_data($id_seduta){
+    function _attr_data($id_seduta){
         return "data-id-seduta=\"{$id_seduta}\"";
     }
     $row=$_REQUEST['row']??$_REQUEST['row_inizio'];
@@ -32,7 +32,7 @@
                 <div class="p-2">
                     <div class="mb-3">
                         <label for="terapista" class="form-label">Terapista</label>
-                        <select type="text"  name="id_terapista" <?php echo attr_data($id_seduta);?> class="form-control text-center" value="<?php echo $_REQUEST['id_terapista']??'';?>" 
+                        <select type="text"  name="id_terapista" <?php echo _attr_data($id_seduta);?> class="form-control text-center" value="<?php echo $_REQUEST['id_terapista']??'';?>" 
                             onchange="window.modalHandlers['sposta_seduta'].change(this)">
                             <?php 
                                 foreach(Select('*')->from('terapisti')->get() as $value){
@@ -44,7 +44,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="data" class="form-label">Data</label>
-                        <input type="date" class="form-control text-center" name="data" value="<?php echo $_REQUEST['data']; ?>" <?php echo attr_data($id_seduta);?> 
+                        <input type="date" class="form-control text-center" name="data" value="<?php echo $_REQUEST['data']; ?>" <?php echo _attr_data($id_seduta);?> 
                             onchange="window.modalHandlers['sposta_seduta'].change(this)"
                         />
                     </div>
@@ -81,9 +81,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-secondary" <?php echo attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnPresente(this,<?php echo $_REQUEST['id_terapista'].",'{$_REQUEST['data']}'"; ?>)">Presente</a>
-                <a href="#" class="btn btn-dark" <?php echo attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnAssente(this,<?php echo $_REQUEST['id_terapista'].",'{$_REQUEST['data']}'"; ?>)">Assente</a>
-                <a href="#" class="btn btn-primary" <?php echo attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnSalva(this)">Sposta Seduta</a>
+                <a href="#" class="btn btn-secondary" <?php echo _attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnPresente(this,<?php echo $_REQUEST['id_terapista'].",'{$_REQUEST['data']}'"; ?>)">Presente</a>
+                <a href="#" class="btn btn-dark" <?php echo _attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnAssente(this,<?php echo $_REQUEST['id_terapista'].",'{$_REQUEST['data']}'"; ?>)">Assente</a>
+                <a href="#" class="btn btn-primary" <?php echo _attr_data($id_seduta);?>onclick="window.modalHandlers['sposta_seduta'].btnSalva(this)">Sposta Seduta</a>
             </div>
         </div>
     </div>

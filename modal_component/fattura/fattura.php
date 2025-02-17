@@ -41,12 +41,17 @@
                             <div class="mb-1 card-body">
                                 <label for="dati" class="form-label">Dati</label>
                                 <textarea  class="form-control" id="dati" name="dati" rows="8"><?php echo _clean("
-                                    Spett.le
-                                    Aprea Ettore
-                                    via F. Gaelota 23
-                                    80125
-                                    Napoli
-                                    CF o P.Iva PRATTR39B27L259S");?>
+                                    Spett.le\r\n".
+                                    $_REQUEST['cliente']['nominativo']."
+                                    ".
+                                    $_REQUEST['cliente']['indirizzo']."
+                                    ".
+                                    $_REQUEST['cliente']['cap']."
+                                    ".
+                                    $_REQUEST['cliente']['citta']."
+                                    ".
+                                    "CF o P.Iva ".$_REQUEST['cliente']['cf']."
+                                    ");?>
                                 </textarea>
                             </div>
                             

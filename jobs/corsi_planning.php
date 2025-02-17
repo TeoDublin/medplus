@@ -1,6 +1,6 @@
 <?php 
     require_once __DIR__.'/../includes.php';
-    function giorni($id_corso){
+    function _giorni($id_corso){
         return Select("*, 
             CASE 
                 WHEN giorno = 'LUNEDI' THEN 1
@@ -14,15 +14,15 @@
             END AS num")->from('corsi_giorni')->where("id_corso={$id_corso}"
         )->get_or_false();
     }
-    function is_not_the_cron(){
+    function _is_not_the_cron(){
         return $_REQUEST['id_corso'] && $_REQUEST['data_inizio'] && $_REQUEST['scadenza'];
     }
-    if (is_not_the_cron()) {
+    if (_is_not_the_cron()) {
         $corso = Select('*')->from('corsi')->where("id={$_REQUEST['id_corso']}")->first();
         $now = now('Y-m-d');
         $future_date = (new DateTime($now))->add(new DateInterval('P60D'))->format('Y-m-d');
         Delete()->from('corsi_planning')->where("id_corso={$corso['id']} AND data >= '{$_REQUEST['data_inizio']}' AND data <= '{$future_date}'");
-        if (($giorni = giorni($_REQUEST['id_corso']))) {
+        if (($giorni = _giorni($_REQUEST['id_corso']))) {
             $start = new DateTime($_REQUEST['data_inizio']);
             $end = new DateTime($future_date);
             $interval = new DateInterval('P1D');
@@ -47,7 +47,7 @@
     }
     else{
         foreach(Select('*')->from('corsi')->where('deleted=0')->get_n_flush() as $corso){
-            if(($giorni=giorni($corso['id']))){
+            if(($giorni=_giorni($corso['id']))){
                 $start = new DateTime(now('Y-m-d'));
                 $end = clone $start;
                 $end->add(new DateInterval('P30D'));

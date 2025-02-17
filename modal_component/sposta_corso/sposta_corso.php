@@ -1,5 +1,5 @@
 <?php 
-    function attr_data($id_corso){
+    function _attr_data($id_corso){
         return "data-id-corso=\"{$id_corso}\"";
     }
     $row=$_REQUEST['row']??$_REQUEST['row_inizio'];
@@ -32,7 +32,7 @@
                 <div class="p-2">
                     <div class="mb-3">
                         <label for="terapista" class="form-label">Terapista</label>
-                        <select type="text"  name="id_terapista" <?php echo attr_data($id_corso);?> class="form-control text-center" value="<?php echo $_REQUEST['id_terapista']??'';?>" 
+                        <select type="text"  name="id_terapista" <?php echo _attr_data($id_corso);?> class="form-control text-center" value="<?php echo $_REQUEST['id_terapista']??'';?>" 
                             onchange="window.modalHandlers['sposta_corso'].change(this)">
                             <?php 
                                 foreach(Select('*')->from('terapisti')->get() as $value){
@@ -44,7 +44,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="data" class="form-label">Data</label>
-                        <input type="date" class="form-control text-center" name="data" value="<?php echo $_REQUEST['data']; ?>" <?php echo attr_data($id_corso);?> 
+                        <input type="date" class="form-control text-center" name="data" value="<?php echo $_REQUEST['data']; ?>" <?php echo _attr_data($id_corso);?> 
                             onchange="window.modalHandlers['sposta_corso'].change(this)"
                         />
                     </div>
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary" <?php echo attr_data($id_corso);?>onclick="window.modalHandlers['sposta_corso'].btnSalva(this)"
+                <a href="#" class="btn btn-primary" <?php echo _attr_data($id_corso);?>onclick="window.modalHandlers['sposta_corso'].btnSalva(this)"
                 >Salva</a>
             </div>
         </div>

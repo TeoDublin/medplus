@@ -26,11 +26,21 @@
     $pdf->SetFont('Arial', '', 14);
     foreach($_REQUEST['table'] ?? [] as $row){
         if($row['importo']=='')$row['importo']=0;
+        
+        if ($pdf->GetY() + 10 > $pdf->GetPageHeight() - 10) {
+            $pdf->AddPage();
+            $pdf->SetFont('Arial', 'B', 14);
+            $pdf->Cell(90, 12, 'OGGETTO', 1, 0, 'C');
+            $pdf->Cell(90, 12, 'IMPORTI', 1, 1, 'C');
+            $pdf->SetFont('Arial', '', 14);
+        }
+    
         $pdf->Cell(90, 10, "  {$row['oggetto']}", 'LR', 0, 'L');
         $pdf->Cell(90, 10, EURO." ".number_format($row['importo'], 2, ',', '.'), 'R', 1, 'C');
         $count++;
     }
-    $rows=6;
+    
+    $rows=2;
     if($count<$rows){
         for($i=0;$i<$rows-$count;$i++){
             $pdf->Cell(90, 10, '', 'LR', 0, 'L');

@@ -25,9 +25,13 @@
         ->where("id_cliente={$_REQUEST['id_cliente']} AND saldato < prezzo AND origine='corsi' AND id_origine={$id_origine}")
         ->get_or_false();
     }
+    function _cliente(){
+        return Select('*')->from('clienti')->where("id={$_REQUEST['id_cliente']}")->first_or_false();
+    }
     style('modal_component/percorsi_pendenze/percorsi_pendenze.css');
     $_trattamenti=_trattamenti();
     $_corsi=_corsi();
+    $cliente=_cliente();
     $is_first=true;
 ?>
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
@@ -260,7 +264,13 @@
                                 }
                             }?>
                             <div class="d-flex flex-fill mt-1">
-                                <div class= "d-flex flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                                <div class= "d-flex flex-fill" 
+                                    data-id-nominativo="<?php echo $cliente['nominativo'];?>"
+                                    data-id-indirizzo="<?php echo $cliente['indirizzo'];?>"
+                                    data-id-cap="<?php echo $cliente['cap'];?>"
+                                    data-id-citta="<?php echo $cliente['citta'];?>"
+                                    data-id-cf="<?php echo $cliente['cf'];?>"
+                                    onclick="window.modalHandlers['percorsi_pendenze'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
                                     <button type="button" class="btn btn-primary p-2 d-flex flex-fill btn-insert h-100">
                                         <div class="mx-2"><?php echo icon('document.svg','white',20,17);?></div>
                                         <div>Fattura</div>
