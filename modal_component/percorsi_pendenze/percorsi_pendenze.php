@@ -260,7 +260,7 @@
                                 }
                             }?>
                             <div class="d-flex flex-fill mt-1">
-                                <div class= "d-flex w-50" onclick="window.modalHandlers['percorsi_pendenze'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                                <div class= "d-flex flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].fatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
                                     <button type="button" class="btn btn-primary p-2 d-flex flex-fill btn-insert h-100">
                                         <div class="mx-2"><?php echo icon('document.svg','white',20,17);?></div>
                                         <div>Fattura</div>
