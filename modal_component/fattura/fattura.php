@@ -105,7 +105,7 @@
                                 <div class="card-body ps-0 pe-1 pb-0 pt-1 bollo" id="row_bollo"><input type="number" id="importoBollo" class="form-control stampDisabled" value="2.0"/></div>
                                 <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" id="imponibile" class="form-control" value="<?php echo $_REQUEST['oggetti']?$total:0;?>" disabled/></div>
                             </div>
-                            <div class="flex-col w-md-10 ms-0 importi">
+                            <div class="flex-col w-md-10 ms-0 btns">
                                 <div class="card-body ps-0 pe-1 pb-0 text-center w-10"><span class="">#</span></div>
                                 <?php
                                 if($_REQUEST['oggetti']){

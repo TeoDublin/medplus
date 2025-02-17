@@ -68,6 +68,7 @@ window.modalHandlers['fattura'] = {
         importoDiv.appendChild(importoInput);
         document.querySelector('.importi').insertBefore(importoDiv, document.querySelector('.importi').children[1]);
         let countBtn = document.querySelectorAll('.delBtn').length;
+        
         const btnContainer  = document.createElement('div');
         btnContainer.className = 'card-body ps-0 pe-1 pb-0 pt-1 delBtn';
         btnContainer.setAttribute('title','ELIMINA');
