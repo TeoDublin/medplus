@@ -7,7 +7,7 @@
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header"><h4 class="modal-title">Corsi</h4>
+            <div class="modal-header"><h4 class="modal-title">Pagamenti</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-span="Close"></button>
             </div>
