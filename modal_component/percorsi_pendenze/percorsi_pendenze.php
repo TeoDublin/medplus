@@ -268,8 +268,16 @@
                                 </div>
                                 <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
                                     <button type="button" class="btn btn-primary p-2 d-flex flex-fill btn-insert w-100 h-100">
+                                        <div class="mx-2"><?php echo icon('bill-check.svg','white',20,25);?></div>
+                                        <div class="d-none d-md-block">Fatturato Arruba</div>
+                                        <div class="d-md-none">Arruba</div>
+                                    </button>
+                                </div>
+                                <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                                    <button type="button" class="btn btn-primary p-2 d-flex flex-fill btn-insert w-100 h-100">
                                         <div class="mx-2"><?php echo icon('coin.svg','white',20,25);?></div>
-                                        <div>Senza Fattura</div>
+                                        <div class="d-none d-md-block">Senza Fattura</div>
+                                        <div class="d-md-none">S.Fat.</div>
                                     </button>
                                 </div>
                             </div><?php
