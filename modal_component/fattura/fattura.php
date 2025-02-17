@@ -171,9 +171,10 @@
                         <div class="card-body d-flex flex-row pt-0">
                             <div class="card-body pe-1 pb-0 pt-1 mt-0 d-flex flex-column align-items-baseline">
                                 <label for="metodo_pagamento" class="form-label">Metodo di Pagamento</label> 
-                                <select class="form-select w-100" value="Carta" name="metodo_pagamento" id="metodo_pagamento">
-                                    <option value="Carta">Carta</option>
+                                <select class="form-select w-100" value="Pos" name="metodo_pagamento" id="metodo_pagamento">
+                                    <option value="Pos">Pos</option>
                                     <option value="Contanti">Contanti</option>
+                                    <option value="Bonifico">Bonifico Bancario</option>
                                 </select>
                             </div>
                         </div>
