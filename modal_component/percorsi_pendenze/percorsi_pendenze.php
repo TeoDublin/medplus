@@ -141,7 +141,7 @@
                                                                     >
                                                                     <span id="fatturato"><?php echo $trattamento['fatturato'];?></span>
                                                                 </div>
-                                                                <div class="cc4 d-flex align-items-center justify-content-center text-center"
+                                                                <div class="cc4 d-flex align-items-center justify-content-center text-center <?php echo (int)$trattamento['non_fatturato']>0?'bg-warning':0;?>"
                                                                         onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
                                                                         onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
                                                                         onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
@@ -164,11 +164,11 @@
                                     <div class="accordion" id="corso_<?php echo $corsi['id_origine'];?>">
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
-                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_<?php echo $corsi['id'];?>" aria-expanded="false" aria-controls="collapse_<?php echo $corsi['id'];?>">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_<?php echo $corsi['id_origine'];?>" aria-expanded="false" aria-controls="collapse_<?php echo $corsi['id_origine'];?>">
                                                     <?php echo "<b>[CORSO]</b>&nbsp{$corsi['nome']}"; ?>
                                                 </button>
                                             </h2>
-                                            <div id="collapse_<?php echo $corsi['id'];?>" class="accordion-collapse collapse" data-bs-parent="#corso_<?php echo $corsi['id'];?>">
+                                            <div id="collapse_<?php echo $corsi['id_origine'];?>" class="accordion-collapse collapse" data-bs-parent="#corso_<?php echo $corsi['id_origine'];?>">
                                                 <div class="table-responsive title">
                                                     <div class="my-0">
                                                         <div class="flex-row titles w-100 d-flex fattura_row">
@@ -245,7 +245,7 @@
                                                                     >
                                                                     <span id="fatturato"><?php echo $corso['fatturato'];?></span>
                                                                 </div>
-                                                                <div class="cc4 d-flex align-items-center justify-content-center text-center"
+                                                                <div class="cc4 d-flex align-items-center justify-content-center text-center <?php echo (int)$corso['non_fatturato']>0?'bg-warning':0;?>"
                                                                         onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
                                                                         onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
                                                                         onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"

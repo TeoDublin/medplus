@@ -78,13 +78,15 @@
     $id_cliente=$_REQUEST['oggetti']['id_cliente'];
     $cliente=Select('*')->from('clienti')->where("id={$id_cliente}")->first();
     $link=str_replace([' ',':'],'_',$cliente['nominativo'].'_'.datetime().'.pdf');
+    $stato=$_REQUEST['metodo_pagamento']=='Bonifico'?'Pendente':'Saldata';
     $id_fattura=Insert([
         'id_cliente'=>$id_cliente,
         'link'=>$link,
         'importo'=>$_REQUEST['totale'],
         'index'=>$_REQUEST['oggetti']['index'],
         'data'=>now('Y-m-d'),
-        'metodo'=>$_REQUEST['metodo_pagamento']
+        'metodo'=>$_REQUEST['metodo_pagamento'],
+        'stato'=>$stato
     ])->into('fatture')->get();
     $totale=(int)$_REQUEST['totale'];
     $totale-=(int)$_REQUEST['bollo'];
