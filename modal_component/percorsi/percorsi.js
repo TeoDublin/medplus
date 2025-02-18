@@ -63,12 +63,15 @@ window.modalHandlers['percorsi'] = {
         }).fail(()=>fail());
     },
     noteEnter:function(element) {
-        const popover = bootstrap.Popover.getOrCreateInstance(element, {
-            title: 'Note',
-            content: element.getAttribute('data-bs-content'),
-            placement: 'top',
-            trigger: 'manual'
-        });
+        let popover = bootstrap.Popover.getInstance(element);
+        if (!popover) {
+            popover = bootstrap.Popover.getOrCreateInstance(element, {
+                title: 'Note',
+                content: element.getAttribute('data-bs-content'),
+                placement: 'top',
+                trigger: 'manual'
+            });
+        }
         popover.show();
     },
     noteLeave:function(element) {
@@ -77,6 +80,25 @@ window.modalHandlers['percorsi'] = {
             popover.hide();
         }
     },
+    acronimoEnter:function(element) {
+        let popover = bootstrap.Popover.getInstance(element);
+        if (!popover) {
+            popover = new bootstrap.Popover(element, {
+                title: 'Trattamenti',
+                content: element.getAttribute('data-bs-content'),
+                placement: 'top',
+                trigger: 'manual'
+            });
+            element.dataset.bsInstance = popover;
+        }
+        popover.show();
+    },
+    acronimoLeave:function(element) {
+        const popover = bootstrap.Popover.getInstance(element);
+        if (popover) {
+            popover.hide();
+        }
+    },    
     check:function(element){
         const modal = element.closest('.modal');
         let btn = modal.querySelector('#del-sedute');

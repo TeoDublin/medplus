@@ -107,7 +107,18 @@
                                                         onmouseleave="window.modalHandlers['percorsi'].deleteLeave(this)">
                                                         <?php echo icon('bin.svg','black',16,16); ?>
                                                     </div>
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['trattamento']; ?></span></div>
+                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center"
+                                                            title=""
+                                                            data-bs-toggle="popover"
+                                                            data-bs-placement="right"
+                                                            data-bs-title="Note"
+                                                            data-bs-html="true"
+                                                            data-bs-content="<?php echo str_replace(';', '<br>', htmlspecialchars($percorso['trattamento'], ENT_QUOTES, 'UTF-8')); ?>"
+                                                            onmouseenter="window.modalHandlers['percorsi'].acronimoEnter(this)"
+                                                            onmouseleave="window.modalHandlers['percorsi'].acronimoLeave(this)"
+                                                        >
+                                                        <?php echo $percorso['acronimo']; ?>
+                                                    </div>                                                    
                                                     <div class="cc2 d-flex align-items-center justify-content-center text-center d-none d-md-block"><span class=""><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['prezzo']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"
@@ -253,7 +264,7 @@
                                                     }?>
                                                     <div class="d-flex flex-row w-100 gap-3">
                                                         <button class="btn btn-dark w-100 d-flex flex-row align-items-center justify-content-center gap-3"
-                                                            onclick="window.modalHandlers['percorsi'].addSeduteClick(<?php echo $_REQUEST['id_cliente'].','.$percorso['id'].','.$percorso['id_trattamento']; ?>);"
+                                                            onclick="window.modalHandlers['percorsi'].addSeduteClick(<?php echo $_REQUEST['id_cliente'].','.$percorso['id'].','.$percorso['id_combo']; ?>);"
                                                         ><span class="text-center">Aggiungi Sedute</span></button>
                                                     </div> <?php                                                   
                                                 }?>

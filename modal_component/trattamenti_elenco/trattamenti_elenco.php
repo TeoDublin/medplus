@@ -21,8 +21,12 @@
                         echo "</select>";?>
                     </div>
                     <div class="m-2">
-                        <label for="trattamento" class="form-label" >trattamento</label>
+                        <label for="trattamento" class="form-label" >Trattamento</label>
                         <input type="text" class="form-control" name="trattamento" value="<?php echo $result['trattamento']??''; ?>"/> 
+                    </div>
+                    <div class="m-2">
+                        <label for="acronimo" class="form-label" >Acronimo</label>
+                        <input type="text" class="form-control" name="acronimo" value="<?php echo $result['acronimo']??''; ?>"/> 
                     </div>
                     <div class="m-2">
                         <label for="prezzo" class="form-label" >Prezzo</label>
