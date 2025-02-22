@@ -11,7 +11,7 @@
             'index'=>++$index,
             'id_cliente'=>$_REQUEST['id_cliente'],
             'id_percorso'=>$_REQUEST['id_percorso'],
-            'id_trattamento'=>$_REQUEST['id_trattamento']
+            'id_combo'=>$_REQUEST['id_combo']
         ])->into('percorsi_terapeutici_sedute');
     }
     Update('percorsi_terapeutici')->set([

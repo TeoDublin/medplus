@@ -40,7 +40,7 @@ SELECT
     pt.timestamp AS timestamp,
     t.trattamenti AS trattamento,
     ta.acronimo AS acronimo,
-    IF(pt.sedute <= IFNULL(p.sp_count, 0), 'Concluso', 'Attivo') AS stato
+    IF(pt.sedute <= IFNULL(p.sp_count, 0), 'Concluso', 'Attivo') COLLATE utf8mb4_general_ci AS `stato`
 FROM percorsi_terapeutici pt
 LEFT JOIN percorsi_combo pc ON pt.id_combo = pc.id
 LEFT JOIN (
@@ -201,3 +201,54 @@ GROUP BY
     pts.id_percorso, 
     pts.id_combo, 
     stato;
+
+DROP VIEW IF EXISTS view_planning;
+CREATE VIEW view_planning AS
+SELECT 
+    'sbarra' AS origin,
+    pm.id AS id,
+    pm.row_inizio AS row_inizio,
+    pm.row_fine AS row_fine,
+    pm.id_terapista AS id_terapista,
+    pm.data AS data,
+    LEFT(m.motivo, 40) AS motivo,
+    '-' AS stato
+FROM planning_motivi pm
+LEFT JOIN motivi m ON pm.id_motivo = m.id
+
+UNION ALL
+
+SELECT 
+    'seduta' AS origin,
+    sp.id AS id,
+    sp.row_inizio AS row_inizio,
+    sp.row_fine AS row_fine,
+    sp.id_terapista AS id_terapista,
+    sp.data AS data,
+    CONCAT(LEFT(c.nominativo, 20), '>', LEFT(t.trattamenti, 20)) AS motivo,
+    sp.stato_prenotazione AS stato
+FROM percorsi_terapeutici_sedute_prenotate sp
+LEFT JOIN clienti c ON sp.id_cliente = c.id
+LEFT JOIN percorsi_terapeutici_sedute s ON sp.id_seduta = s.id
+LEFT JOIN percorsi_combo pc ON s.id_combo = pc.id
+LEFT JOIN (
+    SELECT 
+        pct.id_combo,
+        GROUP_CONCAT(t.trattamento SEPARATOR ';') AS trattamenti
+    FROM percorsi_combo_trattamenti pct
+    LEFT JOIN trattamenti t ON pct.id_trattamento = t.id
+    GROUP BY pct.id_combo
+) t ON pc.id = t.id_combo
+
+UNION ALL
+
+SELECT 
+    'corso' AS origin,
+    cp.id AS id,
+    cp.row_inizio AS row_inizio,
+    cp.row_fine AS row_fine,
+    cp.id_terapista AS id_terapista,
+    cp.data AS data,
+    LEFT(cp.motivo, 40) AS motivo,
+    '-' AS stato
+FROM corsi_planning cp;

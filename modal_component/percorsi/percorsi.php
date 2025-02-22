@@ -1,17 +1,17 @@
 <?php 
-    function _percorso(){
+    function _view_percorsi(){
         return Select('*')
         ->from('view_percorsi')
         ->where("id_cliente={$_REQUEST['id_cliente']}")
         ->get_or_false();
     }
-    function _sedute($id_percorso){
+    function _view_sedute($id_percorso){
         return Select('*')
             ->from('view_sedute')
             ->where("id_percorso={$id_percorso}")
             ->get();
     }
-    function _sedute_prenotate($id_seduta){
+    function _percorsi_terapeutici_sedute_prenotate($id_seduta){
         return Select('sp.id,sp.stato_prenotazione,DATE_FORMAT(sp.data,"%d/%m") as data,t.terapista,TIME_FORMAT(pri.ora,"%H:%i") as "ora_inizio", TIME_FORMAT(prf.ora,"%H:%i") as "ora_fine"')
             ->from('percorsi_terapeutici_sedute_prenotate','sp')
             ->left_join('terapisti t on sp.id_terapista = t.id')
@@ -33,13 +33,13 @@
         }
     }
     style('modal_component/percorsi/percorsi.css');
-    $_percorso=_percorso();
+    $_view_percorsi=_view_percorsi();
     $is_first=true;
 ?>
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header"><h4 class="modal-title">Trattamenti</h4>
+            <div class="modal-header"><h4 class="modal-title">Trattamenti In Corso</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
@@ -48,7 +48,7 @@
                 <div class="p-md-2">
                     <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
                     <div class="container-fluid card text-center py-4">
-                        <?php if(!$_percorso){?>
+                        <?php if(!$_view_percorsi){?>
                             <div class="card">
                                 <div class="card-body">
                                     <span>Non ci sono trattamenti per questo cliente.</span>
@@ -72,7 +72,7 @@
                                         <div class="cc2 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Trattamento</span>
                                         </div>
-                                        <div class="cc2 d-flex align-items-center justify-content-center text-center d-none d-md-block">
+                                        <div class="cc3 d-flex align-items-center justify-content-center text-center d-none d-md-block">
                                             <span class="">Inizio</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
@@ -85,14 +85,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php foreach ($_percorso as $percorso) {
-                                $sedute=_sedute($percorso['id']);
+                            <?php foreach ($_view_percorsi as $percorso) {
+                                $view_sedute=_view_sedute($percorso['id']);
                                 $show = false;
                                 if($_REQUEST['id_percorso']){
                                     $show=$_REQUEST['id_percorso']==$percorso['id'];
                                 }
                                 else{
-                                    $show = $is_first&&count($sedute)>0;
+                                    $show = $is_first&&count($view_sedute)>0;
                                     $is_first = false;
                                 }?>
                                 <div class="accordion" id="accordion-percorso<?php echo $percorso['id'];?>">
@@ -111,15 +111,15 @@
                                                             title=""
                                                             data-bs-toggle="popover"
                                                             data-bs-placement="right"
-                                                            data-bs-title="Note"
+                                                            data-bs-title="Trattamenti"
                                                             data-bs-html="true"
                                                             data-bs-content="<?php echo str_replace(';', '<br>', htmlspecialchars($percorso['trattamento'], ENT_QUOTES, 'UTF-8')); ?>"
                                                             onmouseenter="window.modalHandlers['percorsi'].acronimoEnter(this)"
                                                             onmouseleave="window.modalHandlers['percorsi'].acronimoLeave(this)"
                                                         >
-                                                        <?php echo $percorso['acronimo']; ?>
-                                                    </div>                                                    
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center d-none d-md-block"><span class=""><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
+                                                        <span><?php echo $percorso['acronimo']; ?></span>
+                                                    </div>
+                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center d-none d-md-block"><span class=""><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['prezzo']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"
                                                             title=""
@@ -137,7 +137,7 @@
                                         </h2>
                                         <div id="collapse-percorso<?php echo $percorso['id'];?>" class="accordion-collapse collapse <?php echo $show?'show':''; ?>" data-bs-parent="#accordion-percorso<?php echo $percorso['id'];?>">
                                             <div class="container-fluid card text-center py-4"><?php 
-                                                if(empty($sedute)){?>
+                                                if(empty($view_sedute)){?>
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <span>Non ci sono sedute per questo percorso.</span>
@@ -160,9 +160,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php foreach ($sedute as $seduta) {
+                                                    <?php foreach ($view_sedute as $seduta) {
                                                         $show_seduta=$_REQUEST['id_seduta']&&$seduta['id']==$_REQUEST['id_seduta'];
-                                                        $sedute_prenotate=_sedute_prenotate($seduta['id']);
+                                                        $sedute_prenotate=_percorsi_terapeutici_sedute_prenotate($seduta['id']);
                                                         $abble=in_array($seduta['stato'],['Da Prenotare','Assente','Spostata']);?>
                                                         <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
                                                             <div class="accordion-item">
@@ -281,7 +281,7 @@
                     </div>
                 </div>
                 <div class="p-md-2" id="prenota_planning"></div>
-                <div class="p-md-2" id="percorso_terapeutico"></div>
+                <div class="p-md-2" id="percorso_combo"></div>
                 <div class="p-md-2" id="sedute"></div>
                 <div class="p-md-2" id="add_sedute"></div>
             </div>

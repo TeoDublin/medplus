@@ -1,6 +1,6 @@
 window.modalHandlers['percorsi'] = {
     btnPercorsoClick: function (id_cliente) {
-        modal_component('percorso_terapeutico','percorso_terapeutico',{id_cliente:id_cliente});
+        modal_component('percorso_combo','percorso_combo',{id_cliente:id_cliente});
     },
     prenotaSeduteClick: function (id_seduta,id_cliente,id_percorso){
         modal_component('prenota_planning','prenota_planning',{
@@ -63,15 +63,12 @@ window.modalHandlers['percorsi'] = {
         }).fail(()=>fail());
     },
     noteEnter:function(element) {
-        let popover = bootstrap.Popover.getInstance(element);
-        if (!popover) {
-            popover = bootstrap.Popover.getOrCreateInstance(element, {
-                title: 'Note',
-                content: element.getAttribute('data-bs-content'),
-                placement: 'top',
-                trigger: 'manual'
-            });
-        }
+        const popover = bootstrap.Popover.getOrCreateInstance(element, {
+            title: 'Note',
+            content: element.getAttribute('data-bs-content'),
+            placement: 'top',
+            trigger: 'manual'
+        });
         popover.show();
     },
     noteLeave:function(element) {
@@ -81,16 +78,12 @@ window.modalHandlers['percorsi'] = {
         }
     },
     acronimoEnter:function(element) {
-        let popover = bootstrap.Popover.getInstance(element);
-        if (!popover) {
-            popover = new bootstrap.Popover(element, {
-                title: 'Trattamenti',
-                content: element.getAttribute('data-bs-content'),
-                placement: 'top',
-                trigger: 'manual'
-            });
-            element.dataset.bsInstance = popover;
-        }
+        const popover = bootstrap.Popover.getOrCreateInstance(element, {
+            title: 'Trattamenti',
+            content: element.getAttribute('data-bs-content'),
+            placement: 'top',
+            trigger: 'manual'
+        });
         popover.show();
     },
     acronimoLeave:function(element) {
@@ -98,7 +91,7 @@ window.modalHandlers['percorsi'] = {
         if (popover) {
             popover.hide();
         }
-    },    
+    },
     check:function(element){
         const modal = element.closest('.modal');
         let btn = modal.querySelector('#del-sedute');
@@ -129,7 +122,7 @@ window.modalHandlers['percorsi'] = {
         }
         else alert("Seleziona qualcosa");
     },
-    addSeduteClick:function(id_cliente,id_percorso,id_trattamento){
-        modal_component('add_sedute','add_sedute',{id_cliente:id_cliente,id_percorso:id_percorso,id_trattamento:id_trattamento});
+    addSeduteClick:function(id_cliente,id_percorso,id_combo){
+        modal_component('add_sedute','add_sedute',{id_cliente:id_cliente,id_percorso:id_percorso,id_combo:id_combo});
     }
 }
