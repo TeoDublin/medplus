@@ -2,6 +2,9 @@ window.modalHandlers['percorsi'] = {
     btnPercorsoClick: function (id_cliente) {
         modal_component('percorso_combo','percorso_combo',{id_cliente:id_cliente});
     },
+    btncolloquioClick: function (id_cliente) {
+        modal_component('prenota_colloquio','prenota_colloquio',{id_cliente:id_cliente});
+    },
     prenotaSeduteClick: function (id_seduta,id_cliente,id_percorso){
         modal_component('prenota_planning','prenota_planning',{
             id_seduta:id_seduta,
@@ -61,6 +64,30 @@ window.modalHandlers['percorsi'] = {
                 id_seduta:id_seduta
             });
         }).fail(()=>fail());
+    },
+    changeStatoColloquio:function(element,id){
+        $.post('post/save.php',{
+            table:'colloquio_planning',
+            stato_prenotazione:element.value,
+            id:id
+        }).done(()=>{
+            reload_modal_component('percorsi','percorsi',{
+                'id_cliente':element.closest('.modal').querySelector('#id_cliente').value
+            });
+        }).fail(()=>fail());
+    },
+    deleteColloquio:function(element,id){
+        $.post('post/delete.php',{table:'colloquio_planning',id:id}).done(()=>{
+            reload_modal_component('percorsi','percorsi',{
+                'id_cliente':element.closest('.modal').querySelector('#id_cliente').value
+            });
+        }).fail(()=>fail());
+    },
+    enterColloquio:function(element){
+        element.closest('div.flex-row').classList.add('bg-danger');
+    },
+    leaveColloquio:function(element){
+        element.closest('div.flex-row').classList.remove('bg-danger');
     },
     noteEnter:function(element) {
         const popover = bootstrap.Popover.getOrCreateInstance(element, {

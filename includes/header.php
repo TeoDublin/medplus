@@ -12,6 +12,7 @@
         <script src="<?php echo '/'.PROJECT_NAME.'/assets/js/popper-1.14.7.js?v='.filemtime(root('/assets/js/popper-1.14.7.js'));?>"></script>
         <script src="<?php echo '/'.PROJECT_NAME.'/assets/js/bootstrap-5.3.3.js?v='.filemtime(root('/assets/js/bootstrap-5.3.3.js'));?>"></script>
         <script src="<?php echo '/'.PROJECT_NAME.'/assets/js/functions.js?v='.filemtime(root('/assets/js/functions.js'));?>"></script>
+        <?php require_once __DIR__.'/../assets/css/preferences.php'; ?>
         <title>MedPlus</title>
     </head>
     <body data-bs-theme="<?php echo theme();?>" class="maybe-flex">

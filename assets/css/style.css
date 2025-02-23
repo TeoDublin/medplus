@@ -215,3 +215,11 @@
         display:none!important;
     }
 }
+
+.custom-dropdown-style {
+    position: absolute !important;
+    z-index: 1050;  /* Ensure it is above the modal */
+    max-height: 300px;  /* Adjust the height if necessary */
+    overflow-y: auto;  /* Add scrolling */
+  }
+  

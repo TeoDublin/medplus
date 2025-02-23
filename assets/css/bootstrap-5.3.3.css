@@ -258,6 +258,7 @@
 	--base-bg-colorfull: #32ffbb;
 	--base-bg-colorfull2: #5d7fff;
 	--base-bg-colorfull3: #56ebf7;
+	--base-bg-colorfull4: #aad5d8;
 }
 
 [data-bs-theme=green] {
@@ -510,6 +511,10 @@
 
 .bg-colorfull3 {
 	background-color: var(--base-bg-colorfull3);
+}
+
+.bg-colorfull4 {
+	background-color: var(--base-bg-colorfull4);
 }
 
 

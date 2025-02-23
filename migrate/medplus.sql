@@ -202,6 +202,25 @@ GROUP BY
     pts.id_combo, 
     stato;
 
+CREATE TABLE `colloquio_planning` (
+  `id` int NOT NULL,
+  `row_inizio` int NOT NULL,
+  `row_fine` int NOT NULL,
+  `id_terapista` int NOT NULL,
+  `id_cliente` int NOT NULL,
+  `data` date NOT NULL,
+  `stato_prenotazione` enum('Assente','Conclusa','Prenotata') COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Prenotata'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+ALTER TABLE `colloquio_planning`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_terapista` (`id_terapista`),
+  ADD KEY `id_cliente` (`id_cliente`);
+
+ALTER TABLE `colloquio_planning`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+
 DROP VIEW IF EXISTS view_planning;
 CREATE VIEW view_planning AS
 SELECT 
@@ -251,4 +270,47 @@ SELECT
     cp.data AS data,
     LEFT(cp.motivo, 40) AS motivo,
     '-' AS stato
-FROM corsi_planning cp;
+FROM corsi_planning cp
+
+UNION ALL
+
+SELECT 
+    'colloquio' AS origin,
+    cp.id AS id,
+    cp.row_inizio AS row_inizio,
+    cp.row_fine AS row_fine,
+    cp.id_terapista AS id_terapista,
+    cp.data AS data,
+    CONCAT(LEFT(c.nominativo, 28), ' > Colloquio') AS motivo,
+    cp.stato_prenotazione AS stato
+FROM colloquio_planning cp
+LEFT JOIN clienti c ON cp.id_cliente = c.id;
+
+CREATE VIEW view_colloqui AS 
+SELECT cp.*,c.nominativo,t.terapista,pr_start.ora as ora_inizio, pr_end.ora as ora_fine
+FROM `colloquio_planning` cp
+LEFT JOIN clienti c ON cp.id_cliente = c.id
+LEFT JOIN terapisti t ON cp.id_terapista = t.id
+LEFT JOIN planning_row pr_start ON cp.row_inizio = pr_start.id
+LEFT JOIN planning_row pr_end ON cp.row_fine = pr_end.id;
+
+
+CREATE TABLE `utenti_preferenze` (
+  `id` int NOT NULL,
+  `id_utente` int NOT NULL,
+  `chiave` varchar(60) COLLATE utf8mb4_general_ci NOT NULL,
+  `valore` longtext COLLATE utf8mb4_general_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `utenti_preferenze` (`id`, `id_utente`, `chiave`, `valore`) VALUES
+(1, 1, 'planning_colors', ':root{\r\n    --base-bg-colloquio:#aad5d8;\r\n    --base-bg-seduta:#56ebf7;\r\n    --base-bg-corso:#32ffbb;\r\n    --base-bg-sbarra:#5d7fff;\r\n}'),
+(2, 2, 'planning_colors', ':root{\r\n    --base-bg-colloquio:#aad5d8;\r\n    --base-bg-seduta:#56ebf7;\r\n    --base-bg-corso:#32ffbb;\r\n    --base-bg-sbarra:#5d7fff;\r\n}');
+
+ALTER TABLE `utenti_preferenze`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_utente` (`id_utente`);
+
+
+ALTER TABLE `utenti_preferenze`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+

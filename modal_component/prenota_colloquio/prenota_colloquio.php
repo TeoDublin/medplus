@@ -7,12 +7,10 @@
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-span="Close"></button>
             </div>
             <div class="modal-body"><?php
-                echo "<input id=\"id_seduta\" value=\"{$_REQUEST['id_seduta']}\" hidden/>";
                 echo "<input id=\"id_cliente\" value=\"{$_REQUEST['id_cliente']}\" hidden/>";
-                echo "<input id=\"id_percorso\" value=\"{$_REQUEST['id_percorso']}\" hidden/>";
                 component('planning','php');?>
             </div>
         </div>
     </div>
 </div>
-<?php script('modal_component/prenota_planning/prenota_planning.js');?>
+<?php script('modal_component/prenota_colloquio/prenota_colloquio.js');?>

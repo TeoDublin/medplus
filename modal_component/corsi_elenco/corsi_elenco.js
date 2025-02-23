@@ -70,6 +70,9 @@ window.modalHandlers['corsi_elenco']={
             btn.addEventListener('click', () => this.delClickCliente(btn));
             btn.setAttribute('data-bound', 'true');
         });
+        $('.cliente:not([data-bound])').each(function() {
+            $(this).attr('data-bound', 'true');
+        });
     }
 } 
 window.modalHandlers['corsi_elenco'].bindBtn();
