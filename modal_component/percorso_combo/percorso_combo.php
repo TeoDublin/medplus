@@ -112,7 +112,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary w-100" onclick="window.modalHandlers['percorso_combo'].btnSalva(this,<?php echo $_REQUEST['id_cliente'].','.($_REQUEST['id_percorso']??'').','.($view_percorsi['id_combo']??''); ?>)">Salva</a>
+                <a href="#" class="btn btn-primary w-100" onclick="window.modalHandlers['percorso_combo'].btnSalva(this,<?php echo $_REQUEST['id_cliente'].','.($_REQUEST['id_percorso']??'0').','.($view_percorsi['id_combo']??'0'); ?>)">Salva</a>
             </div>
         </div>
     </div>

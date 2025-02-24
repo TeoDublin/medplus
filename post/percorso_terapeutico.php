@@ -1,7 +1,7 @@
 <?php
     $_REQUEST['skip_cookie']=true;
     require_once '../includes.php';
-    if(!($id_combo=request('id_combo'))){
+    if(!(int)($id_combo=request('id_combo'))){
         $id_combo=Insert([])->into('percorsi_combo')->get();
     }
     else Delete()->from('percorsi_combo_trattamenti')->where("id_combo={$id_combo}");
@@ -10,7 +10,7 @@
         Insert(['id_combo'=>$id_combo,'id_trattamento'=>$id_trattamento])->into('percorsi_combo_trattamenti');
     }
 
-    if(!($id_percorso=request('id_percorso'))){
+    if(!(int)($id_percorso=request('id_percorso'))){
         $id_percorso=Insert([
             'id_cliente'=>$_REQUEST['id_cliente'],
             'id_combo'=>$id_combo,
