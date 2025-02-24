@@ -1,17 +1,23 @@
 <?php 
-    function _percorso(){
+    function _view_percorsi(){
         return Select('*')
         ->from('view_percorsi')
         ->where("id_cliente={$_REQUEST['id_cliente']}")
         ->get_or_false();
     }
-    function _sedute($id_percorso){
+    function _view_colloqui(){
+        return Select('*,DATE_FORMAT(x.data,"%d/%m") as data_formated,TIME_FORMAT(x.ora_inizio,"%H:%i") as "ora_inizio_formated", TIME_FORMAT(x.ora_fine,"%H:%i") as "ora_fine_formated"')
+        ->from('view_colloqui')
+        ->where("id_cliente={$_REQUEST['id_cliente']}")
+        ->get_or_false();
+    }
+    function _view_sedute($id_percorso){
         return Select('*')
             ->from('view_sedute')
             ->where("id_percorso={$id_percorso}")
             ->get();
     }
-    function _sedute_prenotate($id_seduta){
+    function _percorsi_terapeutici_sedute_prenotate($id_seduta){
         return Select('sp.id,sp.stato_prenotazione,DATE_FORMAT(sp.data,"%d/%m") as data,t.terapista,TIME_FORMAT(pri.ora,"%H:%i") as "ora_inizio", TIME_FORMAT(prf.ora,"%H:%i") as "ora_fine"')
             ->from('percorsi_terapeutici_sedute_prenotate','sp')
             ->left_join('terapisti t on sp.id_terapista = t.id')
@@ -33,13 +39,14 @@
         }
     }
     style('modal_component/percorsi/percorsi.css');
-    $_percorso=_percorso();
+    $view_percorsi=_view_percorsi();
+    $view_colloqui=_view_colloqui();
     $is_first=true;
 ?>
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
-            <div class="modal-header"><h4 class="modal-title">Trattamenti</h4>
+            <div class="modal-header"><h4 class="modal-title">Trattamenti In Svolgimento</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
@@ -48,7 +55,7 @@
                 <div class="p-md-2">
                     <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
                     <div class="container-fluid card text-center py-4">
-                        <?php if(!$_percorso){?>
+                        <?php if(!$view_percorsi&&!$view_colloqui){?>
                             <div class="card">
                                 <div class="card-body">
                                     <span>Non ci sono trattamenti per questo cliente.</span>
@@ -72,7 +79,7 @@
                                         <div class="cc2 d-flex align-items-center justify-content-center text-center">
                                             <span class="">Trattamento</span>
                                         </div>
-                                        <div class="cc2 d-flex align-items-center justify-content-center text-center d-none d-md-block">
+                                        <div class="cc3 d-flex align-items-center justify-content-center text-center d-none d-md-block">
                                             <span class="">Inizio</span>
                                         </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center">
@@ -85,20 +92,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php foreach ($_percorso as $percorso) {
-                                $sedute=_sedute($percorso['id']);
-                                $show = false;
-                                if($_REQUEST['id_percorso']){
-                                    $show=$_REQUEST['id_percorso']==$percorso['id'];
-                                }
-                                else{
-                                    $show = $is_first&&count($sedute)>0;
-                                    $is_first = false;
-                                }?>
+                            <?php foreach ($view_percorsi as $percorso) {
+                                $view_sedute=_view_sedute($percorso['id']);?>
                                 <div class="accordion" id="accordion-percorso<?php echo $percorso['id'];?>">
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
-                                            <div class="accordion-button border py-2 <?php echo $show?'':'collapsed'; ?>" name="row_percorso" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-percorso<?php echo $percorso['id'];?>" aria-expanded="<?php echo $show; ?>" aria-controls="collapse-percorso<?php echo $percorso['id'];?>">
+                                            <div class="accordion-button border py-2 collapsed" name="row_percorso" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-percorso<?php echo $percorso['id'];?>" aria-expanded="false" aria-controls="collapse-percorso<?php echo $percorso['id'];?>">
                                                 <div class="d-flex flex-row w-100">
                                                     <input value="<?php echo $percorso['id'];?>" name="id_percorso" hidden/>
                                                     <div class="cc1 d-flex align-items-center justify-content-center text-center" 
@@ -107,8 +106,19 @@
                                                         onmouseleave="window.modalHandlers['percorsi'].deleteLeave(this)">
                                                         <?php echo icon('bin.svg','black',16,16); ?>
                                                     </div>
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['trattamento']; ?></span></div>
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center d-none d-md-block"><span class=""><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
+                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center"
+                                                            title=""
+                                                            data-bs-toggle="popover"
+                                                            data-bs-placement="right"
+                                                            data-bs-title="Trattamenti"
+                                                            data-bs-html="true"
+                                                            data-bs-content="<?php echo str_replace(';', '<br>', htmlspecialchars($percorso['trattamento'], ENT_QUOTES, 'UTF-8')); ?>"
+                                                            onmouseenter="window.modalHandlers['percorsi'].acronimoEnter(this)"
+                                                            onmouseleave="window.modalHandlers['percorsi'].acronimoLeave(this)"
+                                                        >
+                                                        <span><?php echo $percorso['acronimo']; ?></span>
+                                                    </div>
+                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center d-none d-md-block"><span class=""><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $percorso['prezzo']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center"
                                                             title=""
@@ -124,9 +134,9 @@
                                                 </div>
                                             </div>
                                         </h2>
-                                        <div id="collapse-percorso<?php echo $percorso['id'];?>" class="accordion-collapse collapse <?php echo $show?'show':''; ?>" data-bs-parent="#accordion-percorso<?php echo $percorso['id'];?>">
-                                            <div class="container-fluid card text-center py-4"><?php 
-                                                if(empty($sedute)){?>
+                                        <div id="collapse-percorso<?php echo $percorso['id'];?>" class="accordion-collapse collapse" data-bs-parent="#accordion-percorso<?php echo $percorso['id'];?>">
+                                            <div class="container-fluid card text-center pt-4"><?php 
+                                                if(empty($view_sedute)){?>
                                                     <div class="card">
                                                         <div class="card-body">
                                                             <span>Non ci sono sedute per questo percorso.</span>
@@ -149,14 +159,13 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <?php foreach ($sedute as $seduta) {
-                                                        $show_seduta=$_REQUEST['id_seduta']&&$seduta['id']==$_REQUEST['id_seduta'];
-                                                        $sedute_prenotate=_sedute_prenotate($seduta['id']);
+                                                    <?php foreach ($view_sedute as $seduta) {
+                                                        $sedute_prenotate=_percorsi_terapeutici_sedute_prenotate($seduta['id']);
                                                         $abble=in_array($seduta['stato'],['Da Prenotare','Assente','Spostata']);?>
                                                         <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
                                                             <div class="accordion-item">
                                                                 <h2 class="accordion-header">
-                                                                    <div class="accordion-button  <?php echo $show_seduta?'':'collapsed'; ?> border py-2" type="button" data-bs-toggle="collapse"  name="row_percorso" data-bs-target="#collapseSeduta<?php echo $seduta['id'];?>" aria-expanded="<?php echo $show_seduta; ?>" aria-controls="collapseSeduta<?php echo $seduta['id'];?>">
+                                                                    <div class="accordion-button collapsed border py-2" type="button" data-bs-toggle="collapse"  name="row_percorso" data-bs-target="#collapseSeduta<?php echo $seduta['id'];?>" aria-expanded="false" aria-controls="collapseSeduta<?php echo $seduta['id'];?>">
                                                                         <input value="<?php echo $seduta['id'];?>" name="id_seduta" hidden/>
                                                                         <div class="d-flex flex-row w-100">
                                                                             <div class="cs3 d-flex align-items-center justify-content-center text-center">
@@ -188,7 +197,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </h2>
-                                                                <div id="collapseSeduta<?php echo $seduta['id'];?>" class="accordion-collapse collapse <?php echo $show_seduta?'show':''; ?>" data-bs-parent="#accordionSeduta<?php echo $seduta['id'];?>">
+                                                                <div id="collapseSeduta<?php echo $seduta['id'];?>" class="accordion-collapse collapse" data-bs-parent="#accordionSeduta<?php echo $seduta['id'];?>">
                                                                     <?php if(empty($sedute_prenotate)){?>
                                                                         <div class="card">
                                                                             <div class="card-body">
@@ -251,9 +260,9 @@
                                                         </div>
                                                         <p class="psm"><?php
                                                     }?>
-                                                    <div class="d-flex flex-row w-100 gap-3">
-                                                        <button class="btn btn-dark w-100 d-flex flex-row align-items-center justify-content-center gap-3"
-                                                            onclick="window.modalHandlers['percorsi'].addSeduteClick(<?php echo $_REQUEST['id_cliente'].','.$percorso['id'].','.$percorso['id_trattamento']; ?>);"
+                                                    <div class="d-flex flex-row w-100 gap-3 py-3">
+                                                        <button class="btn btn-primary w-100 d-flex flex-row align-items-center justify-content-center gap-3"
+                                                            onclick="window.modalHandlers['percorsi'].addSeduteClick(<?php echo $_REQUEST['id_cliente'].','.$percorso['id'].','.$percorso['id_combo']; ?>);"
                                                         ><span class="text-center">Aggiungi Sedute</span></button>
                                                     </div> <?php                                                   
                                                 }?>
@@ -263,14 +272,85 @@
                                 </div>
                                 <p class="psm"><?php
                             }
+
+                            if($view_colloqui) {?>
+                                <div class="accordion" id="accordion-colloqui">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <div class="accordion-button border py-2 collapsed" name="row_colloqui" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-colloqui" aria-expanded="false" aria-controls="collapse-colloqui">
+                                                <div class="d-flex flex-row w-100">
+                                                    <div class="flex-fill d-flex align-items-center justify-content-center text-center">
+                                                        <span>Colloquio</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h2>
+                                        <div id="collapse-colloqui" class="accordion-collapse collapse" data-bs-parent="#accordion-colloqui">
+                                            <div class="container-fluid card text-center pt-4">
+                                                <div class="table-responsive">
+                                                    <div class="my-0">
+                                                        <div class="flex-row seduta-titles w-100 d-flex">
+                                                            <div class="csp1 d-flex align-items-center justify-content-center text-center">
+                                                                <span class="">Terapista</span>
+                                                            </div>
+                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                <span class="">Data</span>
+                                                            </div>
+                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center">
+                                                                <span class="">Inizio</span>
+                                                            </div>
+                                                            <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center">
+                                                                <span class="">Fine</span>
+                                                            </div>
+                                                            <div class="csp4 d-flex align-items-center justify-content-center text-center">
+                                                                <span class="">Stato</span>
+                                                            </div>
+                                                            <div class="csp3 d-flex align-items-center justify-content-center text-center">
+                                                                <span class="">#</span>
+                                                            </div>
+                                                        </div>
+                                                        <?php foreach ($view_colloqui as $colloquio) {?>
+                                                            <div class="flex-row seduta-titles w-100 d-flex ">
+                                                                <div class="csp1 d-flex align-items-center justify-content-center text-center"><?php _nome_terapista($colloquio['terapista']); ?></div>
+                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $colloquio['data_formated']; ?></span></div>
+                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $colloquio['ora_inizio_formated']; ?></span></div>
+                                                                <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center"><span class=""><?php echo $colloquio['ora_fine_formated']; ?></span></div>
+                                                                <div class="csp4 d-flex align-items-center justify-content-center text-center statoHover">
+                                                                    <select type="text" class="form-control text-center" id="colloquio_stato_prenotazione" value="<?php echo $colloquio['stato_prenotazione']??'';?>" 
+                                                                        onchange="window.modalHandlers['percorsi'].changeStatoColloquio(this,<?php echo $colloquio['id'];?>)">
+                                                                        <?php 
+                                                                            foreach(Enum('colloquio_planning','stato_prenotazione')->list as $value){
+                                                                                $selected = (isset($colloquio['stato_prenotazione']) && $colloquio['stato_prenotazione'] == $value) ? 'selected' : '';
+                                                                                echo "<option value=\"{$value}\" class=\"ps-4  bg-white\" {$selected}>{$value}</option>";
+                                                                            }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="csp3 d-flex align-items-center justify-content-center text-center delHover" 
+                                                                    onclick="window.modalHandlers['percorsi'].deleteColloquio(this,<?php echo $colloquio['id']; ?>)" 
+                                                                    onmouseenter="window.modalHandlers['percorsi'].enterColloquio(this);" 
+                                                                    onmouseleave="window.modalHandlers['percorsi'].leaveColloquio(this);">
+                                                                    <?php echo icon('bin.svg','black',16,16); ?></div>
+                                                            </div><?php                                        
+                                                        }?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="psm"><?php
+                            }
                         }?>
-                        <div class="d-flex mt-2" 
-                            onclick="window.modalHandlers['percorsi'].btnPercorsoClick(<?php echo $_REQUEST['id_cliente']; ?>)"
-                        ><button class="btn btn-primary  flex-fill">Nuovo Trattamento</button></div>
+                        <div class="d-flex mt-2" >
+                            <button class="btn btn-primary flex-fill" onclick="window.modalHandlers['percorsi'].btnPercorsoClick(<?php echo $_REQUEST['id_cliente']; ?>)">Trattamento</button>
+                            <button class="btn btn-secondary w-50 ms-2" onclick="window.modalHandlers['percorsi'].btncolloquioClick(<?php echo $_REQUEST['id_cliente']; ?>)">Colloquio</button>
+                        </div>
                     </div>
                 </div>
                 <div class="p-md-2" id="prenota_planning"></div>
-                <div class="p-md-2" id="percorso_terapeutico"></div>
+                <div class="p-md-2" id="percorso_combo"></div>
+                <div class="p-md-2" id="prenota_colloquio"></div>
                 <div class="p-md-2" id="sedute"></div>
                 <div class="p-md-2" id="add_sedute"></div>
             </div>

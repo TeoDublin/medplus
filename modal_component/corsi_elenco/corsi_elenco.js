@@ -12,7 +12,7 @@ window.modalHandlers['corsi_elenco']={
         });
         modal.querySelectorAll('.cliente_row').forEach(row => {
             _data['clienti'].push({
-                cliente: row.querySelector('.cliente').value,
+                cliente: row.querySelector('select.cliente').value,
                 prezzo: row.querySelector('.prezzo').value,
                 data_inizio: row.querySelector('.data_inizio').value
             });
@@ -69,6 +69,10 @@ window.modalHandlers['corsi_elenco']={
             btn.addEventListener('mouseleave', () => this.delLeaveCliente(btn));
             btn.addEventListener('click', () => this.delClickCliente(btn));
             btn.setAttribute('data-bound', 'true');
+        });
+        document.querySelectorAll('.cliente:not([data-bound])').forEach(select => {
+            select.searchable();
+            select.setAttribute('data-bound', 'true');
         });
     }
 } 
