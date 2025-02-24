@@ -1,7 +1,7 @@
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header"><h4 class="modal-title">Fatturato Aruba</h4>
+            <div class="modal-header"><h4 class="modal-title">Pagamento senza fattura</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
@@ -22,9 +22,9 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['fatturato_aruba'].btnSalva(this,<?php echo $_data;?>)">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['senza_fattura'].btnSalva(this,<?php echo $_data;?>)">Salva</a>
             </div>
         </div>
     </div>
-    <?php modal_script('fatturato_aruba'); ?>
+    <?php modal_script('senza_fattura'); ?>
 </div>

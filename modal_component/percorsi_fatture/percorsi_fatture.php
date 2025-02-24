@@ -115,7 +115,7 @@
                                 </div><?php
                             }
                             if($senza_fattura){?>
-                                <div class="card">
+                                <div class="card mb-3">
                                     <div class="card-header">Senza Fattura</div>
                                     <div class="card-body">
                                         <div class="table-responsive title">

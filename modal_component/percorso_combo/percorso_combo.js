@@ -1,7 +1,11 @@
 window.modalHandlers['percorso_combo']={
     prezzo_picked:false,
     prezzo:0,
+    refreshModal:function(_data){
+        reload_modal_component('percorsi','percorsi',_data);
+    },
     btnSalva:function(element,id_cliente,id_percorso,id_combo){
+        console.log(id_combo);
         const modal = element.closest('.modal');
         let _data = {
             trattamenti:[],
@@ -17,8 +21,9 @@ window.modalHandlers['percorso_combo']={
             _data.trattamenti.push(element.value);
         });
         $.post('post/percorso_terapeutico.php',_data).done(()=>{
-            reload_modal_component('percorsi','percorsi',{id_cliente:id_cliente});
+            this.refreshModal({id_cliente:id_cliente});
         }).fail(()=>{fail();})
+        
     },
     delEnter:function(element){
         element.closest('.d-flex').classList.add('bg-danger');
@@ -97,5 +102,5 @@ window.modalHandlers['percorso_combo']={
         this.prezzo_picked = true;
         this.prezzo = element.value;
         this.refreshPage(modal);
-    }
-} 
+    },
+}

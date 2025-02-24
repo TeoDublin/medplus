@@ -10,7 +10,7 @@
         Insert(['id_combo'=>$id_combo,'id_trattamento'=>$id_trattamento])->into('percorsi_combo_trattamenti');
     }
 
-    if(!($id_percorso=request('id_combo'))){
+    if(!($id_percorso=request('id_percorso'))){
         $id_percorso=Insert([
             'id_cliente'=>$_REQUEST['id_cliente'],
             'id_combo'=>$id_combo,
@@ -47,7 +47,7 @@
                 'id_cliente'=>$_REQUEST['id_cliente'],
                 'id_percorso'=>$id_percorso,
                 'id_combo'=>$id_combo
-            ])->where("id_percorso={$id_percorso} AND id_combo={$id_combo} AND index={$index}");
+            ])->where("id_percorso={$id_percorso} AND id_combo={$id_combo} AND `index`={$index}");
         }
         else{
             Insert([

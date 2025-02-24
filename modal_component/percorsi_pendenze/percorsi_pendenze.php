@@ -302,6 +302,6 @@
 <div id="fattura"></div>
 <div id="senza_fattura"></div>
 <div id="fatturato_aruba"></div>
-<div id="percorso_terapeutico"></div>
+<div id="percorso_combo"></div>
 <div id="prezzo_corso"></div>
 <?php modal_script('percorsi_pendenze'); ?>
