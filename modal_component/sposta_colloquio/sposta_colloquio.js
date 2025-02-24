@@ -1,4 +1,4 @@
-window.modalHandlers['sposta_seduta'] = {
+window.modalHandlers['sposta_colloquio'] = {
     btnSalva:function(element){
         const _data=this._data(element);
         $.post('post/save.php',_data).done(function(){ 
@@ -21,13 +21,13 @@ window.modalHandlers['sposta_seduta'] = {
     },
     change(element){
         closeAllModal();
-        modal_component('sbarra', 'sposta_seduta', this._data(element));
+        modal_component('sbarra', 'sposta_colloquio', this._data(element));
     },
     _data(element){
         const modal = element.closest('.modal');
         const { idSeduta } = element.dataset;
         let _data = { 
-            table:'percorsi_terapeutici_sedute_prenotate',
+            table:'colloquio_planning',
             id:idSeduta,
             stato_prenotazione:'Prenotata'
         };

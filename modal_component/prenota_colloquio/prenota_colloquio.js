@@ -1,18 +1,16 @@
-window.modalHandlers['prenota_planning'] = {
+window.modalHandlers['prenota_colloquio'] = {
     bind_modal_functions:function(){
         window.modalHandlers['planning'].rowClick=function(element,origin,id_terapista){
             const planning_motivi_id = element.getAttribute('planning_motivi_id');
             const modal = element.closest('.modal');
             switch (origin) {
                 case 'empty':
-                    modal_component('sbarra', 'prenota_planning_ora', { 
+                    modal_component('sbarra', 'prenota_colloquio_ora', { 
                         'id_terapista': id_terapista,
                         'data':modal.querySelector('#data').value, 
                         'planning_motivi_id':planning_motivi_id,
                         'row': element.getAttribute('row'),
-                        'id_seduta': modal.querySelector('#id_seduta').value,
                         'id_cliente': modal.querySelector('#id_cliente').value,
-                        'id_percorso': modal.querySelector('#id_percorso').value,
                     });
                     break;
             
@@ -32,13 +30,10 @@ window.modalHandlers['prenota_planning'] = {
                     }
                 },
                 {
-                    id:'prenota_planning', 
-                    component:'prenota_planning',
+                    id:'prenota_colloquio', 
+                    component:'prenota_colloquio',
                     data:{
-                        id_seduta:modal.querySelector('#id_seduta').value,
                         id_cliente:modal.querySelector('#id_cliente').value,
-                        id_percorso:modal.querySelector('#id_percorso').value,
-                        id_terapista:modal.querySelector('#terapista').value,
                         data:modal.querySelector('#data').value
                     }
                 },
@@ -46,4 +41,4 @@ window.modalHandlers['prenota_planning'] = {
         };
     }
 }
-window.modalHandlers['prenota_planning'].bind_modal_functions();
+window.modalHandlers['prenota_colloquio'].bind_modal_functions();

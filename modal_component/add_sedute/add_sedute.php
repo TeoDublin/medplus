@@ -12,7 +12,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['add_sedute'].btnSalva(this,<?php echo $_REQUEST['id_cliente'].','.$_REQUEST['id_percorso'].','.$_REQUEST['id_trattamento']; ?>)">Salva</a>
+                <a href="#" class="btn btn-primary" onclick="window.modalHandlers['add_sedute'].btnSalva(this,<?php echo $_REQUEST['id_cliente'].','.$_REQUEST['id_percorso'].','.$_REQUEST['id_combo']; ?>)">Salva</a>
             </div>
         </div>
     </div>
