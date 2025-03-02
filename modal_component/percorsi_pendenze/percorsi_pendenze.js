@@ -36,72 +36,32 @@ window.modalHandlers['percorsi_pendenze'] = {
     leavePrezzo:function(element){
         element.classList.remove('success');
     },
-    loadScript:function(url, callback) {
-        const script = document.createElement('script');
-        script.src = url;
-        script.onload = callback;
-        document.head.appendChild(script);
-    },
-    clickPrezzoTrattamenti: function(id_percorso, id_cliente) {
-        const id = 'percorso_combo';
-        const component = 'percorso_combo';
-        const _data = { id_cliente: id_cliente, caller: 'percorsi_pendenze', id_percorso: id_percorso };
-        const modal_id = 'modal_' + component;
-        _data['id_modal'] = modal_id;
-        _data['component'] = component;
-    
-        if (!window.modalHandlers['percorso_combo']) {
-            this.loadScript('modal_component/percorso_combo/percorso_combo.js', () => {
-                console.log('Modal script loaded');
-                openModal();
-            });
-        } else {
-            console.log('Modal handler already exists');
-            openModal();
-        }
-    
-        function openModal() {
-            $.post('modal_component.php', _data).done(html => {
-                const container = document.querySelector('#' + id);
-                document.querySelectorAll('#div_' + component).forEach(to_remove => { to_remove.remove(); });
-    
-                const div = document.createElement('div');
-                div.id = 'div_' + component;
-                div.innerHTML = html;
-                append_scripts(div);
-                container.appendChild(div);
-    
-                const modalElement = document.getElementById(modal_id);
-                const newModalInstance = new bootstrap.Modal(modalElement, { keyboard: false });
-    
-                modalElement.addEventListener('shown.bs.modal', () => {
-                    console.log('Modal shown');
-    
-                    // Debugging: Check if modalHandlers['percorso_combo'] exists
-                    if (window.modalHandlers['percorso_combo']) {
-                        console.log('Handler exists:', window.modalHandlers['percorso_combo']);
-    
-                        // Log if refreshModal is already set
-                        console.log('Current refreshModal:', window.modalHandlers['percorso_combo'].refreshModal);
-    
-                        // Reassign refreshModal function
-                        window.modalHandlers['percorso_combo'].refreshModal = function(_data) {
-                            console.log('New refreshModal function triggered');
-                            reload_modal_component('percorsi_pendenze', 'percorsi_pendenze', _data);
-                        };
-    
-                        // Ensure that other properties are set
-                        window.modalHandlers['percorso_combo'].prezzo_picked = true;
-                        window.modalHandlers['percorso_combo'].prezzo = modalElement.querySelector('[name=prezzo]').value;
-                        window.modalHandlers['percorso_combo'].refreshPage(modalElement);
-                    } else {
-                        console.error("modalHandlers['percorso_combo'] is not loaded yet.");
-                    }
+    clickPrezzoTrattamenti: function(element,id_percorso, id_cliente) {
+        const modal = element.closest('.modal');
+        window.modalHandlers['percorso_combo']={
+            prezzo_picked:true,
+            prezzo:modal.querySelector('#prezzo').innerHTML,
+            btnSalva:function(element,id_cliente,id_percorso,id_combo){
+                const modal = element.closest('.modal');
+                let _data = {
+                    trattamenti:[],
+                    prezzo_tabellare:modal.querySelector('[name=prezzo_tabellare]').value,
+                    prezzo:modal.querySelector('[name=prezzo]').value,
+                    note:modal.querySelector('[name=note]').value,
+                    sedute:modal.querySelector('[name=sedute]').value,
+                    id_cliente:id_cliente,
+                    id_percorso:id_percorso,
+                    id_combo:id_combo
+                };
+                modal.querySelectorAll('[name=id_trattamento]').forEach(element=>{
+                    _data.trattamenti.push(element.value);
                 });
-    
-                newModalInstance.show();
-            });
+                $.post('post/percorso_terapeutico.php',_data).done(()=>{
+                    reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:id_cliente});
+                }).fail(()=>{fail();})
+            },
         }
+        modal_component('percorso_combo','percorso_combo',{id_cliente:id_cliente,id_percorso:id_percorso});
     }, 
     clickPrezzoCorsi:function(id,prezzo_tabellare,prezzo,id_cliente){
         modal_component('prezzo_corso','prezzo_corso',{id:id,prezzo_tabellare:prezzo_tabellare,prezzo:prezzo,id_cliente:id_cliente});

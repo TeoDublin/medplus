@@ -123,7 +123,7 @@
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center"
                                                                         onmouseenter="window.modalHandlers['percorsi_pendenze'].enterPrezzo(this)"
                                                                         onmouseleave="window.modalHandlers['percorsi_pendenze'].leavePrezzo(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickPrezzoTrattamenti(<?php echo $trattamento['id'].','.$trattamento['id_cliente']; ?>)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickPrezzoTrattamenti(this,<?php echo $trattamento['id'].','.$trattamento['id_cliente']; ?>)"
                                                                     >
                                                                     <span id="prezzo"><?php echo $trattamento['prezzo'];?></span>
                                                                 </div>

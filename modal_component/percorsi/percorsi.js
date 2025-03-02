@@ -1,5 +1,28 @@
 window.modalHandlers['percorsi'] = {
     btnPercorsoClick: function (id_cliente) {
+        window.modalHandlers['percorso_combo']={
+            prezzo_picked:false,
+            prezzo:0,
+            btnSalva:function(element,id_cliente,id_percorso,id_combo){
+                const modal = element.closest('.modal');
+                let _data = {
+                    trattamenti:[],
+                    prezzo_tabellare:modal.querySelector('[name=prezzo_tabellare]').value,
+                    prezzo:modal.querySelector('[name=prezzo]').value,
+                    note:modal.querySelector('[name=note]').value,
+                    sedute:modal.querySelector('[name=sedute]').value,
+                    id_cliente:id_cliente,
+                    id_percorso:id_percorso,
+                    id_combo:id_combo
+                };
+                modal.querySelectorAll('[name=id_trattamento]').forEach(element=>{
+                    _data.trattamenti.push(element.value);
+                });
+                $.post('post/percorso_terapeutico.php',_data).done(()=>{
+                    reload_modal_component('percorsi','percorsi',{id_cliente:id_cliente});
+                }).fail(()=>{fail();})
+            },
+        }
         modal_component('percorso_combo','percorso_combo',{id_cliente:id_cliente});
     },
     btncolloquioClick: function (id_cliente) {

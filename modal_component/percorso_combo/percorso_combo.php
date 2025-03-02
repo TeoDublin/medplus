@@ -48,7 +48,7 @@
                     <div class="card">
                         <div class="card-header text-center"><h5 class="pt-2">Trattamenti</h5></div>
                         <div class="card-body">
-                            <div class="">
+                            <div class="trattamenti-titles <?php echo $_REQUEST['id_percorso']?'':'d-none';?>">
                                 <div class="d-flex flex-row">
                                     <div class="p-1 flex-fill text-center">
                                         <label class="form-label">Trattamento</label>
@@ -59,13 +59,13 @@
                                     <div class="p-1 w-20 text-center">
                                         <label class="form-label">Tabellare</label>
                                     </div>
-                                    <div class="p-1 w-20 text-center">
-                                        <label class="form-label">Prezzo</label>
-                                    </div>
                                     <div class="p-1 w-10 text-center">
                                         <label class="form-label">#</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="trattamenti-empty justify-content-center align-content-center d-flex mt-2 <?php echo $_REQUEST['id_percorso']?'d-none':'';?>">
+                                <span class="text-center w-100">Aggiungi trattamenti</span>
                             </div>
                             <div class="" id="table-body">
                                 <?php  

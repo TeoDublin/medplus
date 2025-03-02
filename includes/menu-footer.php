@@ -18,6 +18,7 @@
         terapisti: document.querySelector('#menu-terapisti'),
         prenota: document.querySelector('#menu-prenota'),
         clienti: document.querySelector('#menu-clienti'),
+        utenti: document.querySelector('#menu-utenti'),
         pagamenti: document.querySelector('#menu-pagamenti'),
         trattamenti: document.querySelector('#menu-trattamenti'),
         corsi: document.querySelector('#menu-corsi'),
@@ -69,6 +70,9 @@
             }
             if(in_array('menu_clienti',$elementi)){?>
                 this.clienti.addEventListener('click', () => navigate('clienti.php','clienti'));<?php
+            }
+            if(in_array('menu_utenti',$elementi)){?>
+                this.utenti.addEventListener('click', () => navigate('utenti.php','utenti'));<?php
             }
             if(in_array('menu_trattamenti',$elementi)){?>
                 this.trattamenti.addEventListener('click', () => navigate('trattamenti.php','trattamenti'));<?php

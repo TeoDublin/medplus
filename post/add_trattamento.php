@@ -12,10 +12,7 @@
             <input type=\"text\" class=\"form-control text-center\" name=\"row_acronimo\" value=\"".$view_trattamenti_requested['acronimo']."\" disabled/>
         </div>
         <div class=\"p-1 w-20 text-center\">
-            <input type=\"number\" class=\"form-control text-center\" name=\"row_prezzo_tabellare\" value=\"".$view_trattamenti_requested['prezzo']."\" disabled/>
-        </div>
-        <div class=\"p-1 w-20 text-center\">
-            <input type=\"number\" class=\"form-control text-center\" name=\"row_prezzo\" prezzo_tabellare=\"".$view_trattamenti_requested['prezzo']."\" value=\"".$view_trattamenti_requested['prezzo']."\" disabled/>
+            <input type=\"number\" class=\"form-control text-center\" name=\"row_prezzo_tabellare\" prezzo_tabellare=\"".$view_trattamenti_requested['prezzo']."\" value=\"".$view_trattamenti_requested['prezzo']."\" disabled/>
         </div>
         <div class=\"p-1 w-10 text-center justify-content-center align-content-center\"
             onmouseenter=\"window.modalHandlers['percorso_combo'].delEnter(this)\"

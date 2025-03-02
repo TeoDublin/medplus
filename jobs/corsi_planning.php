@@ -30,7 +30,7 @@
             Corsiplanning::insert_corsi_planning($period,$giorni,$corso);
             foreach ($_REQUEST['clienti'] as $cliente) {
                 $data = new DateTime(date(now("Y-m-{$_REQUEST['scadenza']}")));
-                $data->modify('+30 days');
+                $data->modify('+1 month');
                 Corsiplanning::insert_corsi_pagamenti(
                     $cliente['data_inizio'],
                     $data->format('Y-m-d'),
@@ -56,7 +56,7 @@
                 Corsiplanning::insert_corsi_planning($period,$giorni,$corso);
                 foreach(Select('*')->from('corsi_classi')->where("id_corso={$corso['id']}")->get_n_flush() as $cliente){
                     $data = new DateTime(date("Y-m-{$corso['scadenza']}"));
-                    $data->modify("+30 days");
+                    $data->modify("+2 month");
                     Corsiplanning::insert_corsi_pagamenti(
                         $cliente['data_inizio'],
                         $data->format("Y-m-d"),
