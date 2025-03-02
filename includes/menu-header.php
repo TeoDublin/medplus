@@ -1,5 +1,5 @@
 <div class="d-flex flex-column">
-    <div class="d-flex flex-row mb-1 w-100 sticky-top" style="height: 40;">
+    <div class="d-flex flex-row w-100 sticky-top" style="height: 40;">
         <div class="menu-divider hide">
             <div class="d-flex w-100 justify-content-end">
                 <div class="p-3 d-flex align-items-end pe-4 menu-icon-back" >
@@ -34,7 +34,7 @@
     </div>
     <div class="d-flex flex-fill">
         <div class="d-flex flex-fill flex-column flex-md-row">
-            <div class="menu-vertical hide"><?php 
+            <div class="menu-vertical hide bg-white"><?php 
                 $session??=Session();
                 $elementi??=$session->get('elementi')??[];
                 $home=$session->get('home');

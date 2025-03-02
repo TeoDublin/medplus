@@ -158,7 +158,7 @@
                 ?>
             </div>
             <div class="d-flex flex-column flex-grow-0">
-                <div class="d-flex flex-row gap-3 ms-3">
+                <div class="d-flex flex-row flex-wrap gap-3 ms-3">
                     <div class="d-flex align-items-center mb-2 p-1 div-color-box">
                         <input type="color" class="corso_bg color-box color-picker" data-target="--base-bg-corso">
                         <span class="ms-2">Corso</span>
@@ -176,11 +176,12 @@
                         <span class="ms-2">Colloquio</span>
                     </div>
                 </div>
-                <div class="my-3 d-flex  d-none preferences-btn">
-                    <button id="save-btn" class="btn btn-primary w-20">Salva Preferenze</button>
-                    <button id="discard-btn" class="btn btn-secondary ms-2 w-20">Annulla</button>
+                <div class="my-3 d-flex d-none preferences-btn">
+                    <button id="save-btn" class="btn btn-primary w-100 w-md-20">Salva Preferenze</button>
+                    <button id="discard-btn" class="btn btn-secondary ms-2 w-100 w-md-20">Annulla</button>
                 </div>
             </div>
+
             <?php 
                 if($ruolo=='terapista'){
                     $_table($id_terapista);
