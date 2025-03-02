@@ -183,7 +183,7 @@
             </div>
             <?php 
                 if($ruolo=='terapista'){
-                    $_table($user_id);
+                    $_table($id_terapista);
                 }
                 else{
                     ?>
