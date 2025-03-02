@@ -1,10 +1,18 @@
 <?php 
     $rows=$total_rows=51;$tables_by_page=3;
-    $terapisti=Select('*')->from('terapisti')->orderby('id ASC')->get();
+    $session=Session();
+    $elementi=$session->get('elementi')??[];
+    $ruolo=$session->get('ruolo')??false;
+    if($ruolo=='terapista'){
+        $id_terapista = $session->get('user_id');
+        $terapisti=Select('*')->from('terapisti')->where("id={$id_terapista}")->get();
+    }
+    else{
+        $id_terapista = cookie('id_terapista',$_REQUEST['id_terapista']??first('terapisti')['id']);
+        $terapisti=Select('*')->from('terapisti')->orderby('id ASC')->get();
+    }
     $groups=count($terapisti);
     style('components/planning/planning.css'); 
-
-    $id_terapista = cookie('id_terapista',($_REQUEST['id_terapista']??first('terapisti')['id']));
     $data = cookie('data',($_REQUEST['data']??date('Y-m-d')));
     function _ora($row){
         $ora = new DateTime('07:00');
@@ -54,8 +62,7 @@
         }
         return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo),'origin'=>$origin];
     };
-    $_table=function($id_terapista)use(&$rows,&$_planning,&$terapista_planning){
-
+    $_table=function($id_terapista)use(&$rows,&$_planning,&$terapista_planning,&$elementi){
         ?>
         <div class="d-flex flex-column flex-fill text-center p-1 mt-2 table-terapista terapista-<?php echo $id_terapista;?> <?php echo $id_terapista>3?'d-none':'';?>">
             <div class="text-center bg-light bg-opacity-25 p-1 pt-2 my-1">
@@ -71,8 +78,6 @@
                     </thead>
                     <tbody>
                         <?php 
-                        $session=Session();
-                        $elementi=$session->get('elementi')??[];
                         for($row=1; $row<=$rows; $row++){ 
                             $planning = $_planning($id_terapista,$row); ?>
                             <tr class="planning-tr">
@@ -128,23 +133,29 @@
                         onchange="window.modalHandlers['planning'].change(this)"
                     />
                 </div>
-                <div class="flex-fill text-center mb-2 d-md-none">
-                    <label class="form-label" for="terapista">Terapista</label>
-                    <select
-                        id="terapista" 
-                        name="terapista"
-                        class="form-select text-center" 
-                        value="<?php echo $id_terapista??'';?>" 
-                        onchange="window.modalHandlers['planning'].change(this)"
-                        >
-                        <?php
-                            foreach($terapisti as $value){
-                                $selected = (isset($id_terapista) && $id_terapista == $value['id']) ? 'selected' : '';
-                                echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\" {$selected}>{$value['terapista']}</option>";
-                            }
+                <?php 
+                    if($ruolo!='terapista'){
                         ?>
-                    </select>
-                </div>
+                        <div class="flex-fill text-center mb-2 d-md-none">
+                            <label class="form-label" for="terapista">Terapista</label>
+                            <select
+                                id="terapista" 
+                                name="terapista"
+                                class="form-select text-center" 
+                                value="<?php echo $id_terapista??'';?>" 
+                                onchange="window.modalHandlers['planning'].change(this)"
+                                >
+                                <?php
+                                    foreach($terapisti as $value){
+                                        $selected = (isset($id_terapista) && $id_terapista == $value['id']) ? 'selected' : '';
+                                        echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\" {$selected}>{$value['terapista']}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                        <?php
+                    }
+                ?>
             </div>
             <div class="d-flex flex-column flex-grow-0">
                 <div class="d-flex flex-row gap-3 ms-3">

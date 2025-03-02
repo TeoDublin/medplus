@@ -22,14 +22,8 @@
                     <input class="form-control" type="text" name="user" value="<?php echo $view_utenti?$view_utenti['user']:'';?>"/>
                 </div>
                 <div class="p-2">
-                    <label class="form-label" for="id_ruolo">Ruolo</label>
-                    <select class="form-control" name="id_ruolo" value="<?php echo $view_utenti?$view_utenti['id_ruolo']:'';?>">
-                        <?php 
-                            foreach(Select('*')->from('ruoli')->get() as $ruolo){
-                                echo "<option value=\"{$ruolo['id']}\" ".($view_utenti['id_ruolo']&&$ruolo['id']==$view_utenti['id_ruolo']?'selected':'').">{$ruolo['ruolo']}</option>";
-                            }
-                        ?>
-                    </select>
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-control" type="password" name="password" value="<?php echo $view_utenti?$view_utenti['password']:'';?>"/>
                 </div>
             </div>
             <div class="modal-footer">

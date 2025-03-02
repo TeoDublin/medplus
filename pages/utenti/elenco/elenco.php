@@ -1,13 +1,23 @@
 
-<div class="d-flex flex-row p-2">
-    <div class= "d-w20" onclick="add(false);">
-        <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
-            <div class="mx-2"><?php echo icon('cloud-add.svg','white',20,20);?></div>
-            <div>Aggiungi</div>
-        </button>
+<div class="w-100 mx-1 mt-2">
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead class="text-center">
+                    <tr>
+                        <th><h3>Nome</h3></th>
+                        <th><h3>Utente</h3></th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    <?php foreach(Select('*')->from('view_utenti')->get() as $utente){
+                        echo "<tr class=\"hover\" onclick=\"editClick({$utente['id']})\"><td>{$utente['nome']}</td><td>{$utente['user']}</td></tr>";
+                    } ?>
+                </tbody>
+            </table>
+        </div>
     </div>
+    
 </div>
-
-<div class="w-100 mx-1" id="search_table"></div>
 <div id="utenti"></div>
 <?php script('pages/utenti/elenco/elenco.js'); ?>
