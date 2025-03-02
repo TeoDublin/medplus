@@ -181,23 +181,32 @@
                     <button id="discard-btn" class="btn btn-secondary ms-2 w-20">Annulla</button>
                 </div>
             </div>
-            <div class="d-flex w-100 py-3">
-                <div class="flex-fill flex-column">
-                    <ul class="nav nav-tabs"><?php
-                        for($i=1;$i<=ceil($groups/$tables_by_page);$i++){
-                            echo"<li class=\"nav-item\" onclick=\"window.modalHandlers['planning'].tab({$i},this)\">
-                                <span class=\"nav-link ".($i==1?'active':'')."\" aria-current=\"page\" href=\"\">Gruppo{$i}</span>
-                            </li>";
-                        }?>
-                    </ul>
-                    <div class="p-1">
-                        <div class="table-container"><?php
-                            for($i=1;$i<=$groups;$i++)$_table($i);
-                            ?>
+            <?php 
+                if($ruolo=='terapista'){
+                    $_table($user_id);
+                }
+                else{
+                    ?>
+                    <div class="d-flex w-100 py-3">
+                        <div class="flex-fill flex-column">
+                            <ul class="nav nav-tabs"><?php
+                                for($i=1;$i<=ceil($groups/$tables_by_page);$i++){
+                                    echo"<li class=\"nav-item\" onclick=\"window.modalHandlers['planning'].tab({$i},this)\">
+                                        <span class=\"nav-link ".($i==1?'active':'')."\" aria-current=\"page\" href=\"\">Gruppo{$i}</span>
+                                    </li>";
+                                }?>
+                            </ul>
+                            <div class="p-1">
+                                <div class="table-container"><?php
+                                    for($i=1;$i<=$groups;$i++)$_table($i);
+                                    ?>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                    </div><?php
+                }
+            ?>
+            
         </div>
     </div>
 </div>
