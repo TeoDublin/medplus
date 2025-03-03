@@ -1,5 +1,5 @@
 <?php 
-    $rows=$total_rows=51;$tables_by_page=3;
+    $rows=$total_rows=53;$tables_by_page=3;
     $session=Session();
     $elementi=$session->get('elementi')??[];
     $ruolo=$session->get('ruolo')??false;
@@ -133,29 +133,6 @@
                         onchange="window.modalHandlers['planning'].change(this)"
                     />
                 </div>
-                <?php 
-                    if($ruolo!='terapista'){
-                        ?>
-                        <div class="flex-fill text-center mb-2 d-md-none">
-                            <label class="form-label" for="terapista">Terapista</label>
-                            <select
-                                id="terapista" 
-                                name="terapista"
-                                class="form-select text-center" 
-                                value="<?php echo $id_terapista??'';?>" 
-                                onchange="window.modalHandlers['planning'].change(this)"
-                                >
-                                <?php
-                                    foreach($terapisti as $value){
-                                        $selected = (isset($id_terapista) && $id_terapista == $value['id']) ? 'selected' : '';
-                                        echo "<option value=\"{$value['id']}\" class=\"ps-4  bg-white\" {$selected}>{$value['terapista']}</option>";
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                        <?php
-                    }
-                ?>
             </div>
             <div class="d-flex flex-column flex-grow-0">
                 <div class="d-flex flex-row flex-wrap gap-3 ms-3">
