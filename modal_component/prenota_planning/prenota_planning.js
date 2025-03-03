@@ -38,7 +38,6 @@ window.modalHandlers['prenota_planning'] = {
                         id_seduta:modal.querySelector('#id_seduta').value,
                         id_cliente:modal.querySelector('#id_cliente').value,
                         id_percorso:modal.querySelector('#id_percorso').value,
-                        id_terapista:modal.querySelector('#terapista').value,
                         data:modal.querySelector('#data').value
                     }
                 },
