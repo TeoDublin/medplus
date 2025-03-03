@@ -140,7 +140,17 @@
     width: 90%!important;
 }
 
+.dots-dropdown{
+    margin-top: 53px!important;
+    margin-right:-55px!important;
+}
+
 @media (max-width: 768px) {
+    .dots-dropdown{
+        margin-top: -15px!important;
+        margin-right:20px!important;
+    }
+    
     .table {
         margin-bottom: 0!important;
     }

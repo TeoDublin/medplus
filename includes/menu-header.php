@@ -19,7 +19,7 @@
                 <div class="p-2 pt-3 me-3 d-flex justify-content-center align-items-center ms-auto">
                     <div class="dropstart" style="z-index:1160!important">
                         <div class="dots dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><?php echo icon('dots.svg','white',40,40);?></div>
-                        <ul class="dropdown-menu" style="margin-top: 53px;margin-right:-55px;">
+                        <ul class="dropdown-menu dots-dropdown">
                             <li class="menu-exit">
                                 <div class="d-flex align-items-center dropdown-item">
                                     <?php echo icon('exit.svg');?>
