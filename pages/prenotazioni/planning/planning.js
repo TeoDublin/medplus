@@ -37,7 +37,6 @@ function bind_modal_functions(){
     };
     window.modalHandlers['planning'].change=function(element){
         refresh({
-            id_terapista:document.querySelector('#terapista').value,
             data:document.querySelector('#data').value
         });
     };
