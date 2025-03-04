@@ -2,7 +2,7 @@ window.modalHandlers['percorsi'] = {
     btnPercorsoClick: function (id_cliente) {
         window.modalHandlers['percorso_combo']={
             prezzo_picked:false,
-            prezzo:0,
+            prezzo_a_sedute:0,
             btnSalva:function(element,id_cliente,id_percorso,id_combo){
                 const modal = element.closest('.modal');
                 let _data = {

@@ -38,7 +38,13 @@ window.modalHandlers['percorso_combo'] = Object.assign(
     changePrezzo:function(element){
         const modal = element.closest('.modal');
         this.prezzo_picked = true;
-        this.prezzo = element.value;
+        this.prezzo_a_sedute = element.value;
+        modal.querySelector('[name=sedute]').removeAttribute('disabled');
+    },
+    changeSedute:function(element){
+        const modal = element.closest('.modal');
+        let new_value = element.value===0 ? 0 : element.value * this.prezzo_a_sedute;
+        modal.querySelector('[name=prezzo]').value = new_value;
     },
     refreshPage:function(modal){
         let acronimo = [];

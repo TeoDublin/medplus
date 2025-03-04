@@ -40,7 +40,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         const modal = element.closest('.modal');
         window.modalHandlers['percorso_combo']={
             prezzo_picked:true,
-            prezzo:modal.querySelector('#prezzo').innerHTML,
+            prezzo_a_sedute:modal.querySelector('#prezzo').innerHTML,
             btnSalva:function(element,id_cliente,id_percorso,id_combo){
                 const modal = element.closest('.modal');
                 let _data = {

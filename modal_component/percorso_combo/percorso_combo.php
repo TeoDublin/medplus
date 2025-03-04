@@ -32,12 +32,14 @@
                         <input type="number" class="form-control text-center" name="prezzo_tabellare" value="<?php echo $view_percorsi['prezzo_tabellare']??'0';?>" disabled/>
                     </div>
                     <div class="py-2 pe-2 w-15">
-                        <label for="sedute" class="form-label">Sedute</label>
-                        <input type="number" class="form-control" name="sedute" value="<?php echo $view_percorsi['sedute']??'10';?>" <?php echo $view_percorsi?'disabled':'';?>/>
-                    </div>
-                    <div class="py-2 pe-2 w-15">
                         <label class="form-label" for="prezzo">Prezzo</label>
                         <input type="number" class="form-control text-center" name="prezzo" value="<?php echo $view_percorsi['prezzo']??'0';?>" onchange="window.modalHandlers['percorso_combo'].changePrezzo(this)"/>
+                    </div>
+                    <div class="py-2 pe-2 w-15">
+                        <label for="sedute" class="form-label">Sedute</label>
+                        <input type="number" class="form-control" name="sedute" value="<?php echo $view_percorsi['sedute']??'1';?>" disabled
+                            onchange="window.modalHandlers['percorso_combo'].changeSedute(this)"
+                            />
                     </div>
                 </div>
                 <div class="p-2">
