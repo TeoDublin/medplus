@@ -1,16 +1,10 @@
 <?php 
-    $rows=$total_rows=53;$tables_by_page=3;
+    $rows=$total_rows=53;$tables_by_page=4;
     $session=Session();
     $elementi=$session->get('elementi')??[];
     $ruolo=$session->get('ruolo')??false;
-    if($ruolo=='terapista'){
-        $id_terapista = $session->get('user_id');
-        $terapisti=Select('*')->from('terapisti')->where("id={$id_terapista}")->get();
-    }
-    else{
-        $id_terapista = cookie('id_terapista',$_REQUEST['id_terapista']??first('terapisti')['id']);
-        $terapisti=Select('*')->from('terapisti')->orderby('id ASC')->get();
-    }
+    $id_terapista = cookie('id_terapista',$_REQUEST['id_terapista']??first('terapisti')['id']);
+    $terapisti=Select('*')->from('terapisti')->orderby('id ASC')->get();
     $groups=count($terapisti);
     style('components/planning/planning.css'); 
     $data = cookie('data',($_REQUEST['data']??date('Y-m-d')));
@@ -64,7 +58,7 @@
     };
     $_table=function($id_terapista)use(&$rows,&$_planning,&$terapista_planning,&$elementi){
         ?>
-        <div class="d-flex flex-column flex-fill text-center p-1 mt-2 table-terapista terapista-<?php echo $id_terapista;?> <?php echo $id_terapista>3?'d-none':'';?>">
+        <div class="d-flex flex-column flex-fill text-center p-1 mt-2 table-terapista">
             <div class="text-center bg-light bg-opacity-25 p-1 pt-2 my-1">
                 <h4><?php echo $terapista_planning[$id_terapista]['terapista']['terapista']; ?></h4>
             </div>
@@ -158,33 +152,16 @@
                     <button id="discard-btn" class="btn btn-secondary ms-2 w-100 w-md-20">Annulla</button>
                 </div>
             </div>
-
-            <?php 
-                if($ruolo=='terapista'){
-                    $_table($id_terapista);
-                }
-                else{
-                    ?>
-                    <div class="d-flex w-100 py-3">
-                        <div class="flex-fill flex-column">
-                            <ul class="nav nav-tabs"><?php
-                                for($i=1;$i<=ceil($groups/$tables_by_page);$i++){
-                                    echo"<li class=\"nav-item\" onclick=\"window.modalHandlers['planning'].tab({$i},this)\">
-                                        <span class=\"nav-link ".($i==1?'active':'')."\" aria-current=\"page\" href=\"\">Gruppo{$i}</span>
-                                    </li>";
-                                }?>
-                            </ul>
-                            <div class="p-1">
-                                <div class="table-container"><?php
-                                    for($i=1;$i<=$groups;$i++)$_table($i);
-                                    ?>
-                                </div>
+                <div class="d-flex w-100 py-3">
+                    <div class="flex-fill flex-column">
+                        <div class="p-1">
+                            <div class="table-container"><?php
+                                foreach($terapisti as $terapista)$_table($terapista['id']);
+                                ?>
                             </div>
                         </div>
-                    </div><?php
-                }
-            ?>
-            
+                    </div>
+                </div>
         </div>
     </div>
 </div>

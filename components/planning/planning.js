@@ -18,23 +18,6 @@ window.modalHandlers['planning'] = {
             document.querySelectorAll('.'+origin).forEach(cell=>{cell.classList.remove(origin+'_hovered');})
         });
     },
-    tab:function(tab,element){
-        const tables_by_page=3;
-        const last_table=tables_by_page*parseInt(tab);
-        document.querySelectorAll('.table-terapista').forEach(table=>{
-            table.classList.add('d-none');
-        });
-        document.querySelectorAll('.nav-link').forEach(nav=>{
-            nav.classList.remove('active');
-        });
-        element.querySelector('.nav-link').classList.add('active');
-        for(let i=0;i<tables_by_page;i++){
-            let table = document.querySelector('.terapista-'+(last_table-i));
-            if(table){
-                table.classList.remove('d-none');
-            }
-        }
-    }
 }
 if (!window.colorInitialValues) {
     window.colorInitialValues = {};
