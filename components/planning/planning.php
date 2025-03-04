@@ -58,7 +58,7 @@
     };
     $_table=function($id_terapista)use(&$rows,&$_planning,&$terapista_planning,&$elementi){
         ?>
-        <div class="d-flex flex-column text-center p-1 mt-2 table-terapista w-md-23">
+        <div class="d-flex flex-column text-center p-1 mt-2 table-terapista w-md-25">
             <div class="text-center bg-light bg-opacity-25 p-1 pt-2 my-1">
                 <h4><?php echo $terapista_planning[$id_terapista]['terapista']['terapista']; ?></h4>
             </div>
@@ -155,7 +155,7 @@
                 <div class="d-flex w-100 py-3">
                     <div class="flex-fill flex-column">
                         <div class="p-1">
-                            <div class="table-container"><?php
+                            <div class="table-container w-md-25"><?php
                                 foreach($terapisti as $terapista)$_table($terapista['id']);
                                 ?>
                             </div>
