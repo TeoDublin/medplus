@@ -4,8 +4,8 @@ table,td{
     cursor: pointer;
 }
 td {
-    word-wrap: break-word;
-    white-space: normal;
+    word-wrap: break-word!important;
+    white-space: normal!important;
 }  
 .table-container {
     display: flex;
