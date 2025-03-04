@@ -63,6 +63,6 @@ Class ResultForTable{
         $this->total = $total;
         $this->offset = $offset;
         $this->limit = $limit;
-        $this->pages = ceil($total/$limit);
+        $this->pages = $total==0?0:ceil($total/$limit);
     }
 }
