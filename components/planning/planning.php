@@ -155,7 +155,7 @@
                 <div class="d-flex w-100 py-3">
                     <div class="flex-fill flex-column">
                         <div class="p-1">
-                            <div class="table-container w-md-25"><?php
+                            <div class="table-container"><?php
                                 foreach($terapisti as $terapista)$_table($terapista['id']);
                                 ?>
                             </div>
