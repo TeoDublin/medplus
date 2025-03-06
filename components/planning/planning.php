@@ -115,9 +115,17 @@
 <div>
     <div class="p-3 border my-1 d-flex" style="border-bottom: 0px!important; border-radius: 10px 10px 0 0; height: 100%;">
         <div class="w-100">
-            <div class="mx-auto d-flex flex-column flex-md-row p-3">
-                <div class="flex-fill me-2 mb-2 text-center">
-                    <label class="form-label" for="data">Data</label>
+            <div class="mx-auto d-flex flex-row mt-3 p-0 w-md-30 align-content-center justify-content-center">
+                <label class="form-label" for="data">Data</label>
+            </div>
+            <div class="mx-auto d-flex flex-row mt-0 pt-0 w-md-30 align-content-center justify-content-center">
+                <div class="flex-fill me-0 text-center w-md-10 align-content-center justify-content-center"
+                    onclick="window.modalHandlers['planning'].removeDay(this)">
+                    <button class="btn btn-light">
+                        <?php echo icon("arrow-filled-left.svg",'black',40,40); ?>
+                    </button>
+                </div>
+                <div class="flex-fill mx-1 m-md-0 text-center align-content-center justify-content-center">
                     <input
                         type="date"
                         id="data" 
@@ -125,7 +133,14 @@
                         class="form-control text-center"
                         value="<?php echo $data;?>" 
                         onchange="window.modalHandlers['planning'].change(this)"
+                        style="height: 50px;"
                     />
+                </div>
+                <div  class="flex-fill ms-0 text-center w-md-10 align-content-center justify-content-center"
+                    onclick="window.modalHandlers['planning'].addDay(this)">
+                    <button class="btn btn-light">
+                        <?php echo icon("arrow-filled-right.svg",'black',40,40); ?>
+                    </button>
                 </div>
             </div>
             <div class="d-flex flex-column flex-grow-0">

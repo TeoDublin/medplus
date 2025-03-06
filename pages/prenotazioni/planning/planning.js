@@ -40,5 +40,19 @@ function bind_modal_functions(){
             data:document.querySelector('#data').value
         });
     };
+    window.modalHandlers['planning'].removeDay=function(element){
+        const dataInput = document.querySelector('#data');
+        const currentDate = new Date(dataInput.value);
+        currentDate.setDate(currentDate.getDate() + -1);
+        dataInput.value = currentDate.toISOString().split('T')[0];
+        window.modalHandlers['planning'].change(element);
+    };
+    window.modalHandlers['planning'].addDay=function(element){
+        const dataInput = document.querySelector('#data');
+        const currentDate = new Date(dataInput.value);
+        currentDate.setDate(currentDate.getDate() + 1);
+        dataInput.value = currentDate.toISOString().split('T')[0];
+        window.modalHandlers['planning'].change(element);
+    };
 }
 bind_modal_functions();
