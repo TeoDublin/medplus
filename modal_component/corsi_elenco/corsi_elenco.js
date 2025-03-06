@@ -4,6 +4,7 @@ window.modalHandlers['corsi_elenco']={
         const modal = element.closest('.modal');
         modal.querySelectorAll('[name]').forEach(input => { _data[input.name] = input.value;});
         modal.querySelectorAll('.giorno_row').forEach(row => {
+            console.log(row);
             _data['days'].push({
                 giorno: row.querySelector('.giorno').value,
                 inizio: row.querySelector('.inizio').value,

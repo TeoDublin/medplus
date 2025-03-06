@@ -1,7 +1,7 @@
 <?php 
     if(in_array('btn_add_terapisti_elenco',$elementi)){?>
         <div class="d-flex flex-row p-2">
-            <div class= "d-w20" onclick="add(false);">
+            <div class= "d-w20" onclick="add();">
                 <button type="button" class="btn btn-primary p-2 d-flex flex-row btn-insert w-100 h-100">
                     <div class="mx-2"><?php echo icon('cloud-add.svg','white',20,20);?></div>
                     <div>Aggiungi</div>

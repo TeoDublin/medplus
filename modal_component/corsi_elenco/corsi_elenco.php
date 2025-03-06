@@ -73,7 +73,7 @@
                                                     $_REQUEST['inizio']=$giorno['inizio'];
                                                     $_REQUEST['fine']=$giorno['fine'];
                                                     echo "<div class=\"d-flex flex-row w-100 py-1 giorno_row\">";
-                                                        require_once __DIR__ . '/../../post/aggiungi_giorno.php';
+                                                        require __DIR__ . '/../../post/aggiungi_giorno.php';
                                                     echo "</div>";
                                                 }
                                                 ?>
