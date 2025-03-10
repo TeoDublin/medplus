@@ -81,6 +81,8 @@
                 </div>
             </div>
             <div class="modal-footer">
+                <a href="#" class="btn btn-tertiary" <?php echo _attr_data($id_corso);?>onclick="window.modalHandlers['sposta_corso'].btnDelete(this)"
+                >Elimina</a>
                 <a href="#" class="btn btn-primary" <?php echo _attr_data($id_corso);?>onclick="window.modalHandlers['sposta_corso'].btnSalva(this)"
                 >Salva</a>
             </div>

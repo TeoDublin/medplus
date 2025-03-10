@@ -5,6 +5,12 @@ window.modalHandlers['sposta_corso'] = {
             refresh({data:_data.data,id_terapista:_data.id_terapista});
         }).fail(function(){fail()});
     },
+    btnDelete:function(element){
+        const _data=this._data(element);
+        $.post('post/delete.php',_data).done(function(){ 
+            refresh({data:_data.data,id_terapista:_data.id_terapista});
+        }).fail(function(){fail()});
+    },
     change(element){
         closeAllModal();
         modal_component('sbarra', 'sposta_corso', this._data(element));
