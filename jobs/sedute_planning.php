@@ -17,6 +17,6 @@
         ->and("p.data_fine < '{$now}'")
         ->and("p.stato = 'Prenotata'")
         ->get();
-    foreach($sedute as $prenotato){
+    foreach($colloquio as $prenotato){
         Update('colloquio_planning')->set(['stato_prenotazione'=>'Conclusa'])->where("id={$prenotato['id']}")->flush();
     }
