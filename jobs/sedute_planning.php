@@ -1,14 +1,12 @@
 <?php 
     require_once __DIR__.'/../includes.php';
-    $today=now('Y-m-d');
-    $now=now('H:m:i');
-    $conclusi=Select('p.*')
+    $now=now('Y-m-d H:m:i');
+    $prenotati=Select('p.*')
         ->from('view_planning','p')
-        ->left_join('planning_row pr ON p.row_fine = pr.id')
-        ->where("origin='Seduta'")
-        ->and("pr.ora < '{$now}'")
-        ->and("p.data='{$today}'")
+        ->where("p.origin IN('Seduta','colloquio')")
+        ->and("p.data_fine < '{$now}'")
+        ->and("p.stato = 'Prenotata'")
         ->get();
-    foreach($conclusi as $conclusa){
-        Update('percorsi_terapeutici_sedute_prenotate')->set(['stato_prenotazione'=>'Conclusa'])->where("id={$conclusa['id']}");
+    foreach($prenotati as $prenotato){
+        Update('percorsi_terapeutici_sedute_prenotate')->set(['stato_prenotazione'=>'Conclusa'])->where("id={$prenotato['id']}")->flush();
     }

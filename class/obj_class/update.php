@@ -1,5 +1,6 @@
 <?php 
 class Update{
+    private SQL $sql;
     private string $table;
     private string $set;
     private string $where;
@@ -20,7 +21,10 @@ class Update{
     }
     public function where(string $where){
         $this->where=$where;
-        SQL()->query("UPDATE `{$this->table}` SET {$this->set} WHERE {$this->where}");
+        $this->sql->query("UPDATE `{$this->table}` SET {$this->set} WHERE {$this->where}");
         return $this;
+    }
+    public function flush(){
+        $this->sql->flush();
     }
 }
