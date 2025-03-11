@@ -3,7 +3,7 @@
     $now=now('Y-m-d H:m:i');
     $prenotati=Select('p.*')
         ->from('view_planning','p')
-        ->where("p.origin IN('Seduta','colloquio')")
+        ->where("p.origin IN('Seduta')")
         ->and("p.data_fine < '{$now}'")
         ->and("p.stato = 'Prenotata'")
         ->get();
