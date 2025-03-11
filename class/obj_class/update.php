@@ -5,6 +5,7 @@ class Update{
     private string $set;
     private string $where;
     public function __construct(string $table){
+        $this->sql=SQL();
         $this->table=$table;
     }
     public function set(array $set){
