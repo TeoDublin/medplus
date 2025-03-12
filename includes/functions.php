@@ -11,6 +11,11 @@
             $where
         ));        
     }
+    function italian_date($date,$format){
+        setlocale(LC_TIME, 'it_IT.UTF-8');
+        $formattedDate = strftime($format, strtotime($date));
+        return ucfirst($formattedDate);
+    }
     function environment():string{
         return $_SERVER['HTTP_HOST']=='127.0.0.1:8080'?'dev':'prod';
     }
