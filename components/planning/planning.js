@@ -1,5 +1,5 @@
 window.modalHandlers['planning'] = {
-    origins : ['sbarra','corso','seduta'],
+    origins : ['sbarra','corso','seduta','colloquio'],
     enterRow:function(element,origin){
         this.cleanHovered();
         if(origin!=='empty'){

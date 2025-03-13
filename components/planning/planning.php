@@ -52,9 +52,10 @@
                 $motivo=$plan['motivo'];
                 $origin=$plan['origin'];
             }
+            $row_span=$origin=='empty'?1:(int)$plan['row_span'];
             if(!empty($class))break;
         }
-        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo),'origin'=>$origin];
+        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo),'origin'=>$origin, 'row_span'=>$row_span];
     };
     $_table=function($id_terapista)use(&$rows,&$_planning,&$terapista_planning,&$elementi){
         ?>
@@ -72,6 +73,7 @@
                     </thead>
                     <tbody>
                         <?php 
+                        $doing_span=0;
                         for($row=1; $row<=$rows; $row++){ 
                             $planning = $_planning($id_terapista,$row); ?>
                             <tr class="planning-tr">
@@ -88,21 +90,29 @@
                                     onmouseenter="window.modalHandlers['planning'].enterRow(this,'<?php echo $planning['origin']; ?>');"
                                     >
                                     <input class="w-100 p-0 m-0 text-center border-0 bg-transparent inizio" id="input_parent_inizio_<?php echo $row;?>" type="text" value="<?php echo _ora($row);?>"  readonly disabled/>
-                                </td>
-                                <td 
-                                    scope="col" 
-                                    class="text-center border-0 border-end impegno <?php echo $planning['class'];?> last" 
-                                    planning_motivi_id="<?php echo $planning['id'];?>" 
-                                    row="<?php echo $row;?>" 
-                                    <?php 
-                                        if(in_array('row_click_planning',$elementi)){?>
-                                            onclick="window.modalHandlers['planning'].rowClick(this,'<?php echo $planning['origin']; ?>','<?php echo $id_terapista; ?>');"<?php
-                                        }
-                                    ?>
-                                    onmouseenter="window.modalHandlers['planning'].enterRow(this,'<?php echo $planning['origin']; ?>');"
-                                    >
-                                    <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
-                                </td>
+                                </td><?php 
+                                    if($doing_span==0){?>
+                                        <td rowspan="<?php echo $planning['row_span'];?>"
+                                            scope="col" 
+                                            class="text-center border-0 border-end impegno <?php echo $planning['class'];?> td" 
+                                            planning_motivi_id="<?php echo $planning['id'];?>" 
+                                            row="<?php echo $row;?>" 
+                                            <?php 
+                                                if(in_array('row_click_planning',$elementi)){?>
+                                                    onclick="window.modalHandlers['planning'].rowClick(this,'<?php echo $planning['origin']; ?>','<?php echo $id_terapista; ?>');"<?php
+                                                }
+                                            ?>
+                                            onmouseenter="window.modalHandlers['planning'].enterRow(this,'<?php echo $planning['origin']; ?>');"
+                                            >
+                                            <span class="w-100 p-0 m-0 text-center border-0 bg-transparent"><?php echo $planning['motivo'];?></span>
+                                        </td>                                        
+                                        <?php
+                                        $doing_span=$planning['row_span']-1;
+                                    }
+                                    else {
+                                        $doing_span --;
+                                    }
+                                ?>
                             </tr><?php
                         }?>
                     </tbody>
