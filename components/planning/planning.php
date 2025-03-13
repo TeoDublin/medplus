@@ -55,7 +55,7 @@
             $row_span=$origin=='empty'?1:(int)$plan['row_span'];
             if(!empty($class))break;
         }
-        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo),'origin'=>$origin, 'row_span'=>$row_span];
+        return ['class'=>$class,'id'=>$id,'motivo'=>($motivo=='Vuoto'?'':$motivo),'origin'=>$origin, 'row_span'=>$row_span??1];
     };
     $_table=function($id_terapista)use(&$rows,&$_planning,&$terapista_planning,&$elementi){
         ?>
