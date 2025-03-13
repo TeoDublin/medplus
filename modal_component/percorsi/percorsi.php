@@ -18,7 +18,7 @@
             ->get();
     }
     function _percorsi_terapeutici_sedute_prenotate($id_seduta){
-        return Select('sp.id,sp.stato_prenotazione,DATE_FORMAT(sp.data,"%d/%m") as data,t.terapista,TIME_FORMAT(pri.ora,"%H:%i") as "ora_inizio", TIME_FORMAT(prf.ora,"%H:%i") as "ora_fine"')
+        return Select('sp.id,sp.stato_prenotazione,sp.data,t.terapista,TIME_FORMAT(pri.ora,"%H:%i") as "ora_inizio", TIME_FORMAT(prf.ora,"%H:%i") as "ora_fine"')
             ->from('percorsi_terapeutici_sedute_prenotate','sp')
             ->left_join('terapisti t on sp.id_terapista = t.id')
             ->left_join('planning_row pri on sp.row_inizio = pri.id')
@@ -231,7 +231,7 @@
                                                                                 <?php foreach($sedute_prenotate as $seduta_prenotata){?>
                                                                                     <div class="flex-row seduta-titles w-100 d-flex ">
                                                                                         <div class="csp1 d-flex align-items-center justify-content-center text-center"><?php _nome_terapista($seduta_prenotata['terapista']); ?></div>
-                                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['data']; ?></span></div>
+                                                                                        <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo italian_date($seduta_prenotata['data'],"%a %d/%m"); ?></span></div>
                                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
                                                                                         <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
                                                                                         <div class="csp4 d-flex align-items-center justify-content-center text-center statoHover">
