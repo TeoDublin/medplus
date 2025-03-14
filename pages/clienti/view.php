@@ -1,5 +1,5 @@
 
-<div class="d-flex py-3">
+<div class="py-3">
     <div class="flex-fill flex-column">
         <ul class="nav nav-tabs">
             <li class="nav-item">
