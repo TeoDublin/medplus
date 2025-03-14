@@ -2,7 +2,7 @@
     function _view_percorsi(){
         return Select('*')
         ->from('view_percorsi')
-        ->where("id_cliente={$_REQUEST['id_cliente']}")
+        ->where("id_cliente={$_REQUEST['id_cliente']} AND stato <> 'Concluso'")
         ->get_or_false();
     }
     function _view_colloqui(){
@@ -14,7 +14,7 @@
     function _view_sedute($id_percorso){
         return Select('*')
             ->from('view_sedute')
-            ->where("id_percorso={$id_percorso}")
+            ->where("id_percorso={$id_percorso} AND (`data` IS NULL OR `data` >= '".now('Y-m-d')."')")
             ->get();
     }
     function _percorsi_terapeutici_sedute_prenotate($id_seduta){
