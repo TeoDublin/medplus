@@ -150,6 +150,13 @@
 }
 
 @media (max-width: 768px) {
+    .pagination{
+        --bs-pagination-padding-x: 0.5rem;
+        --bs-pagination-padding-y: 0.25rem;
+        --bs-pagination-font-size: 0.875rem;
+        --bs-pagination-border-radius: var(--bs-border-radius-sm);
+    }
+
     .dots-dropdown{
         margin-top: -15px!important;
         margin-right:20px!important;
