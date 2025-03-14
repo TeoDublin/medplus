@@ -29,7 +29,7 @@ class Html{
                                 echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
                                 if($current>=3&&$current<($total_pages - 2)){
                                     $active = 'active';
-                                    echo '<li class="page-item ' . $active . '"><a class="page-link" href="' . $url . 'pagination=' . $current . '">' . $current . '</a></li>';
+                                    echo '<li class="page-item ' . $active . '"><a class="page-link" href="' . $url . 'pagination=' . $current . '">' . ($current +1). '</a></li>';
                                     echo '<li class="page-item disabled"><span class="page-link">...</span></li>';
                                 }
                                 for ($i = $total_pages - 2; $i <= $total_pages; $i++) {
