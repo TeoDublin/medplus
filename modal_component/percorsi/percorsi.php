@@ -12,10 +12,9 @@
         ->get_or_false();
     }
     function _view_sedute($id_percorso){
-        return Select('*')
-            ->from('view_sedute')
-            ->where("id_percorso={$id_percorso} AND (`data` IS NULL OR `data` >= '".now('Y-m-d')."')")
-            ->get();
+        $ret=Select('*')->from('view_sedute')->where("id_percorso={$id_percorso}");
+        if(!isset($_REQUEST['storico']))$ret->and(" (`data` IS NULL OR `data` >= '".now('Y-m-d')."')");
+        return $ret->get();
     }
     function _percorsi_terapeutici_sedute_prenotate($id_seduta){
         return Select('sp.id,sp.stato_prenotazione,sp.data,t.terapista,TIME_FORMAT(pri.ora,"%H:%i") as "ora_inizio", TIME_FORMAT(prf.ora,"%H:%i") as "ora_fine"')
