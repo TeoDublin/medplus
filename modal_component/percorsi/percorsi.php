@@ -1,9 +1,8 @@
 <?php 
     function _view_percorsi(){
-        return Select('*')
-        ->from('view_percorsi')
-        ->where("id_cliente={$_REQUEST['id_cliente']} AND stato <> 'Concluso'")
-        ->get_or_false();
+        $ret=Select('*')->from('view_percorsi')->where("id_cliente={$_REQUEST['id_cliente']}");
+        if(!isset($_REQUEST['storico']))$ret->and("stato <> 'Concluso'");
+        return $ret->get_or_false();
     }
     function _view_colloqui(){
         return Select('*,DATE_FORMAT(x.data,"%d/%m") as data_formated,TIME_FORMAT(x.ora_inizio,"%H:%i") as "ora_inizio_formated", TIME_FORMAT(x.ora_fine,"%H:%i") as "ora_fine_formated"')
