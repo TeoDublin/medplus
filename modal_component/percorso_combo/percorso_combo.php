@@ -23,6 +23,7 @@
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-row">
+                    <input type="text" id="single_tabellare" value="<?php echo $view_percorsi['prezzo_tabellare']??'0';?>" hidden/>
                     <div class="p-2 flex-fill">
                         <label for="acronimo" class="form-label">Acronimo</label>
                         <input type="text" class="form-control" name="acronimo" placeholder="Aggiungi trattamento" value="<?php echo $view_percorsi['acronimo']??'';?>" disabled/>

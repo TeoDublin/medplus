@@ -43,21 +43,26 @@ window.modalHandlers['percorso_combo'] = Object.assign(
     },
     changeSedute:function(element){
         const modal = element.closest('.modal');
+        let single_tabellare = modal.querySelector('#single_tabellare').value;
+        let sedute = modal.querySelector('[name=sedute]').value;
         let new_value = element.value===0 ? 0 : element.value * this.prezzo_a_sedute;
         modal.querySelector('[name=prezzo]').value = new_value;
+        modal.querySelector('[name=prezzo_tabellare]').value = single_tabellare * sedute;
     },
     refreshPage:function(modal){
         let acronimo = [];
-        let prezzo_tabellare = 0;
+        let single_tabellare = 0;
         let index = 0;
+        let sedute = modal.querySelector('[name=sedute]').value;
         modal.querySelectorAll('[name=row_acronimo]').forEach(element=>{
             acronimo.push(element.value);
             index++;
         });
         modal.querySelectorAll('[name=row_prezzo_tabellare]').forEach(element=>{
-            prezzo_tabellare+=parseInt(element.value);
+            single_tabellare+=parseInt(element.value);
         });
         modal.querySelector('[name=acronimo]').value = acronimo.join(' - ');
-        modal.querySelector('[name=prezzo_tabellare]').value = prezzo_tabellare;
+        modal.querySelector('#single_tabellare').value = single_tabellare;
+        modal.querySelector('[name=prezzo_tabellare]').value = single_tabellare * sedute;
     },
 });
