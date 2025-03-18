@@ -77,18 +77,37 @@ function append_scripts(element){
         }
     });
 }
-function modal_component(id, component, _data, callback=false) {
+function modal_component_no_spinner(id, component, _data, callback=false) {
     const modal_id = 'modal_' + component;
     _data['id_modal'] = modal_id;
     _data['component'] = component;
-    const container = document.querySelector('#' + id);
+    $.post('modal_component.php', _data).done(html => {
+        const container = document.querySelector('#' + id);
+        document.querySelectorAll('#div_' + component).forEach(to_remove => { to_remove.remove(); });
+        const div = document.createElement('div');
+        div.id = 'div_' + component;
+        div.innerHTML = html;
+        append_scripts(div);
+        container.appendChild(div);
+        const modalElement = document.getElementById(modal_id);
+        const newModalInstance = new bootstrap.Modal(modalElement, {keyboard: false});
+        newModalInstance.show();
+    });
+}
+function modal_component(id, component, _data) {
+    const modal_id = 'modal_' + component;
+    _data['id_modal'] = modal_id;
+    _data['component'] = component;
+    let container = document.querySelector('#' + id);
+    if (!container) {
+        container=document.createElement('div');
+        container.id=id;
+        document.body.appendChild(container);
+    }
     document.querySelectorAll('#div_' + component).forEach(to_remove => to_remove.remove());
     const div = document.createElement('div');
     div.id = 'div_' + component;
-    div.innerHTML = `<div class="modal-backdrop show"></div>
-                    <div class="d-flex justify-content-center align-items-center" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1050;background:rgba(0,0,0,0.5);">
-                        <div class="spinner-border text-light" role="status"></div>
-                    </div>`;
+    div.innerHTML = spinner();
     container.appendChild(div);
     $.post('modal_component.php', _data).done(html => {
         div.innerHTML = html;
@@ -99,17 +118,25 @@ function modal_component(id, component, _data, callback=false) {
     });
 }
 
+function spinner(){
+    return `<div class="modal-backdrop show"></div>
+            <div class="d-flex justify-content-center align-items-center" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1050;background:rgba(0,0,0,0.5);">
+                <div class="spinner-border text-light" role="status"></div>
+            </div>`;
+}
+
 function reload_modal_component(id, component,_data){
     closeAllModal();
     modal_component(id, component,_data);
     success();
 }
-function reload_modal_component_tree(params){
+function reload_modal_component_tree(params) {
     closeAllModal();
-    params.forEach(param=>{
-        modal_component(param.id, param.component,param.data);
+    params.forEach(param => {
+        modal_component(param.id, param.component, param.data);
     });
 }
+
 function refresh(request){
     const params = new URLSearchParams(request);
     window.location.href = `${window.location.pathname}?${params.toString()}`
