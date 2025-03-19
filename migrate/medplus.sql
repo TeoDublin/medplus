@@ -397,5 +397,41 @@ SELECT
 FROM 
   `colloquio_planning` `cp`
   LEFT JOIN `clienti` `c` ON `cp`.`id_cliente` = `c`.`id`
-  LEFT JOIN `planning_row` `pr` ON `cp`.`row_fine` = `pr`.`id`
+  LEFT JOIN `planning_row` `pr` ON `cp`.`row_fine` = `pr`.`id`;
+
+DROP VIEW view_sedute;
+CREATE VIEW view_sedute AS
+SELECT 
+    pts.id AS id,
+    pts.`index` AS `index`,
+    pts.id_cliente AS id_cliente,
+    pts.id_percorso AS id_percorso,
+    pts.id_combo AS id_combo,
+    ptsp.data AS data,
+    CASE 
+        WHEN ptsp_Conclusa.id IS NOT NULL THEN 'Conclusa'
+        WHEN ptsp_Prenotata.id IS NOT NULL THEN 'Prenotata'
+        WHEN ptsp_Assente.id IS NOT NULL THEN 'Assente'
+        ELSE 'Da Prenotare' 
+    END AS stato
+FROM 
+    percorsi_terapeutici_sedute AS pts
+LEFT JOIN 
+    percorsi_terapeutici_sedute_prenotate AS ptsp 
+    ON pts.id = ptsp.id_seduta
+LEFT JOIN 
+    percorsi_terapeutici_sedute_prenotate AS ptsp_Assente 
+    ON pts.id = ptsp_Assente.id_seduta 
+    AND ptsp_Assente.stato_prenotazione = 'Assente'
+LEFT JOIN 
+    percorsi_terapeutici_sedute_prenotate AS ptsp_Conclusa 
+    ON pts.id = ptsp_Conclusa.id_seduta 
+    AND ptsp_Conclusa.stato_prenotazione = 'Conclusa'
+LEFT JOIN 
+    percorsi_terapeutici_sedute_prenotate AS ptsp_Prenotata 
+    ON pts.id = ptsp_Prenotata.id_seduta 
+    AND ptsp_Prenotata.stato_prenotazione = 'Prenotata'
+GROUP BY 
+    pts.id;
+
 
