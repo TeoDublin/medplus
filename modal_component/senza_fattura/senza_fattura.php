@@ -16,6 +16,10 @@
                         <input type="number" class="form-control" name="valore" value=""/> 
                     </div>
                     <div class="m-2">
+                        <label for="data" class="form-label" >Data</label>
+                        <input type="date" class="form-control" name="data" value=""/> 
+                    </div>
+                    <div class="m-2">
                         <label for="note" class="form-label" >Note</label>
                         <textarea class="form-control" name="note" value="" rows="4"></textarea> 
                     </div>

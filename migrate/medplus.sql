@@ -435,3 +435,5 @@ GROUP BY
     pts.id;
 
 
+ALTER TABLE `pagamenti_senza_fattura` ADD `data` DATE NULL AFTER `valore`;
+ALTER TABLE `pagamenti_aruba` ADD `data` DATE NULL AFTER `valore`;

@@ -10,6 +10,7 @@
                 'id_origine'=>$percorso['id_percorso'],
                 'id_cliente'=>$_REQUEST['_data']['id_cliente'],
                 'valore'=>$debit,
+                'data'=>$_REQUEST['_data']['data'],
                 'note'=>$_REQUEST['_data']['note']?:'-'
             ])->into('pagamenti_senza_fattura')->get();
             $valore-=$debit;

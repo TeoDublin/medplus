@@ -43,6 +43,9 @@
                                                     <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
                                                         <span class="">Emissione</span>
                                                     </div>
+                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                        <span class="">Pagamento</span>
+                                                    </div>
                                                     <div class="cc4 d-flex align-items-center justify-content-center text-center">
                                                         <span class="">Stato</span>
                                                     </div>
@@ -83,7 +86,14 @@
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
                                                             >
-                                                            <span><?php echo unformat_date($fattura['data']);?></span>
+                                                            <span><?php echo unformat_date($fattura['timestamp']);?></span>
+                                                        </div>
+                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"
+                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
+                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
+                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
+                                                            >
+                                                            <span><?php echo $fattura['data']?unformat_date($fattura['data']):'-';?></span>
                                                         </div>
                                                         <div class="cc4 d-flex align-items-center justify-content-center text-center">
                                                             <?php 
@@ -131,6 +141,9 @@
                                                     <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
                                                         <span class="">Emissione</span>
                                                     </div>
+                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                        <span class="">Pagamento</span>
+                                                    </div>
                                                     <div class="cc4 d-flex align-items-center justify-content-center text-center">
                                                         <span class="">Stato</span>
                                                     </div>
@@ -152,6 +165,9 @@
                                                         </div>
                                                         <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
                                                             <span><?php echo unformat_date($senza['timestamp']);?></span>
+                                                        </div>
+                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
+                                                            <span><?php echo $senza['data']?unformat_date($senza['data']):'-';?></span>
                                                         </div>
                                                         <div class="cc4 d-flex align-items-center justify-content-center text-center"      >
                                                             <span>Saldata</span>
@@ -188,6 +204,9 @@
                                                     <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
                                                         <span class="">Emissione</span>
                                                     </div>
+                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                        <span class="">Pagamento</span>
+                                                    </div>
                                                     <div class="cc4 d-flex align-items-center justify-content-center text-center">
                                                         <span class="">Stato</span>
                                                     </div>
@@ -209,6 +228,9 @@
                                                         </div>
                                                         <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
                                                             <span><?php echo unformat_date($a['timestamp']);?></span>
+                                                        </div>
+                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
+                                                            <span><?php echo $a['data']?unformat_date($a['data']):'-';?></span>
                                                         </div>
                                                         <div class="cc4 d-flex align-items-center justify-content-center text-center"      >
                                                             <span>Saldata</span>

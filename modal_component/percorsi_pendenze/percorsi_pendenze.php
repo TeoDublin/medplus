@@ -110,8 +110,8 @@
                                                                         onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
                                                                         onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"             
                                                                     >
-                                                                    <span id="scadenza" class="d-none d-md-block"><?php echo unformat_date($trattamento['scadenza']);?></span>
-                                                                    <span id="scadenza" class="d-md-none"><?php echo format($trattamento['scadenza'],'d/m');?></span>
+                                                                    <span id="scadenza" class="d-none d-md-block"><?php echo  $trattamento['scadenza']?unformat_date($trattamento['scadenza']):'-';?></span>
+                                                                    <span id="scadenza" class="d-md-none"><?php echo $trattamento['scadenza']?format($trattamento['scadenza'],'d/m'):'-';?></span>
                                                                 </div>
                                                                 <div class="cc4 d-none d-md-flex align-items-center justify-content-center text-center"
                                                                         onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
