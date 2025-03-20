@@ -437,3 +437,7 @@ GROUP BY
 
 ALTER TABLE `pagamenti_senza_fattura` ADD `data` DATE NULL AFTER `valore`;
 ALTER TABLE `pagamenti_aruba` ADD `data` DATE NULL AFTER `valore`;
+
+-----
+
+ALTER TABLE `clienti` ADD `privacy` VARCHAR(255) NULL AFTER `notizie_cliniche`;

@@ -60,6 +60,13 @@
                 </div>
                 <div class="d-flex flex-row">
                     <div class="p-1 flex-fill">
+                        <label for="privacy" class="form-label">Privacy</label>
+                        <input class="form-control" type="file" id="privacy" name="privacy">
+                        <?php if($result['privacy']) echo "<a href=\"".privacy_url($result['privacy'])."\" target=\"_blank\">Privacy</a>"; ?>
+                    </div>
+                </div>
+                <div class="d-flex flex-row">
+                    <div class="p-1 flex-fill">
                         <label for="notizie_cliniche" class="form-label">Notizie Cliniche</label>
                         <textarea name="notizie_cliniche" class="form-control" rows="4"><?php echo trim($result['notizie_cliniche']) ?? ''; ?></textarea>
                     </div>

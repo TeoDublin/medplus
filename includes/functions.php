@@ -39,8 +39,14 @@
     function root_path(string $path): string {
         return "/".PROJECT_NAME."/{$path}";
     }
+    function privacy_path(string $path):string{
+        return __DIR__ . "/" .root_path(PRIVACY_FOLDER."/".$path);
+    }
+    function privacy_url(string $path):string{
+        return url(PRIVACY_FOLDER."/".$path);
+    }
     function fatture_path(string $filename):string{
-        return "archive/fatture/{$filename}";
+        return FATTURE_FOLDER.'/'.$filename;
     }
     function url(string $path): string {
         $rootUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
