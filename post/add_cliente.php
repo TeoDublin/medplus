@@ -15,4 +15,4 @@
         copy($_FILES['privacy']['tmp_name'],privacy_path("privacy_{$id}.{$ext}"));
         Update($table)->set(['privacy'=>"privacy_{$id}.{$ext}"])->where("id={$id}");
     }
-    echo $id;
+    echo json_encode(["from"=>$_FILES['privacy']['tmp_name'],"to"=>privacy_path("privacy_{$id}.{$ext}")]);

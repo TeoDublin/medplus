@@ -40,7 +40,7 @@
         return "/".PROJECT_NAME."/{$path}";
     }
     function privacy_path(string $path):string{
-        return __DIR__ . "/" .root_path(PRIVACY_FOLDER."/".$path);
+        return dirname(__DIR__) . "/".PRIVACY_FOLDER."/".$path;
     }
     function privacy_url(string $path):string{
         return url(PRIVACY_FOLDER."/".$path);
