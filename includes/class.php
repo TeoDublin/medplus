@@ -29,3 +29,6 @@
     function Session(){
         return Session::getInstance();
     }
+    function Sedute():Sedute{
+        return new Sedute();
+    }

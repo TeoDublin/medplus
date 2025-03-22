@@ -184,9 +184,10 @@
 
 [data-bs-theme=blue] {
 	--bs-light: #cfe2ff;
+	--bs-green: #c6d7d1;
 	--bs-light-rgb: 207, 220, 233;
 	--base-bg-light: #cfe2ff;
-	--bs-danger: #335681e0;
+	--bs-danger: #ff4545e0;
 	--bs-danger-hover: #396fa8e0;
 	--bs-danger-active: #25405ce0;
 	--base-color-primary: #fff;

@@ -14,5 +14,6 @@
                 'note'=>$_REQUEST['_data']['note']?:'-'
             ])->into('pagamenti_aruba')->get();
             $valore-=$debit;
+            Sedute()->refresh($percorso['id_percorso']);
         }
     }

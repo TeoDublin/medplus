@@ -17,7 +17,7 @@
                     </div>
                     <div class="m-2">
                         <label for="data" class="form-label" >Data</label>
-                        <input type="date" class="form-control" name="data" value=""/> 
+                        <input type="date" class="form-control" name="data" value="<?php echo now('Y-m-d'); ?>"/> 
                     </div>
                     <div class="m-2">
                         <label for="note" class="form-label" >Note</label>

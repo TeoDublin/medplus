@@ -100,6 +100,7 @@
             'id_fattura'=>$id_fattura,
             'importo'=>$importo
         ])->into('pagamenti_fatture');
+        Sedute()->refresh($obj['id_percorso']);
         if($totale<=0)break;
     }
     $file=fatture_path($link);

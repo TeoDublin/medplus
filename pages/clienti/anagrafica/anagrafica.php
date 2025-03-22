@@ -7,10 +7,4 @@
     </div>
 </div>
 <div class="w-100 mx-1" id="search_table"></div>
-<div id="add_cliente"></div>
-<div id="percorsi"></div>
-<div id="percorsi_pendenze"></div>
-<div id="percorsi_fatture"></div>
-<div id="percorsi_corsi"></div>
-<div id="prenota_planning"></div>
 <?php script('pages/clienti/anagrafica/anagrafica.js'); ?>

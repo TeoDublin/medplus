@@ -20,7 +20,7 @@ function editClick(element,id){
     }
 }
 function trattamenti(id){
-    modal_component('percorsi','percorsi',{id_cliente:id, storico:true});
+    modal_component('percorsi','percorsi',{id_cliente:id});
 }
 function percorsoFatture(id){
     modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id});

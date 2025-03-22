@@ -23,7 +23,8 @@
         $url=$_SERVER['REQUEST_URI']??$_SERVER['HTTP_REFERER'];
         $exceptions=[
             'post/search_table',
-            'component'
+            'component',
+            'modal_component'
         ];
         foreach ($exceptions as $exception) {
             if($url=="/".PROJECT_NAME.'/'.$exception.'.php'){

@@ -16,7 +16,7 @@ window.modalHandlers['percorsi_fatture']={
     },
     clickDelete:function(id,id_cliente,table){
         if(confirm('sicuro di voler eliminare ?')){
-            $.post('post/delete.php',{table:table,id:id}).done(()=>{
+            $.post('post/delete_percorsi_fatture.php',{table:table,id:id}).done(()=>{
                 reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id_cliente});
             }).fail(()=>{fail()});
         }

@@ -31,30 +31,4 @@
         ])->where("id={$id_percorso}");
     }
 
-    function _percorsi_terapeutici_sedute($id_percorso,$id_combo,$index){
-        return Select('*')
-            ->from('percorsi_terapeutici_sedute')
-            ->where("id_percorso={$id_percorso}")
-            ->and("id_combo={$id_combo}")
-            ->and("`index`={$index}")
-            ->first_or_false();
-    }
-    for ($i=0; $i < $_REQUEST['sedute']; $i++) { 
-        $index=$i+1;
-        if(_percorsi_terapeutici_sedute($id_percorso,$id_combo,$index)){
-            Update('percorsi_terapeutici_sedute')->set([
-                'index'=>$index,
-                'id_cliente'=>$_REQUEST['id_cliente'],
-                'id_percorso'=>$id_percorso,
-                'id_combo'=>$id_combo
-            ])->where("id_percorso={$id_percorso} AND id_combo={$id_combo} AND `index`={$index}");
-        }
-        else{
-            Insert([
-                'index'=>$index,
-                'id_cliente'=>$_REQUEST['id_cliente'],
-                'id_percorso'=>$id_percorso,
-                'id_combo'=>$id_combo
-            ])->into('percorsi_terapeutici_sedute');
-        }
-    }
+    Sedute()->refresh($id_percorso);
