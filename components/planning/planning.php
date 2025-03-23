@@ -135,15 +135,17 @@
                         <?php echo icon("arrow-filled-left.svg",'black',40,40); ?>
                     </button>
                 </div>
-                <div class="flex-fill mx-1 m-md-0 text-center align-content-center justify-content-center">
+                <div class="flex-fill mx-1 m-md-0 text-center align-content-center justify-content-center date-label">
+                    <div class="w-100">
+                        <span><?php echo italian_date($data,'%A'); ?></span>
+                    </div>
                     <input
                         type="date"
                         id="data" 
                         name="data" 
-                        class="form-control text-center"
+                        class="form-control text-center date-pick"
                         value="<?php echo $data;?>" 
                         onchange="window.modalHandlers['planning'].change(this)"
-                        style="height: 50px;"
                     />
                 </div>
                 <div  class="flex-fill ms-0 text-center w-md-10 align-content-center justify-content-center"

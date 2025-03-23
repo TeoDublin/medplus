@@ -277,3 +277,12 @@ input:disabled {
 .colloquio_bg{
     background-color: var(--base-bg-colloquio,var(--base-bg-colorfull4))!important;
 }
+.date-pick{
+    height: 30px;
+    border:none!important;
+}
+.date-label{
+    padding: 5px;
+    border: solid rgb(212, 212, 212) 1px!important;
+    border-radius: 5px;
+}
