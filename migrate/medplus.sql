@@ -1,96 +1,114 @@
-ALTER TABLE `percorsi_terapeutici_sedute` ADD `prezzo` DOUBLE(10,2) NOT NULL AFTER `id_combo`, ADD `saldato` DOUBLE(10,2) NOT NULL AFTER `prezzo`  DEFAULT '0', ADD `stato_pagamento` ENUM('Pendente','Parziale','Saldato','Fatturato') NOT NULL AFTER `saldato` DEFAULT 'Pendente';
-
-DROP VIEW view_sedute;
-CREATE VIEW view_sedute AS
+DROP VIEW view_planning;
+CREATE VIEW view_planning AS
 SELECT 
-    pts.id AS id,
-    pts.index AS `index`,
-    pts.id_cliente AS id_cliente,
-    pts.id_percorso AS id_percorso,
-    pts.id_combo AS id_combo,
-    COALESCE(
-        MAX(ptsp_Conclusa.data),
-        COALESCE(MAX(ptsp_Prenotata.data), MAX(ptsp_Assente.data))
-    ) COLLATE utf8mb4_general_ci AS data,
-    CASE
-        WHEN MAX(ptsp_Conclusa.id) IS NOT NULL THEN 'Conclusa'
-        WHEN MAX(ptsp_Prenotata.id) IS NOT NULL THEN 'Prenotata'
-        WHEN MAX(ptsp_Assente.id) IS NOT NULL THEN 'Assente'
-        ELSE 'Da Prenotare'
-    END COLLATE utf8mb4_general_ci AS stato_prenotazione,
-    pts.stato_pagamento COLLATE utf8mb4_general_ci as stato_pagamento,
-    IF(MAX(ptsp_Conclusa.id) IS NOT NULL,
-       	if(pts.stato_pagamento='Saldato', 
-       		'Completato',
-           if(pts.stato_pagamento='Pendente','Debitore','Parziale')
-        ),
-       'In corso'
-    ) COLLATE utf8mb4_general_ci as stato_seduta
-FROM 
-    percorsi_terapeutici_sedute pts
-LEFT JOIN 
-    percorsi_terapeutici_sedute_prenotate ptsp_Assente 
-    ON pts.id = ptsp_Assente.id_seduta AND ptsp_Assente.stato_prenotazione = 'Assente'
-LEFT JOIN 
-    percorsi_terapeutici_sedute_prenotate ptsp_Conclusa 
-    ON pts.id = ptsp_Conclusa.id_seduta AND ptsp_Conclusa.stato_prenotazione = 'Conclusa'
-LEFT JOIN 
-    percorsi_terapeutici_sedute_prenotate ptsp_Prenotata 
-    ON pts.id = ptsp_Prenotata.id_seduta AND ptsp_Prenotata.stato_prenotazione = 'Prenotata'
-GROUP BY 
-    pts.id,
-    pts.index,
-    pts.id_cliente,
-    pts.id_percorso,
-    pts.id_combo;
+    'sbarra' AS origin,
+    pm.id AS id,
+    pm.row_inizio AS row_inizio,
+    pm.row_fine AS row_fine,
+	DATE_FORMAT(pri.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_inizio,
+    DATE_FORMAT(pr.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_fine,
+    (pm.row_fine - pm.row_inizio + 1) AS row_span,
+    pm.id_terapista AS id_terapista,
+    SUBSTRING_INDEX(t.terapista, ' ', 1) COLLATE utf8mb4_general_ci as terapista,
+    pm.data AS data,
+    CONCAT(pm.data, ' ', pr.ora) AS data_fine,
+    m.motivo AS motivo,
+	m.motivo AS acronimo,
+    '-' AS stato
+FROM planning_motivi pm
+LEFT JOIN motivi m ON pm.id_motivo = m.id
+LEFT JOIN planning_row pri ON pm.row_inizio = pri.id
+LEFT JOIN planning_row pr ON pm.row_fine = pr.id
+LEFT JOIN terapisti t ON pm.id_terapista = t.id
 
+UNION ALL
 
-
-DROP VIEW `view_percorsi`;
-CREATE VIEW view_percorsi as
 SELECT 
-    pt.id AS id,
-    pt.id_cliente AS id_cliente,
-    pt.id_combo AS id_combo,
-    pt.sedute AS sedute,
-    pt.prezzo_tabellare AS prezzo_tabellare,
-    pt.prezzo AS prezzo,
-    pt.note AS note,
-    pt.timestamp AS timestamp,
-    t.trattamenti AS trattamento,
-    ta.acronimo AS acronimo,
-    (IF(pt.sedute <= IFNULL(p.sp_count, 0), 'Concluso', 'Attivo') COLLATE utf8mb4_general_ci) AS stato
-FROM percorsi_terapeutici pt
-LEFT JOIN percorsi_combo pc 
-    ON pt.id_combo = pc.id
+    'seduta' AS origin,
+    sp.id AS id,
+    sp.row_inizio AS row_inizio,
+    sp.row_fine AS row_fine,
+	DATE_FORMAT(pri.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_inizio,
+    DATE_FORMAT(pr.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_fine,
+    (sp.row_fine - sp.row_inizio + 1) AS row_span,
+    sp.id_terapista AS id_terapista,
+	SUBSTRING_INDEX(t.terapista, ' ', 1) COLLATE utf8mb4_general_ci as terapista,
+    sp.data AS data,
+    CONCAT(sp.data, ' ', pr.ora) AS data_fine,
+    CONCAT(c.nominativo, ' (', t.trattamenti, ')') AS motivo,
+	CONCAT(
+		SUBSTRING_INDEX(c.nominativo, ' ', 1), 
+		' ', 
+		LEFT(SUBSTRING_INDEX(c.nominativo, ' ', -1), 1), 
+		'. (', 
+		t.acronimo, 
+		')'
+	) AS acronimo,
+    sp.stato_prenotazione AS stato
+FROM percorsi_terapeutici_sedute_prenotate sp
+LEFT JOIN planning_row pr ON sp.row_fine = pr.id
+LEFT JOIN planning_row pri ON sp.row_inizio = pri.id
+LEFT JOIN clienti c ON sp.id_cliente = c.id
+LEFT JOIN percorsi_terapeutici_sedute s ON sp.id_seduta = s.id
+LEFT JOIN percorsi_combo pc ON s.id_combo = pc.id
 LEFT JOIN (
     SELECT 
-        pct.id_combo,
-        GROUP_CONCAT(t.trattamento SEPARATOR ';') AS trattamenti
+        pct.id_combo AS id_combo,
+        GROUP_CONCAT(t.trattamento SEPARATOR ', ') AS trattamenti,
+		GROUP_CONCAT(t.acronimo SEPARATOR ', ') AS acronimo
     FROM percorsi_combo_trattamenti pct
-    LEFT JOIN trattamenti t 
-        ON pct.id_trattamento = t.id
+    LEFT JOIN trattamenti t ON pct.id_trattamento = t.id
     GROUP BY pct.id_combo
-) t 
-    ON pc.id = t.id_combo
-LEFT JOIN (
-    SELECT 
-        pct.id_combo,
-        GROUP_CONCAT(t.acronimo SEPARATOR ' - ') AS acronimo
-    FROM percorsi_combo_trattamenti pct
-    LEFT JOIN trattamenti t 
-        ON pct.id_trattamento = t.id
-    GROUP BY pct.id_combo
-) ta 
-    ON pc.id = ta.id_combo
-LEFT JOIN (
-    SELECT 
-        pts.id_percorso,
-        COUNT(pts.id) AS sp_count
-    FROM percorsi_terapeutici_sedute_prenotate pts
-    INNER JOIN percorsi_terapeutici_sedute p ON pts.id_seduta = p.id
-    WHERE pts.stato_prenotazione = 'Conclusa' AND p.stato_pagamento = 'Saldato'
-    GROUP BY pts.id_percorso
-) p 
-    ON pt.id = p.id_percorso
-ORDER BY pt.timestamp DESC
+) t ON pc.id = t.id_combo
+LEFT JOIN terapisti t ON sp.id_terapista = t.id
+WHERE sp.stato_prenotazione <> 'Assente'
+
+UNION ALL
+
+SELECT 
+    'corso' AS origin,
+    cp.id AS id,
+    cp.row_inizio AS row_inizio,
+    cp.row_fine AS row_fine,
+	DATE_FORMAT(pri.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_inizio,
+    DATE_FORMAT(pr.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_fine,
+    (cp.row_fine - cp.row_inizio + 1) AS row_span,
+    cp.id_terapista AS id_terapista,
+	SUBSTRING_INDEX(t.terapista, ' ', 1) COLLATE utf8mb4_general_ci as terapista,
+    cp.data AS data,
+    CONCAT(cp.data, ' ', pr.ora) AS data_fine,
+    CONCAT(cp.motivo, ' ( Corso )') AS motivo,
+	CONCAT(cp.motivo, ' ( Corso )') AS acronimo,
+    '-' AS stato
+FROM corsi_planning cp
+LEFT JOIN planning_row pri ON cp.row_inizio = pri.id
+LEFT JOIN planning_row pr ON cp.row_fine = pr.id
+LEFT JOIN terapisti t ON cp.id_terapista = t.id
+
+UNION ALL
+
+SELECT 
+    'colloquio' AS origin,
+    cp.id AS id,
+    cp.row_inizio AS row_inizio,
+    cp.row_fine AS row_fine,
+	DATE_FORMAT(pri.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_inizio,
+    DATE_FORMAT(pr.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_fine,
+    (cp.row_fine - cp.row_inizio + 1) AS row_span,
+    cp.id_terapista AS id_terapista,
+	SUBSTRING_INDEX(t.terapista, ' ', 1) COLLATE utf8mb4_general_ci as terapista,
+    cp.data AS data,
+    CONCAT(cp.data, ' ', pr.ora) AS data_fine,
+    CONCAT(c.nominativo, ' ( Colloquio )') AS motivo,
+	CONCAT(
+		SUBSTRING_INDEX(c.nominativo, ' ', 1), 
+		' ', 
+		LEFT(SUBSTRING_INDEX(c.nominativo, ' ', -1), 1), 
+		'. ( Colloquio )'
+	) AS acronimo,
+    cp.stato_prenotazione AS stato
+FROM colloquio_planning cp
+LEFT JOIN clienti c ON cp.id_cliente = c.id
+LEFT JOIN planning_row pri ON cp.row_inizio = pri.id
+LEFT JOIN terapisti t ON cp.id_terapista = t.id
+LEFT JOIN planning_row pr ON cp.row_fine = pr.id;
