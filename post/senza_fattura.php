@@ -14,6 +14,6 @@
                 'note'=>$_REQUEST['_data']['note']?:'-'
             ])->into('pagamenti_senza_fattura')->get();
             $valore-=$debit;
-            Sedute()->refresh($percorso['id_percorso']);
+            if(!$percorso['origine']=='corsi')Sedute()->refresh($percorso['id_percorso']);
         }
     }
