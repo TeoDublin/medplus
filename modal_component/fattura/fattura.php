@@ -198,7 +198,7 @@
                         ], JSON_HEX_APOS | JSON_HEX_QUOT);
                     ?>
                     <div class="flex-col" 
-                        onclick="window.modalHandlers['fattura'].generatePDF(<?php echo htmlspecialchars($obj, ENT_QUOTES, 'UTF-8');?>);">
+                        onclick="window.modalHandlers['fattura'].generatePDF(this,<?php echo htmlspecialchars($obj, ENT_QUOTES, 'UTF-8');?>);">
                         <div class="flex-fill px-3"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('print.svg','white',20,20); ?></a>Genera</button></div>
                     </div>
                 </div>

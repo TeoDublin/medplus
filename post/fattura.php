@@ -89,7 +89,7 @@
         'stato'=>$stato
     ])->into('fatture')->get();
     $totale=(int)$_REQUEST['totale'];
-    $totale-=(int)$_REQUEST['bollo'];
+    $totale-=(int)$_REQUEST['bollo']??0;
     foreach($_REQUEST['oggetti']['obj'] as $obj){
         $importo=$totale>=(int)$obj['importo']?$obj['importo']:$totale;
         $totale-=$importo;

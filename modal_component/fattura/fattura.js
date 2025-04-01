@@ -1,5 +1,6 @@
 window.modalHandlers['fattura'] = {
-    generatePDF:function(oggetti) {
+    generatePDF:function(element,oggetti) {
+        element.querySelector('button').setAttribute('disabled',true);
         let _data = {};
         let table = [];
         for (let index = document.querySelectorAll('.oggetto').length; index >= 1; index--) {
