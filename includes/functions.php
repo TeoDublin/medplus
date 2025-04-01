@@ -12,6 +12,7 @@
         ));        
     }
     function italian_date($date,$format){
+        putenv('LC_TIME=it_IT.UTF-8');
         setlocale(LC_TIME, 'it_IT.UTF-8');
         $formattedDate = strftime($format, strtotime($date));
         return ucfirst($formattedDate);
