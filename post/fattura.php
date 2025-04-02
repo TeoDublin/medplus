@@ -12,7 +12,7 @@
         $width = $current>$width?$current:$width;
     }
     $pdf->SetX($pdf->GetPageWidth() - $width - 20);
-    $pdf->MultiCell($width +10, 6, trim($_REQUEST['dati']), 0, 'C');
+    $pdf->MultiCell($width +10, 6, trim(iconv('UTF-8', 'windows-1252//TRANSLIT',$_REQUEST['dati'])), 0, 'C');
     $pdf->Ln();
     $pdf->SetFont('Arial', 'B', 14);
     $pdf->MultiCell(0, 6, trim($_REQUEST['data']));
@@ -100,7 +100,7 @@
             'id_fattura'=>$id_fattura,
             'importo'=>$importo
         ])->into('pagamenti_fatture');
-        Sedute()->refresh($obj['id_percorso']);
+	if($obj['origine']!='corsi')Sedute()->refresh($obj['id_percorso']);
         if($totale<=0)break;
     }
     $file=fatture_path($link);
