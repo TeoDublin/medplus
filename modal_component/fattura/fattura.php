@@ -23,43 +23,34 @@
                 <div class="p-2 card mt-2">
                     <div class="d-flex flex-column flex-md-row">
                         <div class="flex-col w-md-50">
+                            <div class="pb-0 mb-0 card-body">
+                                <label for="date" class="form-label">Numero e data</label>
+                                <textarea  class="form-control" id="date" name="date" rows="1"><?php echo _clean("Fattura n: {$index} del ".now('d/m/Y'));?></textarea>
+                            </div>
                             <div class="mb-1 card-body">
                                 <label for="head" class="form-label">Intestazione</label>
-                                <textarea  class="form-control" id="head" name="head" rows="8"><?php echo _clean("
-                                        Daniela Zanotti
-                                        Dr. in Fisioterapia
+                                <textarea  class="form-control" id="head" name="head" rows="7"><?php echo _clean("
+                                        Daniela Zanotti Dr. in Fisioterapia
                                         Specialista in Terapia Manuale
                                         Fisioterapista ISICO NAPOLI
                                         Iscrizione Albo Nr.909
                                         Tel 08119918966
-                                        Email: danielazanotti@hotmail.it
                                         Iban: IT82M0301503200000002984154");?>
                                 </textarea>
                             </div>
                         </div>
-                        <div class="flex-col w-md-25">
+                        <div class="flex-col w-md-50">
                             <div class="mb-1 card-body">
                                 <label for="dati" class="form-label">Dati</label>
-                                <textarea  class="form-control" id="dati" name="dati" rows="8"><?php echo _clean("
-                                    Spett.le\r\n".
-                                    $_REQUEST['cliente']['nominativo']."
+                                <textarea  class="form-control" id="dati" name="dati" rows="4"><?php echo _clean("
+                                    Spett.le {$_REQUEST['cliente']['nominativo']}"."
                                     ".
                                     $_REQUEST['cliente']['indirizzo']."
                                     ".
-                                    $_REQUEST['cliente']['cap']."
+                                    $_REQUEST['cliente']['cap']." ".$_REQUEST['cliente']['citta']."
                                     ".
-                                    $_REQUEST['cliente']['citta']."
-                                    ".
-                                    "CF o P.Iva ".$_REQUEST['cliente']['cf']."
-                                    ");?>
+                                    "CF o P.Iva {$_REQUEST['cliente']['cf']}");?>
                                 </textarea>
-                            </div>
-                            
-                        </div>
-                        <div class="flex-col w-md-25">
-                            <div class="mb-1 card-body pb-4">
-                                <label for="date" class="form-label">Numero e data</label>
-                                <textarea  class="form-control" id="date" name="date" rows="1"><?php echo _clean("Fattura n: {$index} del ".now('d/m/Y'));?></textarea>
                             </div>
                             <div class="mb-1 card-body py-0">
                                 <label for="footer" class="form-label">Piè di pagina</label>
@@ -78,16 +69,8 @@
                                 <div class="card-body pe-1 pb-0 text-center">
                                     <span class="d-none d-md-block">OGGETTO</span>
                                     <span class="d-md-none">OG.</span>
-                                </div><?php
-                                    if($_REQUEST['oggetti']){
-                                        $count=1;
-                                        foreach($_REQUEST['oggetti'] as $obj){
-                                            echo "<div class=\"card-body pe-1 pb-0 pt-1 oggetto\" id=\"row{$count}\"><input id=\"oggetto{$count}\" class=\"form-control\" value=\"{$obj['oggetto']}\"/></div>";
-                                            $count++;
-                                        }
-                                    }
-                                    else echo "<div class=\"card-body pe-1 pb-0 pt-1 oggetto\" id=\"row1\"><input id=\"oggetto1\" class=\"form-control\" value=\"\"/></div>";
-                                ?>
+                                </div>
+                                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="row1"><input id="oggetto1" class="form-control" value="Interveni/sedute di fisioterapia"/></div>
                                 <div class="card-body pe-1 pb-0 pt-1" id="row_bollo"><input id="oggettoBollo" class="form-control stampDisabled" value="Bollo"/></div>
                                 <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" id="oggetto_imponibile" value="IMPONIBILE" disabled/></div>
                             </div>
@@ -96,53 +79,26 @@
                                     <span class="d-none d-md-block">IMPORTI</span>
                                     <span class="d-md-none">IMP.</span>
                                 </div>
-                                <?php
-                                    if($_REQUEST['oggetti']){
-                                        $count=1;$total=0;
-                                        foreach($_REQUEST['oggetti'] as $obj){
-                                            echo "<div class=\"card-body ps-0 pe-1 pb-0 pt-1 importo importo_row\" id=\"row{$count}\"><input type=\"number\" id=\"importo{$count}\" class=\"form-control\" value=\"{$obj['importo']}\" onchange=\"window.modalHandlers['fattura'].addTotal(this)\"/></div>";
-                                            $total+=(int)$obj['importo'];
-                                            $count++;
-                                        }
-                                    }
-                                    else echo "<div class=\"card-body ps-0 pe-1 pb-0 pt-1 importo importo_row\" id=\"row1\"><input type=\"number\" id=\"importo1\" class=\"form-control \" value=\"\" onchange=\"window.modalHandlers['fattura'].addTotal(this)\"/></div>";
+                                <?php 
+                                    $total=0;
+                                    foreach($_REQUEST['oggetti']??[] as $obj)$total+=(int)$obj['importo'];
                                 ?>
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1 importo importo_row" id="row1"><input type="number" id="importo1" class="form-control" value="<?php echo $total; ?>" onchange="window.modalHandlers['fattura'].addTotal(this)"/></div>
                                 <div class="card-body ps-0 pe-1 pb-0 pt-1 bollo" id="row_bollo"><input type="number" id="importoBollo" class="form-control stampDisabled" value="2.0"/></div>
                                 <div class="card-body ps-0 pe-1 pb-0 pt-1"><input type="number" id="imponibile" class="form-control" value="<?php echo $_REQUEST['oggetti']?$total:0;?>" disabled/></div>
                             </div>
                             <div class="flex-col w-md-10 ms-0 btns">
                                 <div class="card-body ps-0 pe-1 pb-0 text-center w-10"><span class="">#</span></div>
-                                <?php
-                                if($_REQUEST['oggetti']){
-                                        $count=1;
-                                        foreach($_REQUEST['oggetti'] as $obj){?>
-                                            <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA"  id="row<?php echo $count;?>"
-                                                onclick="window.modalHandlers['fattura'].deleteBtnClick(this);" 
-                                                onmouseenter="window.modalHandlers['fattura'].deleteBtnEnter(this);" 
-                                                onmouseleave="window.modalHandlers['fattura'].deleteBtnLeave(this);">
-                                                <div class="pe-0" >
-                                                    <button class="btn btn-primary w-100">
-                                                        <a class=""><?php echo icon('bin.svg','white',15,15); ?></a>
-                                                    </button>
-                                                </div>
-                                            </div><?php
-                                            $count++;
-                                        }
-                                    }
-                                    else{?>
-                                        <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA"  id="row1" 
-                                            onclick="window.modalHandlers['fattura'].deleteBtnClick(this);" 
-                                            onmouseenter="window.modalHandlers['fattura'].deleteBtnEnter(this);" 
-                                            onmouseleave="window.modalHandlers['fattura'].deleteBtnLeave(this);">
-                                            <div class="pe-0" >
-                                                <button class="btn btn-primary w-100">
-                                                    <a class=""><?php echo icon('bin.svg','white',15,15); ?></a>
-                                                </button>
-                                            </div>
-                                        </div><?php
-                                    }
-                                ?>
-                                
+                                <div class="card-body ps-0 pe-1 pb-0 pt-1 delBtn" title="ELIMINA"  id="row1"
+                                    onclick="window.modalHandlers['fattura'].deleteBtnClick(this);" 
+                                    onmouseenter="window.modalHandlers['fattura'].deleteBtnEnter(this);" 
+                                    onmouseleave="window.modalHandlers['fattura'].deleteBtnLeave(this);">
+                                    <div class="pe-0" >
+                                        <button class="btn btn-primary w-100">
+                                            <a class=""><?php echo icon('bin.svg','white',15,15); ?></a>
+                                        </button>
+                                    </div>
+                                </div>
                                 <div class="card-body ps-0 pe-1 pb-0 pt-1" title="ELIMINA MARCA DA BOLLO" id="row_bollo" 
                                     onclick="window.modalHandlers['fattura'].stampBtnClick(this);" 
                                     onmouseenter="window.modalHandlers['fattura'].stampBtnEnter(this);" 
