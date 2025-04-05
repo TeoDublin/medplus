@@ -17,8 +17,8 @@
     }
     else{
         $_POST['stato_seduta']='Conclusa';
-        $_POST['data_seduta']['da']=now("Y-m-01");
-        $_POST['data_seduta']['a']=now("Y-m-d");
+        $_POST['data_seduta']['da']=date('Y-m-01', strtotime('first day of last month'));
+        $_POST['data_seduta']['a']=date('Y-m-t', strtotime('last month'));
         $where.=" AND data_seduta >='{$_POST['data_seduta']['da']}' AND data_seduta <='{$_POST['data_seduta']['a']}'";
         $where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
     }
