@@ -54,7 +54,7 @@
     }
     else{?>
         <div class="w-100 mx-1">
-            <table class="table table-striped table-hover text-center">
+            <table class="table table-striped table-hover text-center w-100">
                 <thead>
                     <tr>
                         <th>Cliente</th>
