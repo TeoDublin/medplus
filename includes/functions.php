@@ -1,6 +1,6 @@
 <?php
     function request($key,$fallback=false){
-        $ret=$_REQUEST[$key];
+        $ret=$_REQUEST[$key]??false;
         unset($_REQUEST[$key]);
         return $ret ?? $fallback;
     }
@@ -145,10 +145,13 @@
         $date_value=new DateTime(date($date));
         return $date_value->format($format);
     }
-    function unformat_date(string $date):string{
-        $split_date=explode(' ',$date);
-        $split=explode('-',$split_date[0]);
-        return "{$split[2]}/{$split[1]}/{$split[0]}";
+    function unformat_date(?string $date):string{
+        if(!$date)return '-';
+        else{
+            $split_date=explode(' ',$date);
+            $split=explode('-',$split_date[0]);
+            return "{$split[2]}/{$split[1]}/{$split[0]}";
+        }
     }
     function str_scape(string $text):string{
         return str_replace("'","\'",$text);

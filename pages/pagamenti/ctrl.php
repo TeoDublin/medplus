@@ -1,4 +1,4 @@
 <?php 
     function _tab($tab):bool{
-        return cookie('tab','da_fatturare')==$tab;
+        return cookie('tab','sedute')==$tab;
     }

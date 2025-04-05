@@ -10459,6 +10459,10 @@ fieldset:disabled .btn {
 	background-color: rgba(var(--bs-light-rgb), var(--bs-bg-opacity)) !important;
 }
 
+.bg-gray {
+	background-color: var(--bs-gray) !important;
+}
+
 .bg-dark {
 	--bs-bg-opacity: 1;
 	background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;

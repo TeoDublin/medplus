@@ -130,7 +130,10 @@
             }
 
             $result=$this->get();
-            return new ResultForTable($result,$total,$this->offset,$this->limit);
+            return new ResultForTable($result,$total,$this->offset,$this->limit,$query);
+        }
+        public function newxt(){
+            
         }
         public function flush(){
             $this->sql->flush();

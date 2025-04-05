@@ -1,114 +1,43 @@
-DROP VIEW view_planning;
-CREATE VIEW view_planning AS
-SELECT 
-    'sbarra' AS origin,
-    pm.id AS id,
-    pm.row_inizio AS row_inizio,
-    pm.row_fine AS row_fine,
-	DATE_FORMAT(pri.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_inizio,
-    DATE_FORMAT(pr.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_fine,
-    (pm.row_fine - pm.row_inizio + 1) AS row_span,
-    pm.id_terapista AS id_terapista,
-    SUBSTRING_INDEX(t.terapista, ' ', 1) COLLATE utf8mb4_general_ci as terapista,
-    pm.data AS data,
-    CONCAT(pm.data, ' ', pr.ora) AS data_fine,
-    m.motivo AS motivo,
-	m.motivo AS acronimo,
-    '-' AS stato
-FROM planning_motivi pm
-LEFT JOIN motivi m ON pm.id_motivo = m.id
-LEFT JOIN planning_row pri ON pm.row_inizio = pri.id
-LEFT JOIN planning_row pr ON pm.row_fine = pr.id
-LEFT JOIN terapisti t ON pm.id_terapista = t.id
+ALTER TABLE `ruoli_utenti` ADD CONSTRAINT `ruoli_utenti_ruoli` FOREIGN KEY (`id_ruolo`) REFERENCES `ruoli`(`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
-UNION ALL
+ALTER TABLE `terapisti` 
+    ADD `percentuale_sedute` INT(11) NOT NULL DEFAULT '0'  AFTER `terapista`,  
+    ADD `percentuale_corsi` INT(11) NOT NULL DEFAULT '0'  AFTER `percentuale_sedute`;
 
-SELECT 
-    'seduta' AS origin,
-    sp.id AS id,
-    sp.row_inizio AS row_inizio,
-    sp.row_fine AS row_fine,
-	DATE_FORMAT(pri.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_inizio,
-    DATE_FORMAT(pr.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_fine,
-    (sp.row_fine - sp.row_inizio + 1) AS row_span,
-    sp.id_terapista AS id_terapista,
-	SUBSTRING_INDEX(t.terapista, ' ', 1) COLLATE utf8mb4_general_ci as terapista,
-    sp.data AS data,
-    CONCAT(sp.data, ' ', pr.ora) AS data_fine,
-    CONCAT(c.nominativo, ' (', t.trattamenti, ')') AS motivo,
-	CONCAT(
-		SUBSTRING_INDEX(c.nominativo, ' ', 1), 
-		' ', 
-		LEFT(SUBSTRING_INDEX(c.nominativo, ' ', -1), 1), 
-		'. (', 
-		t.acronimo, 
-		')'
-	) AS acronimo,
-    sp.stato_prenotazione AS stato
-FROM percorsi_terapeutici_sedute_prenotate sp
-LEFT JOIN planning_row pr ON sp.row_fine = pr.id
-LEFT JOIN planning_row pri ON sp.row_inizio = pri.id
-LEFT JOIN clienti c ON sp.id_cliente = c.id
-LEFT JOIN percorsi_terapeutici_sedute s ON sp.id_seduta = s.id
-LEFT JOIN percorsi_combo pc ON s.id_combo = pc.id
-LEFT JOIN (
-    SELECT 
-        pct.id_combo AS id_combo,
-        GROUP_CONCAT(t.trattamento SEPARATOR ', ') AS trattamenti,
-		GROUP_CONCAT(t.acronimo SEPARATOR ', ') AS acronimo
-    FROM percorsi_combo_trattamenti pct
-    LEFT JOIN trattamenti t ON pct.id_trattamento = t.id
-    GROUP BY pct.id_combo
-) t ON pc.id = t.id_combo
-LEFT JOIN terapisti t ON sp.id_terapista = t.id
-WHERE sp.stato_prenotazione <> 'Assente'
+ALTER TABLE `percorsi_terapeutici_sedute`  
+    ADD `id_terapista` INT NULL  AFTER `id_combo`, 
+    ADD `percentuale_terapista` INT NULL AFTER `id_terapista`,  
+    ADD `saldo_terapista` DOUBLE(10,2) NULL AFTER `percentuale_terapista`,  
+    ADD `saldato_terapista` DOUBLE(10,2) NULL AFTER `saldo_terapista`,
+    ADD `stato_saldato_terapista` ENUM('Pendente','Saldato','Parziale') NOT NULL DEFAULT 'Pendente' AFTER `saldo_terapista`,
+    ADD `stato_seduta` ENUM('Pendente','Assente','Conclusa','Prenotata') NOT NULL DEFAULT 'Pendente' AFTER `saldo_terapista`,  
+    ADD `data_seduta` DATE NULL AFTER `stato_saldato_terapista`,
+    ADD `data_pagamento` DATE NULL AFTER `data_seduta`, 
+    ADD `data_saldato_terapista` DATE NULL AFTER `data_pagamento`,
+    ADD `tipo_pagamento` ENUM('Senza Fattura','Aruba','Fattura') NULL AFTER `data_pagamento`,
+    ADD  INDEX  `id_terapista` (`id_terapista`);
 
-UNION ALL
+-- query to refresh new columns percorsi_terapeutici_sedute
+
+
+DROP VIEW IF EXISTS view_sedute;
+CREATE VIEW view_sedute AS 
 
 SELECT 
-    'corso' AS origin,
-    cp.id AS id,
-    cp.row_inizio AS row_inizio,
-    cp.row_fine AS row_fine,
-	DATE_FORMAT(pri.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_inizio,
-    DATE_FORMAT(pr.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_fine,
-    (cp.row_fine - cp.row_inizio + 1) AS row_span,
-    cp.id_terapista AS id_terapista,
-	SUBSTRING_INDEX(t.terapista, ' ', 1) COLLATE utf8mb4_general_ci as terapista,
-    cp.data AS data,
-    CONCAT(cp.data, ' ', pr.ora) AS data_fine,
-    CONCAT(cp.motivo, ' ( Corso )') AS motivo,
-	CONCAT(cp.motivo, ' ( Corso )') AS acronimo,
-    '-' AS stato
-FROM corsi_planning cp
-LEFT JOIN planning_row pri ON cp.row_inizio = pri.id
-LEFT JOIN planning_row pr ON cp.row_fine = pr.id
-LEFT JOIN terapisti t ON cp.id_terapista = t.id
+    pts.*,
+    c.nominativo AS nominativo,
+    t.terapista AS terapista
+FROM percorsi_terapeutici_sedute pts
+LEFT JOIN terapisti t ON pts.id_terapista = t.id
+LEFT JOIN clienti c ON pts.id_cliente = c.id;
 
-UNION ALL
 
-SELECT 
-    'colloquio' AS origin,
-    cp.id AS id,
-    cp.row_inizio AS row_inizio,
-    cp.row_fine AS row_fine,
-	DATE_FORMAT(pri.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_inizio,
-    DATE_FORMAT(pr.ora,"%H:%i") COLLATE utf8mb4_general_ci as ora_fine,
-    (cp.row_fine - cp.row_inizio + 1) AS row_span,
-    cp.id_terapista AS id_terapista,
-	SUBSTRING_INDEX(t.terapista, ' ', 1) COLLATE utf8mb4_general_ci as terapista,
-    cp.data AS data,
-    CONCAT(cp.data, ' ', pr.ora) AS data_fine,
-    CONCAT(c.nominativo, ' ( Colloquio )') AS motivo,
-	CONCAT(
-		SUBSTRING_INDEX(c.nominativo, ' ', 1), 
-		' ', 
-		LEFT(SUBSTRING_INDEX(c.nominativo, ' ', -1), 1), 
-		'. ( Colloquio )'
-	) AS acronimo,
-    cp.stato_prenotazione AS stato
-FROM colloquio_planning cp
-LEFT JOIN clienti c ON cp.id_cliente = c.id
-LEFT JOIN planning_row pri ON cp.row_inizio = pri.id
-LEFT JOIN terapisti t ON cp.id_terapista = t.id
-LEFT JOIN planning_row pr ON cp.row_fine = pr.id;
+INSERT INTO `ruoli` (`id`, `ruolo`, `home`) VALUES (NULL, 'commercialista', 'commercialista'), (NULL, 'direzione', 'direzione');
+
+INSERT INTO `utenti` (`id`, `user`, `password`, `nome`) VALUES ('6', 'commercialista', '$2y$10$HcnYhJXcs9byefQqIDmV/OOOUL1iTHJvVj3OfQT4y/Ce0pyQopnjG', 'Commercialista');
+
+INSERT INTO `utenti` (`id`, `user`, `password`, `nome`) VALUES ('7', 'direzione', '$2y$10$Lcc31McAqeec49qOVDW/8uiwhm.wyd2t9/hXDwyWyYpznCnsulob2', 'Direzione');
+
+INSERT INTO `ruoli_utenti` (`id`, `id_utente`, `id_ruolo`) VALUES (NULL, '7', '4');
+
+INSERT INTO ruoli_elementi SELECT NULL,4,id FROM elementi

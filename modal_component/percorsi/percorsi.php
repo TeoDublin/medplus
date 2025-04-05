@@ -169,7 +169,7 @@
                                                     </div>
                                                     <?php foreach ($view_sedute as $seduta) {
                                                         $sedute_prenotate=_percorsi_terapeutici_sedute_prenotate($seduta['id']);
-                                                        $abble=in_array($seduta['stato_prenotazione'],['Da Prenotare','Assente','Spostata']);
+                                                        $abble=in_array($seduta['stato_seduta'],['Pendente','Assente','Spostata']);
                                                         ?>
                                                         <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
                                                             <div class="accordion-item">
@@ -201,7 +201,7 @@
                                                                                     onmouseleave="window.modalHandlers['percorsi'].prenotaLeave(this)">PRENOTA</button><?php
                                                                                 }
                                                                                 else{?>
-                                                                                    <button class="btn btn-dark flex-fill" disabled><?php echo strtoupper($seduta['stato_prenotazione']);?> </button><?php
+                                                                                    <button class="btn btn-dark flex-fill" disabled><?php echo strtoupper($seduta['stato_seduta']);?> </button><?php
                                                                                 }?>
                                                                             </div>
                                                                         </div>

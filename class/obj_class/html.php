@@ -14,7 +14,7 @@ class Html{
                     <nav aria-label="Page navigation example">
                         <ul class="pagination ">
                             <li class="page-item">
-                                <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == 0 ? 0 : $this->offset() - 1); ?>" aria-label="indietro">
+                                <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == 0 ? 0 : $this->offset() - 1); ?>" aria-label="indietro" >
                                     <span>&laquo;</span>
                                 </a>
                             </li>
@@ -56,4 +56,36 @@ class Html{
         }
     }
     
+    public function pagination2($result, $url): void {
+        if (!str_contains($url, '?')) $url .= '?';
+        if ($result->pages > 1 && !$_REQUEST['search']) { ?>
+            <div class="d-flex align-content-end">
+                <div class="ms-auto flex-grow-0 me-md-3">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination ">
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == 0 ? 0 : $this->offset() - 1); ?>" aria-label="indietro" >
+                                    <span>&laquo;</span>
+                                </a>
+                            </li>
+                            <?php
+                            $total_pages = intdiv($result->total, $result->limit);
+                            $current = $this->offset();
+                            for ($i = 0; $i <= $total_pages; $i++) {
+                                $active = ($i == $current) ? 'active' : '';
+                                echo '<li class="page-item ' . $active . '"><a class="page-link" href="' . $url . 'pagination=' . $i . '">' . ($i + 1) . '</a></li>';
+                            }
+                            ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == $total_pages ? $total_pages : $this->offset() + 1); ?>" aria-label="Next">
+                                    <span>&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        <?php
+        }
+    }    
 }
