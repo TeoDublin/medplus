@@ -57,17 +57,17 @@
             <table class="table table-striped table-hover text-center w-100">
                 <thead>
                     <tr>
-                        <th>Cliente</th>
-                        <th>Stato Seduta</th>
-                        <th>Data Seduta</th>
-                        <th>Prezzo</th>
-                        <th>Stato Pagamento</th>
-                        <th>Terapista</th>
-                        <th>% Terapista</th>
-                        <th>Saldo Terapista</th>
-                        <th>Saldato Terapista</th>
-                        <th>Data Saldato Terapista</th>
-                        <th>Stato Saldato Terapista</th>
+                        <th class="w-10">Cliente</th>
+                        <th class="w-10">Stato Seduta</th>
+                        <th class="w-10">Data Seduta</th>
+                        <th class="w-5">Prezzo</th>
+                        <th class="w-10">Stato Pagamento</th>
+                        <th class="w-10">Terapista</th>
+                        <th class="w-5">% Terapista</th>
+                        <th class="w-10">Saldo Terapista</th>
+                        <th class="w-10">Saldato Terapista</th>
+                        <th class="w-10">Data Saldato Terapista</th>
+                        <th class="w-10">Stato Saldato Terapista</th>
                     </tr>
                 </thead>
                 <tbody><?php 
