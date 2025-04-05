@@ -1,6 +1,6 @@
 
 <div class="d-flex w-100 py-3">
-    <div class="flex-fill flex-column">
+    <div class="flex-fill flex-column w-100">
         <ul class="nav nav-tabs">
             <li class="nav-item">
                 <a class="nav-link <?php echo _tab('sedute')?'active':'';?>" aria-current="page" href="pagamenti.php?tab=sedute&pagination=0">Sedute</a>
