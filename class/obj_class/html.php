@@ -62,28 +62,26 @@ class Html{
             <div class="d-flex align-content-end">
                 <div class="ms-auto flex-grow-0 me-md-3">
                     <nav aria-label="Page navigation example">
-                        <div style="overflow-x: auto; max-width: 100%;">
-                            <ul class="pagination flex-nowrap">
-                                <li class="page-item">
-                                    <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == 0 ? 0 : $this->offset() - 1); ?>" aria-label="indietro" >
-                                        <span>&laquo;</span>
-                                    </a>
-                                </li>
-                                <?php
-                                $total_pages = intdiv($result->total, $result->limit);
-                                $current = $this->offset();
-                                for ($i = 0; $i <= $total_pages; $i++) {
-                                    $active = ($i == $current) ? 'active' : '';
-                                    echo '<li class="page-item ' . $active . '"><a class="page-link" href="' . $url . 'pagination=' . $i . '">' . ($i + 1) . '</a></li>';
-                                }
-                                ?>
-                                <li class="page-item">
-                                    <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == $total_pages ? $total_pages : $this->offset() + 1); ?>" aria-label="Next">
-                                        <span>&raquo;</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        <ul class="pagination d-flex flex-wrap justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == 0 ? 0 : $this->offset() - 1); ?>" aria-label="indietro" >
+                                    <span>&laquo;</span>
+                                </a>
+                            </li>
+                            <?php
+                            $total_pages = intdiv($result->total, $result->limit);
+                            $current = $this->offset();
+                            for ($i = 0; $i <= $total_pages; $i++) {
+                                $active = ($i == $current) ? 'active' : '';
+                                echo '<li class="page-item ' . $active . '"><a class="page-link" href="' . $url . 'pagination=' . $i . '">' . ($i + 1) . '</a></li>';
+                            }
+                            ?>
+                            <li class="page-item">
+                                <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == $total_pages ? $total_pages : $this->offset() + 1); ?>" aria-label="Next">
+                                    <span>&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
                     </nav>
                 </div>
             </div>
