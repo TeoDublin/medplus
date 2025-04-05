@@ -53,7 +53,7 @@
         <div class="card card-body w-100 mt-3 text-center"><h5>Non trovato</h5></div><?php
     }
     else{?>
-        <div class="w-100 mx-1">
+        <div class="w-100 mx-1 table-responsive">
             <table class="table table-striped table-hover text-center w-100">
                 <thead>
                     <tr>
