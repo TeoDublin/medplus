@@ -34,8 +34,8 @@
         <?php
             if($_POST['data_seduta']['all']);
             else{
-                if($_POST['data_seduta']['da']) echo "<div class=\"filter-label bg-gray\"><span >Da: ".unformat_date($_POST['data_seduta']['da'])."</span></div>"; 
-                if($_POST['data_seduta']['a']) echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data_seduta']['a'])."</span></div>";    
+                if($_POST['data_seduta']['da']) echo "<div class=\"filter-label bg-gray\"><span >Seduta Da: ".unformat_date($_POST['data_seduta']['da'])."</span></div>"; 
+                if($_POST['data_seduta']['a']) echo "<div class=\"filter-label bg-gray\"><span >Seduta A: ".unformat_date($_POST['data_seduta']['a'])."</span></div>";    
             } 
             if(isset($_POST['id_terapista'])) echo "<div class=\"filter-label bg-gray\"><span >Terapista: {$_POST['terapista']}</span></div>";
             if($_POST['stato_seduta']) echo "<div class=\"filter-label bg-gray\"><span >Stato Seduta: {$_POST['stato_seduta']}</span></div>";

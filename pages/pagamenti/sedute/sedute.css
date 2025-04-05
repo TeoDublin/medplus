@@ -1,3 +1,8 @@
+td,th {
+    white-space: normal;
+    word-break: break-word;
+}
+
 .filter-labels{
     height: 80px;
     min-height: 80px;
