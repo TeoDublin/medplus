@@ -145,8 +145,8 @@
         $date_value=new DateTime(date($date));
         return $date_value->format($format);
     }
-    function unformat_date(?string $date):string{
-        if(!$date)return '-';
+    function unformat_date(?string $date,string $fallback='-'):string{
+        if(!$date)return $fallback;
         else{
             $split_date=explode(' ',$date);
             $split=explode('-',$split_date[0]);

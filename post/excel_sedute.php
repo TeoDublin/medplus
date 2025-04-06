@@ -25,17 +25,17 @@ foreach (Sql()->select($query) as $result) {
         'Prezzo' => $result['prezzo'],
         'Seduta' => $result['index'],
         'Stato Seduta' => $result['stato_seduta'],
-        'Data Seduta' => unformat_date($result['data_seduta']),
+        'Data Seduta' => unformat_date($result['data_seduta'],''),
 
         'Stato Pagamento' => $result['stato_pagamento'],
         'Valore Saldato' => $result['saldato'],
-        'Data Pagamento'=> unformat_date($result['data_pagamento']),
+        'Data Pagamento'=> unformat_date($result['data_pagamento'],''),
         
         'Percentuale Terapista' => $result['percentuale_terapista'],
         'Saldo Terapista' => $result['saldo_terapista'],
         'Saldato Terapista' => $result['saldato_terapista'],
         'Stato Pagamento Terapista' => $result['stato_saldato_terapista'],
-        'Data Pagamento al Terapista'=> unformat_date($result['data_saldato_terapista']),
+        'Data Pagamento al Terapista'=> unformat_date($result['data_saldato_terapista'],''),
         
     ];
 
@@ -51,12 +51,17 @@ foreach (Sql()->select($query) as $result) {
     $col = 'A';
     foreach ($map as $key => $value) {
         $sheet->setCellValue("{$col}{$line}", $value);
+        if (strpos($key, 'Data') !== false && !empty($value)) {
+            $dateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel(\DateTime::createFromFormat('d/m/Y', $value));
+            $sheet->setCellValue("{$col}{$line}", $dateValue);
+            $sheet->getStyle("{$col}{$line}")->getNumberFormat()->setFormatCode('DD/MM/YYYY');
+        }
         $col++;
     }
     $line++;
 }
 
-$filename = 'sedute.xlsx';
+$filename = 'sedute_' . time() . '.xlsx';
 
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 header('Content-Disposition: attachment; filename="' . $filename . '"');
