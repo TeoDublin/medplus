@@ -58,22 +58,24 @@
                 <thead>
                     <tr>
                         <th class="w-10">Cliente</th>
+                        <th class="w-5">Acron.</th>
                         <th class="w-10">Stato Seduta</th>
                         <th class="w-10">Data Seduta</th>
                         <th class="w-5">Prezzo</th>
                         <th class="w-10">Stato Pagamento</th>
                         <th class="w-10">Terapista</th>
-                        <th class="w-5">% Terapista</th>
-                        <th class="w-10">Saldo Terapista</th>
-                        <th class="w-10">Saldato Terapista</th>
-                        <th class="w-10">Data Saldato Terapista</th>
-                        <th class="w-10">Stato Saldato Terapista</th>
+                        <th class="w-5">% Terap.</th>
+                        <th class="w-5">Saldo Terap.</th>
+                        <th class="w-10">Saldato Terap.</th>
+                        <th class="w-10">Data Saldato Terap.</th>
+                        <th class="w-10">Stato Saldato Terap.</th>
                     </tr>
                 </thead>
                 <tbody><?php 
                     foreach($view_sedute->result as $seduta){?>
                         <tr data-id=<?php echo $seduta['id']; ?>>
                             <td><?php echo $seduta['nominativo']; ?></td>
+                            <td><?php echo $seduta['acronimo']; ?></td>
                             <td><?php echo $seduta['stato_seduta']; ?></td>
                             <td><?php echo $seduta['data_seduta']?unformat_date($seduta['data_seduta']):'-'; ?></td>
                             <td><?php echo number_format($seduta['prezzo'],2); ?></td>
@@ -99,6 +101,9 @@
 <div class="floating-menu-btn">
     <button class="h-100 left"><?php echo icon('arrow-filled-left.svg'); ?></button>
     <button class="h-100 right"><?php echo icon('arrow-filled-right.svg'); ?></button>
+</div>
+<div class="floating-excel-btn" onclick="excel('post/excel_sedute.php')">
+    <?php echo icon('excel.svg','green',50,50); ?>
 </div>
 <div class="floating-menu text-center">
     <div class="content p-0 h-100">

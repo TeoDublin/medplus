@@ -107,7 +107,7 @@ function modal_component(id, component, _data) {
     document.querySelectorAll('#div_' + component).forEach(to_remove => to_remove.remove());
     const div = document.createElement('div');
     div.id = 'div_' + component;
-    div.innerHTML = spinner();
+    div.innerHTML = `<div class="modal-backdrop show"></div>`+spinner();
     container.appendChild(div);
     $.post('modal_component.php', _data).done(html => {
         div.innerHTML = html;
@@ -119,8 +119,7 @@ function modal_component(id, component, _data) {
 }
 
 function spinner(){
-    return `<div class="modal-backdrop show"></div>
-            <div class="d-flex justify-content-center align-items-center" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1050;background:rgba(0,0,0,0.5);">
+    return `<div class="d-flex justify-content-center align-items-center" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1050;background:rgba(0,0,0,0.5);">
                 <div class="spinner-border text-light" role="status"></div>
             </div>`;
 }
@@ -234,6 +233,36 @@ function search_table(_data){
     });
 
 }
+function excel(page) {
+    const div = document.createElement('div');
+    div.id = 'div_excel_spinner';
+    div.innerHTML=spinner();
+    document.body.appendChild(div); 
+    $.ajax({
+        url: page,
+        method: 'POST',
+        xhrFields: {
+            responseType: 'blob'
+        },
+        success: function (data) {
+            const url = window.URL.createObjectURL(data);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'hello_world.xlsx';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        },
+        error: function () {
+            fail();
+        },
+        complete:function(){
+            div.remove();
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {
         const toastLive = document.getElementById('successToast');

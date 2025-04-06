@@ -69,6 +69,7 @@
             if(!empty($this->where))$query.=" WHERE {$this->where}";
             if(!empty($this->groupby))$query.=" GROUP BY {$this->groupby}";
             if(!empty($this->orderby))$query.=" ORDER BY {$this->orderby}";
+            $this->query=$query;
             if(!empty($this->limit))$query.=" LIMIT {$this->limit}";
             if(!empty($this->offset))$query.=" OFFSET {$this->offset}";
             return $this->sql->select($query) ?? [];
@@ -130,6 +131,7 @@
             }
 
             $result=$this->get();
+            Session()->set('last_query',$this->query);
             return new ResultForTable($result,$total,$this->offset,$this->limit,$query);
         }
         public function newxt(){

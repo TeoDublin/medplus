@@ -64,6 +64,27 @@ td,th {
     border: none;
 }
 
+.floating-excel-btn {
+    position: fixed;
+    bottom: 10px;
+    transition: right 0.3s ease;
+    z-index: 1021;
+    right: 10px;
+    background-color: #9bc79b;
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+.floating-excel-btn:hover {
+    border: solid green 5px;
+    background-color: white;
+}
+
+.floating-excel-btn.open {
+    right: 260px;
+}
+
 .floating-menu-btn.open {
     right: 210px;
     background-color: transparent;

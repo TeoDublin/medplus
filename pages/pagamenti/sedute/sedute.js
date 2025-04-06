@@ -42,9 +42,11 @@ function loadView(response){
     document.querySelector('#spa_sedute').innerHTML = response;
     const floatingMenu = document.querySelector('.floating-menu');
     const floatingMenuBtn = document.querySelector('.floating-menu-btn');
+    const floatingExcelBtn = document.querySelector('.floating-excel-btn');
     floatingMenuBtn.addEventListener('click', () => {
         floatingMenu.classList.toggle('open');
         floatingMenuBtn.classList.toggle('open');
+        floatingExcelBtn.classList.toggle('open');
     });
     document.querySelectorAll('a.page-link').forEach(link => {
         link.addEventListener('click', event => {
