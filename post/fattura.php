@@ -100,7 +100,7 @@
             'id_fattura'=>$id_fattura,
             'importo'=>$importo
         ])->into('pagamenti_fatture');
-	if($obj['origine']!='corsi')Sedute()->refresh($obj['id_percorso']);
+	if($obj['origine']!='corsi')Sedute()->refresh($obj['id_percorso'],$_REQUEST['data_pagamento'],'Fattura');
         if($totale<=0)break;
     }
     $file=fatture_path($link);

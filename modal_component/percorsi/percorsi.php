@@ -12,7 +12,8 @@
     }
     function _view_sedute($id_percorso){
         $ret=Select('*')->from('view_sedute')->where("id_percorso={$id_percorso}");
-        if(!cookie('storico'))$ret->and(" stato_seduta <> 'Completato'");
+        if(!cookie('storico'))$ret->and("( stato_seduta <> 'Conclusa' or stato_pagamento <> 'Saldato')");
+        $ret->orderby('`index` ASC');
         return $ret->get();
     }
     function _percorsi_terapeutici_sedute_prenotate($id_seduta){
@@ -152,6 +153,9 @@
                                                                     <span class="d-none d-md-block">Seduta</span>
                                                                     <span class="d-md-none">n</span>
                                                                 </div>
+                                                                <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
+                                                                    <span>Prezzo</span>
+                                                                </div>
                                                                 <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                                                     <span class="d-none d-md-block">Stato Pagamento</span>
                                                                     <span class="d-md-none">$</span>
@@ -170,6 +174,7 @@
                                                     <?php foreach ($view_sedute as $seduta) {
                                                         $sedute_prenotate=_percorsi_terapeutici_sedute_prenotate($seduta['id']);
                                                         $abble=in_array($seduta['stato_seduta'],['Pendente','Assente','Spostata']);
+                                                        $debitore=$seduta['stato_seduta']=='Conclusa'&&$seduta['stato_pagamento']=='Pendente';
                                                         ?>
                                                         <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
                                                             <div class="accordion-item">
@@ -191,8 +196,9 @@
                                                                                 
                                                                             </div>
                                                                             <div class="w-10 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta['index']; ?></span></div>
-                                                                            <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta['stato_pagamento']; ?></span></div>
-                                                                            <div class="flex-fill d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta['stato_seduta']; ?></span></div>
+                                                                            <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta['prezzo']; ?></span></div>
+                                                                            <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 div-<?php echo $debitore?'Debitore':$seduta['stato_pagamento']; ?>"><span class=""><?php echo $debitore?'Debitore':$seduta['stato_pagamento']; ?></span></div>
+                                                                            <div class="flex-fill d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 div-<?php echo $seduta['stato_seduta']; ?>"><span class=""><?php echo $seduta['stato_seduta']; ?></span></div>
                                                                             <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                                                                 <?php if($abble){?>
                                                                                     <button class="btn btn-primary flex-fill" 

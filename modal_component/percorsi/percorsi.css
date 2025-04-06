@@ -64,12 +64,15 @@
     min-height: 50px!important;
 }
 
-div.Debitore{
+.div-Debitore, .div-Assente{
     background-color: var(--bs-danger)!important;
+    margin-right:5px;
 }
-div.Parziale{
+.div-Parziale,.div-Prenotata{
     background-color: var(--bs-warning)!important;
+    margin-right:5px;
 }
-div.Completato, div.Concluso{
+.div-Saldato, .div-Conclusa{
     background-color: var(--bs-green)!important;
+    margin-right:5px;
 }

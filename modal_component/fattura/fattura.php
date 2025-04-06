@@ -24,8 +24,12 @@
                     <div class="d-flex flex-column flex-md-row">
                         <div class="flex-col w-md-50">
                             <div class="pb-0 mb-0 card-body">
-                                <label for="date" class="form-label">Numero e data</label>
-                                <textarea  class="form-control" id="date" name="date" rows="1"><?php echo _clean("Fattura n: {$index} del ".now('d/m/Y'));?></textarea>
+                                <label for="date_div" class="form-label">Numero e data</label>
+                                <div class="d-flex d-row" id="date_div">
+                                    <input type="text" class="form-control" id="date" name="date" value="<?php echo _clean("Fattura n: {$index} del: ");?>"/>
+                                    <input type="date" class="form-control w-50 ms-2" id="data_pagamento" name="data_pagamento" value="<?php echo now('Y-m-d'); ?>"/>
+                                </div>
+                                
                             </div>
                             <div class="mb-1 card-body">
                                 <label for="head" class="form-label">Intestazione</label>

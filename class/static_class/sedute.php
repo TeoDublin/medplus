@@ -25,7 +25,19 @@
             return [(double)$ret['prezzo'],(int)$ret['sedute'],$ret['id_cliente'],$ret['id_combo']];
         }
 
-        public function refresh($id_percorso){
+        private function _update_payment($data_pagamento,$tipo_pagamento,$percorsi_terapeutici_sedute,$stato_pagamento){
+            if(!$tipo_pagamento)return [];
+            elseif($stato_pagamento=='Pendente')return ['data_pagamento'=>'','tipo_pagamento'=>''];
+            elseif($percorsi_terapeutici_sedute){
+                if($percorsi_terapeutici_sedute['stato_pagamento']!='Saldato')
+                    return ['data_pagamento'=>$data_pagamento??now('Y-m-d'),'tipo_pagamento'=>$tipo_pagamento??now('Y-m-d')];
+                
+                else return [];
+            }
+            else return [];
+        }
+
+        public function refresh($id_percorso,$data_pagamento=null,$tipo_pagamento=null){
             [$prezzo,$sedute,$id_cliente,$id_combo]=$this->_view_percorsi($id_percorso);
             $prezzo_a_seduta=round((double)$prezzo/(double)$sedute,2);
             $saldato_total=$this->_view_pagamenti($id_percorso);
@@ -47,28 +59,21 @@
                     $saldato=0;
                     $stato_pagamento='Pendente';
                 }
-
-                if($this->_percorsi_terapeutici_sedute($id_percorso,$id_combo,$index)){
-                    Update('percorsi_terapeutici_sedute')->set([
-                        'index'=>$index,
-                        'id_cliente'=>$id_cliente,
-                        'id_percorso'=>$id_percorso,
-                        'id_combo'=>$id_combo,
-                        'prezzo'=>$prezzo_a_seduta,
-                        'saldato'=>$saldato,
-                        'stato_pagamento'=>$stato_pagamento
-                    ])->where("id_percorso={$id_percorso} AND id_combo={$id_combo} AND `index`={$index}");
+                $percorsi_terapeutici_sedute=$this->_percorsi_terapeutici_sedute($id_percorso,$id_combo,$index);
+                $params=array_merge([
+                    'index'=>$index,
+                    'id_cliente'=>$id_cliente,
+                    'id_percorso'=>$id_percorso,
+                    'id_combo'=>$id_combo,
+                    'prezzo'=>$prezzo_a_seduta,
+                    'saldato'=>$saldato,
+                    'stato_pagamento'=>$stato_pagamento
+                ],$this->_update_payment($data_pagamento,$tipo_pagamento,$percorsi_terapeutici_sedute,$stato_pagamento));
+                if($percorsi_terapeutici_sedute){
+                    Update('percorsi_terapeutici_sedute')->set($params)->where("id_percorso={$id_percorso} AND id_combo={$id_combo} AND `index`={$index}");
                 }
                 else{
-                    Insert([
-                        'index'=>$index,
-                        'id_cliente'=>$id_cliente,
-                        'id_percorso'=>$id_percorso,
-                        'id_combo'=>$id_combo,
-                        'prezzo'=>$prezzo_a_seduta,
-                        'saldato'=>$saldato,
-                        'stato_pagamento'=>$stato_pagamento
-                    ])->into('percorsi_terapeutici_sedute');
+                    Insert($params)->into('percorsi_terapeutici_sedute');
                 }
             }            
         }
