@@ -33,7 +33,7 @@
                             </div>
                             <div class="mb-1 card-body">
                                 <label for="head" class="form-label">Intestazione</label>
-                                <textarea  class="form-control" id="head" name="head" rows="7"><?php echo _clean("
+                                <textarea  class="form-control" id="head" rows="7"><?php echo _clean("
                                         Daniela Zanotti Dr. in Fisioterapia
                                         Specialista in Terapia Manuale
                                         Fisioterapista ISICO NAPOLI
@@ -46,7 +46,7 @@
                         <div class="flex-col w-md-50">
                             <div class="mb-1 card-body">
                                 <label for="dati" class="form-label">Dati</label>
-                                <textarea  class="form-control" id="dati" name="dati" rows="4"><?php echo _clean("
+                                <textarea  class="form-control" id="dati" rows="4"><?php echo _clean("
                                     Spett.le {$_REQUEST['cliente']['nominativo']}"."
                                     ".
                                     $_REQUEST['cliente']['indirizzo']."
@@ -58,7 +58,7 @@
                             </div>
                             <div class="mb-1 card-body py-0">
                                 <label for="footer" class="form-label">Piè di pagina</label>
-                                <textarea  class="form-control" id="footer" name="footer" rows="4"><?php echo _clean("
+                                <textarea  class="form-control" id="footer" rows="4"><?php echo _clean("
                                     P.IVA: 06191421210
                                     C.F.ZNT DNL 64P58 F839W
                                     VIA LEOPARDI N.253
@@ -147,7 +147,7 @@
                     <div class="d-flex flex-row" articolo>
                         <div class="mb-1 card-body ">
                             <label for="articolo" class="form-label">Articolo</label>
-                            <textarea  class="form-control" id="articolo" name="articolo" rows="1"><?php echo _clean("Operazione esente da Iva effettuata ai sensi dell'art. 10, DPR 633/72");?></textarea>
+                            <textarea  class="form-control" id="articolo" rows="1"><?php echo _clean("Operazione esente da Iva effettuata ai sensi dell'art. 10, DPR 633/72");?></textarea>
                         </div>
                     </div>
                     <?php 
