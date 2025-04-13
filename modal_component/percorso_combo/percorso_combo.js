@@ -14,7 +14,13 @@ window.modalHandlers['percorso_combo'] = Object.assign(
         if(modal.querySelectorAll('.row-trattamenti').length == 0 ){
             modal.querySelector('.trattamenti-empty').classList.remove('d-none');
             modal.querySelector('.trattamenti-titles').classList.add('d-none');
+            let isico_opt = modal.querySelector('select#add_trattamento option[value="16"]');
+            isico_opt.removeAttribute('disabled');
+            isico_opt.classList.add('bg-white');
+            isico_opt.classList.remove('bg-light');
         }
+        modal.querySelector('#btnAddTrattamento').removeAttribute('disabled');
+        modal.querySelector('#isicoWarning').setAttribute('hidden','true');
         this.refreshPage(modal);
     },
     addTrattamento:function(element){
@@ -24,6 +30,15 @@ window.modalHandlers['percorso_combo'] = Object.assign(
             alert('Seleziona trattamento');
         }
         else{
+            if(id_trattamento==16){
+                modal.querySelector('#btnAddTrattamento').setAttribute('disabled','true');
+                modal.querySelector('#isicoWarning').removeAttribute('hidden');
+            }
+            let isico_opt = modal.querySelector('select#add_trattamento option[value="16"]');
+            isico_opt.setAttribute('disabled', 'true');
+            isico_opt.classList.remove('bg-white');
+            isico_opt.classList.add('bg-light');
+
             $.post('post/add_trattamento.php',{id_trattamento:id_trattamento}).done(response=>{
                 let div = document.createElement('div');
                 div.classList = 'd-flex flex-row row-trattamenti';

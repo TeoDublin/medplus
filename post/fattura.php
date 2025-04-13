@@ -86,7 +86,9 @@
         'index'=>$_REQUEST['oggetti']['index'],
         'data'=>now('Y-m-d'),
         'metodo'=>$_REQUEST['metodo_pagamento'],
-        'stato'=>$stato
+        'stato'=>$stato,
+        'fatturato_da'=>$_REQUEST['oggetti']['is_isico']=='true'?'Isico':'Medplus',
+        'request'=>json_encode($_REQUEST)
     ])->into('fatture')->get();
     $totale=(int)$_REQUEST['totale'];
     $totale-=(int)$_REQUEST['bollo']??0;

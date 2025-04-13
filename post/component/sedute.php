@@ -1,10 +1,13 @@
 <?php 
-    require_once '../includes.php';
+    require_once '../../includes.php';
+    $session=Session();
+    $ruolo=$session->get('ruolo')??false;
 
     function _has_filters(){
-        return count($_POST)>0;
+        return count($_POST)>0&&!$_REQUEST['btnClean'];
     }
-    $where='1=1';
+    
+    $where=$ruolo=='display'?"( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )":'1=1';
     $url='pagamenti.php';
     if(_has_filters()){
         if($_POST['data_seduta']['all']);
@@ -14,13 +17,17 @@
         }
         if(isset($_POST['id_terapista']))$where.=" AND id_terapista ='{$_POST['id_terapista']}'";
         if($_POST['stato_seduta'])$where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
+        if($_POST['stato_pagamento'])$where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
     }
+    elseif($_REQUEST['btnClean']);
     else{
         $_POST['stato_seduta']='Conclusa';
+        $_POST['stato_pagamento']='Saldato';
         $_POST['data_seduta']['da']=date('Y-m-01', strtotime('first day of last month'));
         $_POST['data_seduta']['a']=date('Y-m-t', strtotime('last month'));
         $where.=" AND data_seduta >='{$_POST['data_seduta']['da']}' AND data_seduta <='{$_POST['data_seduta']['a']}'";
         $where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
+        $where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
     }
 
     $view_sedute = Select('*')->from('view_sedute')->where($where)->get_table();
@@ -39,6 +46,7 @@
             } 
             if(isset($_POST['id_terapista'])) echo "<div class=\"filter-label bg-gray\"><span >Terapista: {$_POST['terapista']}</span></div>";
             if($_POST['stato_seduta']) echo "<div class=\"filter-label bg-gray\"><span >Stato Seduta: {$_POST['stato_seduta']}</span></div>";
+            if($_POST['stato_pagamento']) echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: {$_POST['stato_pagamento']}</span></div>";
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
@@ -183,6 +191,31 @@
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute_prenotate','stato_prenotazione')->get() as $enum) {
                                         $selected=$_POST['stato_seduta']&&$_POST['stato_seduta']==$enum?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion p-1" id="filter_stato_pagamento">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_stato_pagamento" aria-expanded="false" aria-controls="collapse_filter_stato_pagamento">
+                    Stato Pagamento
+                    </button>
+                </h2>
+                <div id="collapse_filter_stato_pagamento" class="accordion-collapse collapse" data-bs-parent="#filter_stato_pagamento">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="stato_pagamento">Stato Pagamento</label>
+                            <select class="form-control" id="stato_pagamento" value="<?php echo $_POST['stato_pagamento']; ?>">
+                                <option value="">Tutti</option>
+                                <?php 
+                                    foreach (Enum('percorsi_terapeutici_sedute','stato_pagamento')->get() as $enum) {
+                                        $selected=$_POST['stato_pagamento']&&$_POST['stato_pagamento']==$enum?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>

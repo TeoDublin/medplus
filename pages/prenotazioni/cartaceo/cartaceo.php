@@ -1,4 +1,6 @@
 <?php 
+    $session=Session();
+    $ruolo=$session->get('ruolo')??false;
     $data = cookie('data',($_REQUEST['data']??date('Y-m-d')));
     $_ore=function()use(&$data){
         $ret=$o=[];
@@ -16,11 +18,15 @@
         }
         return $ret;
     };
-    $_t=function($id_terapista)use(&$ore,&$data){
+    $_t=function($id_terapista)use(&$ore,&$data,&$ruolo){
         $ret=[];
         foreach($ore as $o){
             $got_o=false;
-            $vp=Select('*,DATE_FORMAT(STR_TO_DATE(ora_inizio, "%H:%i"), "%H") as f_ora_inizio')->from('view_planning')->where("`data`='{$data}' AND id_terapista={$id_terapista}")->get();
+            $vp=Select('*,DATE_FORMAT(STR_TO_DATE(ora_inizio, "%H:%i"), "%H") as f_ora_inizio')
+                ->from('view_planning')
+                ->where("`data`='{$data}' AND id_terapista={$id_terapista}");
+            if($ruolo=='display')$vp->and("( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )");
+            $vp=$vp->get();
             foreach($vp as $v){
                 if($v['f_ora_inizio']==$o['ora']){
                     $ret[]=$v;

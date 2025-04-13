@@ -105,10 +105,13 @@
                                     ?>
                                 </select>                                    
                             </div>
-                            <div class="p-2 w-40 text-center" onclick="window.modalHandlers['percorso_combo'].addTrattamento(this)">
+                            <div class="p-2 w-40 text-center">
                                 <label for="btn" class="form-label">#</label>
-                                <button name="btn" class="btn btn-primary w-100">Aggiungi Trattamento</button>
+                                <button name="btn" class="btn btn-primary w-100" id="btnAddTrattamento" onclick="window.modalHandlers['percorso_combo'].addTrattamento(this)">Aggiungi Trattamento</button>
                             </div>
+                        </div>
+                        <div class="text-center p-1 bg-warning" id="isicoWarning" hidden>
+                            <span>I trattamenti Isico non possono essere aggiunti insieme ai altri</span>
                         </div>
                     </div>
                     

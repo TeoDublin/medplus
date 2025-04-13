@@ -74,7 +74,7 @@
                                     <span class="d-none d-md-block">OGGETTO</span>
                                     <span class="d-md-none">OG.</span>
                                 </div>
-                                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="row1"><input id="oggetto1" class="form-control" value="Interveni/sedute di fisioterapia"/></div>
+                                <div class="card-body pe-1 pb-0 pt-1 oggetto" id="row1"><input id="oggetto1" class="form-control" value="Interventi/sedute di fisioterapia"/></div>
                                 <div class="card-body pe-1 pb-0 pt-1" id="row_bollo"><input id="oggettoBollo" class="form-control stampDisabled" value="Bollo"/></div>
                                 <div class="card-body pe-1 pb-0 pt-1"><input  class="form-control" id="oggetto_imponibile" value="IMPONIBILE" disabled/></div>
                             </div>
@@ -154,6 +154,7 @@
                         $obj = json_encode([
                             'obj' => $_REQUEST['oggetti'],
                             'id_cliente' => $_REQUEST['id_cliente'],
+                            'is_isico' => $_REQUEST['is_isico'],
                             'index'=>$index
                         ], JSON_HEX_APOS | JSON_HEX_QUOT);
                     ?>

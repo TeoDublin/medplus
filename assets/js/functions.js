@@ -73,7 +73,9 @@ function append_scripts(element){
             newScript.src = script.src;
             newScript.async = false;
             newScript.setAttribute('component',script.getAttribute('component'));
-            document.body.appendChild(newScript);
+            if(script.type!=='')newScript.type=script.type;
+            script.remove();
+            element.appendChild(newScript);
         }
     });
 }
@@ -248,7 +250,8 @@ function excel(page) {
             const url = window.URL.createObjectURL(data);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'hello_world.xlsx';
+            let filename = page.split("/").pop().split(".")[0];
+            a.download = filename+'.xlsx';
             document.body.appendChild(a);
             a.click();
             a.remove();

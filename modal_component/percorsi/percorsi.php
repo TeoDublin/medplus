@@ -11,8 +11,11 @@
         ->get_or_false();
     }
     function _view_sedute($id_percorso){
+        $session=Session();
+        $ruolo=$session->get('ruolo')??'';
         $ret=Select('*')->from('view_sedute')->where("id_percorso={$id_percorso}");
         if(!cookie('storico'))$ret->and("( stato_seduta <> 'Conclusa' or stato_pagamento <> 'Saldato')");
+        if($ruolo=='display')$ret->and("( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )");
         $ret->orderby('`index` ASC');
         return $ret->get();
     }

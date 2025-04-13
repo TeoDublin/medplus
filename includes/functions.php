@@ -112,6 +112,10 @@
         $full_path="modal_component/{$component}/{$component}.js";
         echo '<script component="modal_'.$component.'" src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
     }
+    function module_script(String $component):void{
+        $full_path="assets/js/components/{$component}.js";
+        echo '<script component="module_'.$component.'" src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
+    }
     function root(string $path):string{
         return $_SERVER['DOCUMENT_ROOT'].root_path($path);
     }

@@ -15,13 +15,14 @@
         }
         return $ora->format('H:i');
     };
-    $_terapista_planning=function($ret=[])use(&$terapisti,&$data){
+    $_terapista_planning=function($ret=[])use(&$terapisti,&$data,&$ruolo){
         foreach($terapisti as $terapista){
             $view_planning=Select('*')
                 ->from('view_planning')
                 ->where("id_terapista={$terapista['id']}")
-                ->and("data='{$data}'")
-                ->get();
+                ->and("data='{$data}'");
+            if($ruolo=='display')$view_planning->and("( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )");
+            $view_planning=$view_planning->get();
             $ret[$terapista['id']]['planning']=$view_planning;
             $ret[$terapista['id']]['terapista']=$terapista;
         }

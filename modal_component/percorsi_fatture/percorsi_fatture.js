@@ -21,6 +21,13 @@ window.modalHandlers['percorsi_fatture']={
             }).fail(()=>{fail()});
         }
     },
+    clickEdit:function(id,id_cliente){
+        modal_component('fattura','fattura',{id_cliente:id_cliente,oggetti:oggetti,cliente:cliente});
+        $.post('post/delete_percorsi_fatture.php',{table:table,id:id}).done(()=>{
+            reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id_cliente});
+        }).fail(()=>{fail()});
+
+    },
     enterStato:function(element){
         element.classList.add('successSingle');
     },

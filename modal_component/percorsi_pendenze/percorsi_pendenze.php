@@ -1,4 +1,6 @@
 <?php 
+    $session=Session();
+    $ruolo=$session->get('ruolo')??false;
     function _trattamenti(){
         return Select('id_origine,nome')
         ->from('view_pagamenti')
@@ -97,7 +99,8 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <?php foreach (_trattamento($trattamenti['id_origine']) as $trattamento) {?>
+                                                <?php foreach (_trattamento($trattamenti['id_origine']) as $trattamento) {
+                                                    $is_isico=$trattamento['nome']=='Isico'?'true':'false';?>
                                                     <div class="table-responsive">
                                                         <div class="my-0">
                                                             <div class="flex-row titles w-100 d-flex fattura_row <?php echo (int)$trattamento['non_fatturato']==0?'disabled bg-light':''; ?>" origine="trattamenti">
@@ -106,17 +109,17 @@
                                                                     <input class="form-check-input" type="checkbox" id="id_percorso" origine="trattamenti" value="<?php echo $trattamento['id'];?>" disabled/>
                                                                 </div>
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"             
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,<?php echo $is_isico; ?>)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,<?php echo $is_isico; ?>)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,<?php echo $is_isico; ?>)"             
                                                                     >
                                                                     <span id="scadenza" class="d-none d-md-block"><?php echo  $trattamento['scadenza']?unformat_date($trattamento['scadenza']):'-';?></span>
                                                                     <span id="scadenza" class="d-md-none"><?php echo $trattamento['scadenza']?format($trattamento['scadenza'],'d/m'):'-';?></span>
                                                                 </div>
                                                                 <div class="cc4 d-none d-md-flex align-items-center justify-content-center text-center"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,<?php echo $is_isico; ?>)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,<?php echo $is_isico; ?>)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,<?php echo $is_isico; ?>)"
                                                                     >
                                                                     <span class=""><?php echo $trattamento['prezzo_tabellare'];?></span>
                                                                 </div>
@@ -128,23 +131,23 @@
                                                                     <span id="prezzo"><?php echo $trattamento['prezzo'];?></span>
                                                                 </div>
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,<?php echo $is_isico; ?>)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,<?php echo $is_isico; ?>)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,<?php echo $is_isico; ?>)"
                                                                     >
                                                                     <span id="saldato"><?php echo $trattamento['saldato'];?></span>
                                                                 </div>
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,<?php echo $is_isico; ?>)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,<?php echo $is_isico; ?>)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,<?php echo $is_isico; ?>)"
                                                                     >
                                                                     <span id="fatturato"><?php echo $trattamento['fatturato'];?></span>
                                                                 </div>
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center <?php echo (int)$trattamento['non_fatturato']>0?'bg-warning':0;?>"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,<?php echo $is_isico; ?>)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,<?php echo $is_isico; ?>)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,<?php echo $is_isico; ?>)"
                                                                     >
                                                                     <span id="non_fatturato"><?php echo $trattamento['non_fatturato'];?></span>
                                                                 </div>                                           
@@ -210,17 +213,17 @@
                                                                     <input class="form-check-input" type="checkbox" id="id_percorso" origine="corsi" value="<?php echo $corso['id'];?>" disabled/>
                                                                 </div>
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"             
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,false)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,false)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,false)"             
                                                                     >
                                                                     <span id="scadenza" class="d-none d-md-block"><?php echo unformat_date($corso['scadenza']);?></span>
                                                                     <span id="scadenza" class="d-md-none"><?php echo format($corso['scadenza'],'d/m');?></span>
                                                                 </div>
                                                                 <div class="cc4 d-none d-md-flex align-items-center justify-content-center text-center"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,false)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,false)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,false)"
                                                                     >
                                                                     <span class=""><?php echo $corso['prezzo_tabellare'];?></span>
                                                                 </div>
@@ -232,23 +235,23 @@
                                                                     <span id="prezzo"><?php echo $corso['prezzo'];?></span>
                                                                 </div>
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,false)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,false)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,false)"
                                                                     >
                                                                     <span id="saldato"><?php echo $corso['saldato'];?></span>
                                                                 </div>
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,false)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,false)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,false)"
                                                                     >
                                                                     <span id="fatturato"><?php echo $corso['fatturato'];?></span>
                                                                 </div>
                                                                 <div class="cc4 d-flex align-items-center justify-content-center text-center <?php echo (int)$corso['non_fatturato']>0?'bg-warning':0;?>"
-                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this)"
-                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this)"
-                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this)"
+                                                                        onmouseenter="window.modalHandlers['percorsi_pendenze'].enterRow(this,false)"
+                                                                        onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveRow(this,false)"
+                                                                        onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,false)"
                                                                     >
                                                                     <span id="non_fatturato"><?php echo $corso['non_fatturato'];?></span>
                                                                 </div>                                           
@@ -283,13 +286,17 @@
                                         <div class="d-md-none">Aruba</div>
                                     </button>
                                 </div>
-                                <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
-                                    <button type="button" class="btn btn-primary p-2 d-flex flex-fill btn-insert w-100 h-100">
-                                        <div class="mx-2"><?php echo icon('coin.svg','white',20,25);?></div>
-                                        <div class="d-none d-md-block">Senza Fattura</div>
-                                        <div class="d-md-none">S.Fat.</div>
-                                    </button>
-                                </div>
+                                <?php 
+                                    if($ruolo!='display'){?>
+                                        <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                                            <button type="button" class="btn btn-primary p-2 d-flex flex-fill btn-insert w-100 h-100">
+                                                <div class="mx-2"><?php echo icon('coin.svg','white',20,25);?></div>
+                                                <div class="d-none d-md-block">Contanti</div>
+                                                <div class="d-md-none">Ctt</div>
+                                            </button>
+                                        </div><?php
+                                    }
+                                ?>
                             </div><?php
                         }?>
                     </div>
@@ -305,3 +312,4 @@
 <div id="percorso_combo"></div>
 <div id="prezzo_corso"></div>
 <?php modal_script('percorsi_pendenze'); ?>
+<?php module_script('fattura'); ?>

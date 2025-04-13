@@ -1,21 +1,33 @@
 window.modalHandlers['percorsi_pendenze'] = {
-    enterRow:function(element){
+    doing_isico:false,
+    is_clicked:false,
+    enterRow:function(element,is_isico){
         element.closest('div.fattura_row').classList.add('success');
     },
-    leaveRow:function(element){
+    leaveRow:function(element,is_isico){
         element.closest('div.fattura_row').classList.remove('success');
     },
-    clickRow:function(element){
+    clickRow:function(element,is_isico){
+        const modal = element.closest('.modal');
+        if(is_isico&&!this.doing_isico&&!this.is_clicked)this.doing_isico=true;
+        if(is_isico&&!this.doing_isico||!is_isico&&this.doing_isico){
+            alert("I trattamenti Isico non possono essere fatturati insieme ai altri");
+            return;
+        }
+        this.is_clicked=true;
         let row = element.closest('div.fattura_row');
         let check = row.querySelector('#id_percorso');
         if (check.checked) {
             check.checked = false;
             row.classList.remove('checked');
+            if(modal.querySelectorAll('.checked').length==0){
+                this.doing_isico=false;
+                this.is_clicked=false;
+            }
         } else {
             check.checked = true;
             row.classList.add('checked');
         }
-        const modal = element.closest('.modal');
         let sum_selected = 0;
         modal.querySelectorAll('.checked').forEach(checked_div=>{
             sum_selected+=parseFloat(checked_div.querySelector('#non_fatturato').innerHTML) || 0;
@@ -67,7 +79,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         modal_component('prezzo_corso','prezzo_corso',{id:id,prezzo_tabellare:prezzo_tabellare,prezzo:prezzo,id_cliente:id_cliente});
     },
     fatturaClick:function(element,id_cliente){
-        modal = element.closest('.modal');
+        const modal = element.closest('.modal');
         let oggetti=[];
         const { idNominativo, idIndirizzo, idCap, idCitta, idCf } = element.dataset;
         let error = 'Per generare la fattura devi inserire i dati:\n\n';
@@ -115,10 +127,9 @@ window.modalHandlers['percorsi_pendenze'] = {
                 alert('Seleziona qualcosa');
             }
             else{
-                modal_component('fattura','fattura',{id_cliente:id_cliente,oggetti:oggetti,cliente:cliente});
+                modal_component('fattura','fattura',{id_cliente:id_cliente,oggetti:oggetti,cliente:cliente,is_isico:this.doing_isico});
             }
         }
-        
     },
     senzaFatturaClick:function(element,id_cliente){
         modal = element.closest('.modal');
@@ -154,4 +165,12 @@ window.modalHandlers['percorsi_pendenze'] = {
             modal_component('fatturato_aruba','fatturato_aruba',{id_cliente:id_cliente,_data:_data});
         }
     }
+}
+window.modalHandlers['fattura'] = {
+    generatePDF:function(element,oggetti) {
+        $.post('post/fattura.php',_data(element,oggetti)).done(response=>{
+            window.open(response,'_blank');
+            reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:oggetti['id_cliente']});
+        });
+    },
 }

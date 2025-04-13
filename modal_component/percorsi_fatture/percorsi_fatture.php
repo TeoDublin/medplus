@@ -1,5 +1,7 @@
 <?php 
     style('modal_component/percorsi_fatture/percorsi_fatture.css');
+    $session=Session();
+    $ruolo=$session->get('ruolo')??false;
     $fatture=Select('*')->from('view_fatture')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
     $senza_fattura=Select('*')->from('pagamenti_senza_fattura')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
     $aruba=Select('*')->from('pagamenti_aruba')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
@@ -15,7 +17,7 @@
                 <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
                 <div class="p-2">
                     <div class="container-fluid text-center py-4">
-                        <?php if(!$fatture&&!$senza_fattura&&!$aruba){?>
+                        <?php if(!$fatture&&!($senza_fattura&&$ruolo!='display')&&!$aruba){?>
                             <div class="card">
                                 <div class="card-body">
                                     <span>Non ci fatture per questo cliente.</span>
@@ -48,6 +50,9 @@
                                                     </div>
                                                     <div class="cc4 d-flex align-items-center justify-content-center text-center">
                                                         <span class="">Stato</span>
+                                                    </div>
+                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center">
+                                                        <span class="">#</span>
                                                     </div>
                                                     <div class="cc1 d-flex align-items-center justify-content-center text-center">
                                                         <span class="">#</span>
@@ -112,6 +117,13 @@
                                                         <div class="cc1 d-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
+                                                                onclick="window.modalHandlers['percorsi_fatture'].clickEdit(<?php echo $fattura['id'].','.$_REQUEST['id_cliente'];?>)"             
+                                                            >
+                                                            <span><?php echo icon('edit.svg');?></span>
+                                                        </div>
+                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center"
+                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
+                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickDelete(<?php echo $fattura['id'].','.$_REQUEST['id_cliente'].',\'fatture\'';?>)"             
                                                             >
                                                             <span><?php echo icon('bin.svg');?></span>
@@ -124,9 +136,9 @@
                                     </div>
                                 </div><?php
                             }
-                            if($senza_fattura){?>
+                            if($senza_fattura&&$ruolo!='display'){?>
                                 <div class="card mb-3">
-                                    <div class="card-header">Senza Fattura</div>
+                                    <div class="card-header">Contanti</div>
                                     <div class="card-body">
                                         <div class="table-responsive title">
                                             <div class="my-0">
