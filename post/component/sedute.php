@@ -18,6 +18,7 @@
         if(isset($_POST['id_terapista']))$where.=" AND id_terapista ='{$_POST['id_terapista']}'";
         if($_POST['stato_seduta'])$where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
         if($_POST['stato_pagamento'])$where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
+        if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
     }
     elseif($_REQUEST['btnClean']);
     else{
@@ -30,7 +31,7 @@
         $where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
     }
 
-    $view_sedute = Select('*')->from('view_sedute')->where($where)->get_table();
+    $view_sedute = Select('*')->from('view_sedute')->where($where)->orderby('id_cliente,id_percorso,`index` ASC')->get_table();
     $somma_prezzo= number_format(Select("sum(prezzo) as prezzo")->from('view_sedute')->where($where)->col('prezzo'),2);
 ?>
 
@@ -47,6 +48,7 @@
             if(isset($_POST['id_terapista'])) echo "<div class=\"filter-label bg-gray\"><span >Terapista: {$_POST['terapista']}</span></div>";
             if($_POST['stato_seduta']) echo "<div class=\"filter-label bg-gray\"><span >Stato Seduta: {$_POST['stato_seduta']}</span></div>";
             if($_POST['stato_pagamento']) echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: {$_POST['stato_pagamento']}</span></div>";
+            if($_POST['nominativo']) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
@@ -67,6 +69,7 @@
                     <tr>
                         <th class="w-10">Cliente</th>
                         <th class="w-5">Acron.</th>
+                        <th class="w-5">N.</th>
                         <th class="w-10">Stato Seduta</th>
                         <th class="w-10">Data Seduta</th>
                         <th class="w-5">Prezzo</th>
@@ -74,7 +77,7 @@
                         <th class="w-10">Terapista</th>
                         <th class="w-5">% Terap.</th>
                         <th class="w-5">Saldo Terap.</th>
-                        <th class="w-10">Saldato Terap.</th>
+                        <th class="w-5">Saldato Terap.</th>
                         <th class="w-10">Data Saldato Terap.</th>
                         <th class="w-10">Stato Saldato Terap.</th>
                     </tr>
@@ -84,6 +87,7 @@
                         <tr data-id=<?php echo $seduta['id']; ?>>
                             <td><?php echo $seduta['nominativo']; ?></td>
                             <td><?php echo $seduta['acronimo']; ?></td>
+                            <td><?php echo $seduta['index']; ?></td>
                             <td><?php echo $seduta['stato_seduta']; ?></td>
                             <td><?php echo $seduta['data_seduta']?unformat_date($seduta['data_seduta']):'-'; ?></td>
                             <td><?php echo number_format($seduta['prezzo'],2); ?></td>
@@ -118,6 +122,34 @@
         <div class="pt-3 p-2">
             <h6>FILTRA</h6>
         </div>
+        
+        <div class="accordion p-1" id="filter_cliente">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_cliente" aria-expanded="false" aria-controls="collapse_filter_cliente">
+                    Cliente
+                    </button>
+                </h2>
+                <div id="collapse_filter_cliente" class="accordion-collapse collapse" data-bs-parent="#filter_cliente">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="cliente">Nominativo Cliente</label>
+                            <select class="form-control" id="cliente" value="<?php echo $_POST['cliente']; ?>">
+                                <option value="">Tutti</option>
+                                <?php 
+                                    foreach(Select('*')->from('clienti')->get() as $enum){
+                                        $selected = $_POST['cliente']==$enum['id']?'selected':'';
+                                        echo "<option value=\"{$enum['id']}\" {$selected}>{$enum['nominativo']}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <div class="accordion p-1" id="filter_data">
             <div class="accordion-item">
                 <h2 class="accordion-header">

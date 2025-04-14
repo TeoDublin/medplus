@@ -59,28 +59,22 @@ class Html{
     public function pagination2($result, $url): void {
         if (!str_contains($url, '?')) $url .= '?';
         if ($result->pages > 1 && !$_REQUEST['search']) { ?>
-            <div class="d-flex align-content-end">
-                <div class="ms-auto flex-grow-0 me-md-3">
+            <div class="d-flex flex-fill align-content-start">
+                <div class="ms-md-3">
                     <nav aria-label="Page navigation example">
-                        <ul class="pagination d-flex flex-wrap justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == 0 ? 0 : $this->offset() - 1); ?>" aria-label="indietro" >
-                                    <span>&laquo;</span>
-                                </a>
-                            </li>
-                            <?php
+                        <ul class="pagination d-flex flex-wrap justify-content-center"><?php
                             $total_pages = intdiv($result->total, $result->limit);
                             $current = $this->offset();
+                            echo '<li class="page-item"><a class="page-link" href="' . $url . 'pagination=1" data-n="1">&laquo;</a></li>';
                             for ($i = 0; $i <= $total_pages; $i++) {
+                                if($total_pages>6&&($i<$current||($i>($current+4)&&$i<($total_pages-4))))continue;
                                 $active = ($i == $current) ? 'active' : '';
-                                echo '<li class="page-item ' . $active . '"><a class="page-link" href="' . $url . 'pagination=' . $i . '">' . ($i + 1) . '</a></li>';
+                                $n=($i + 1);
+                                echo '<li class="page-item ' . $active . '"><a class="page-link" href="' . $url . 'pagination=' . $i . '" data-n="'.$n.'">' . $n . '</a></li>';
                             }
+                            $n=$total_pages+1;
+                            echo '<li class="page-item"><a class="page-link" href="' . $url . 'pagination=' . $n . '" data-n="'.$n.'">&raquo;</a></li>';
                             ?>
-                            <li class="page-item">
-                                <a class="page-link" href="<?php echo $url . 'pagination=' . ($this->offset() == $total_pages ? $total_pages : $this->offset() + 1); ?>" aria-label="Next">
-                                    <span>&raquo;</span>
-                                </a>
-                            </li>
                         </ul>
                     </nav>
                 </div>

@@ -7,6 +7,8 @@ function parseFilter(){
     let id_terapista = document.querySelector('#id_terapista').value;
     let stato_seduta = document.querySelector('#stato_seduta').value;
     let stato_pagamento = document.querySelector('#stato_pagamento').value;
+    let cliente = document.querySelector('#cliente').value;
+    let nominativo = document.querySelector('#cliente option:checked').innerHTML;
 
     if(data_seduta_da !== '' && data_seduta_a !== ''){
         if(data_seduta_a<data_seduta_da){
@@ -28,6 +30,9 @@ function parseFilter(){
     if(stato_seduta!=='')ret.stato_seduta=stato_seduta;
 
     if(stato_pagamento!=='')ret.stato_pagamento=stato_pagamento;
+
+    if(cliente!=='')ret.cliente=cliente;
+    if(nominativo!=='')ret.nominativo=nominativo;
 
     if(alert.length>0){
         alert(alerts.join('\n'));       
@@ -54,10 +59,11 @@ function loadView(response){
     document.querySelectorAll('a.page-link').forEach(link => {
         link.addEventListener('click', event => {
             event.preventDefault();
-            let page = parseInt(event.target.innerHTML) - 1;
+            let page = parseInt(event.target.dataset.n) - 1;
             $.post('post/component/sedute.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
+    document.querySelector('#filter_cliente').querySelector('select#cliente').searchable();
     
 }
 document.addEventListener('DOMContentLoaded',function(){
