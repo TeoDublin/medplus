@@ -35,6 +35,6 @@ window.modalHandlers['percorsi_fatture']={
         element.classList.remove('successSingle');
     },
     changeStato:function(stato,id){
-        $.post('post/save.php',{table:'fatture',stato:stato,id:id}).done(()=>{success()}).fail(()=>{fail()});
+        $.post('post/fattura_cambia_stato.php',{stato:stato,id:id}).done(()=>{success()}).fail(()=>{fail()});
     },
 }
