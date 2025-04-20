@@ -157,6 +157,11 @@
             return "{$split[2]}/{$split[1]}/{$split[0]}";
         }
     }
+    function data_set(array $params):String{
+        $arr_data_set=[];
+        foreach($params as $k=>$v)$arr_data_set[]="data-{$k}=\"{$v}\"";
+        return implode(' ',$arr_data_set);
+    }
     function str_scape(string $text):string{
         return str_replace("'","\'",$text);
     }

@@ -54,21 +54,6 @@
                 $interval = new DateInterval('P1D');
                 $period = new DatePeriod($start, $interval, $end);
                 Corsiplanning::insert_corsi_planning($period,$giorni,$corso);
-                foreach(Select('*')->from('corsi_classi')->where("id_corso={$corso['id']}")->get_n_flush() as $cliente){
-                    $data = new DateTime(date("Y-m-{$corso['scadenza']}"));
-                    $data->modify("+2 month");
-                    Corsiplanning::insert_corsi_pagamenti(
-                        $cliente['data_inizio'],
-                        $data->format("Y-m-d"),
-                        $corso['scadenza'],
-                        [
-                            'id_cliente'=>$cliente['id_cliente'],
-                            'id_corso'=>$cliente['id_corso'],
-                            'prezzo_tabellare'=>$corso['prezzo'],
-                            'prezzo'=>$cliente['prezzo'],
-                        ]
-                    );
-                }
             }
         }
     }

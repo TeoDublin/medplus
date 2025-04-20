@@ -6004,6 +6004,7 @@ fieldset:disabled .btn {
 	white-space: nowrap;
 	vertical-align: baseline;
 	border-radius: var(--bs-badge-border-radius);
+	z-index: 1010;
 }
 
 .badge:empty {

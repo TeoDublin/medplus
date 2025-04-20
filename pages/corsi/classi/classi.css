@@ -1,0 +1,18 @@
+#tab-classi .nav-link{
+    color:white!important;
+}
+#tab-classi .nav-tabs .nav-link.active{
+    color:var(--base-bg-secondary)!important;
+    border: solid gray 1px;
+    border-radius: 5px;
+}
+#tab-classi .nav-classi-item{
+    color:white!important;
+    background-color: var(--base-bg-secondary)!important;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+tr{
+    cursor: pointer;
+}

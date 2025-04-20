@@ -201,6 +201,9 @@
                                                                 <span class="d-none d-md-block">Non Fatturato</span>
                                                                 <span class="d-md-none">N.Fat.</span>
                                                             </div>
+                                                            <div class="cc1 d-flex align-items-center justify-content-center text-center">
+                                                                <span class="">#</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div><?php
@@ -254,7 +257,20 @@
                                                                         onclick="window.modalHandlers['percorsi_pendenze'].clickRow(this,false)"
                                                                     >
                                                                     <span id="non_fatturato"><?php echo $corso['non_fatturato'];?></span>
-                                                                </div>                                           
+                                                                </div>
+                                                                <div class="cc1 d-flex align-items-center justify-content-center text-center"
+                                                                    <?php 
+                                                                        if((int)$corso['non_fatturato']==(int)(int)$corso['prezzo']){?>
+                                                                            onmouseenter="window.modalHandlers['percorsi_pendenze'].enterDel(this)"
+                                                                            onmouseleave="window.modalHandlers['percorsi_pendenze'].leaveDel(this)"
+                                                                            onclick="window.modalHandlers['percorsi_pendenze'].clickDel(<?php echo $corso['id']; ?>,<?php echo $corso['id_cliente']; ?>)"<?php
+                                                                        }
+                                                                        else{?>
+                                                                            onclick="window.modalHandlers['percorsi_pendenze'].clickDelAlert()"<?php
+                                                                        }
+                                                                    ?> >
+                                                                    <span><?php echo icon('bin.svg');?></span>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>

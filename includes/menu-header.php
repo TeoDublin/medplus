@@ -78,10 +78,33 @@
                         <div class="menu-label align-self-center hide" ><span>Trattamenti</span></div>
                     </div><?php                    
                 }
-                if(in_array('menu_corsi',$elementi)){?>
+                if(in_array('menu_corsi',$elementi)){
+                    $to_do=Select('
+                        SUM(IF(`1`=4,1,0)) +
+                        SUM(IF(`2`=4,1,0)) +
+                        SUM(IF(`3`=4,1,0)) +
+                        SUM(IF(`4`=4,1,0)) +
+                        SUM(IF(`5`=4,1,0)) +
+                        SUM(IF(`7`=4,1,0)) +
+                        SUM(IF(`8`=4,1,0)) +
+                        SUM(IF(`9`=4,1,0)) +
+                        SUM(IF(`10`=4,1,0)) +
+                        SUM(IF(`11`=4,1,0)
+                    ) AS to_do')
+                    ->from('view_corsi_pagamenti')
+                    ->col('to_do');
+                    ?>
                     <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page',$home)=='corsi'?'menu-active':''?>" id="menu-corsi" title="corsi">
-                        <div class="d-flex align-items-start mx-2" >
-                            <?php echo icon('people-arms.svg','black',31,30);?>
+                        <div class="d-flex align-items-start mx-2 position-relative" >
+                            <?php 
+                                echo icon('people-arms.svg','black',31,30);
+                                if($to_do){
+                                    echo "<span class=\"position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger\">".
+                                        "{$to_do}".
+                                        "<span class=\"visually-hidden\">Pendenti di Conferma</span>".
+                                    "</span>";
+                                }
+                            ?>
                         </div>
                         <div class="menu-label align-self-center hide" ><span>Corsi</span></div>
                     </div><?php        

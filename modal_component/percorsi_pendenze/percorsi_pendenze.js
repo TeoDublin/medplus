@@ -42,6 +42,20 @@ window.modalHandlers['percorsi_pendenze'] = {
             span_Sum_selected.innerHTML='SELEZIONATO: '+formattedSum;
         }
     },
+    enterDel:function(element){
+        element.closest('div.fattura_row').classList.add('warning');
+    },
+    leaveDel:function(element){
+        element.closest('div.fattura_row').classList.remove('warning');
+    },
+    clickDel:function(id,id_cliente){
+        $.post('post/delete.php',{table:'corsi_pagamenti',id:id}).done(()=>{
+            reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:id_cliente});
+        }).fail(()=>{fail()});
+    },
+    clickDelAlert:function(){
+        alert('Non puoi eliminare una pendenza gia fatturata');
+    },
     enterPrezzo:function(element){
         element.classList.add('success');
     },
