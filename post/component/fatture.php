@@ -13,8 +13,12 @@
         if($_POST['data']['all']);
         else{
             if($_POST['data']['da'])$where.=" AND `data` >='{$_POST['data']['da']}'";
-            if($_POST['data']['a'])$where.=" AND `data` <='{$_POST['data']['a']}'";    
+            if($_POST['data']['a'])$where.=" AND `data` <='{$_POST['data']['a']}'";
+            
         }
+        if($_POST['fatturato_da'])$where.=" AND `fatturato_da` ='{$_POST['fatturato_da']}'";
+        if($_POST['stato'])$where.=" AND `stato` ='{$_POST['stato']}'";
+        if($_POST['confermato_dal_commercialista'])$where.=" AND `confermato_dal_commercialista` ='{$_POST['confermato_dal_commercialista']}'";
     }
     elseif($_REQUEST['btnClean']);
     else{
@@ -37,6 +41,9 @@
                 if($_POST['data']['da']) echo "<div class=\"filter-label bg-gray\"><span >Da: ".unformat_date($_POST['data']['da'])."</span></div>"; 
                 if($_POST['data']['a']) echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data']['a'])."</span></div>";    
             } 
+            if($_POST['fatturato_da']) echo "<div class=\"filter-label bg-gray\"><span >fatturato da: {$_POST['fatturato_da']}</span></div>";
+            if($_POST['stato']) echo "<div class=\"filter-label bg-gray\"><span >stato: {$_POST['stato']}</span></div>";
+            if(isset($_POST['confermato_dal_commercialista'])) echo "<div class=\"filter-label bg-gray\"><span>Confermato Commercialista: ".((int)$_POST['confermato_dal_commercialista']?'Si':'No')."</span></div>";
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
@@ -95,6 +102,9 @@
 <div class="floating-excel-btn" onclick="excel('post/excel_fatture.php')">
     <?php echo icon('excel.svg','green',50,50); ?>
 </div>
+<div class="floating-download-fatture-btn" onclick="excel('post/download_fatture.php')">
+    <?php echo icon('pdf.svg','#d4263a',50,50); ?>
+</div>
 <div class="floating-menu text-center">
     <div class="content p-0 h-100">
         <div class="pt-3 p-2">
@@ -107,6 +117,7 @@
                     Data
                     </button>
                 </h2>
+
                 <div id="collapse_filter_data" class="accordion-collapse collapse" data-bs-parent="#filter_data">
                     <div class="accordion-body">
                         <div>
@@ -129,6 +140,84 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="accordion p-1" id="filter_fatturato_da">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_fatturato_da" aria-expanded="false" aria-controls="collapse_filter_fatturato_da">
+                            Fatturato da
+                            </button>
+                        </h2>
+                        <div id="collapse_filter_fatturato_da" class="accordion-collapse collapse" data-bs-parent="#filter_fatturato_da">
+                            <div class="accordion-body">
+                                <div>
+                                    <label for="fatturato_da">Fatturato da</label>
+                                    <select class="form-control" id="fatturato_da" value="<?php echo $_POST['fatturato_da']; ?>">
+                                        <option value="">Tutti</option>
+                                        <?php 
+                                            foreach(Enum('fatture','fatturato_da')->get() as $enum){
+                                                $selected = $_POST['fatturato_da']==$enum?'selected':'';
+                                                echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion p-1" id="filter_stato">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_stato" aria-expanded="false" aria-controls="collapse_filter_stato">
+                            Stato
+                            </button>
+                        </h2>
+                        <div id="collapse_filter_stato" class="accordion-collapse collapse" data-bs-parent="#filter_stato">
+                            <div class="accordion-body">
+                                <div>
+                                    <label for="stato">Stato</label>
+                                    <select class="form-control" id="stato" value="<?php echo $_POST['stato']; ?>">
+                                        <option value="">Tutti</option>
+                                        <?php 
+                                            foreach(Enum('fatture','stato')->get() as $enum){
+                                                $selected = $_POST['stato']==$enum?'selected':'';
+                                                echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion p-1" id="filter_confermato_dal_commercialista">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_confermato_dal_commercialista" aria-expanded="false" aria-controls="collapse_filter_confermato_dal_commercialista">
+                            Confermato dal commercialista
+                            </button>
+                        </h2>
+                        <div id="collapse_filter_confermato_dal_commercialista" class="accordion-collapse collapse" data-bs-parent="#filter_confermato_dal_commercialista">
+                            <div class="accordion-body">
+                                <div>
+                                    <label for="confermato_dal_commercialista">Confermato</label>
+                                    <select class="form-control" id="confermato_dal_commercialista" value="<?php echo $_POST['confermato_dal_commercialista']; ?>">
+                                        <option value="">Tutti</option>
+                                        <?php 
+                                            foreach([0=>'No',1=>'Si'] as $k => $v){
+                                                $selected = isset($_POST['confermato_dal_commercialista'])&&$_POST['confermato_dal_commercialista']==$k?'selected':'';
+                                                echo "<option value=\"{$k}\" {$selected}>{$v}</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>            
             </div>
         </div>
     </div>

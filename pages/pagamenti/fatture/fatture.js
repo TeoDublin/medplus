@@ -4,6 +4,9 @@ function parseFilter(){
     let data_da = document.querySelector('#data_da').value;
     let data_a = document.querySelector('#data_a').value;
     let data_all = document.querySelector('#data_all').checked;
+    let fatturato_da = document.querySelector('#fatturato_da').value;
+    let stato = document.querySelector('#stato').value;
+    let confermato_dal_commercialista = document.querySelector('#confermato_dal_commercialista').value;
 
     if(data_da !== '' && data_a !== ''){
         if(data_a<data_da){
@@ -18,6 +21,9 @@ function parseFilter(){
             if (data_a !== '') ret.data.a = data_a;    
         }
     }
+    if(fatturato_da!=='')ret.fatturato_da=fatturato_da;
+    if(stato!=='')ret.stato=stato;
+    if(confermato_dal_commercialista!=='')ret.confermato_dal_commercialista=confermato_dal_commercialista;
     if(alert.length>0){
         alert(alerts.join('\n'));       
     }
@@ -35,10 +41,12 @@ function loadView(response){
     const floatingMenu = document.querySelector('.floating-menu');
     const floatingMenuBtn = document.querySelector('.floating-menu-btn');
     const floatingExcelBtn = document.querySelector('.floating-excel-btn');
+    const floatingDownloadBtn = document.querySelector('.floating-download-fatture-btn');
     floatingMenuBtn.addEventListener('click', () => {
         floatingMenu.classList.toggle('open');
         floatingMenuBtn.classList.toggle('open');
         floatingExcelBtn.classList.toggle('open');
+        floatingDownloadBtn.classList.toggle('open');
     });
     document.querySelectorAll('a.page-link').forEach(link => {
         link.addEventListener('click', event => {

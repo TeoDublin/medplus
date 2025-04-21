@@ -85,6 +85,27 @@ td,th {
     right: 260px;
 }
 
+.floating-download-fatture-btn {
+    position: fixed;
+    bottom: 100px;
+    transition: right 0.3s ease;
+    z-index: 1021;
+    right: 10px;
+    background-color: #f0bac1;
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+.floating-download-fatture-btn:hover {
+    border: solid #d4263a 5px;
+    background-color: white;
+}
+
+.floating-download-fatture-btn.open {
+    right: 260px;
+}
+
 .floating-menu-btn.open {
     right: 210px;
     background-color: transparent;
