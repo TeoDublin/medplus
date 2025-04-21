@@ -22,6 +22,7 @@ window.modalHandlers['fattura'] = Object.assign(
         const parent = ele.closest('.card');
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.remove();});
         window.modalHandlers['fattura'].addTotal(parent);
+        this.updateRowId();
     },
     addBtnClick:function() {
         let countOggetto = document.querySelectorAll('.oggetto').length;
@@ -71,6 +72,7 @@ window.modalHandlers['fattura'] = Object.assign(
         btnContainer.addEventListener('mouseleave',function(){window.modalHandlers['fattura'].deleteBtnLeave(btnContainer)});
         btnContainer.addEventListener('click',function(){window.modalHandlers['fattura'].deleteBtnClick(btnContainer)});
         document.querySelector('.btns').insertBefore(btnContainer, document.querySelector('.btns').children[1]);
+        this.updateRowId();
     },
     stampBtnEnter:function(ele){
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.classList.add('stampBtnEnter');});
@@ -110,5 +112,25 @@ window.modalHandlers['fattura'] = Object.assign(
             bollo.classList.remove('importo');
             this.addTotal(spanBollo);
         }
+    },
+    updateRowId:function(){
+        let row = 1;
+        document.querySelectorAll('div.oggetto').forEach(function(e){
+            e.id="row"+row;
+            e.querySelector('input').id="oggetto"+row;
+            row++;
+        });
+        row = 1;
+        document.querySelectorAll('div.importo_row').forEach(function(e){
+            e.id="row"+row;
+            e.querySelector('input').id="importo"+row;
+            row++;
+        });
+        row = 1;
+        document.querySelectorAll('div.delBtn').forEach(function(e){
+            e.id="row"+row;
+            row++;
+        });
+        
     }
 });

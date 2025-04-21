@@ -15,7 +15,7 @@
     $pdf->MultiCell($width +10, 6, trim(iconv('UTF-8', 'windows-1252//TRANSLIT',$_REQUEST['dati'])), 0, 'C');
     $pdf->Ln();
     $pdf->SetFont('Arial', 'B', 12);
-    $pdf->MultiCell(0, 6, trim($_REQUEST['data']));
+    $pdf->MultiCell(0, 6, trim($_REQUEST['data'].unformat_date($_REQUEST['data_pagamento'])));
     $pdf->Ln();
 
     $pdf->SetFont('Arial', 'B', 12);
@@ -75,24 +75,30 @@
     $pdf->SetY(-40);
     $pdf->MultiCell(0, 4, trim($_REQUEST['footer']),0,'C');
     
-    $id_cliente=$_REQUEST['oggetti']['id_cliente'];
-    $cliente=Select('*')->from('clienti')->where("id={$id_cliente}")->first();
-    $link=str_replace([' ',':'],'_',$cliente['nominativo'].'_'.datetime().'.pdf');
+    $id_cliente=$_REQUEST['id_cliente'];
+    $link=str_replace([' ',':'],'_',$_REQUEST['cliente']['nominativo'].'_'.datetime().'.pdf');
     $stato=$_REQUEST['metodo_pagamento']=='Bonifico'?'Pendente':'Saldata';
-    $id_fattura=Insert([
+    $save=[
         'id_cliente'=>$id_cliente,
         'link'=>$link,
         'importo'=>$_REQUEST['totale'],
-        'index'=>$_REQUEST['oggetti']['index'],
+        'index'=>$_REQUEST['index'],
         'data'=>now('Y-m-d'),
         'metodo'=>$_REQUEST['metodo_pagamento'],
         'stato'=>$stato,
-        'fatturato_da'=>$_REQUEST['oggetti']['is_isico']=='true'?'Isico':'Medplus',
+        'fatturato_da'=>$_REQUEST['is_isico']=='true'?'Isico':'Medplus',
         'request'=>json_encode($_REQUEST)
-    ])->into('fatture')->get();
+    ];
+    if(isset($_REQUEST['doing_edit'])){
+        $id_fattura=$_REQUEST['id_fattura'];
+        Update('fatture')->set($save)->where("id={$id_fattura}");
+        Delete()->from('pagamenti_fatture')->where("id_fattura={$id_fattura}");
+    }
+    else $id_fattura=Insert($save)->into('fatture')->get();
+    
     $totale=(int)$_REQUEST['totale'];
     $totale-=(int)$_REQUEST['bollo']??0;
-    foreach($_REQUEST['oggetti']['obj'] as $obj){
+    foreach($_REQUEST['oggetti'] as $obj){
         $importo=$totale>=(int)$obj['importo']?$obj['importo']:$totale;
         $totale-=$importo;
         Insert([

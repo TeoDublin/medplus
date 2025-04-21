@@ -1,4 +1,5 @@
 window.modalHandlers['percorsi_pendenze'] = {
+    deletePersistent:'fattura',
     doing_isico:false,
     is_clicked:false,
     enterRow:function(element,is_isico){
@@ -180,11 +181,13 @@ window.modalHandlers['percorsi_pendenze'] = {
         }
     }
 }
-window.modalHandlers['fattura'] = {
+window.modalHandlers['fattura'] = Object.assign(
+    window.modalHandlers['fattura'] || {},{
+    persistent:true,
     generatePDF:function(element,oggetti) {
         $.post('post/fattura.php',_data(element,oggetti)).done(response=>{
             window.open(response,'_blank');
             reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:oggetti['id_cliente']});
         });
     },
-}
+});

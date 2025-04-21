@@ -185,7 +185,20 @@ function closeModalAndScripts(modalElement) {
         if (modalElement.modalHandlers) {
             delete modalElement.modalHandlers;
         }
-        delete window.modalHandlers[component];
+        if (
+            typeof window.modalHandlers !== 'undefined' &&
+            typeof window.modalHandlers[component] !== 'undefined' &&
+            typeof window.modalHandlers[component].deletePersistent !== 'undefined'
+        ) {
+            delete window.modalHandlers[window.modalHandlers[component].deletePersistent];
+        }
+        if (
+            typeof window.modalHandlers !== 'undefined' &&
+            typeof window.modalHandlers[component] !== 'undefined' &&
+            typeof window.modalHandlers[component].persistent !== 'undefined'
+        ) {
+            delete window.modalHandlers[component];
+        }
         document.querySelectorAll('#' + modalElement.id.replace('modal_','div_')).forEach(to_remove => { to_remove.remove(); });
     }
     if (!document.querySelector('.modal.show')) {

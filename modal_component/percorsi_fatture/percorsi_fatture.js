@@ -1,4 +1,5 @@
 window.modalHandlers['percorsi_fatture']={
+    deletePersistent:'fattura',
     enterRow:function(element){
         element.closest('.fattura_row').classList.add('success');
     },
@@ -21,12 +22,8 @@ window.modalHandlers['percorsi_fatture']={
             }).fail(()=>{fail()});
         }
     },
-    clickEdit:function(id,id_cliente){
-        modal_component('fattura','fattura',{id_cliente:id_cliente,oggetti:oggetti,cliente:cliente});
-        $.post('post/delete_percorsi_fatture.php',{table:table,id:id}).done(()=>{
-            reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id_cliente});
-        }).fail(()=>{fail()});
-
+    clickEdit:function(e){
+        modal_component('fattura','fattura',JSON.parse(e.dataset.request));
     },
     enterStato:function(element){
         element.classList.add('successSingle');
@@ -38,3 +35,15 @@ window.modalHandlers['percorsi_fatture']={
         $.post('post/fattura_cambia_stato.php',{stato:stato,id:id}).done(()=>{success()}).fail(()=>{fail()});
     },
 }
+window.modalHandlers['fattura'] = Object.assign(
+    window.modalHandlers['fattura'] || {},
+    {
+    persistent:true,
+    generatePDF:function(element,oggetti) {
+        oggetti.doing_edit=true;
+        $.post('post/fattura.php',_data(element,oggetti)).done(response=>{
+            window.open(response,'_blank');
+            reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:oggetti['id_cliente']});
+        });
+    },
+});

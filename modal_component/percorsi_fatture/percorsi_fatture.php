@@ -114,10 +114,20 @@
                                                                 echo "</select>";
                                                             ?>
                                                         </div>
-                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickEdit(<?php echo $fattura['id'].','.$_REQUEST['id_cliente'];?>)"             
+                                                        <?php 
+                                                            $raw = $fattura['request'];
+                                                            $fixed = preg_replace_callback('/"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"/s', function ($matches) {
+                                                                $content = $matches[1];
+                                                                $content = str_replace(["\r", "\n"], ['\\r', '\\n'], $content);
+                                                                return '"' . $content . '"';
+                                                            }, $raw);
+                                                            
+                                                            $request = json_decode($fixed);
+                                                            $request->id_fattura = $fattura['id'];
+                                                            $json = htmlspecialchars(json_encode($request, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8');
+                                                        ?>
+                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center" data-request="<?php echo $json; ?>"
+                                                                onclick="window.modalHandlers['percorsi_fatture'].clickEdit(this)"             
                                                             >
                                                             <span><?php echo icon('edit.svg');?></span>
                                                         </div>
@@ -268,5 +278,8 @@
             </div>
         </div>
     </div>
-    <?php modal_script('percorsi_fatture'); ?>
+    <?php 
+        module_script('fattura');
+        modal_script('percorsi_fatture'); 
+    ?>
 </div>
