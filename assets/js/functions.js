@@ -279,6 +279,39 @@ function excel(page) {
     });
 }
 
+function zip(page) {
+    const div = document.createElement('div');
+    div.id = 'div_zip_spinner';
+    div.innerHTML = spinner();
+    document.body.appendChild(div);
+
+    $.ajax({
+        url: page,
+        method: 'POST',
+        xhrFields: {
+            responseType: 'arraybuffer'
+        },
+        success: function (data, status, xhr) {
+            const blob = new Blob([data], { type: 'application/zip' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            let filename = page.split("/").pop().split(".")[0];
+            a.download = filename + '.zip';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        },
+        error: function () {
+            fail();
+        },
+        complete: function () {
+            div.remove();
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {
         const toastLive = document.getElementById('successToast');

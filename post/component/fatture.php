@@ -102,7 +102,7 @@
 <div class="floating-excel-btn" onclick="excel('post/excel_fatture.php')">
     <?php echo icon('excel.svg','green',50,50); ?>
 </div>
-<div class="floating-download-fatture-btn" onclick="excel('post/download_fatture.php')">
+<div class="floating-download-fatture-btn" onclick="zip('post/download_fatture.php')">
     <?php echo icon('pdf.svg','#d4263a',50,50); ?>
 </div>
 <div class="floating-menu text-center">

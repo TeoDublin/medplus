@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-$zipFile = 'fatture_' . time() . '.zip';
+$zipFile = sys_get_temp_dir() . '/fatture_' . time() . '.zip';
 $zip = new ZipArchive;
 $files=[];
 
@@ -14,7 +14,7 @@ $query = Session()->get('last_query');
 
 if ($zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
     foreach (Sql()->select($query) as $result) {
-        $file=fatture_path($result['link']);
+        $file=root(fatture_path($result['link']));
         if (file_exists($file)) {
             $zip->addFile($file, basename($file));
         }
@@ -29,7 +29,12 @@ header('Cache-Control: max-age=0');
 
 ob_clean();
 flush();
-readfile($zipFile);
+$fp = fopen($zipFile, 'rb');
+while (!feof($fp)) {
+    echo fread($fp, 8192);
+    flush();
+}
+fclose($fp);
 unlink($zipFile);
-ob_end_flush();
+
 exit;
