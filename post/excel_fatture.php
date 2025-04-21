@@ -17,6 +17,7 @@ $line = 1;
 
 foreach (Sql()->select($query) as $result) {
     $map = [
+        'id'=>$result['id'],
         'Nominativo' => $result['nominativo'],
         'Numero'=> $result['index'],
         'Stato Fattura	'=> $result['stato'],
