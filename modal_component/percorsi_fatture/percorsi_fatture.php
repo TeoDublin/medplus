@@ -122,7 +122,7 @@
                                                                 return '"' . $content . '"';
                                                             }, $raw);
                                                             
-                                                            $request = json_decode($fixed);
+                                                            $request = json_decode(($fixed==""?'{}':$fixed));
                                                             $request->id_fattura = $fattura['id'];
                                                             $json = htmlspecialchars(json_encode($request, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8');
                                                         ?>
