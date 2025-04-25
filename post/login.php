@@ -1,8 +1,7 @@
 <?php
     $_REQUEST['skip_cookie']=true;
     require_once '../includes.php';
-    global $session; 
-    $session = Session::getInstance();
+    $session = Session();
     $ret=Select('*')
         ->from('view_utenti')
         ->where("user='{$_REQUEST['username']}'")

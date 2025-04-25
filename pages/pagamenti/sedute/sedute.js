@@ -51,10 +51,12 @@ function loadView(response){
     const floatingMenu = document.querySelector('.floating-menu');
     const floatingMenuBtn = document.querySelector('.floating-menu-btn');
     const floatingExcelBtn = document.querySelector('.floating-excel-btn');
+    const floatingDownloadBtn = document.querySelector('.floating-download-fatture-btn');
     floatingMenuBtn.addEventListener('click', () => {
         floatingMenu.classList.toggle('open');
         floatingMenuBtn.classList.toggle('open');
         floatingExcelBtn.classList.toggle('open');
+        floatingDownloadBtn.classList.toggle('open');
     });
     document.querySelectorAll('a.page-link').forEach(link => {
         link.addEventListener('click', event => {

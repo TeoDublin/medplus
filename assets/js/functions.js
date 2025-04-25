@@ -312,6 +312,24 @@ function zip(page) {
     });
 }
 
+function pdf(component,sid) {
+    const div = document.createElement('div');
+    div.id = 'div_pdf_spinner';
+    div.innerHTML = spinner();
+    document.body.appendChild(div);
+
+    $.post('pdf_render.php', { component:component, sid:sid }).done((path) => {
+        div.remove();
+        const a = document.createElement('a');
+        a.href = path;
+        a.download = 'document.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    });
+}
+
+
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {
         const toastLive = document.getElementById('successToast');

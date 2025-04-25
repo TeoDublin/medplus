@@ -35,7 +35,7 @@
         }
         $split= explode('/',strtok($url, '?'));
         $ret=str_replace('.php','',end($split));
-        if($_REQUEST['search'])$ret.='_searching';
+        if(isset($_REQUEST['search']))$ret.='_searching';
         return $ret;
     }
     function root_path(string $path): string {
@@ -54,6 +54,12 @@
         $rootUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'];
         return $rootUrl.root_path("{$path}");
     }
+    function url_no_port(string $path): string {
+        $host = explode(':', $_SERVER['HTTP_HOST'])[0];
+        $rootUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $host;
+        return $rootUrl . root_path("{$path}");
+    }
+    
     function image(string $name): string {
         return root_path("assets/images/{$name}");
     }
@@ -188,4 +194,7 @@
         echo $msg ."\n".'</br>';
         @ob_flush();
         @flush();
+    }
+    function _txt($txt){
+        return $txt;
     }

@@ -1,5 +1,5 @@
 <?php
-global $session,$elementi; 
+global $elementi; 
 $session = Session();
 if (!$session->isLoggedIn()||!$session->get('home')) {
     redirect('login.php');

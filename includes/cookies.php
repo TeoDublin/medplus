@@ -18,7 +18,7 @@ function _page_cookie():array{
     return isset($_COOKIE[page()]) ? json_decode($_COOKIE[page()], true) : [];
 }
 function cookie(string $key, $fallback=false):string{
-    if($_REQUEST['skip_cookie'])$ret=$_REQUEST[$key]??$fallback;
+    if(isset($_REQUEST['skip_cookie']))$ret=$_REQUEST[$key]??$fallback;
     else{
         $page_cookie=_page_cookie();
         $ret=$page_cookie[$key] ?? $fallback;

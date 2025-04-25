@@ -27,7 +27,9 @@
         return new Jwt();
     }
     function Session(){
-        return Session::getInstance();
+        global $session;
+        if(!$session)$session=Session::getInstance();
+        return $session;
     }
     function Sedute():Sedute{
         return new Sedute();

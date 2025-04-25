@@ -4,27 +4,18 @@ class Session
 {
     private static $instance = null;
 
-    private function __construct()
-    {
-        session_start();
-    }
-
-    private function __clone() {}
-    private function __wakeup() {}
-
     public static function getInstance()
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            if (!empty($_GET['PHPSESSID'])) {
+                session_id($_GET['PHPSESSID']);
+            }
+            session_start();
+        }
         if (self::$instance === null) {
             self::$instance = new Session();
         }
         return self::$instance;
-    }
-
-    public function startSession()
-    {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
     }
 
     public function set($key, $value)

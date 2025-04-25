@@ -4,7 +4,7 @@
     $ruolo=$session->get('ruolo')??false;
 
     function _has_filters(){
-        return count($_POST)>0&&!$_REQUEST['btnClean'];
+        return count($_POST)>0&&!isset($_REQUEST['btnClean']);
     }
     
     $where=$ruolo=='display'?"( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )":'1=1';
@@ -20,7 +20,7 @@
         if($_POST['stato_pagamento'])$where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
         if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
     }
-    elseif($_REQUEST['btnClean']);
+    elseif(isset($_REQUEST['btnClean']));
     else{
         $_POST['stato_seduta']='Conclusa';
         $_POST['stato_pagamento']='Saldato';
@@ -31,7 +31,7 @@
         $where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
     }
 
-    $view_sedute = Select('*')->from('view_sedute')->where($where)->orderby('id_cliente,id_percorso,`index` ASC')->get_table();
+    $view_sedute = Select('*')->from('view_sedute')->where($where)->orderby('data_seduta ASC')->get_table();
     $somma_prezzo= number_format(Select("sum(prezzo) as prezzo")->from('view_sedute')->where($where)->col('prezzo'),2);
 ?>
 
@@ -40,7 +40,7 @@
     <?php
     if(_has_filters()){?>
         <?php
-            if($_POST['data_seduta']['all']);
+            if(isset($_POST['data_seduta']['all']));
             else{
                 if($_POST['data_seduta']['da']) echo "<div class=\"filter-label bg-gray\"><span >Seduta Da: ".unformat_date($_POST['data_seduta']['da'])."</span></div>"; 
                 if($_POST['data_seduta']['a']) echo "<div class=\"filter-label bg-gray\"><span >Seduta A: ".unformat_date($_POST['data_seduta']['a'])."</span></div>";    
@@ -48,7 +48,7 @@
             if(isset($_POST['id_terapista'])) echo "<div class=\"filter-label bg-gray\"><span >Terapista: {$_POST['terapista']}</span></div>";
             if($_POST['stato_seduta']) echo "<div class=\"filter-label bg-gray\"><span >Stato Seduta: {$_POST['stato_seduta']}</span></div>";
             if($_POST['stato_pagamento']) echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: {$_POST['stato_pagamento']}</span></div>";
-            if($_POST['nominativo']) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
+            if(isset($_POST['nominativo'])) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
@@ -116,6 +116,9 @@
 </div>
 <div class="floating-excel-btn" onclick="excel('post/excel_sedute.php')">
     <?php echo icon('excel.svg','green',50,50); ?>
+</div>
+<div class="floating-download-fatture-btn" onclick="pdf('sedute','<?php echo session_id(); ?>')">
+    <?php echo icon('pdf.svg','#d4263a',50,50); ?>
 </div>
 <div class="floating-menu text-center">
     <div class="content p-0 h-100">

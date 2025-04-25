@@ -121,7 +121,7 @@
             if(!empty($this->inner_join))$query.=implode('',$this->inner_join);
             if(!empty($this->where))$query.=" WHERE {$this->where}";
             $total= $this->sql->select($query)[0]['total'];
-            if(!$_REQUEST['search']){
+            if(!isset($_REQUEST['search'])){
                 $this->limit??=(int)cookie('limit',14);
                 $this->offset??=(Html()->offset()*$this->limit)??0;
             }
