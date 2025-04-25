@@ -26,13 +26,20 @@ window.modalHandlers['percorsi_fatture']={
         modal_component('fattura','fattura',JSON.parse(e.dataset.request));
     },
     enterStato:function(element){
-        element.classList.add('successSingle');
     },
     leaveStato:function(element){
-        element.classList.remove('successSingle');
+    },
+    enterEdit:function(element){
+        element.closest('div.fattura_row').classList.add('bg-success');
+    },
+    leaveEdit:function(element){
+        element.closest('div.fattura_row').classList.remove('bg-success');
     },
     changeStato:function(stato,id){
         $.post('post/fattura_cambia_stato.php',{stato:stato,id:id}).done(()=>{success()}).fail(()=>{fail()});
+    },
+    changeFatturatoDa:function(fatturato_da,id){
+        $.post('post/fattura_cambia_fatturato_da.php',{fatturato_da:fatturato_da,id:id}).done(()=>{success()}).fail(()=>{fail()});
     },
 }
 window.modalHandlers['fattura'] = Object.assign(

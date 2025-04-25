@@ -19,6 +19,7 @@
         if($_POST['fatturato_da'])$where.=" AND `fatturato_da` ='{$_POST['fatturato_da']}'";
         if($_POST['stato'])$where.=" AND `stato` ='{$_POST['stato']}'";
         if($_POST['confermato_dal_commercialista'])$where.=" AND `confermato_dal_commercialista` ='{$_POST['confermato_dal_commercialista']}'";
+        if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
     }
     elseif($_REQUEST['btnClean']);
     else{
@@ -44,6 +45,7 @@
             if($_POST['fatturato_da']) echo "<div class=\"filter-label bg-gray\"><span >fatturato da: {$_POST['fatturato_da']}</span></div>";
             if($_POST['stato']) echo "<div class=\"filter-label bg-gray\"><span >stato: {$_POST['stato']}</span></div>";
             if(isset($_POST['confermato_dal_commercialista'])) echo "<div class=\"filter-label bg-gray\"><span>Confermato Commercialista: ".((int)$_POST['confermato_dal_commercialista']?'Si':'No')."</span></div>";
+            if($_POST['nominativo']) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
@@ -118,6 +120,32 @@
                     </button>
                 </h2>
 
+                <div class="accordion p-1" id="filter_cliente">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_cliente" aria-expanded="false" aria-controls="collapse_filter_cliente">
+                            Cliente
+                            </button>
+                        </h2>
+                        <div id="collapse_filter_cliente" class="accordion-collapse collapse" data-bs-parent="#filter_cliente">
+                            <div class="accordion-body">
+                                <div>
+                                    <label for="cliente">Nominativo Cliente</label>
+                                    <select class="form-control" id="cliente" value="<?php echo $_POST['cliente']; ?>">
+                                        <option value="">Tutti</option>
+                                        <?php 
+                                            foreach(Select('*')->from('clienti')->get() as $enum){
+                                                $selected = $_POST['cliente']==$enum['id']?'selected':'';
+                                                echo "<option value=\"{$enum['id']}\" {$selected}>{$enum['nominativo']}</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
                 <div id="collapse_filter_data" class="accordion-collapse collapse" data-bs-parent="#filter_data">
                     <div class="accordion-body">
                         <div>

@@ -7,6 +7,8 @@ function parseFilter(){
     let fatturato_da = document.querySelector('#fatturato_da').value;
     let stato = document.querySelector('#stato').value;
     let confermato_dal_commercialista = document.querySelector('#confermato_dal_commercialista').value;
+    let cliente = document.querySelector('#cliente').value;
+    let nominativo = document.querySelector('#cliente option:checked').innerHTML;
 
     if(data_da !== '' && data_a !== ''){
         if(data_a<data_da){
@@ -24,6 +26,8 @@ function parseFilter(){
     if(fatturato_da!=='')ret.fatturato_da=fatturato_da;
     if(stato!=='')ret.stato=stato;
     if(confermato_dal_commercialista!=='')ret.confermato_dal_commercialista=confermato_dal_commercialista;
+    if(cliente!=='')ret.cliente=cliente;
+    if(nominativo!=='')ret.nominativo=nominativo;
     if(alert.length>0){
         alert(alerts.join('\n'));       
     }
@@ -55,7 +59,7 @@ function loadView(response){
             $.post('post/component/fatture.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
-    
+    document.querySelector('#filter_cliente').querySelector('select#cliente').searchable();
 }
 document.addEventListener('DOMContentLoaded',function(){
     $.post('post/component/fatture.php?pagination=0', {} ).done(response => { loadView(response);});

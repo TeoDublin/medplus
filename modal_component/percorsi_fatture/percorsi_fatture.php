@@ -32,29 +32,32 @@
                                         <div class="table-responsive title">
                                             <div class="my-0">
                                                 <div class="flex-row titles w-100 d-flex fattura_row">
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center">
+                                                    <div class="flex-fill d-flex align-items-center justify-content-center text-center">
                                                         <span class="">Fattura</span>
                                                     </div>
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center">
+                                                    <div class="w-10 d-flex align-items-center justify-content-center text-center">
                                                         <span class="d-none d-md-block">Importo</span>
                                                         <span class="d-md-none">$</span>
                                                     </div>
-                                                    <div class="cc1 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                    <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center">
                                                         <span class="">Nr.</span>
                                                     </div>
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                    <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center">
                                                         <span class="">Emissione</span>
                                                     </div>
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                    <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center">
                                                         <span class="">Pagamento</span>
                                                     </div>
-                                                    <div class="cc4 d-flex align-items-center justify-content-center text-center">
+                                                    <div class="w-15 d-flex align-items-center justify-content-center text-center">
                                                         <span class="">Stato</span>
                                                     </div>
-                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center">
+                                                    <div class="w-15 d-flex align-items-center justify-content-center text-center">
+                                                        <span class="">Fatturato Da</span>
+                                                    </div>
+                                                    <div class="w-5 d-flex align-items-center justify-content-center text-center">
                                                         <span class="">#</span>
                                                     </div>
-                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center">
+                                                    <div class="w-5 d-flex align-items-center justify-content-center text-center">
                                                         <span class="">#</span>
                                                     </div>
                                                 </div>
@@ -65,50 +68,64 @@
                                             <div class="table-responsive">
                                                 <div class="my-0">
                                                     <div class="flex-row titles w-100 d-flex fattura_row" >
-                                                        <div class="cc2 d-flex align-items-center justify-content-center text-center"
+                                                        <div class="flex-fill d-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
                                                             >
                                                             <span><a id="link" href="<?php echo fatture_path($fattura['link']);?>" target="_blank"><?php echo $fattura['index'].".pdf";?></a></span>
                                                         </div>
-                                                        <div class="cc2 d-flex align-items-center justify-content-center text-center"
+                                                        <div class="w-10 d-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
                                                             >
                                                             <span><?php echo $fattura['importo'];?></span>
                                                         </div>
-                                                        <div class="cc1 d-none d-md-flex align-items-center justify-content-center text-center"
+                                                        <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
                                                             >
                                                             <span><?php echo $fattura['index'];?></span>
                                                         </div>
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"
+                                                        <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
                                                             >
                                                             <span><?php echo unformat_date($fattura['timestamp']);?></span>
                                                         </div>
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"
+                                                        <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
                                                             >
                                                             <span><?php echo $fattura['data']?unformat_date($fattura['data']):'-';?></span>
                                                         </div>
-                                                        <div class="cc4 d-flex align-items-center justify-content-center text-center">
+                                                        <div class="w-15 px-2 d-flex align-items-center justify-content-center text-center">
                                                             <?php 
-                                                                echo "<select class=\"form-control text-center\" name=\"id_categoria\" value=\"{$fattura['stato']}\"
+                                                                echo "<select class=\"form-control text-center\" name=\"stato\" value=\"{$fattura['stato']}\"
                                                                     onmouseenter=\"window.modalHandlers['percorsi_fatture'].enterStato(this)\"
                                                                     onmouseleave=\"window.modalHandlers['percorsi_fatture'].leaveStato(this)\"
                                                                     onchange=\"window.modalHandlers['percorsi_fatture'].changeStato(this.value,{$fattura['id']})\"                                                    
                                                                 >";
                                                                 foreach(Enum('fatture','stato')->list as $enum){
                                                                     $selected=$fattura['stato']==$enum?'selected':'';
+                                                                    echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                                                                }
+                                                                echo "</select>";
+                                                            ?>
+                                                        </div>
+                                                        <div class="w-15 px-2 d-flex align-items-center justify-content-center text-center">
+                                                            <?php 
+                                                                echo "<select class=\"form-control text-center\" name=\"fatturato_da\" value=\"{$fattura['fatturato_da']}\"
+                                                                    onmouseenter=\"window.modalHandlers['percorsi_fatture'].enterStato(this)\"
+                                                                    onmouseleave=\"window.modalHandlers['percorsi_fatture'].leaveStato(this)\"
+                                                                    onchange=\"window.modalHandlers['percorsi_fatture'].changeFatturatoDa(this.value,{$fattura['id']})\"                                                    
+                                                                >";
+                                                                foreach(Enum('fatture','fatturato_da')->list as $enum){
+                                                                    $selected=$fattura['fatturato_da']==$enum?'selected':'';
                                                                     echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
                                                                 }
                                                                 echo "</select>";
@@ -126,12 +143,14 @@
                                                             $request->id_fattura = $fattura['id'];
                                                             $json = htmlspecialchars(json_encode($request, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8');
                                                         ?>
-                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center" data-request="<?php echo $json; ?>"
+                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center" data-request="<?php echo $json; ?>"
+                                                            onmouseenter="window.modalHandlers['percorsi_fatture'].enterEdit(this)"
+                                                            onmouseleave="window.modalHandlers['percorsi_fatture'].leaveEdit(this)"                                                                
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickEdit(this)"             
                                                             >
                                                             <span><?php echo icon('edit.svg');?></span>
                                                         </div>
-                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center"
+                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickDelete(<?php echo $fattura['id'].','.$_REQUEST['id_cliente'].',\'fatture\'';?>)"             

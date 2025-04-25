@@ -5,6 +5,7 @@
 .fattura_row{
     padding: 10px;
     min-height: 50px!important;
+    cursor: pointer;
 }
 .fattura_row.checked{
     background-color: var(--base-bg-light);
