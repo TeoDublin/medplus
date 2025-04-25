@@ -17,6 +17,7 @@ $line = 1;
 
 foreach (Sql()->select($query) as $result) {
     $map = [
+        'id'=>$result['id'],
         'Nominativo' => $result['nominativo'],
         'Portato Da'=> $result['portato_da'],
         'Terapista'=> $result['terapista'],
@@ -43,6 +44,7 @@ foreach (Sql()->select($query) as $result) {
         $col = 'A';
         foreach ($map as $key => $value) {
             $sheet->setCellValue("{$col}{$line}", $key);
+            $sheet->getStyle("{$col}{$line}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $col++;
         }
         $line = 2;
@@ -56,6 +58,8 @@ foreach (Sql()->select($query) as $result) {
             $sheet->setCellValue("{$col}{$line}", $dateValue);
             $sheet->getStyle("{$col}{$line}")->getNumberFormat()->setFormatCode('DD/MM/YYYY');
         }
+        $sheet->getStyle("{$col}{$line}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension($col)->setAutoSize(true);
         $col++;
     }
     $line++;

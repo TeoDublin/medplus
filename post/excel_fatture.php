@@ -33,6 +33,7 @@ foreach (Sql()->select($query) as $result) {
         $col = 'A';
         foreach ($map as $key => $value) {
             $sheet->setCellValue("{$col}{$line}", $key);
+            $sheet->getStyle("{$col}{$line}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $col++;
         }
         $line = 2;
@@ -55,6 +56,8 @@ foreach (Sql()->select($query) as $result) {
         else {
             $sheet->setCellValue($cell, $value);
         }
+        $sheet->getStyle("{$col}{$line}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->getColumnDimension($col)->setAutoSize(true);
         $col++;
     }    
     $line++;

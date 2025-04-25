@@ -23,12 +23,10 @@
     elseif(isset($_REQUEST['btnClean']));
     else{
         $_POST['stato_seduta']='Conclusa';
-        $_POST['stato_pagamento']='Saldato';
-        $_POST['data_seduta']['da']=date('Y-m-01', strtotime('first day of last month'));
-        $_POST['data_seduta']['a']=date('Y-m-t', strtotime('last month'));
+        $_POST['data_seduta']['da']=date('Y-m-01');
+        $_POST['data_seduta']['a']=date('Y-m-d');
         $where.=" AND data_seduta >='{$_POST['data_seduta']['da']}' AND data_seduta <='{$_POST['data_seduta']['a']}'";
         $where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
-        $where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
     }
 
     $view_sedute = Select('*')->from('view_sedute')->where($where)->orderby('data_seduta ASC')->get_table();

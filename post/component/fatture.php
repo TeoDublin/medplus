@@ -23,8 +23,8 @@
     }
     elseif($_REQUEST['btnClean']);
     else{
-        $_POST['data']['da']=date('Y-m-01', strtotime('first day of last month'));
-        $_POST['data']['a']=date('Y-m-t', strtotime('last month'));
+        $_POST['data']['da'] = date('Y-m-01');
+        $_POST['data']['a'] = date('Y-m-d');
         $where.=" AND `data` >='{$_POST['data']['da']}' AND `data` <='{$_POST['data']['a']}'";
     }
 
@@ -114,11 +114,6 @@
         </div>
         <div class="accordion p-1" id="filter_data">
             <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_data" aria-expanded="false" aria-controls="collapse_filter_data">
-                    Data
-                    </button>
-                </h2>
 
                 <div class="accordion p-1" id="filter_cliente">
                     <div class="accordion-item">
@@ -146,24 +141,33 @@
                     </div>
                 </div>
                 
-                <div id="collapse_filter_data" class="accordion-collapse collapse" data-bs-parent="#filter_data">
-                    <div class="accordion-body">
-                        <div>
-                            <label for="data_da">Da</label>
-                            <input class="form-control" type="date" id="data_da" value="<?php echo $_POST['data']['da']; ?>">
-                        </div>
-                        <div>
-                            <label for="data_a">A</label>
-                            <input class="form-control" type="date" id="data_a" value="<?php echo $_POST['data']['a']; ?>">
-                        </div>
-                        <div class="mt-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="data_all" 
-                                    value="<?= isset($_POST['data']['all']) ? htmlspecialchars($_POST['data']['all']) : '' ?>" 
-                                    <?= !empty($_POST['data']['all']) ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="data_all">
-                                    Seleziona tutto
-                                </label>
+                <div class="accordion p-1" id="filter_data">
+                    <div class="accordion-item">                
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_data" aria-expanded="false" aria-controls="collapse_filter_data">
+                            Data
+                            </button>
+                        </h2>
+                        <div id="collapse_filter_data" class="accordion-collapse collapse" data-bs-parent="#filter_data">
+                            <div class="accordion-body">
+                                <div>
+                                    <label for="data_da">Da</label>
+                                    <input class="form-control" type="date" id="data_da" value="<?php echo $_POST['data']['da']; ?>">
+                                </div>
+                                <div>
+                                    <label for="data_a">A</label>
+                                    <input class="form-control" type="date" id="data_a" value="<?php echo $_POST['data']['a']; ?>">
+                                </div>
+                                <div class="mt-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="data_all" 
+                                            value="<?= isset($_POST['data']['all']) ? htmlspecialchars($_POST['data']['all']) : '' ?>" 
+                                            <?= !empty($_POST['data']['all']) ? 'checked' : '' ?>>
+                                        <label class="form-check-label" for="data_all">
+                                            Seleziona tutto
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
