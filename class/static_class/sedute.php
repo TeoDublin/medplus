@@ -87,7 +87,6 @@
                 'Trattamenti'=>['col'=>'trattamenti','type'=>'dont_save'],
                 'Acronimo'=>['col'=>'acronimo','type'=>'dont_save'],
                 'Prezzo'=>['col'=>'prezzo','type'=>'double'],
-                'Seduta'=>['col'=>'index'],
                 'Stato Seduta'=>['col'=>'stato_seduta','type'=>'enum'],
                 'Data Seduta'=>['col'=>'data_seduta','type'=>'date'],
                 'Stato Pagamento'=>['col'=>'stato_pagamento','type'=>'enum'],

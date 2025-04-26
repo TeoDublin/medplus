@@ -10,20 +10,21 @@
         <div class="d-flex flex-row font-bold w-100 py-2 bg-dark fs-5 color-white">
             <div class="w-15">Data Seduta</div>
             <div class="w-20">Acron.</div>
-            <div class="w-10">N.</div>
             <div class="flex-fill">Cliente</div>
             <div class="w-15">Saldo</div>
+            <div class="w-15">Prezzo</div>
         </div>
     </div>
     <?php 
         foreach (Sql()->select($query) as $result) {
             $saldo = floatval($result['saldo_terapista']);
+            $prezzo = floatval($result['prezzo']);
             echo '<div class="d-flex flex-row w-100">';
                 echo '<div class="w-15 border">' . unformat_date($result['data_seduta']) . '</div>';
                 echo '<div class="w-20 border">' . _txt($result['acronimo']) . '</div>';
-                echo '<div class="w-10 border">' . $result['index'] . '</div>';
                 echo '<div class="flex-fill border">' . _txt($result['nominativo']) . '</div>';
                 echo '<div class="w-15 border">' . number_format($saldo, 2, '.', '') . '</div>';
+                echo '<div class="w-15 border">' . number_format($prezzo, 2, '.', '') . '</div>';
             echo '</div>';
             $total += $saldo;
         }
