@@ -44,13 +44,15 @@ function loadView(response){
     document.querySelector('#spa_fatture').innerHTML = response;
     const floatingMenu = document.querySelector('.floating-menu');
     const floatingMenuBtn = document.querySelector('.floating-menu-btn');
+    const floatingInputFatture = document.querySelector('.floating-input-fatture');
+    const floatinfloatingDownloadFatture = document.querySelector('.floating-download-fatture-btn');
     const floatingExcelBtn = document.querySelector('.floating-excel-btn');
-    const floatingDownloadBtn = document.querySelector('.floating-download-fatture-btn');
     floatingMenuBtn.addEventListener('click', () => {
         floatingMenu.classList.toggle('open');
         floatingMenuBtn.classList.toggle('open');
+        floatingInputFatture.classList.toggle('open');
+        floatinfloatingDownloadFatture.classList.toggle('open');
         floatingExcelBtn.classList.toggle('open');
-        floatingDownloadBtn.classList.toggle('open');
     });
     document.querySelectorAll('a.page-link').forEach(link => {
         link.addEventListener('click', event => {
@@ -60,6 +62,9 @@ function loadView(response){
         });
     });
     document.querySelector('#filter_cliente').querySelector('select#cliente').searchable();
+}
+function inputExcel(){
+    alert("got here");
 }
 document.addEventListener('DOMContentLoaded',function(){
     $.post('post/component/fatture.php?pagination=0', {} ).done(response => { loadView(response);});

@@ -14,31 +14,10 @@ $query = Session()->get('last_query');
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 $line = 1;
+$sedute = Sedute();
 
 foreach (Sql()->select($query) as $result) {
-    $map = [
-        'id'=>$result['id'],
-        'Nominativo' => $result['nominativo'],
-        'Portato Da'=> $result['portato_da'],
-        'Terapista'=> $result['terapista'],
-        'Trattamenti'=> $result['trattamenti'],
-        'Acronimo'=> $result['acronimo'],
-        'Prezzo' => $result['prezzo'],
-        'Seduta' => $result['index'],
-        'Stato Seduta' => $result['stato_seduta'],
-        'Data Seduta' => unformat_date($result['data_seduta'],''),
-
-        'Stato Pagamento' => $result['stato_pagamento'],
-        'Valore Saldato' => $result['saldato'],
-        'Data Pagamento'=> unformat_date($result['data_pagamento'],''),
-        
-        'Percentuale Terapista' => $result['percentuale_terapista'],
-        'Saldo Terapista' => $result['saldo_terapista'],
-        'Saldato Terapista' => $result['saldato_terapista'],
-        'Stato Pagamento Terapista' => $result['stato_saldato_terapista'],
-        'Data Pagamento al Terapista'=> unformat_date($result['data_saldato_terapista'],''),
-        
-    ];
+    $map = $sedute->map_out($result);
 
     if ($line == 1) {
         $col = 'A';

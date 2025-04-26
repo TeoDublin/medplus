@@ -242,3 +242,17 @@
 .color-white{
     color:white!important;
 }
+
+.tip{
+    position: fixed;
+    padding: 2px;
+    text-align: center;
+    width: 250px;
+    color:black;
+    background-color: white;
+    border-radius: 10px;
+    z-index: 1098!important;
+    font-weight: bold;
+    font-style: italic;
+    height: 62px;
+}

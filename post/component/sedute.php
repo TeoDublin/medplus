@@ -2,11 +2,9 @@
     require_once '../../includes.php';
     $session=Session();
     $ruolo=$session->get('ruolo')??false;
-
     function _has_filters(){
         return count($_POST)>0&&!isset($_REQUEST['btnClean']);
     }
-    
     $where=$ruolo=='display'?"( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )":'1=1';
     $url='pagamenti.php';
     if(_has_filters()){
@@ -18,6 +16,7 @@
         if(isset($_POST['id_terapista']))$where.=" AND id_terapista ='{$_POST['id_terapista']}'";
         if($_POST['stato_seduta'])$where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
         if($_POST['stato_pagamento'])$where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
+        if($_POST['stato_saldato_terapista'])$where.=" AND stato_saldato_terapista ='{$_POST['stato_saldato_terapista']}'";
         if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
     }
     elseif(isset($_REQUEST['btnClean']));
@@ -28,11 +27,11 @@
         $where.=" AND data_seduta >='{$_POST['data_seduta']['da']}' AND data_seduta <='{$_POST['data_seduta']['a']}'";
         $where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
     }
-
     $view_sedute = Select('*')->from('view_sedute')->where($where)->orderby('data_seduta ASC')->get_table();
     $somma_prezzo= number_format(Select("sum(prezzo) as prezzo")->from('view_sedute')->where($where)->col('prezzo'),2);
 ?>
 
+<!-- where -->
 <div class="filter-labels d-flex flex-row align-items-center bg-light p-2">
     <span class="fw-bold">FILTRI APPLICATI:</span>
     <?php
@@ -46,6 +45,7 @@
             if(isset($_POST['id_terapista'])) echo "<div class=\"filter-label bg-gray\"><span >Terapista: {$_POST['terapista']}</span></div>";
             if($_POST['stato_seduta']) echo "<div class=\"filter-label bg-gray\"><span >Stato Seduta: {$_POST['stato_seduta']}</span></div>";
             if($_POST['stato_pagamento']) echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: {$_POST['stato_pagamento']}</span></div>";
+            if($_POST['stato_saldato_terapista']) echo "<div class=\"filter-label bg-gray\"><span >Stato Saldato Terapista: {$_POST['stato_saldato_terapista']}</span></div>";
             if(isset($_POST['nominativo'])) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
@@ -56,6 +56,7 @@
     <span><?php echo "Quantità: {$view_sedute->total}, Somma: € {$somma_prezzo}"; ?></span>
 </div>
 
+<!-- table -->
 <?php 
     if(!$view_sedute->result){?>
         <div class="card card-body mt-3 text-center"><h5>Non trovato</h5></div><?php
@@ -64,7 +65,7 @@
         <div class="px-1">
             <table class="table table-striped table-hover text-center">
                 <thead>
-                    <tr>
+                    <tr class="small">
                         <th class="w-10">Cliente</th>
                         <th class="w-5">Acron.</th>
                         <th class="w-5">N.</th>
@@ -82,7 +83,7 @@
                 </thead>
                 <tbody><?php 
                     foreach($view_sedute->result as $seduta){?>
-                        <tr data-id=<?php echo $seduta['id']; ?>>
+                        <tr data-id=<?php echo $seduta['id']; ?> style="font-size:12px;line-height:8px; word-break:break-word;">
                             <td><?php echo $seduta['nominativo']; ?></td>
                             <td><?php echo $seduta['acronimo']; ?></td>
                             <td><?php echo $seduta['index']; ?></td>
@@ -106,24 +107,44 @@
     <?php
     }
 ?>
-
 <?php Html()->pagination2($view_sedute,$url); ?>
+
+<!-- floating menu -->
 <div class="floating-menu-btn">
     <button class="h-100 left"><?php echo icon('arrow-filled-left.svg'); ?></button>
     <button class="h-100 right"><?php echo icon('arrow-filled-right.svg'); ?></button>
 </div>
+<div class="floating-input-sedute" onclick="inputExcel()">
+    <div class="d-grid tip d-none justify-content-center align-content-center">
+        <span>Aggiorna dati delle sedute importando un file excel</span>
+    </div>
+    <div class="div-icon">
+        <?php echo icon('upload.svg','#0d394a',25,25); ?>
+    </div>
+</div>
+<div class="floating-download-pdf-btn" onclick="pdf('sedute','<?php echo session_id(); ?>')">
+    <div class="d-grid tip d-none justify-content-center align-content-center">
+        <span>Scarrica pdf con le sedute filtrate</span>
+    </div>
+    <div class="div-icon">
+        <?php echo icon('pdf.svg','#0d394a',25,25); ?>
+    </div>
+</div>
 <div class="floating-excel-btn" onclick="excel('post/excel_sedute.php')">
-    <?php echo icon('excel.svg','green',50,50); ?>
+    <div class="d-grid tip d-none justify-content-center align-content-center">
+        <span>Scarrica excel con le sedute filtrate</span>
+    </div>
+    <div class="div-icon">
+        <?php echo icon('excel.svg','#0d394a',25,25); ?>
+    </div>
 </div>
-<div class="floating-download-fatture-btn" onclick="pdf('sedute','<?php echo session_id(); ?>')">
-    <?php echo icon('pdf.svg','#d4263a',50,50); ?>
-</div>
+
+<!-- filters -->
 <div class="floating-menu text-center">
     <div class="content p-0 h-100">
         <div class="pt-3 p-2">
             <h6>FILTRA</h6>
         </div>
-        
         <div class="accordion p-1" id="filter_cliente">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -149,8 +170,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="accordion p-1" id="filter_data">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -249,6 +268,31 @@
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute','stato_pagamento')->get() as $enum) {
                                         $selected=$_POST['stato_pagamento']&&$_POST['stato_pagamento']==$enum?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion p-1" id="filter_stato_saldato_terapista">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_stato_saldato_terapista" aria-expanded="false" aria-controls="collapse_filter_stato_saldato_terapista">
+                    Stato Pagamento Terapista
+                    </button>
+                </h2>
+                <div id="collapse_filter_stato_saldato_terapista" class="accordion-collapse collapse" data-bs-parent="#filter_stato_saldato_terapista">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="stato_saldato_terapista">Pagamento Terapista</label>
+                            <select class="form-control" id="stato_saldato_terapista" value="<?php echo $_POST['stato_saldato_terapista']; ?>">
+                                <option value="">Tutti</option>
+                                <?php 
+                                    foreach (Enum('percorsi_terapeutici_sedute','stato_saldato_terapista')->get() as $enum) {
+                                        $selected=$_POST['stato_saldato_terapista']&&$_POST['stato_saldato_terapista']==$enum?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>

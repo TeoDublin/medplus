@@ -7,6 +7,7 @@ function parseFilter(){
     let id_terapista = document.querySelector('#id_terapista').value;
     let stato_seduta = document.querySelector('#stato_seduta').value;
     let stato_pagamento = document.querySelector('#stato_pagamento').value;
+    let stato_saldato_terapista = document.querySelector('#stato_saldato_terapista').value;
     let cliente = document.querySelector('#cliente').value;
     let nominativo = document.querySelector('#cliente option:checked').innerHTML;
 
@@ -30,6 +31,7 @@ function parseFilter(){
     if(stato_seduta!=='')ret.stato_seduta=stato_seduta;
 
     if(stato_pagamento!=='')ret.stato_pagamento=stato_pagamento;
+    if(stato_saldato_terapista!=='')ret.stato_saldato_terapista=stato_saldato_terapista;
 
     if(cliente!=='')ret.cliente=cliente;
     if(nominativo!=='')ret.nominativo=nominativo;
@@ -50,13 +52,15 @@ function loadView(response){
     document.querySelector('#spa_sedute').innerHTML = response;
     const floatingMenu = document.querySelector('.floating-menu');
     const floatingMenuBtn = document.querySelector('.floating-menu-btn');
+    const floatingInputSedute = document.querySelector('.floating-input-sedute');
+    const floatingDownloadPdfBtn = document.querySelector('.floating-download-pdf-btn');
     const floatingExcelBtn = document.querySelector('.floating-excel-btn');
-    const floatingDownloadBtn = document.querySelector('.floating-download-fatture-btn');
     floatingMenuBtn.addEventListener('click', () => {
         floatingMenu.classList.toggle('open');
         floatingMenuBtn.classList.toggle('open');
+        floatingInputSedute.classList.toggle('open');
+        floatingDownloadPdfBtn.classList.toggle('open');
         floatingExcelBtn.classList.toggle('open');
-        floatingDownloadBtn.classList.toggle('open');
     });
     document.querySelectorAll('a.page-link').forEach(link => {
         link.addEventListener('click', event => {
@@ -67,6 +71,9 @@ function loadView(response){
     });
     document.querySelector('#filter_cliente').querySelector('select#cliente').searchable();
     
+}
+function inputExcel(){
+    modal_component('input_excel_sedute','input_excel_sedute',{});
 }
 document.addEventListener('DOMContentLoaded',function(){
     $.post('post/component/sedute.php?pagination=0', {} ).done(response => { loadView(response);});

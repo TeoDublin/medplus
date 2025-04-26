@@ -148,8 +148,8 @@
         return date('Y-m-d H:i:s');
     }
     function format_date(string $date):string{
-        $split=explode('/',$date);
-        return "{$split[2]}-{$split[1]}-{$split[0]}";
+        $date_value=new DateTime(date($date));
+        return $date_value->format('Y-m-d');
     }
     function format(String $date, String $format):String{
         $date_value=new DateTime(date($date));
@@ -158,9 +158,8 @@
     function unformat_date(?string $date,string $fallback='-'):string{
         if(!$date)return $fallback;
         else{
-            $split_date=explode(' ',$date);
-            $split=explode('-',$split_date[0]);
-            return "{$split[2]}/{$split[1]}/{$split[0]}";
+            $date_value=new DateTime(date($date));
+            return $date_value->format('d/m/Y');
         }
     }
     function data_set(array $params):String{

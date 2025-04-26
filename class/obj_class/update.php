@@ -15,7 +15,6 @@ class Update{
             $value=str_replace("'","\'",$value);
             $value=$value||$value==0?"'{$value}'":'NULL';
             $_set[]="`{$key}`={$value}";
-
         } 
         $this->set=implode(',',$_set);
         return $this;

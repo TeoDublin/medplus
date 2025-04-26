@@ -2,11 +2,9 @@
     require_once '../../includes.php';
     $session=Session();
     $ruolo=$session->get('ruolo')??false;
-
     function _has_filters(){
         return count($_POST)>0&&!$_REQUEST['btnClean'];
     }
-    
     $where='1=1';
     $url='pagamenti.php';
     if(_has_filters()){
@@ -27,11 +25,11 @@
         $_POST['data']['a'] = date('Y-m-d');
         $where.=" AND `data` >='{$_POST['data']['da']}' AND `data` <='{$_POST['data']['a']}'";
     }
-
     $view_fatture = Select('*')->from('view_fatture')->where($where)->get_table();
     $somma_importo= number_format(Select("sum(importo) as importo")->from('view_fatture')->where($where)->col('importo'),2);
 ?>
 
+<!-- where -->
 <div class="filter-labels d-flex flex-row align-items-center bg-light p-2">
     <span class="fw-bold">FILTRI APPLICATI:</span>
     <?php
@@ -55,6 +53,7 @@
     <span><?php echo "Quantità: {$view_fatture->total}, Somma: € {$somma_importo}"; ?></span>
 </div>
 
+<!-- table -->
 <?php 
     if(!$view_fatture->result){?>
         <div class="card card-body mt-3 text-center"><h5>Non trovato</h5></div><?php
@@ -63,7 +62,7 @@
         <div class="px-1">
             <table class="table table-striped table-hover text-center">
                 <thead>
-                    <tr>
+                    <tr class="small">
                         <th class="w-10">Cliente</th>
                         <th class="w-5">N.</th>
                         <th class="w-10">Stato Fattura</th>
@@ -76,7 +75,7 @@
                 </thead>
                 <tbody><?php 
                     foreach($view_fatture->result as $fattura){?>
-                        <tr data-id=<?php echo $fattura['id']; ?>>
+                        <tr data-id=<?php echo $fattura['id']; ?> style="font-size:12px;line-height:9px; word-break:break-word;">
                             <td><?php echo $fattura['nominativo']; ?></td>
                             <td><?php echo $fattura['index']; ?></td>
                             <td><?php echo $fattura['stato']; ?></td>
@@ -95,18 +94,39 @@
     <?php
     }
 ?>
-
 <?php Html()->pagination2($view_fatture,$url); ?>
+
+<!-- floating menu -->
 <div class="floating-menu-btn">
     <button class="h-100 left"><?php echo icon('arrow-filled-left.svg'); ?></button>
     <button class="h-100 right"><?php echo icon('arrow-filled-right.svg'); ?></button>
 </div>
-<div class="floating-excel-btn" onclick="excel('post/excel_fatture.php')">
-    <?php echo icon('excel.svg','green',50,50); ?>
+<div class="floating-input-fatture" onclick="inputExcel()">
+    <div class="d-grid tip d-none justify-content-center align-content-center">
+        <span>Aggiorna dati della fattura importando un file excel</span>
+    </div>
+    <div class="div-icon">
+        <?php echo icon('upload.svg','#0d394a',25,25); ?>
+    </div>
 </div>
 <div class="floating-download-fatture-btn" onclick="zip('post/download_fatture.php')">
-    <?php echo icon('pdf.svg','#d4263a',50,50); ?>
+    <div class="d-grid tip d-none justify-content-center align-content-center">
+        <span>Scarrica zip con le fatture filtrate</span>
+    </div>
+    <div class="div-icon">
+        <?php echo icon('zip.svg','#0d394a',25,25); ?>
+    </div>
 </div>
+<div class="floating-excel-btn" onclick="excel('post/excel_fatture.php')">
+    <div class="d-grid tip d-none justify-content-center align-content-center">
+        <span>Scarrica excel con le fatture filtrate</span>
+    </div>
+    <div class="div-icon">
+        <?php echo icon('excel.svg','#0d394a',25,25); ?>
+    </div>
+</div>
+
+<!-- filters -->
 <div class="floating-menu text-center">
     <div class="content p-0 h-100">
         <div class="pt-3 p-2">
