@@ -64,7 +64,7 @@ function loadView(response){
     document.querySelector('#filter_cliente').querySelector('select#cliente').searchable();
 }
 function inputExcel(){
-    alert("got here");
+    modal_component('input_excel_fatture','input_excel_fatture',{});
 }
 document.addEventListener('DOMContentLoaded',function(){
     $.post('post/component/fatture.php?pagination=0', {} ).done(response => { loadView(response);});

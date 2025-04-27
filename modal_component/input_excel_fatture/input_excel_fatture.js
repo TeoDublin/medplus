@@ -1,4 +1,4 @@
-window.modalHandlers['input_excel_sedute'] = {
+window.modalHandlers['input_excel_fatture'] = {
     btnSalva: function(element) {
         const mnodal = element.closest('.modal');
         const form = mnodal.querySelector('#excelUploadForm');
@@ -11,10 +11,10 @@ window.modalHandlers['input_excel_sedute'] = {
 
         const formData = new FormData();
         formData.append("file", fileInput.files[0]);
-        formData.append("table", "percorsi_terapeutici_sedute");
+        formData.append("table", "fatture");
 
         $.ajax({
-            url: 'post/input_excel_sedute.php',
+            url: 'post/input_excel_fatture.php',
             type: 'POST',
             data: formData,
             processData: false,

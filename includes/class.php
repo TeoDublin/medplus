@@ -34,3 +34,6 @@
     function Sedute():Sedute{
         return new Sedute();
     }
+    function Fatture():Fatture{
+        return new Fatture();
+    }

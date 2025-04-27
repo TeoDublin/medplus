@@ -14,21 +14,10 @@ $query = Session()->get('last_query');
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 $line = 1;
+$fatture = Fatture();
 
 foreach (Sql()->select($query) as $result) {
-    $map = [
-        'id'=>$result['id'],
-        'Nominativo' => $result['nominativo'],
-        'Numero'=> $result['index'],
-        'Stato Fattura	'=> $result['stato'],
-        'Data Fattura'=> unformat_date($result['data'],''),
-        'Importo'=> $result['importo'],
-        'Metodo di pagamento' => $result['metodo'],
-        'Fatturato da' => $result['fatturato_da'],
-        'Confermato dal Commercialista' => (int)$result['confermato_dal_commercialista']?'Si':'No',
-        'link' => $result['link']
-    ];
-
+    $map = $fatture->map_out($result);
     if ($line == 1) {
         $col = 'A';
         foreach ($map as $key => $value) {
