@@ -64,7 +64,6 @@
                 <thead>
                     <tr class="small">
                         <th class="w-10">Cliente</th>
-                        <th class="w-5">N.</th>
                         <th class="w-10">Stato Fattura</th>
                         <th class="w-10">Data Fattura</th>
                         <th class="w-5">Importo</th>
@@ -77,7 +76,6 @@
                     foreach($view_fatture->result as $fattura){?>
                         <tr data-id=<?php echo $fattura['id']; ?> style="font-size:12px;line-height:9px; word-break:break-word;">
                             <td><?php echo $fattura['nominativo']; ?></td>
-                            <td><?php echo $fattura['index']; ?></td>
                             <td><?php echo $fattura['stato']; ?></td>
                             <td><?php echo $fattura['data']?unformat_date($fattura['data']):'-'; ?></td>
                             <td><?php echo number_format($fattura['importo'],2); ?></td>

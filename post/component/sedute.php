@@ -28,7 +28,7 @@
         $where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
     }
     $view_sedute = Select('*')->from('view_sedute')->where($where)->orderby('data_seduta ASC')->get_table();
-    $somma_prezzo= number_format(Select("sum(prezzo) as prezzo")->from('view_sedute')->where($where)->col('prezzo'),2);
+    $somma_prezzo= number_format(Select("sum(saldato) as saldato")->from('view_sedute')->where($where)->col('saldato'),2);
 ?>
 
 <!-- where -->
