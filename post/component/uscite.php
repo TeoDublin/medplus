@@ -58,14 +58,20 @@
                         <th>Data</th>
                         <th>Importo</th>
                         <th>Uscita</th>
+                        <th>#</th>
                     </tr>
                 </thead>
                 <tbody><?php 
                     foreach($view_uscite->result as $uscita){?>
-                        <tr data-id=<?php echo $uscita['id']; ?> style="font-size:12px;line-height:8px; word-break:break-word;">
-                            <td><?php echo $uscita['data']?unformat_date($uscita['data']):'-'; ?></td>
-                            <td><?php echo number_format($uscita['importo'],2); ?></td>
-                            <td><?php echo $uscita['nome']; ?></td>
+                        <tr data-id=<?php echo $uscita['id']; ?> style="font-size:12px;line-height:8px; word-break:break-word;" >
+                            <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo $uscita['data']?unformat_date($uscita['data']):'-'; ?></td>
+                            <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo number_format($uscita['importo'],2); ?></td>
+                            <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo $uscita['nome']; ?></td>
+                            <td class="del"
+                                onmouseenter="enterDel(this);"
+                                onmouseleave="leaveDel(this);"
+                                onclick="delClick(<?php echo $uscita['id']; ?>);"
+                            ><?php echo icon('bin.svg','black',15,15); ?></td>
                         </tr>
                         <?php
                     }

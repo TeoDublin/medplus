@@ -1,3 +1,6 @@
+tr{
+    cursor: pointer;
+}
 td,th {
     white-space: normal!important;
     word-break: break-word!important;
@@ -174,4 +177,14 @@ td,th {
 }
 .floating-download-pdf-btn.open {
     right: 260px;
+}
+.bg-danger{
+    --bs-table-bg: red !important;
+	background-color: red !important;
+    box-shadow: none !important;
+}
+.bg-success{
+    --bs-table-bg: var(--base-bg-primary) !important;
+	background-color: var(--base-bg-primary) !important;
+    box-shadow: none !important;
 }

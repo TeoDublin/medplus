@@ -56,6 +56,26 @@ function loadView(response){
 function aggiungiUscita(){
     modal_component('add_uscita','add_uscita',{});
 }
+function enterDel(e){
+    e.closest('tr').classList.add('bg-danger');
+}
+function leaveDel(e){
+    e.closest('tr').classList.remove('bg-danger');
+}
+function delClick(id){
+    if(confirm('Sicuro di voler eliminare?')){
+        $.post('post/delete.php',{table:'uscite_per_giorno',id:id}).done(()=>{success_and_refresh();}).fail(()=>{fail();})
+    }
+}
+function enterEdit(e){
+    e.closest('tr').classList.add('bg-success');
+}
+function leaveEdit(e){
+    e.closest('tr').classList.remove('bg-success');
+}
+function clickEdit(id){
+    modal_component('add_uscita','add_uscita',{id:id});
+}
 document.addEventListener('DOMContentLoaded',function(){
     $.post('post/component/uscite.php?pagination=0', {} ).done(response => { loadView(response);});
 });
