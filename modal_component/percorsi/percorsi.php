@@ -200,7 +200,20 @@
                                                                             </div>
                                                                             <div class="w-10 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta['index']; ?></span></div>
                                                                             <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta['prezzo']; ?></span></div>
-                                                                            <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 div-<?php echo $debitore?'Debitore':$seduta['stato_pagamento']; ?>"><span class=""><?php echo $debitore?'Debitore':$seduta['stato_pagamento']; ?></span></div>
+                                                                            <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 div-<?php echo $debitore?'Debitore':$seduta['stato_pagamento']; ?>">
+                                                                                <span class="">
+                                                                                    <?php 
+                                                                                        if($debitore){
+                                                                                            echo 'Debitore';
+                                                                                        }
+                                                                                        elseif($seduta['stato_pagamento']=='Parziale'){
+                                                                                            echo "Parziale (".($seduta['prezzo']-$seduta['saldato']).")";
+                                                                                        }
+                                                                                        else{
+                                                                                            echo $seduta['stato_pagamento'];
+                                                                                        }
+                                                                                    ?>
+                                                                                </span></div>
                                                                             <div class="flex-fill d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 div-<?php echo $seduta['stato_seduta']; ?>"><span class=""><?php echo $seduta['stato_seduta']; ?></span></div>
                                                                             <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                                                                 <?php if($abble){?>
