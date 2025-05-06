@@ -2,10 +2,11 @@
     style('pdf_component/sedute/sedute.css');
     $query = Session()->get('last_query');
     $total = 0;
+    $select=Sql()->select($query);
 ?>
 
 <div class="container-fluid text-center">
-    <h2>Report Terapista</h2>
+    <h2>Report <?php echo $select[0]['terapista']; ?></h2>
     <div class="table-responsive my-2">
         <div class="d-flex flex-row font-bold w-100 py-2 bg-dark fs-5 color-white">
             <div class="w-15">Data Seduta</div>
@@ -16,7 +17,7 @@
         </div>
     </div>
     <?php 
-        foreach (Sql()->select($query) as $result) {
+        foreach ($select as $result) {
             $saldo = floatval($result['saldo_terapista']);
             $prezzo = floatval($result['prezzo']);
             echo '<div class="d-flex flex-row w-100">';
