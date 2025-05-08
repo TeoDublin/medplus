@@ -36,7 +36,7 @@
         }
     
         $pdf->Cell(90, 10, "  {$row['oggetto']}", 'LR', 0, 'L');
-        $pdf->Cell(90, 10, EURO." ".number_format($row['importo'], 2, ',', '.'), 'R', 1, 'C');
+        $pdf->Cell(90, 10, ($row['importo']==0?'':EURO." ".number_format($row['importo'], 2, ',', '.')), 'R', 1, 'C');
         $count++;
     }
     
