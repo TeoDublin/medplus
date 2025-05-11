@@ -16,6 +16,7 @@
         if(isset($_POST['id_terapista']))$where.=" AND id_terapista ='{$_POST['id_terapista']}'";
         if($_POST['stato_seduta'])$where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
         if($_POST['stato_pagamento'])$where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
+        if($_POST['tipo_pagamento'])$where.=" AND tipo_pagamento ='{$_POST['tipo_pagamento']}'";
         if($_POST['stato_saldato_terapista'])$where.=" AND stato_saldato_terapista ='{$_POST['stato_saldato_terapista']}'";
         if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
     }
@@ -45,6 +46,7 @@
             if(isset($_POST['id_terapista'])) echo "<div class=\"filter-label bg-gray\"><span >Terapista: {$_POST['terapista']}</span></div>";
             if($_POST['stato_seduta']) echo "<div class=\"filter-label bg-gray\"><span >Stato Seduta: {$_POST['stato_seduta']}</span></div>";
             if($_POST['stato_pagamento']) echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: {$_POST['stato_pagamento']}</span></div>";
+            if($_POST['tipo_pagamento']) echo "<div class=\"filter-label bg-gray\"><span >Tipo Pagamento: {$_POST['tipo_pagamento']}</span></div>";
             if($_POST['stato_saldato_terapista']) echo "<div class=\"filter-label bg-gray\"><span >Stato Saldato Terapista: {$_POST['stato_saldato_terapista']}</span></div>";
             if(isset($_POST['nominativo'])) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
         ?>
@@ -70,14 +72,15 @@
                         <th class="w-5">Acron.</th>
                         <th class="w-5">N.</th>
                         <th class="w-10">Stato Seduta</th>
-                        <th class="w-10">Data Seduta</th>
+                        <th class="w-5">Data Seduta</th>
                         <th class="w-5">Prezzo</th>
                         <th class="w-10">Stato Pagamento</th>
+                        <th class="w-10">Tipo Pagamento</th>
                         <th class="w-10">Terapista</th>
                         <th class="w-5">% Terap.</th>
                         <th class="w-5">Saldo Terap.</th>
                         <th class="w-5">Saldato Terap.</th>
-                        <th class="w-10">Data Saldato Terap.</th>
+                        <th class="w-5">Data Saldato Terap.</th>
                         <th class="w-10">Stato Saldato Terap.</th>
                     </tr>
                 </thead>
@@ -88,14 +91,15 @@
                             <td><?php echo $seduta['acronimo']; ?></td>
                             <td><?php echo $seduta['index']; ?></td>
                             <td><?php echo $seduta['stato_seduta']; ?></td>
-                            <td><?php echo $seduta['data_seduta']?unformat_date($seduta['data_seduta']):'-'; ?></td>
+                            <td><?php echo $seduta['data_seduta']?format($seduta['data_seduta'],'d/m/y'):'-'; ?></td>
                             <td><?php echo number_format($seduta['prezzo'],2); ?></td>
                             <td><?php echo $seduta['stato_pagamento']; ?></td>
+                            <td><?php echo $seduta['tipo_pagamento']??'-'; ?></td>
                             <td><?php echo $seduta['terapista']; ?></td>
                             <td><?php echo number_format($seduta['percentuale_terapista'],0); ?></td>
                             <td><?php echo number_format($seduta['saldo_terapista'],2); ?></td>
                             <td><?php echo number_format($seduta['saldato_terapista'],2); ?></td>
-                            <td><?php echo unformat_date($seduta['data_saldato_terapista']); ?></td>
+                            <td><?php echo $seduta['data_saldato_terapista']?format($seduta['data_saldato_terapista'],'d/m/y'):'-'; ?></td>
                             <td><?php echo $seduta['stato_saldato_terapista']; ?></td>
                         </tr>
                         <?php
@@ -268,6 +272,56 @@
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute','stato_pagamento')->get() as $enum) {
                                         $selected=$_POST['stato_pagamento']&&$_POST['stato_pagamento']==$enum?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion p-1" id="filter_stato_saldato_terapista">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_stato_saldato_terapista" aria-expanded="false" aria-controls="collapse_filter_stato_saldato_terapista">
+                    Stato Pagamento Terapista
+                    </button>
+                </h2>
+                <div id="collapse_filter_stato_saldato_terapista" class="accordion-collapse collapse" data-bs-parent="#filter_stato_saldato_terapista">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="stato_saldato_terapista">Pagamento Terapista</label>
+                            <select class="form-control" id="stato_saldato_terapista" value="<?php echo $_POST['stato_saldato_terapista']; ?>">
+                                <option value="">Tutti</option>
+                                <?php 
+                                    foreach (Enum('percorsi_terapeutici_sedute','stato_saldato_terapista')->get() as $enum) {
+                                        $selected=$_POST['stato_saldato_terapista']&&$_POST['stato_saldato_terapista']==$enum?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion p-1" id="filter_tipo_pagamento">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_tipo_pagamento" aria-expanded="false" aria-controls="collapse_filter_tipo_pagamento">
+                    Tipo Pagamento
+                    </button>
+                </h2>
+                <div id="collapse_filter_tipo_pagamento" class="accordion-collapse collapse" data-bs-parent="#filter_tipo_pagamento">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="tipo_pagamento">Tipo Pagamento</label>
+                            <select class="form-control" id="tipo_pagamento" value="<?php echo $_POST['tipo_pagamento']; ?>">
+                                <option value="">Tutti</option>
+                                <?php 
+                                    foreach (Enum('percorsi_terapeutici_sedute','tipo_pagamento')->get() as $enum) {
+                                        $selected=$_POST['tipo_pagamento']&&$_POST['tipo_pagamento']==$enum?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>

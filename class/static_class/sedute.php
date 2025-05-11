@@ -70,6 +70,10 @@
                     'stato_pagamento'=>$stato_pagamento
                 ],$this->_update_payment($data_pagamento,$tipo_pagamento,$percorsi_terapeutici_sedute,$stato_pagamento));
                 if($percorsi_terapeutici_sedute){
+                    if($params['stato_pagamento']=='Pendente'){
+                        $params['data_pagamento']='';
+                        $params['tipo_pagamento']='';
+                    }
                     Update('percorsi_terapeutici_sedute')->set($params)->where("id_percorso={$id_percorso} AND id_combo={$id_combo} AND `index`={$index}");
                 }
                 else{

@@ -35,7 +35,8 @@ SET
 
 UPDATE `percorsi_terapeutici_sedute` pts
 LEFT JOIN terapisti t ON pts.id_terapista = t.id
-SET pts.percentuale_terapista = t.percentuale_sedute;
+SET pts.percentuale_terapista = t.percentuale_sedute
+WHERE 
 
 update `percorsi_terapeutici_sedute` set saldo_terapista = ROUND((prezzo * percentuale_terapista)/100,2) 
 where saldo_terapista is null and percentuale_terapista is not null;

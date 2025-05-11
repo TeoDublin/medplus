@@ -100,7 +100,7 @@
                                                     </div>
                                                 </div>
                                                 <?php foreach (_trattamento($trattamenti['id_origine']) as $trattamento) {
-                                                    $is_isico=$trattamento['nome']=='Isico'?'true':'false';?>
+                                                    $is_isico=preg_match('#isico#i',$trattamento['nome'])?'true':'false';?>
                                                     <div class="table-responsive">
                                                         <div class="my-0">
                                                             <div class="flex-row titles w-100 d-flex fattura_row <?php echo (int)$trattamento['non_fatturato']==0?'disabled bg-light':''; ?>" origine="trattamenti">
@@ -312,7 +312,16 @@
                                             </button>
                                         </div><?php
                                     }
-                                ?>
+                                    else{?>
+                                        <div class= "d-flex flex-fill ms-1" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(this,<?php echo $_REQUEST['id_cliente'];?>);">
+                                            <button type="button" class="btn btn-primary p-2 d-flex flex-fill btn-insert w-100 h-100">
+                                                <div class="mx-2"><?php echo icon('coin.svg','white',20,25);?></div>
+                                                <div class="d-none d-md-block">Pagamento Isico</div>
+                                                <div class="d-md-none">Isc.</div>
+                                            </button>
+                                        </div><?php
+                                    }
+                                ?>  
                             </div><?php
                         }?>
                     </div>

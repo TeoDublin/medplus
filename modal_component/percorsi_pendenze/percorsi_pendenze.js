@@ -147,6 +147,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         }
     },
     senzaFatturaClick:function(element,id_cliente){
+        console.log(this.doing_isico);
         modal = element.closest('.modal');
         _data=[];
         modal.querySelectorAll('.checked').forEach(checked => {
@@ -158,6 +159,9 @@ window.modalHandlers['percorsi_pendenze'] = {
         });
         if(_data.length === 0){
             alert('Seleziona qualcosa');
+        }
+        else if(this.doing_isico){
+            modal_component('pagamento_isico','pagamento_isico',{id_cliente:id_cliente,_data:_data});
         }
         else{
             modal_component('senza_fattura','senza_fattura',{id_cliente:id_cliente,_data:_data});
