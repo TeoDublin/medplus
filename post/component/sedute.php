@@ -331,31 +331,6 @@
                 </div>
             </div>
         </div>
-        <div class="accordion p-1" id="filter_stato_saldato_terapista">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_stato_saldato_terapista" aria-expanded="false" aria-controls="collapse_filter_stato_saldato_terapista">
-                    Stato Pagamento Terapista
-                    </button>
-                </h2>
-                <div id="collapse_filter_stato_saldato_terapista" class="accordion-collapse collapse" data-bs-parent="#filter_stato_saldato_terapista">
-                    <div class="accordion-body">
-                        <div>
-                            <label for="stato_saldato_terapista">Pagamento Terapista</label>
-                            <select class="form-control" id="stato_saldato_terapista" value="<?php echo $_POST['stato_saldato_terapista']; ?>">
-                                <option value="">Tutti</option>
-                                <?php 
-                                    foreach (Enum('percorsi_terapeutici_sedute','stato_saldato_terapista')->get() as $enum) {
-                                        $selected=$_POST['stato_saldato_terapista']&&$_POST['stato_saldato_terapista']==$enum?'selected':'';
-                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="sticky-bottom w-100" onclick="btnFiltra()">
         <button class="btn btn-primary w-100">Filtra</button>
