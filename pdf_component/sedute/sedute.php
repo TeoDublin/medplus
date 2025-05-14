@@ -1,7 +1,7 @@
 <?php
     style('pdf_component/sedute/sedute.css');
     $query = Session()->get('last_query');
-    $total = 0;
+    $total_prezzo = $total_saldo = $count = 0;
     $select=Sql()->select($query);
 ?>
 
@@ -27,11 +27,18 @@
                 echo '<div class="w-15 border">' . number_format($saldo, 2, '.', '') . '</div>';
                 echo '<div class="w-15 border">' . number_format($prezzo, 2, '.', '') . '</div>';
             echo '</div>';
-            $total += $saldo;
+            $total_saldo += $saldo;
+            $count++;
         }
     ?>
     <div class="d-flex flex-row mt-10 font-bold fs-5 mt-3">
+        <div class="flex-fill"></div>
+        <div class="w-15">Quantità</div>
+        <div class="w-15">Saldo</div>
+    </div>
+    <div class="d-flex flex-row mt-10 font-bold fs-5 mt-1">
         <div class="flex-fill border">TOTALE</div>
-        <div class="w-15 border"><?php echo number_format($total, 2, '.', ''); ?></div>
+        <div class="w-15 border"><?php echo $count; ?></div>
+        <div class="w-15 border"><?php echo number_format($total_saldo, 2, '.', ''); ?></div>
     </div>
 </div>
