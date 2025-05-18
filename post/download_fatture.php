@@ -16,7 +16,7 @@ if ($zip->open($zipFile, ZipArchive::CREATE | ZipArchive::OVERWRITE) === TRUE) {
     foreach (Sql()->select($query) as $result) {
         $file=root(fatture_path($result['link']));
         if (file_exists($file)) {
-            $zip->addFile($file, basename($file));
+            $zip->addFile($file, str_replace(' ','',"{$result['data']}-{$result['index']}-{$result['nominativo']}.pdf"));
         }
     }
     $zip->close();

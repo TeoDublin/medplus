@@ -1656,7 +1656,7 @@ protected function _putfonts()
 		$type = $font['type'];
 		$name = $font['name'];
 		if($font['subsetted'])
-			$name = 'AAAAAA+'.$name;
+			$name = $name;
 		if($type=='Core')
 		{
 			// Core font

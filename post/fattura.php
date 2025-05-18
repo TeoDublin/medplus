@@ -75,7 +75,7 @@
     $pdf->SetY(-40);
     $pdf->MultiCell(0, 4, trim($_REQUEST['footer']),0,'C');
     
-    $id_cliente=$_REQUEST['id_cliente'];
+    $id_cliente=$_REQUEST['id_cliente']??$_REQUEST['oggetti']['id_cliente'];
     $link=str_replace([' ',':'],'_',$_REQUEST['cliente']['nominativo'].'_'.datetime().'.pdf');
     $stato=$_REQUEST['metodo_pagamento']=='Bonifico'?'Pendente':'Saldata';
     $save=[
