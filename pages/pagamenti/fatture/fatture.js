@@ -5,6 +5,7 @@ function parseFilter(){
     let data_a = document.querySelector('#data_a').value;
     let data_all = document.querySelector('#data_all').checked;
     let fatturato_da = document.querySelector('#fatturato_da').value;
+    let index = document.querySelector('#index').value;
     let stato = document.querySelector('#stato').value;
     let confermato_dal_commercialista = document.querySelector('#confermato_dal_commercialista').value;
     let cliente = document.querySelector('#cliente').value;
@@ -24,6 +25,7 @@ function parseFilter(){
         }
     }
     if(fatturato_da!=='')ret.fatturato_da=fatturato_da;
+    if(index!=='')ret.index=index;
     if(stato!=='')ret.stato=stato;
     if(confermato_dal_commercialista!=='')ret.confermato_dal_commercialista=confermato_dal_commercialista;
     if(cliente!=='')ret.cliente=cliente;
@@ -62,6 +64,7 @@ function loadView(response){
         });
     });
     document.querySelector('#filter_cliente').querySelector('select#cliente').searchable();
+    document.querySelector('#filter_index').querySelector('select#index').searchable();
 }
 function inputExcel(){
     modal_component('input_excel_fatture','input_excel_fatture',{});

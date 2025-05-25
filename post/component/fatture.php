@@ -15,6 +15,7 @@
             
         }
         if($_POST['fatturato_da'])$where.=" AND `fatturato_da` ='{$_POST['fatturato_da']}'";
+        if($_POST['index'])$where.=" AND `index` ='{$_POST['index']}'";
         if($_POST['stato'])$where.=" AND `stato` ='{$_POST['stato']}'";
         if($_POST['confermato_dal_commercialista'])$where.=" AND `confermato_dal_commercialista` ='{$_POST['confermato_dal_commercialista']}'";
         if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
@@ -41,6 +42,7 @@
                 if($_POST['data']['a']) echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data']['a'])."</span></div>";    
             } 
             if($_POST['fatturato_da']) echo "<div class=\"filter-label bg-gray\"><span >fatturato da: {$_POST['fatturato_da']}</span></div>";
+            if($_POST['index']) echo "<div class=\"filter-label bg-gray\"><span >Numero fattura: {$_POST['index']}</span></div>";
             if($_POST['stato']) echo "<div class=\"filter-label bg-gray\"><span >stato: {$_POST['stato']}</span></div>";
             if(isset($_POST['confermato_dal_commercialista'])) echo "<div class=\"filter-label bg-gray\"><span>Confermato Commercialista: ".((int)$_POST['confermato_dal_commercialista']?'Si':'No')."</span></div>";
             if($_POST['nominativo']) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
@@ -63,6 +65,7 @@
             <table class="table table-striped table-hover text-center">
                 <thead>
                     <tr class="small">
+                        <th class="w-5">N.</th>
                         <th class="w-10">Cliente</th>
                         <th class="w-10">Stato Fattura</th>
                         <th class="w-10">Data Fattura</th>
@@ -75,6 +78,7 @@
                 <tbody><?php 
                     foreach($view_fatture->result as $fattura){?>
                         <tr data-id=<?php echo $fattura['id']; ?> style="font-size:12px;line-height:9px; word-break:break-word;">
+                            <td><?php echo $fattura['index']; ?></td>
                             <td><?php echo $fattura['nominativo']; ?></td>
                             <td><?php echo $fattura['stato']; ?></td>
                             <td><?php echo $fattura['data']?unformat_date($fattura['data']):'-'; ?></td>
@@ -208,6 +212,32 @@
                                             foreach(Enum('fatture','fatturato_da')->get() as $enum){
                                                 $selected = $_POST['fatturato_da']==$enum?'selected':'';
                                                 echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion p-1" id="filter_index">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_index" aria-expanded="false" aria-controls="collapse_filter_index">
+                            Numero Fattura
+                            </button>
+                        </h2>
+                        <div id="collapse_filter_index" class="accordion-collapse collapse" data-bs-parent="#filter_index">
+                            <div class="accordion-body">
+                                <div>
+                                    <label for="index">Numero Fattura</label>
+                                    <select class="form-control" id="index" value="<?php echo $_POST['index']; ?>">
+                                        <option value="">Tutti</option>
+                                        <?php 
+                                            foreach(Select('`index`')->from('fatture')->groupby('`index`')->get() as $enum){
+                                                $selected = $_POST['index']==$enum['index']?'selected':'';
+                                                echo "<option value=\"{$enum['index']}\" {$selected}>{$enum['index']}</option>";
                                             }
                                         ?>
                                     </select>
