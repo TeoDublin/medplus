@@ -22,8 +22,8 @@ window.modalHandlers['percorsi_fatture']={
             }).fail(()=>{fail()});
         }
     },
-    clickEdit:function(e){
-        modal_component('fattura','fattura',JSON.parse(e.dataset.request));
+    clickEdit:function(id_fattura){
+        modal_component('fattura','fattura',{id_fattura:id_fattura});
     },
     enterStato:function(element){
     },
@@ -46,11 +46,11 @@ window.modalHandlers['fattura'] = Object.assign(
     window.modalHandlers['fattura'] || {},
     {
     persistent:true,
-    generatePDF:function(element,oggetti) {
-        oggetti.doing_edit=true;
-        $.post('post/fattura.php',_data(element,oggetti)).done(response=>{
+    generatePDF:function(e,id_cliente,oggetti) {
+        let _oggetti=JSON.parse(oggetti);
+        $.post('post/fattura.php',{..._data(e), ..._oggetti}).done(response=>{
             window.open(response,'_blank');
-            reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:oggetti['id_cliente']});
+            reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id_cliente});
         });
     },
 });

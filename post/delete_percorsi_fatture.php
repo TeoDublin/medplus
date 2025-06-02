@@ -3,6 +3,8 @@
     switch ($_REQUEST['table']) {
         case 'fatture':
             $trattamenti=Select('*')->from('pagamenti_fatture')->where("id_fattura={$_REQUEST['id']} AND origine='trattamenti'")->get();
+            $index=Select('*')->from('fatture')->where("id={$_REQUEST['id']}")->col('index');
+            Insert(['index'=>$index])->ignore()->into('fatture_eliminate');
             break;
         
         default:

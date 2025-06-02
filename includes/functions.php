@@ -116,7 +116,7 @@
     }
     function modal_script(String $component):void{
         $full_path="modal_component/{$component}/{$component}.js";
-        echo '<script component="modal_'.$component.'" src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
+        echo '<script defer component="modal_'.$component.'" src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
     }
     function module_script(String $component):void{
         $full_path="assets/js/components/{$component}.js";
@@ -196,4 +196,7 @@
     }
     function _txt($txt){
         return $txt;
+    }
+    function _json_encode($array){
+        return '\'' . htmlspecialchars(json_encode($array), ENT_QUOTES) . '\'';
     }

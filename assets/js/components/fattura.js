@@ -1,23 +1,27 @@
-function _data(element, oggetti){
-    element.querySelector('button').setAttribute('disabled',true);
+function _data(e){
+    e.querySelector('button').setAttribute('disabled',true);
+    const modal = e.closest('.modal');
     let table = [];
-    for (let index = document.querySelectorAll('.oggetto').length; index >= 1; index--) {
-        table.push({'oggetto':document.querySelector('#oggetto'+index)?.value,'importo':document.querySelector('#importo'+index)?.value});
+    let oggetti = {};
+    let importo = 0;
+    const oggettiElements = modal.querySelectorAll('.oggetto');
+    for (let index = 1; index <= oggettiElements.length; index++) {
+        let _importo = modal.querySelector('#importo' + index)?.value;
+        importo += parseFloat(_importo);
+        table.push({
+            'oggetto': modal.querySelector('#oggetto' + index)?.value,
+            'importo': _importo
+        });
     }
-    oggetti['dati']=document.querySelector('#dati').value;
-    oggetti['footer']=document.querySelector('#footer').value;
-    oggetti['articolo']=document.querySelector('#articolo').value;
-    oggetti['head']=document.querySelector('#head').value;
-    oggetti['data']=document.querySelector('#date').value;
-    oggetti['data_pagamento']=document.querySelector('#data_pagamento').value;
-    oggetti['metodo_pagamento']=document.querySelector('#metodo_pagamento').value;
-    oggetti['totale']=document.querySelector('#totale').value;
-    oggetti['imponibile']=document.querySelector('#imponibile').value;
-    if(!document.querySelector('#btnBollo').classList.contains('btn-dark')){
-        oggetti['bollo']=document.querySelector('#importoBollo').value;
-        oggetti['spanBollo']=document.querySelector('#spanBolloValue').value;
-    }
+
+    oggetti['id_cliente']=modal.querySelector('#id_cliente').value;
+    oggetti['data_pagamento']=modal.querySelector('#data_pagamento').value;
+    oggetti['metodo_pagamento']=modal.querySelector('#metodo_pagamento').value;
+    oggetti['sum']=modal.querySelector('#sum').value;
+    oggetti['bollo']=modal.querySelector('#bollo').value;
+    oggetti['inps']=modal.querySelector('#inps').value;
+    oggetti['index']=modal.querySelector('#index').value;
     oggetti['table']=table;
-    document.querySelectorAll('textarea[name]').forEach(element =>{ oggetti[element.getAttribute('name')]=element.textContent });
+    oggetti['importo']=importo;
     return oggetti;
 };

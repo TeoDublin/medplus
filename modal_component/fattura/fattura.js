@@ -2,15 +2,21 @@ window.modalHandlers['fattura'] = Object.assign(
     window.modalHandlers['fattura'] || {}, {
     addTotal:function(element) {
         const modal = element.closest('.modal');
-        const totale = modal.querySelector('#totale');
-        const imponibile = modal.querySelector('#imponibile');
+        const totale = modal.querySelector('#sum');
         let new_total = 0;
         modal.querySelectorAll('.importo').forEach(importo=>{
             let input = importo.querySelector('input').value;
             new_total+=parseFloat(input) || 0;
         });
+        let inps = Math.round(new_total * 0.04 * 100) / 100;
+        let bollo = 0;
+        if((new_total+inps)>70){
+            bollo = 2;            
+        }
+        new_total = new_total + inps + bollo;
         totale.value = parseFloat(new_total).toFixed(2);
-        imponibile.value = parseFloat(new_total).toFixed(2);
+        modal.querySelector('#inps').value=inps;
+        modal.querySelector('#bollo').value=bollo;
     },
     deleteBtnEnter:function(ele){
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.classList.add('deleteBtnEnter');});
@@ -33,8 +39,14 @@ window.modalHandlers['fattura'] = Object.assign(
         oggettoDiv.id = 'row' + (countOggetto + 1);
         oggettoInput.className = 'form-control';
         oggettoDiv.appendChild(oggettoInput);
-        document.querySelector('.oggetti').insertBefore(oggettoDiv, document.querySelector('.oggetti').children[1]);
-    
+        const oggettiContainer = document.querySelector('.titleOggetti');
+
+        if (countOggetto === 0) {
+            oggettiContainer.insertAdjacentElement('afterend',oggettoDiv);
+        } else {
+            document.querySelector('.oggetto').insertAdjacentElement('afterend', oggettoDiv);
+        }
+
         let countImporto = document.querySelectorAll('.importo_row').length;
         const importoDiv = document.createElement('div');
         importoDiv.className = "card-body ps-0 pe-1 pb-0 pt-1 importo importo_row";
@@ -45,7 +57,14 @@ window.modalHandlers['fattura'] = Object.assign(
         importoInput.type = 'number';
         importoInput.addEventListener('change',function(){window.modalHandlers['fattura'].addTotal(importoInput)});
         importoDiv.appendChild(importoInput);
-        document.querySelector('.importi').insertBefore(importoDiv, document.querySelector('.importi').children[1]);
+        const importoContainer = document.querySelector('.titleImporti');
+
+        if (countImporto === 0) {
+            importoContainer.insertAdjacentElement('afterend',importoDiv);
+        } else {
+            document.querySelector('.importo').insertAdjacentElement('afterend', importoDiv);
+        }
+
         let countBtn = document.querySelectorAll('.delBtn').length;
         
         const btnContainer  = document.createElement('div');
@@ -79,39 +98,6 @@ window.modalHandlers['fattura'] = Object.assign(
     },
     stampBtnLeave:function(ele){
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.classList.remove('stampBtnEnter');});
-    },
-    stampBtnClick:function(){
-        const oggetto = document.querySelector('#oggettoBollo');
-        const importo = document.querySelector('#importoBollo');
-        const btn = document.querySelector('#btnBollo');
-        const spanBollo = document.querySelector('#spanBollo');
-        const bollo = document.querySelector('.bollo');
-        if(btn.classList.contains('btn-dark')){
-            oggetto.removeAttribute('disabled');
-            oggetto.classList.remove('stampDisabled');
-            importo.removeAttribute('disabled');
-            importo.classList.remove('stampDisabled');
-            btn.classList.add('btn-primary');
-            btn.classList.remove('btn-dark');
-            btn.setAttribute('title','ELIMINA MARCA DA BOLLO');
-            spanBollo.removeAttribute('hidden');
-            spanBollo.classList.remove('d-none');
-            bollo.classList.add('importo');
-            this.addTotal(spanBollo);
-        }
-        else{
-            oggetto.setAttribute('disabled',true);
-            oggetto.classList.add('stampDisabled');
-            importo.setAttribute('disabled',true);
-            importo.classList.add('stampDisabled');
-            btn.classList.remove('btn-primary');
-            btn.classList.add('btn-dark');
-            btn.setAttribute('title','AGGIUNGI MARCA DA BOLLO');
-            spanBollo.setAttribute('hidden','');
-            spanBollo.classList.add('d-none');
-            bollo.classList.remove('importo');
-            this.addTotal(spanBollo);
-        }
     },
     updateRowId:function(){
         let row = 1;

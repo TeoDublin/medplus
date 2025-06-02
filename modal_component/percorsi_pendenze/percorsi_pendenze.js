@@ -188,10 +188,12 @@ window.modalHandlers['percorsi_pendenze'] = {
 window.modalHandlers['fattura'] = Object.assign(
     window.modalHandlers['fattura'] || {},{
     persistent:true,
-    generatePDF:function(element,oggetti) {
-        $.post('post/fattura.php',_data(element,oggetti)).done(response=>{
+
+    generatePDF:function(e,id_cliente,oggetti) {
+        const _oggetti=JSON.parse(oggetti);
+        $.post('post/fattura.php',{..._data(e), ..._oggetti}).done(response=>{
             window.open(response,'_blank');
-            reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:oggetti['id_cliente']});
+            reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:id_cliente});
         });
     },
 });

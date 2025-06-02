@@ -8,7 +8,7 @@
     $isico=Select('*')->from('pagamenti_isico')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-xxl">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Pagamenti</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
@@ -37,12 +37,22 @@
                                                         <span class="">Fattura</span>
                                                     </div>
                                                     <div class="w-10 d-flex align-items-center justify-content-center text-center">
+                                                        <span class="d-none d-md-block">Totale</span>
+                                                        <span class="d-md-none">$</span>
+                                                    </div>                                                    
+                                                    <div class="w-5 d-flex align-items-center justify-content-center text-center">
                                                         <span class="d-none d-md-block">Importo</span>
                                                         <span class="d-md-none">$</span>
+                                                    </div>                                                    
+                                                    <div class="w-5 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                        <span class="">Bollo</span>
                                                     </div>
-                                                    <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                    <div class="w-5 d-none d-md-flex align-items-center justify-content-center text-center">
+                                                        <span class="">INPS</span>
+                                                    </div>
+                                                    <div class="w-5 d-none d-md-flex align-items-center justify-content-center text-center">
                                                         <span class="">Nr.</span>
-                                                    </div>
+                                                    </div>                                                    
                                                     <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center">
                                                         <span class="">Emissione</span>
                                                     </div>
@@ -81,9 +91,30 @@
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
                                                             >
+                                                            <span><?php echo $fattura['totale'];?></span>
+                                                        </div>                                                        
+                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
+                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
+                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
+                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
+                                                            >
                                                             <span><?php echo $fattura['importo'];?></span>
                                                         </div>
-                                                        <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center"
+                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
+                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
+                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
+                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
+                                                            >
+                                                            <span><?php echo $fattura['bollo'];?></span>
+                                                        </div>
+                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
+                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
+                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
+                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
+                                                            >
+                                                            <span><?php echo $fattura['inps'];?></span>
+                                                        </div>                                          
+                                                        <div class="w-5 d-none d-md-flex align-items-center justify-content-center text-center"
                                                                 onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
                                                                 onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
                                                                 onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
@@ -132,22 +163,10 @@
                                                                 echo "</select>";
                                                             ?>
                                                         </div>
-                                                        <?php 
-                                                            $raw = $fattura['request'];
-                                                            $fixed = preg_replace_callback('/"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"/s', function ($matches) {
-                                                                $content = $matches[1];
-                                                                $content = str_replace(["\r", "\n"], ['\\r', '\\n'], $content);
-                                                                return '"' . $content . '"';
-                                                            }, $raw);
-                                                            
-                                                            $request = json_decode(($fixed==""?'{}':$fixed))??(object)[];
-                                                            $request->id_fattura = $fattura['id'];
-                                                            $json = htmlspecialchars(json_encode($request, JSON_UNESCAPED_UNICODE), ENT_QUOTES, 'UTF-8');
-                                                        ?>
-                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center" data-request="<?php echo $json; ?>"
+                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
                                                             onmouseenter="window.modalHandlers['percorsi_fatture'].enterEdit(this)"
                                                             onmouseleave="window.modalHandlers['percorsi_fatture'].leaveEdit(this)"                                                                
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickEdit(this)"             
+                                                            onclick="window.modalHandlers['percorsi_fatture'].clickEdit(<?php echo $fattura['id']; ?>)"             
                                                             >
                                                             <span><?php echo icon('edit.svg');?></span>
                                                         </div>
