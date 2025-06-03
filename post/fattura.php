@@ -26,13 +26,15 @@
     $width=0;
     $dati=[];
     $cliente=_cliente();
+    $get_data=['name','indirizzo','cap','cf'];
     foreach ($cliente as $key=> $value) {
-        if(in_array($key,['name','indirizzo','cap','cf'])){
+        if(in_array($key,$get_data)){
             $current=$pdf->GetStringWidth($value);
             $width = $current>$width?$current:$width;
-            $dati[]=$value;
+            $dati[array_flip($get_data)[$key]]=$value;
         }
     }
+    ksort($dati);
     $pdf->SetX($pdf->GetPageWidth() - $width - 20);
     $pdf->MultiCell($width +10, 6,implode("\r\n",$dati) , 0, 'C');
     $pdf->Ln();
@@ -71,8 +73,12 @@
     }
     if((double)$_REQUEST['inps']>0){
         $pdf->SetFont('Arial', 'B', 12);
-        $pdf->Cell(90, 12, '  Rivalsa INPS', 'LR', 0, 'L');
+        $pdf->Cell(90, 12, '  Rivalsa INPS (4%)', 'LR', 0, 'L');
         $pdf->Cell(90, 12, EURO." ".number_format($_REQUEST['inps'], 2, ',', '.'), 'R', 1, 'C');
+
+        $pdf->SetFont('Arial', 'B', 12);
+        $pdf->Cell(90, 12, '  Subtotale', 'LR', 0, 'L');
+        $pdf->Cell(90, 12, EURO." ".number_format((double)$_REQUEST['inps']+(double)$_REQUEST['importo'], 2, ',', '.'), 'R', 1, 'C');
     }
     if((double)$_REQUEST['bollo']>0){
         $pdf->SetFont('Arial', 'B', 12);
