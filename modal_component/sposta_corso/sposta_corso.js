@@ -1,7 +1,7 @@
 window.modalHandlers['sposta_corso'] = {
     btnSalva:function(element){
         const _data=this._data(element);
-        $.post('post/save.php',_data).done(function(){ 
+        $.post('post/sposta_corso_save.php',_data).done(function(){ 
             refresh({data:_data.data,id_terapista:_data.id_terapista});
         }).fail(function(){fail()});
     },

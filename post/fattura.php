@@ -3,10 +3,10 @@
     function _cliente(){
         return Select("
             *,
-            CONCAT('Spett.le ',nominativo) AS name,
+            CONCAT('Spett.le ',COALESCE(fattura_nominativo,nominativo)) AS name,
             indirizzo,
             CONCAT(cap,' ',citta) AS cap,
-            CONCAT('CF o P.Iva ',cf) AS cf
+            CONCAT('CF o P.Iva ',COALESCE(fattura_cf,cf)) AS cf
         ")
         ->from('clienti')
         ->where("id = {$_REQUEST['id_cliente']}")
@@ -49,7 +49,6 @@
     $count=0;
     $pdf->SetFont('Arial', '', 12);
     foreach($_REQUEST['table'] ?? [] as $row){
-        if($row['importo']=='')$row['importo']=0;
 
         if ($pdf->GetY() + 10 > $pdf->GetPageHeight() - 10) {
             $pdf->AddPage();
@@ -59,8 +58,10 @@
             $pdf->SetFont('Arial', '', 12);
         }
 
+        $importo=$row['importo']==''?'':EURO." ".number_format($row['importo'], 2, ',', '.');
+
         $pdf->Cell(90, 10, "  {$row['oggetto']}", 'LR', 0, 'L');
-        $pdf->Cell(90, 10, ($row['importo']==0?'':EURO." ".number_format($row['importo'], 2, ',', '.')), 'R', 1, 'C');
+        $pdf->Cell(90, 10, $importo, 'R', 1, 'C');
         $count++;
     }
 
@@ -134,7 +135,8 @@
     }
 
     foreach($_REQUEST['table'] ?? [] as $row){
-        Insert(['id_fattura'=>$id_fattura, 'oggetto'=>$row['oggetto'],'importo'=>$row['importo']])->into('fatture_table');
+        $importo=$row['importo']==''?0:$row['importo'];
+        Insert(['id_fattura'=>$id_fattura, 'oggetto'=>$row['oggetto'],'importo'=>$importo])->into('fatture_table');
     }
 
     $totale=(double)$_REQUEST['importo'];

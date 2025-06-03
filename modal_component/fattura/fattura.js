@@ -6,7 +6,9 @@ window.modalHandlers['fattura'] = Object.assign(
         let new_total = 0;
         modal.querySelectorAll('.importo').forEach(importo=>{
             let input = importo.querySelector('input').value;
-            new_total+=parseFloat(input) || 0;
+            if(input!==''){
+                new_total+=parseFloat(input);
+            }
         });
         let inps = Math.round(new_total * 0.04 * 100) / 100;
         let bollo = 0;

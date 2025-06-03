@@ -14,7 +14,7 @@
             </div>
             <div class="modal-body">
                 <?php 
-                    $result=$id_corso?Select('*')->from('corsi_planning')->where("id={$id_corso}")->first():[];
+                    $result=$id_corso?Select('*')->from('view_corsi_planning')->where("id={$id_corso}")->first():[];
                     if(empty($result)){
                         $planning=Select('*')->from('view_planning')->where("id_terapista={$_REQUEST['id_terapista']} and data='{$_REQUEST['data']}'")->get();
                     }

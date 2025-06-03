@@ -1,4 +1,6 @@
 <?php
+    ini_set('upload_max_filesize', '20M');
+    ini_set('post_max_size', '25M');
     $result=$_REQUEST['id_cliente']?Select('*')->from('clienti')->where("id={$_REQUEST['id_cliente']}")->first_or_false():false;
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
@@ -58,6 +60,18 @@
                         <input type="text" name="email" class="form-control" value="<?php echo $result['email']??'';?>"/>
                     </div>
                 </div>
+
+                <div class="d-flex flex-row">
+                    <div class="p-1 flex-fill">
+                        <label for="fattura_nominativo" class="form-label">Fattura a nome di</label>
+                        <input type="text" name="fattura_nominativo" class="form-control" value="<?php echo $result['fattura_nominativo']??'';?>"/>
+                    </div>  
+                    <div class="p-1 w-50">
+                        <label for="fattura_cf" class="form-label">Fattura CF</label>
+                        <input type="text" name="fattura_cf" class="form-control" value="<?php echo $result['fattura_cf']??'';?>"/>
+                    </div>                    
+                </div>
+
                 <div class="d-flex flex-row">
                     <div class="p-1 flex-fill">
                         <label for="privacy" class="form-label">Privacy</label>

@@ -6,8 +6,10 @@ function _data(e){
     let importo = 0;
     const oggettiElements = modal.querySelectorAll('.oggetto');
     for (let index = 1; index <= oggettiElements.length; index++) {
-        let _importo = modal.querySelector('#importo' + index)?.value;
-        importo += parseFloat(_importo);
+        let _importo = modal.querySelector('#importo' + index).value;
+        if(_importo!==''){
+            importo += parseFloat(_importo);
+        }
         table.push({
             'oggetto': modal.querySelector('#oggetto' + index)?.value,
             'importo': _importo

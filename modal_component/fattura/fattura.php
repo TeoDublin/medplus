@@ -121,7 +121,8 @@
                                     if($table){
                                         $row=1;
                                         foreach ($table as $tr) {
-                                            echo "<div class=\"card-body ps-0 pe-1 pb-0 pt-1 importo importo_row\" id=\"row{$row}\"><input type=\"number\" id=\"importo{$row}\" class=\"form-control\" value=\"{$tr['importo']}\" onchange=\"window.modalHandlers['fattura'].addTotal(this)\"/></div>";
+                                            $importo=$tr['importo']==0?'':$tr['importo'];
+                                            echo "<div class=\"card-body ps-0 pe-1 pb-0 pt-1 importo importo_row\" id=\"row{$row}\"><input type=\"number\" id=\"importo{$row}\" class=\"form-control\" value=\"{$importo}\" onchange=\"window.modalHandlers['fattura'].addTotal(this)\"/></div>";
                                             $row++;
                                         }
                                     } 
