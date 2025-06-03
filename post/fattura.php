@@ -36,7 +36,7 @@
     }
     ksort($dati);
     $pdf->SetX($pdf->GetPageWidth() - $width - 20);
-    $pdf->MultiCell($width +10, 6,implode("\r\n",$dati) , 0, 'C');
+    $pdf->MultiCell($width +10, 6,iconv('UTF-8', 'windows-1252',implode("\r\n",$dati)), 0, 'C');
     $pdf->Ln();
     $pdf->SetFont('Arial', 'B', 12);
     $pdf->MultiCell(0, 6, "Fattura n: {$_REQUEST['index']} del: ".unformat_date($_REQUEST['data_pagamento']));
@@ -123,12 +123,14 @@
     ];
     if(isset($_REQUEST['id_fattura'])){
         $id_fattura=$_REQUEST['id_fattura'];
+        $oggetti=Select('*,  id_origine as id_percorso')->from('pagamenti_fatture')->where("id_fattura={$id_fattura}")->get();
         Update('fatture')->set($save)->where("id={$id_fattura}");
         Delete()->from('pagamenti_fatture')->where("id_fattura={$id_fattura}");
         Delete()->from('fatture_table')->where("id_fattura={$id_fattura}");
     }
     else{
         $id_fattura=Insert($save)->into('fatture')->get();
+        $oggetti=$_REQUEST['oggetti'];
     }
 
     foreach($_REQUEST['table'] ?? [] as $row){
@@ -136,7 +138,7 @@
     }
 
     $totale=(double)$_REQUEST['importo'];
-    foreach($_REQUEST['oggetti'] as $obj){
+    foreach($oggetti as $obj){
         $importo=$totale>=(double)$obj['importo']?$obj['importo']:$totale;
         $totale-=$importo;
         Insert([
