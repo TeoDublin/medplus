@@ -33,7 +33,7 @@ foreach (Sql()->select($query) as $result) {
     foreach ($map as $key => $value) {
         $sheet->setCellValue("{$col}{$line}", $value);
         if (strpos($key, 'Data') !== false && !empty($value)) {
-            $dateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel(\DateTime::createFromFormat('d/m/Y', $value));
+            $dateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel(\DateTime::createFromFormat('d/m/Y', unformat_date($value)));
             $sheet->setCellValue("{$col}{$line}", $dateValue);
             $sheet->getStyle("{$col}{$line}")->getNumberFormat()->setFormatCode('DD/MM/YYYY');
         }

@@ -2,9 +2,18 @@
     $_REQUEST['skip_cookie']=true;
     require_once '../includes.php';
     Delete()->from('corsi_planning_spostati')->where("id_corsi_planning={$_REQUEST['id']}");
-    Insert([
-        'id_corsi_planning'=>$_REQUEST['id'],
-        'row_inizio'=>$_REQUEST['row_inizio'],
-        'row_fine'=>$_REQUEST['row_fine'],
-        'data'=>$_REQUEST['data']
-    ])->into('corsi_planning_spostati');
+    if(isset($_REQUEST['delete'])){
+        $save=[
+            'id_corsi_planning'=>$_REQUEST['id'],
+            'data'=>$_REQUEST['data']
+        ];
+    }
+    else{
+        $save=[
+            'id_corsi_planning'=>$_REQUEST['id'],
+            'row_inizio'=>$_REQUEST['row_inizio'],
+            'row_fine'=>$_REQUEST['row_fine'],
+            'data'=>$_REQUEST['data']
+        ];
+    }
+    Insert($save)->into('corsi_planning_spostati');
