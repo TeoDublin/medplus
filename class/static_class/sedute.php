@@ -107,10 +107,7 @@
         public function map_out($data):array{
             $ret=[];
             foreach($this->map() as $key=>$value){
-                $ret[$key]=match($value['type']??'text'){
-                    'date'=>unformat_date($data[$value['col']],''),
-                    default=>$data[$value['col']]
-                };
+                $ret[$key]=$data[$value['col']];
             }
             return $ret;
         }
