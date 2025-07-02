@@ -117,7 +117,7 @@
         'bollo'=>$_REQUEST['bollo'],
         'inps'=>$_REQUEST['inps'],
         'index'=>$_REQUEST['index'],
-        'data'=>now('Y-m-d'),
+        'data'=>$_REQUEST['data_pagamento'],
         'metodo'=>$_REQUEST['metodo_pagamento'],
         'stato'=>$stato,
         'fatturato_da'=>$_REQUEST['is_isico']=='true'?'Isico':'Medplus'
