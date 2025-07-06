@@ -37,3 +37,6 @@
     function Fatture():Fatture{
         return new Fatture();
     }
+    function _Mail(){
+        return new _Mail();
+    }
