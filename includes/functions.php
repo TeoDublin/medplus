@@ -144,6 +144,11 @@
     function now(string $format):string{
         return date($format);
     }
+    function add_date($add){
+        $date = new DateTime();
+        $date->modify($add);
+        return $date->format('Y-m-d H:i:s');
+    }
     function datetime() {
         return date('Y-m-d H:i:s');
     }

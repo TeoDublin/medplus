@@ -7,11 +7,12 @@
                     <tr>
                         <th><h3>Nome</h3></th>
                         <th><h3>Utente</h3></th>
+                        <th><h3>Email</h3></th>
                     </tr>
                 </thead>
                 <tbody class="text-center">
                     <?php foreach(Select('*')->from('view_utenti')->get() as $utente){
-                        echo "<tr class=\"hover\" onclick=\"editClick({$utente['id']})\"><td>{$utente['nome']}</td><td>{$utente['user']}</td></tr>";
+                        echo "<tr class=\"hover\" onclick=\"editClick({$utente['id']})\"><td>{$utente['nome']}</td><td>{$utente['user']}</td><td>{$utente['email']}</td></tr>";
                     } ?>
                 </tbody>
             </table>

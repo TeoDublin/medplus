@@ -7,6 +7,6 @@
         Update($table)->set([
             'nome'=>$_REQUEST['nome'],
             'user'=>$_REQUEST['user'],
-            'password'=>password_hash($_REQUEST['password'], PASSWORD_DEFAULT),
+            'email'=>$_REQUEST['email']
         ])->where("id={$id}");
     }

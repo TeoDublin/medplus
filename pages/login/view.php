@@ -1,3 +1,3 @@
-<div>
-    <?php require_once('landing/landing.php'); ?>
-</div>
+<?php
+    $tab=_tab();
+    require_once("$tab/$tab.php");

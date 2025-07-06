@@ -19,6 +19,11 @@
                         <label for="password" class="form-label">Password</label>
                         <input type="password" class="form-control" name="password" id="password" autocomplete="current-password"/>
                     </div>
+                    <div class="d-flex flex-row">
+                        <div class="ms-3 hover">
+                            <a class="link" href="login.php?tab=dont_remember_password">Non ricordo la Password</a>
+                        </div>
+                    </div>
                     <div class="my-4">
                         <button class="btn btn-primary w-100" onclick="login()">Avanti</button>
                     </div>

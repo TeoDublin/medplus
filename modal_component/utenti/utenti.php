@@ -22,8 +22,8 @@
                     <input class="form-control" type="text" name="user" value="<?php echo $view_utenti?$view_utenti['user']:'';?>"/>
                 </div>
                 <div class="p-2">
-                    <label class="form-label" for="password">Password</label>
-                    <input class="form-control" type="password" name="password" value="<?php echo $view_utenti?$view_utenti['password']:'';?>"/>
+                    <label class="form-label" for="user">email</label>
+                    <input class="form-control" type="text" name="email" value="<?php echo $view_utenti?$view_utenti['email']:'';?>"/>
                 </div>
             </div>
             <div class="modal-footer">
