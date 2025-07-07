@@ -33,8 +33,8 @@
         $oggetti=Select('*')->from('pagamenti_fatture')->where("id_fattura={$_REQUEST['id_fattura']}")->get();
         $index=$view_fatture['index'];
         $total=(double)$view_fatture['importo'];
-        $inps=(double)$view_fatture['inps'];
-        $bollo=(double)$view_fatture['bollo'];
+        $inps=(double)$total*0.04;
+        $bollo=(double)$total>77.47?2:0;
     }
     else{
         $id_cliente=$_REQUEST['id_cliente'];

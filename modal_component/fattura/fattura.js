@@ -12,7 +12,7 @@ window.modalHandlers['fattura'] = Object.assign(
         });
         let inps = Math.round(new_total * 0.04 * 100) / 100;
         let bollo = 0;
-        if((new_total+inps)>70){
+        if((new_total+inps)>77.47){
             bollo = 2;            
         }
         new_total = new_total + inps + bollo;
