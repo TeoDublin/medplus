@@ -8,7 +8,7 @@
             <?php 
                 if(in_array('tab_utenti_presenze',$elementi)){?>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo _tab('presenze')?'active':'';?>" aria-current="page" href="utenti.php?tab=presenze&pagination=0">Presenze</a>
+                        <a class="nav-link <?php echo _tab('presenze_log')?'active':'';?>" aria-current="page" href="utenti.php?tab=presenze_log&pagination=0">Presenze Log</a>
                     </li>
                     <?php
                 }

@@ -13,7 +13,11 @@
         else{
             $index=Select('max(`index`) as mx')->from('fatture')->first_or_false();
             if(!$index['mx'])$index=Select("JSON_EXTRACT(setup, '$.first_index') as first_index")->from('setup')->where("`key`='fatture'")->col('first_index');
-            else $index=(int)$index['mx']+1;
+            else {
+                $blocate=Select('max(`index`) as mx')->from('fatture_blocate')->first_or_false();
+                if($blocate&&(int)$blocate['mx']>(int)$index['mx'])$index['mx']=$blocate['mx'];
+                $index=(int)$index['mx']+1;
+            }
             return $index; 
         }
     }
@@ -45,7 +49,7 @@
         $index=_index($oggetti);
         $total=_total($oggetti);
         $inps=round($total*0.04,2,PHP_ROUND_HALF_UP);
-        $bollo=($total+$inps)>70?2:0;
+        $bollo=($total+$inps)>77.47?2:0;
     }
 
     $sum=$total+$inps+$bollo;

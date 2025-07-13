@@ -29,7 +29,7 @@
         $where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
     }
     $view_sedute = Select('*')->from('view_sedute')->where($where)->orderby('data_seduta ASC')->get_table();
-    $somma_prezzo= number_format(Select("sum(saldato) as saldato")->from('view_sedute')->where($where)->col('saldato'),2);
+    $sum= Select("sum(prezzo) as prezzo, sum(saldato) as saldato")->from('view_sedute')->where($where)->first();
 ?>
 
 <!-- where -->
@@ -55,7 +55,7 @@
     ?>
 </div>
 <div>
-    <span><?php echo "Quantità: {$view_sedute->total}, Somma: € {$somma_prezzo}"; ?></span>
+    <span><?php echo "Quantità: {$view_sedute->total}, Totale: € {$sum['prezzo']}, Incassato: € {$sum['saldato']}, Pendente: € ".number_format($sum['prezzo']-$sum['saldato'],2); ?></span>
 </div>
 
 <!-- table -->

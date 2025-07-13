@@ -131,7 +131,7 @@
             foreach($this->map() as $key=>$value){
                 if(($val=$data[$key])){
                     $type=$value['type']??'text';
-                    if($type=='dont_save');
+                    if($type=='dont_save')continue;
                     else{
                         $v=match($type){
                             'date'=>format_date($val,''),

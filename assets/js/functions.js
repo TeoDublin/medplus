@@ -119,13 +119,11 @@ function modal_component(id, component, _data) {
         newModalInstance.show();
     });
 }
-
 function spinner(){
     return `<div class="d-flex justify-content-center align-items-center" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:1050;background:rgba(0,0,0,0.5);">
                 <div class="spinner-border text-light" role="status"></div>
             </div>`;
 }
-
 function reload_modal_component(id, component,_data){
     closeAllModal();
     modal_component(id, component,_data);
@@ -137,7 +135,6 @@ function reload_modal_component_tree(params) {
         modal_component(param.id, param.component, param.data);
     });
 }
-
 function refresh(request){
     const params = new URLSearchParams(request);
     window.location.href = `${window.location.pathname}?${params.toString()}`
@@ -278,7 +275,6 @@ function excel(page) {
         }
     });
 }
-
 function zip(page) {
     const div = document.createElement('div');
     div.id = 'div_zip_spinner';
@@ -311,7 +307,6 @@ function zip(page) {
         }
     });
 }
-
 function pdf(component,sid) {
     const div = document.createElement('div');
     div.id = 'div_pdf_spinner';
@@ -328,8 +323,6 @@ function pdf(component,sid) {
         a.remove();
     });
 }
-
-
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {
         const toastLive = document.getElementById('successToast');

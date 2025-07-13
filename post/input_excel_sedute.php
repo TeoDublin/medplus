@@ -16,7 +16,7 @@ if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
         else{
             $map=$sedute->map_in(array_combine($headers,$row));
             if($map['has_error'])$errors[]=$map;
-            else Update('percorsi_terapeutici_sedute')->set($map)->where("id={$map['id']}");
+            elseif(isset($map['id']))Update('percorsi_terapeutici_sedute')->set($map)->where("id={$map['id']}");
         }
     }
     if(count($errors)>0){
