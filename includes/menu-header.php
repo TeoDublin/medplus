@@ -116,6 +116,14 @@
                         </div>
                         <div class="menu-label align-self-center hide" ><span>Utenti</span></div>
                     </div><?php 
+                }
+                if(in_array('menu_dashboard',$elementi)){?>
+                    <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page',$home)=='dashboard'?'menu-active':''?>" id="menu-dashboard" title="dashboard">
+                        <div class="d-flex align-items-start mx-2" >
+                            <?php echo icon('chart.svg','black',31,30);?>
+                        </div>
+                        <div class="menu-label align-self-center hide" ><span>Dashboard</span></div>
+                    </div><?php 
                 }?>
                 
             </div>

@@ -22,6 +22,7 @@
         pagamenti: document.querySelector('#menu-pagamenti'),
         trattamenti: document.querySelector('#menu-trattamenti'),
         corsi: document.querySelector('#menu-corsi'),
+        dashboard: document.querySelector('#menu-dashboard'),
         start: function(){
             if(getCookie("menu")=="show"){
                 this.menuVertical.classList.remove('hide');
@@ -79,7 +80,11 @@
             }
             if(in_array('menu_corsi',$elementi)){?>
                 this.corsi.addEventListener('click', () => navigate('corsi.php','corsi'));<?php
-            }?>
+            }
+            if(in_array('menu_dashboard',$elementi)){?>
+                this.dashboard.addEventListener('click', () => navigate('dashboard.php','dashboard'));<?php
+            }            
+            ?>
         }
     }
     menu.start();
