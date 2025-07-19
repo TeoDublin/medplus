@@ -245,7 +245,7 @@ function search_table(_data){
     });
 
 }
-function excel(page) {
+function excel(page,_data={}) {
     const div = document.createElement('div');
     div.id = 'div_excel_spinner';
     div.innerHTML=spinner();
@@ -253,6 +253,7 @@ function excel(page) {
     $.ajax({
         url: page,
         method: 'POST',
+        data:_data,
         xhrFields: {
             responseType: 'blob'
         },

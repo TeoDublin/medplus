@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Rome');
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
@@ -31,14 +32,18 @@ foreach ($view_utenti_presenze as $vup) {
     }
 }
 
-if(!$has_error){
+if(!$has_error&&isset($_POST['selected'])){
     Insert([
         'id_utenti'=>5,
         'categoria'=>_categoria(),
         'nome'=>$_POST['selected'],
         'data'=>$today,
-        'orario'=>now('H:m:i')
+        'orario'=>now('H:i:s')
     ])->into('utenti_presenze');
+}
+else{
+    echo json_encode(['error'=>'not allowed']);
+    exit();
 }
 
 

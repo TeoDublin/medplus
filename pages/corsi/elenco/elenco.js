@@ -20,6 +20,9 @@ function add(id){
     if(id){_data["id"]=id;}
     modal_component('modal','corsi_elenco',_data);
 }
+function esporta(){
+    modal_component('modal','corsi_esporta',{});
+}
 document.addEventListener('DOMContentLoaded',function(){
     search_table({table:'view_corsi','cols':['corso','categoria','terapista','prezzo_tabellare','scadenza','giorni']});
 });
