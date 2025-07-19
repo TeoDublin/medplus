@@ -1,4 +1,4 @@
 <?php 
     function _tab($tab):bool{
-        return cookie('tab','kpis')==$tab;
+        return cookie('tab','pagamenti')==$tab;
     }

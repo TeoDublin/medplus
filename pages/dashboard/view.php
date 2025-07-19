@@ -3,12 +3,12 @@
     <div class="flex-fill flex-column">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link <?php echo _tab('kpis')?'active':'';?>" aria-current="page" href="dashboard.php?tab=kpis&pagination=0">Dashboard</a>
+                <a class="nav-link <?php echo _tab('pagamenti')?'active':'';?>" aria-current="page" href="dashboard.php?tab=pagamenti&pagination=0">Pagamenti</a>
             </li>
         </ul>
         <div class="p-1">
             <?php 
-                $tab=cookie('tab','kpis'); 
+                $tab=cookie('tab','pagamenti'); 
                 require_once "{$tab}/{$tab}.php";?>
         </div>
     </div>
