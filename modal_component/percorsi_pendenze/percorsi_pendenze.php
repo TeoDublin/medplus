@@ -5,6 +5,7 @@
         return Select('id_origine,nome')
         ->from('view_pagamenti')
         ->where("id_cliente={$_REQUEST['id_cliente']} AND saldato < prezzo AND origine='trattamenti'")
+        ->orderby('scadenza ASC')
         ->groupby('id_origine,nome')
         ->get_or_false();
     }
