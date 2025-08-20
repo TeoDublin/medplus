@@ -17,7 +17,8 @@
             'sedute'=>$_REQUEST['sedute'],
             'prezzo_tabellare'=>$_REQUEST['prezzo_tabellare'],
             'prezzo'=>$_REQUEST['prezzo'],
-            'note'=>$_REQUEST['note']
+            'note'=>$_REQUEST['note'],
+            'realizzato_da'=>$_REQUEST['realizzato_da'],
         ])->into('percorsi_terapeutici')->get();
     }
     else{

@@ -42,6 +42,16 @@
                             onchange="window.modalHandlers['percorso_combo'].changeSedute(this)"
                             />
                     </div>
+                    <div class="py-2 pe-2 w-15">
+                        <label for="btn" class="form-label">Realizzato da</label>
+                        <select class="form-select" id="realizzato_da" name="realizzato_da" value="<?php echo $view_percorsi['realizzato_da']??'1';?>">
+                            <?php 
+                                foreach(Enum('percorsi_terapeutici','realizzato_da')->list as $value){
+                                    $selected = (isset($view_percorsi['realizzato_da']) && $view_percorsi['realizzato_da'] == $value) ? 'selected' : '';
+                                    echo "<option value=\"{$value}\" class=\"ps-4  bg-white\" {$selected}>{$value}</option>";
+                                }?>
+                        </select>
+                    </div>
                 </div>
                 <div class="p-2">
                     <label for="note" class="form-label">Note</label>
@@ -105,7 +115,7 @@
                                     ?>
                                 </select>                                    
                             </div>
-                            <div class="p-2 w-40 text-center">
+                            <div class="p-2 w-20 text-center">
                                 <label for="btn" class="form-label">#</label>
                                 <button name="btn" class="btn btn-primary w-100" id="btnAddTrattamento" onclick="window.modalHandlers['percorso_combo'].addTrattamento(this)">Aggiungi Trattamento</button>
                             </div>

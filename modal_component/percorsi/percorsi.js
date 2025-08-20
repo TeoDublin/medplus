@@ -11,6 +11,7 @@ window.modalHandlers['percorsi'] = {
                     prezzo:modal.querySelector('[name=prezzo]').value,
                     note:modal.querySelector('[name=note]').value,
                     sedute:modal.querySelector('[name=sedute]').value,
+                    realizzato_da:modal.querySelector('[name=realizzato_da]').value,
                     id_cliente:id_cliente,
                     id_percorso:id_percorso,
                     id_combo:id_combo

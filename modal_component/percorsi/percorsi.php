@@ -81,6 +81,9 @@
                                         <div class="cc2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                             <span class="">Trattamento</span>
                                         </div>
+                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
+                                            <span class="">Realizzato da</span>
+                                        </div>
                                         <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 d-none d-md-block">
                                             <span class="">Inizio</span>
                                         </div>
@@ -120,6 +123,7 @@
                                                         >
                                                         <span><?php echo $percorso['acronimo']; ?></span>
                                                     </div>
+                                                    <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 d-none d-md-block"><span class=""><?php echo $percorso['realizzato_da']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 d-none d-md-block"><span class=""><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $percorso['prezzo']; ?></span></div>
                                                     <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"
