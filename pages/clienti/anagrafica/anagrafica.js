@@ -12,16 +12,19 @@ function editClick(element,id){
     if(element.classList.contains('warning')){
         delClick(id);
     }
-    else if(element.classList.contains('success')){
+    else if(element.classList.contains('percorsi')){
         trattamenti(id);
+    }
+    else if(element.classList.contains('storico')){
+        storico(id);
     }
     else if(element.classList.contains('success2')){
         percorsoCorso(id);
     }
-    else if(element.classList.contains('success3')){
+    else if(element.classList.contains('pendenze')){
         pendenze(id);
     }
-    else if(element.classList.contains('success4')){
+    else if(element.classList.contains('pagamenti')){
         percorsoFatture(id);
     }
     else{
@@ -30,6 +33,9 @@ function editClick(element,id){
 }
 function trattamenti(id){
     modal_component('percorsi','percorsi',{id_cliente:id});
+}
+function storico(id){
+    modal_component('percorsi','percorsi',{id_cliente:id,storico:true});
 }
 function percorsoCorso(id){
     modal_component('percorsi_corsi','percorsi_corsi',{id_cliente:id});
@@ -48,6 +54,6 @@ document.addEventListener('DOMContentLoaded',function(){
         table:'clienti',
         orderby:'nominativo ASC',
         cols:['id','nominativo','cellulare','email'],
-        actions:{ Trattamenti:'success', Corsi:'success2', Pendenze:'success3' }
+        actions:{ Percorsi:'percorsi', Storico:'storico', Pendenze:'pendenze', Pagamenti:'pagamenti' }
     });
 });

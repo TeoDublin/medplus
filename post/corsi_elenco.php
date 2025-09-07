@@ -8,7 +8,8 @@
         'id_terapista'=>$_REQUEST['id_terapista'],
         'corso'=>$_REQUEST['corso'],
         'prezzo'=>$_REQUEST['prezzo'],
-        'scadenza'=>$_REQUEST['scadenza']
+        'scadenza'=>$_REQUEST['scadenza'],
+        'realizzato_da'=>$_REQUEST['realizzato_da']
     ];
     if($id&&!empty($id))Update('corsi')->set($corso)->where("id={$id}");
     else $id=Insert($corso)->into('corsi')->get();

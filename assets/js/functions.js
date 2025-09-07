@@ -178,29 +178,29 @@ function closeModalAndScripts(modalElement) {
         if (window[modal_id] && typeof window[modal_id].cleanup === 'function') {
             window[modal_id].cleanup();
         }
-        document.querySelectorAll(`script[component="${modal_id}"]`).forEach(modalScript => modalScript.remove());
+
         if (modalElement.modalHandlers) {
             delete modalElement.modalHandlers;
         }
-        if (
-            typeof window.modalHandlers !== 'undefined' &&
-            typeof window.modalHandlers[component] !== 'undefined' &&
-            typeof window.modalHandlers[component].deletePersistent !== 'undefined'
-        ) {
-            delete window.modalHandlers[window.modalHandlers[component].deletePersistent];
+
+        if(window.modalHandlers[component].closePersistent !== undefined && window.modalHandlers[component].closePersistent ){
+            document.querySelectorAll(`script[component="modal_${window.modalHandlers[component].closePersistent}"]`).forEach(to_remove => { to_remove.remove(); });
+            delete window.modalHandlers[window.modalHandlers[component].closePersistent];
         }
-        if (
-            typeof window.modalHandlers !== 'undefined' &&
-            typeof window.modalHandlers[component] !== 'undefined' &&
-            typeof window.modalHandlers[component].persistent !== 'undefined'
-        ) {
+    
+        if(window.modalHandlers[component].persistent === undefined){
+            document.querySelectorAll(`script[component="${modal_id}"]`).forEach(to_remove => { to_remove.remove(); });
             delete window.modalHandlers[component];
         }
+
         document.querySelectorAll('#' + modalElement.id.replace('modal_','div_')).forEach(to_remove => { to_remove.remove(); });
+
     }
+
     if (!document.querySelector('.modal.show')) {
         document.body.classList.remove('modal-open');
     }
+
 }
 function component(component,_data){
     let element = document.querySelector('#'+component);

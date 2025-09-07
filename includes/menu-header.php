@@ -1,7 +1,7 @@
 <div class="d-flex flex-column">
     <div class="d-flex flex-row w-100 sticky-top" style="height: 40;">
-        <div class="menu-divider hide">
-            <div class="d-flex w-100 justify-content-end">
+        <div class="menu-divider d-flex hide">
+            <div class="ms-auto my-auto">
                 <div class="p-3 d-flex align-items-end pe-4 menu-icon-back" >
                     <?php echo icon('minor.svg','black',30,30);?>
                 </div>

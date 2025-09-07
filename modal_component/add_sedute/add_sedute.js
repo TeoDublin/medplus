@@ -4,7 +4,8 @@ window.modalHandlers['add_sedute'] = {
             id_cliente:id_cliente,
             id_percorso:id_percorso,
             id_combo:id_combo,
-            qtt:element.closest('.modal').querySelector('#qtt').value
+            qtt:element.closest('.modal').querySelector('#qtt').value,
+            prezzo:element.closest('.modal').querySelector('#prezzo').value
         }).done(()=>{
             reload_modal_component('percorsi','percorsi',{id_cliente:id_cliente});
         }).fail(()=>{

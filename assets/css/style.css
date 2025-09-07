@@ -123,8 +123,16 @@
     width: 25%!important;
 }
 
+.w-md-15{
+    width: 15%!important;
+}
+
 .w-md-30{
     width: 30%!important;
+}
+
+.w-md-33{
+    width: 33%!important;
 }
 
 .w-md-41{
@@ -179,7 +187,7 @@
         border: none!important;
     }
 
-    .w-md-10,.w-md-20,.w-md-23,.w-md-25,.w-md-30,.w-md-41,.w-md-50,.w-md-60,.w-md-90{
+    .w-md-10,.w-md-15,.w-md-20,.w-md-23,.w-md-25,.w-md-30,.w-md-33,.w-md-41,.w-md-50,.w-md-60,.w-md-90{
         width: 100% !important;
     }
 

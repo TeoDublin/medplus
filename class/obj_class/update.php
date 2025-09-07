@@ -13,7 +13,9 @@ class Update{
         foreach ($set as $key => $value){
             if(preg_match('#([0-9]{2})\/([0-9]{2})\/([0-9]{4})#',$value,$m))$value="{$m[3]}-{$m[2]}-{$m[1]}";
             $value=str_replace("'","\'",$value);
-            $value=$value||$value==0?"'{$value}'":'NULL';
+            if(!preg_match('#`#',$value)){
+                $value=$value||$value==0?"'{$value}'":'NULL';
+            }
             $_set[]="`{$key}`={$value}";
         } 
         $this->set=implode(',',$_set);

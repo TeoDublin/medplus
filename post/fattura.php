@@ -141,16 +141,37 @@
 
     $totale=(double)$_REQUEST['importo'];
     foreach($oggetti as $obj){
-        $importo=$totale>=(double)$obj['importo']?$obj['importo']:$totale;
+        $obj_importo = $obj['importo'] ?? $obj['prezzo'];
+        $importo=$totale>=(double)$obj_importo?$obj_importo:$totale;
         $totale-=$importo;
+        switch($obj['view']){
+            case 'corsi_pagamenti':{
+                $origine='corsi';
+                $id_origine=$obj['id_corso'];
+                $id_origine_child=$obj['id'];
+                break;
+            }
+            case 'view_sedute':{
+                $origine='trattamenti';
+                $id_origine=$obj['id_percorso'];
+                $id_origine_child=$obj['id'];
+                break;
+            }
+        }
+
         Insert([
-            'origine'=>$obj['origine'],
-            'id_origine'=>$obj['id_percorso'],
+            'origine'=>$origine,
+            'id_origine'=>$id_origine,
+            'id_origine_child'=>$id_origine_child,
             'id_cliente'=>$_REQUEST['id_cliente'],
             'id_fattura'=>$id_fattura,
             'importo'=>$importo
         ])->into('pagamenti_fatture');
-	if($obj['origine']!='corsi')Sedute()->refresh($obj['id_percorso'],$_REQUEST['data_pagamento'],'Fattura');
+
+	    if($origine=='trattamenti'){
+            Sedute()->refresh($obj['id_percorso'],$_REQUEST['data_pagamento'],'Fattura');
+        }
+
         if($totale<=0)break;
     }
     $file=fatture_path($link);

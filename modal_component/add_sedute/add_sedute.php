@@ -10,6 +10,10 @@
                     <label class="form-label" for="qtt">Quantità</label>
                     <input type="number" name="qtt" id="qtt" class="form-control" />
                 </div>
+                <div class="p-2">
+                    <label class="form-label" for="prezzo">Prezzo</label>
+                    <input type="number" name="prezzo" id="prezzo" class="form-control" />
+                </div>
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn btn-primary" onclick="window.modalHandlers['add_sedute'].btnSalva(this,<?php echo $_REQUEST['id_cliente'].','.$_REQUEST['id_percorso'].','.$_REQUEST['id_combo']; ?>)">Salva</a>

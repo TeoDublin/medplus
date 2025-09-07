@@ -17,20 +17,24 @@
                 if($response->actions){
                     foreach (json_decode($response->actions) as $key => $value) {
                         switch ($value) {
-                            case 'success':{
-                                echo "<td scope=\"col\" class=\"text-center text-wrap hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success')\";>".icon('heart.svg')."</td>";
+                            case 'percorsi':{
+                                echo "<td scope=\"col\" class=\"text-center text-wrap hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'percorsi')\";>".icon('heart.svg')."</td>";
+                                break;
+                            }
+                            case 'storico':{
+                                echo "<td scope=\"col\" class=\"text-center text-wrap hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'storico')\";>".icon('time.svg')."</td>";
                                 break;
                             }
                             case 'success2':{
                                 echo "<td scope=\"col\" class=\"text-center text-wrap hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success2')\";>".icon('people-arms.svg')."</td>";
                                 break;
                             }
-                            case 'success3':{
-                                echo "<td scope=\"col\" class=\"text-center text-wrap hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success3')\";>".icon('dollar.svg')."</td>";
+                            case 'pendenze':{
+                                echo "<td scope=\"col\" class=\"text-center text-wrap hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'pendenze')\";>".icon('dollar.svg')."</td>";
                                 break;
                             }
-                            case 'success4':{
-                                echo "<td scope=\"col\" class=\"text-center text-wrap hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'success4')\";>".icon('document.svg')."</td>";
+                            case 'pagamenti':{
+                                echo "<td scope=\"col\" class=\"text-center text-wrap hover-icon\" title=\"{$key}\" onmouseenter=\"hoverIconAdd(this,'pagamenti')\";>".icon('document.svg')."</td>";
                                 break;
                             }
                         }

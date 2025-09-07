@@ -15,7 +15,7 @@
                 <div class="p-2">
                     <input name="id" value="<?php echo $_REQUEST['id']??'';?>" hidden/>
                     <div class="d-flex flex-column flex-md-row mb-3">
-                        <div class="flex-fill">
+                        <div class="w-md-20 ms-2">
                             <label for="id_categoria" class="form-label">Categoria</label><?php 
                             echo "<select class=\"form-control text-center\" name=\"id_categoria\" value=\"{$corso['id_categoria']}\">";
                                 foreach(Select('*')->from('corsi_categorie')->get() as $enum){
@@ -24,7 +24,16 @@
                                 }
                             echo "</select>";?>
                         </div>
-                        <div class="w-md-50 ms-2">
+                        <div class="w-md-20 mx-2">
+                            <label for="realizzato_da" class="form-label">Realizzato Da</label><?php 
+                            echo "<select class=\"form-control text-center\" name=\"realizzato_da\" value=\"{$corso['realizzato_da']}\">";
+                                foreach(Enum('corsi','realizzato_da')->get() as $enum){
+                                    $selected=$corso['realizzato_da']==$enum?'selected':'';
+                                    echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                                }
+                            echo "</select>";?>
+                        </div>
+                        <div class="flex-fill">
                             <label for="corso" class="form-label" >Corso</label>
                             <input type="text" class="form-control text-center" placeholder="Di un nome al corso" name="corso" value="<?php echo $corso['corso']??''; ?>"/> 
                         </div>

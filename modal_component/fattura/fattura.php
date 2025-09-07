@@ -24,7 +24,14 @@
     function _total($oggetti){
         $ret=0;
         foreach($oggetti??[] as $obj){
-            $ret+=(int)$obj['importo'];
+            $ret+=(double)$obj['prezzo'];
+        }
+        return $ret;
+    }
+    function _oggetti(){
+        $ret=[];
+        foreach($_REQUEST['data'] as $key=>$value){
+            $ret=array_merge($ret,Select("*,'{$value['view']}' as view")->from($value['view'])->where("id={$value['id']}")->get());
         }
         return $ret;
     }
@@ -41,12 +48,12 @@
         $bollo=(double)$total>77.47?2:0;
     }
     else{
-        $id_cliente=$_REQUEST['id_cliente'];
-        $data_pagamento=$_REQUEST['data_pagamento'];
-        $metodo_pagamento=$_REQUEST['metodo_pagamento'];
-        $table=$_REQUEST['table'];
-        $oggetti=$_REQUEST['oggetti'];
-        $index=_index($oggetti);
+        $id_cliente=$_REQUEST['data_cliente']['id'];
+        $data_pagamento=null;
+        $metodo_pagamento=null;
+        $table=null;
+        $oggetti=_oggetti();
+        $index=_index([]);
         $total=_total($oggetti);
         $inps=round($total*0.04,2,PHP_ROUND_HALF_UP);
         $bollo=($total+$inps)>77.47?2:0;
@@ -66,7 +73,7 @@
             </div>
             <div class="modal-body">
                 <input type="text" id="id_cliente" value="<?php echo $id_cliente; ?>" hidden/>
-                <div class="p-2 card mt-2">
+                <div class="p-2 card my-2">
                     <div class="pb-0 mb-0 card-body w-100">
                         <div class="d-flex flex-column w-100 my-3">
                             <div class="d-flex flex-row" id="date_div">
@@ -183,7 +190,7 @@
                             </div>
                         </div>
                     </div>  
-                    <div class="flex-col" 
+                    <div class="flex-col mt-3" 
                         <?php 
                             if($_REQUEST['id_fattura']){
                                 echo "onclick=\"window.modalHandlers['fattura'].generatePDF(this,{$id_cliente},"._json_encode(['id_fattura'=>$_REQUEST['id_fattura'],'oggetti'=>$oggetti]).")\"";
@@ -192,7 +199,7 @@
                                 echo "onclick=\"window.modalHandlers['fattura'].generatePDF(this,{$id_cliente},"._json_encode(['oggetti'=>$oggetti]).")\"";
                             }?>
                         >
-                        <div class="flex-fill px-3"><button class="btn btn-primary w-100"><a class="me-2"><?php echo icon('print.svg','white',20,20); ?></a>Genera</button></div>
+                        <div class="flex-fill px-3"><button class="btn btn-primary w-100 mb-2"><a class="me-2"><?php echo icon('print.svg','white',20,20); ?></a>Genera</button></div>
                     </div>
                 </div>
             </div>
