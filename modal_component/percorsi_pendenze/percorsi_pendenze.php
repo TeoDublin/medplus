@@ -11,7 +11,11 @@
     }
 
     function _view_sedute($id_percorso){
-        return Select('*')->from('view_sedute')->where("id_percorso={$id_percorso}")->get();
+        return Select('*')
+            ->from('view_sedute')
+            ->where("id_percorso={$id_percorso}")
+            ->orderby('`data_seduta` IS NULL,`data_seduta`, `index` ASC')
+            ->get();
     }
 
     function _corsi(){

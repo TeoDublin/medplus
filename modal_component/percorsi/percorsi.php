@@ -22,7 +22,7 @@
         $ret=Select('*')->from('view_sedute')->where("id_percorso={$id_percorso}");
         if(!$_REQUEST['storico'])$ret->and("( stato_seduta <> 'Conclusa' or stato_pagamento <> 'Saldato')");
         if($ruolo=='display')$ret->and("( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )");
-        $ret->orderby('`index` ASC');
+        $ret->orderby('`data_seduta` IS NULL,`data_seduta`, `index` ASC');
         return $ret->get();
     }
     function _percorsi_terapeutici_sedute_prenotate($id_seduta){
