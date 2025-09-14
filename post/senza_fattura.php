@@ -1,7 +1,7 @@
 <?php
     $_REQUEST['skip_cookie']=true;
     require_once '../includes.php';
-    $valore=(int)$_REQUEST['_data']['valore'];
+    $valore=(double)$_REQUEST['_data']['valore'];
     foreach ($_REQUEST['percorsi'] as $key=>$value) {
         if($valore>0){
 
@@ -9,7 +9,7 @@
 
             $prezzo = (double)$obj['prezzo'];
 
-            $saldato=$prezzo<=$valore?$prezzo:$valore;
+            $saldato = $prezzo <= ($valore + (double)$obj['saldato']) ? ($prezzo - (double)$obj['saldato']) : $valore;
 
             switch($value['view']){
                 case 'corsi_pagamenti':{
@@ -26,8 +26,8 @@
                     Update('percorsi_terapeutici_sedute')->set([
                         'data_pagamento'=>$_REQUEST['_data']['data'],
                         'tipo_pagamento'=>'Senza Fattura',
-                        'saldato'=>$saldato,
-                        'stato_pagamento'=>($saldato < $prezzo ? 'Parziale' : 'Saldato')
+                        'saldato'=>($saldato + (double)$obj['saldato']),
+                        'stato_pagamento'=>(($saldato + (double)$obj['saldato']) < $prezzo ? 'Parziale' : 'Saldato')
                     ])->where("id={$obj['id']}");
                     break;
                 }
@@ -43,7 +43,7 @@
                 'note'=>$_REQUEST['_data']['note']?:'-'
             ])->into('pagamenti_senza_fattura')->get();
 
-            $valore-=$saldato;
+            $valore= $valore - $saldato;
 
         }
     }

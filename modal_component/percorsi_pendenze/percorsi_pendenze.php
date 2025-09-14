@@ -384,7 +384,7 @@
                                                                         
                                                                         <!-- sedute --><?php
                                                                         foreach (_view_sedute($value['id']) as $v) {
-                                                                            $abble=in_array($v['stato_pagamento'],['Pendente','Parziale']);
+                                                                            $abble=in_array($v['stato_pagamento'],['Pendente','Parziale','Esento']);
                                                                             ?>
                                                                             <div 
                                                                                 class="d-flex w-100 border p-3 hover <?php echo $abble?'':'disabled'; ?> <?php echo $v['stato_pagamento'];?>" 

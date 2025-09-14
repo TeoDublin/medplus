@@ -152,50 +152,52 @@
         Insert(['id_fattura'=>$id_fattura, 'oggetto'=>$row['oggetto'],'importo'=>$importo])->into('fatture_table');
     }
 
-    $totale=(double)$_REQUEST['importo'];
-    foreach($oggetti as $obj){
-        $obj_importo = $obj['importo'] ?? $obj['prezzo'];
-        $importo=$totale>=(double)$obj_importo?$obj_importo:$totale;
-        $totale-=$importo;
-        switch($obj['view']){
-            case 'corsi_pagamenti':{
-                $origine='corsi';
-                $id_origine=$obj['id_corso'];
-                $id_origine_child=$obj['id'];
-                break;
-            }
-            case 'view_sedute':{
-                $origine='trattamenti';
-                $id_origine=$obj['id_percorso'];
-                $id_origine_child=$obj['id'];
+    $valore=(double)$_REQUEST['importo'];
+    foreach($oggetti as $value){
 
-                $percorsi_terapeutici_sedute=Select('*')->from('percorsi_terapeutici_sedute')->where("id={$obj['id']}")->first_or_false();
+        if($valore>0){
 
-                if(!$percorsi_terapeutici_sedute){
-                    throw new Exception("Error Processing Request", 1);
+            $obj=Select('*')->from($value['view'])->where("id={$value['id']}")->first();
+
+            $prezzo = (double)$obj['prezzo'];
+
+            $saldato = $prezzo <= ($valore + (double)$obj['saldato']) ? ($prezzo - (double)$obj['saldato']) : $valore;
+
+            switch($value['view']){
+                case 'corsi_pagamenti':{
+                    $origine='corsi';
+                    $id_origine=$obj['id_corso'];
+                    $id_origine_child=$obj['id'];
+                    break;
                 }
+                case 'view_sedute':{
+                    $origine='trattamenti';
+                    $id_origine=$obj['id_percorso'];
+                    $id_origine_child=$obj['id'];
 
-                Update('percorsi_terapeutici_sedute')->set([
-                    'data_pagamento'=>$_REQUEST['data_pagamento'],
-                    'tipo_pagamento'=>'Fattura',
-                    'saldato'=>$importo,
-                    'stato_pagamento'=>_stato_pagamento($percorsi_terapeutici_sedute, $importo)
-                ])->where("id=$id_origine_child");
-
-                break;
+                    Update('percorsi_terapeutici_sedute')->set([
+                        'data_pagamento'=>$_REQUEST['_data']['data'],
+                        'tipo_pagamento'=>'Fattura',
+                        'saldato'=>($saldato + (double)$obj['saldato']),
+                        'stato_pagamento'=>(($saldato + (double)$obj['saldato']) < $prezzo ? 'Parziale' : 'Saldato')
+                    ])->where("id={$obj['id']}");
+                    break;
+                }
             }
+            
+            Insert([
+                'origine'=>$origine,
+                'id_origine'=>$id_origine,
+                'id_origine_child'=>$id_origine_child,
+                'id_cliente'=>$_REQUEST['id_cliente'],
+                'id_fattura'=>$id_fattura,
+                'importo'=>$saldato
+            ])->into('pagamenti_fatture');
+
+            $valore= $valore - $saldato;
+
         }
 
-        Insert([
-            'origine'=>$origine,
-            'id_origine'=>$id_origine,
-            'id_origine_child'=>$id_origine_child,
-            'id_cliente'=>$_REQUEST['id_cliente'],
-            'id_fattura'=>$id_fattura,
-            'importo'=>$importo
-        ])->into('pagamenti_fatture');
-
-        if($totale<=0)break;
     }
     $file=fatture_path($link);
     $pdf->Output('F', root($file));
