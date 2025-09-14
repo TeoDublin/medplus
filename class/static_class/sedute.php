@@ -1,90 +1,7 @@
 <?php 
     require_once __DIR__.'/../../includes/functions.php';
     Class Sedute{
-        private function _percorsi_terapeutici_sedute(){
-            if(isset(($_REQUEST['percorsi']))){
-                $arr_ids=[];
-                foreach($_REQUEST['percorsi'] as $key=>$value){
-                    $arr_ids[]=$value['id'];
-                }
-                $ids=implode(',',$arr_ids);
-                 return Select('*')
-                    ->from('percorsi_terapeutici_sedute')
-                    ->where("id in({$ids})")
-                    ->get();
-            }
-        }
-        
-        private function _view_pagamenti($id_percorso){
-            return (double)Select('*')
-                ->from('view_pagamenti')
-                ->where("origine='trattamenti' AND id={$id_percorso}")
-                ->col('saldato');
-        }
-
-        private function _view_percorsi($id_percorso){
-            $ret=Select('*')
-                ->from('view_percorsi')
-                ->where("id={$id_percorso}")
-                ->first();
-            return [(double)$ret['prezzo'],$ret['id_cliente'],$ret['id_combo']];
-        }
-
-        private function _update_payment($data_pagamento,$tipo_pagamento,$percorsi_terapeutici_sedute,$stato_pagamento){
-            if(!$tipo_pagamento)return [];
-            elseif($stato_pagamento=='Pendente')return ['data_pagamento'=>'','tipo_pagamento'=>''];
-            elseif($percorsi_terapeutici_sedute){
-                if($percorsi_terapeutici_sedute['stato_pagamento']!='Saldato')
-                    return ['data_pagamento'=>$data_pagamento??now('Y-m-d'),'tipo_pagamento'=>$tipo_pagamento??now('Y-m-d')];
-                
-                else return [];
-            }
-            else return [];
-        }
-
-        public function refresh($id_percorso,$data_pagamento=null,$tipo_pagamento=null){
-            [$prezzo,$id_cliente,$id_combo]=$this->_view_percorsi($id_percorso);
-            $saldato_total = $_REQUEST['_data']['valore'] ?? $_REQUEST['importo'];
-            $sedute=$this->_percorsi_terapeutici_sedute();
-            foreach($sedute as $seduta){
-                
-                if($saldato_total>=$seduta['prezzo']){
-                    $saldato=$seduta['prezzo'];
-                    $saldato_total-=$seduta['prezzo'];
-                    $stato_pagamento='Saldato';
-                }
-                elseif($saldato_total>0){
-                    $saldato=$saldato_total;
-                    $saldato_total=0;
-                    $stato_pagamento='Parziale';
-                }
-                else{
-                    $saldato=0;
-                    $stato_pagamento='Pendente';
-                }
-
-                $percorsi_terapeutici_sedute=$seduta;
-                $params=array_merge([
-                    'index'=>$seduta['index'],
-                    'id_cliente'=>$id_cliente,
-                    'id_percorso'=>$id_percorso,
-                    'id_combo'=>$id_combo,
-                    'prezzo'=>$seduta['prezzo'],
-                    'saldato'=>$saldato,
-                    'stato_pagamento'=>$stato_pagamento
-                ],$this->_update_payment($data_pagamento,$tipo_pagamento,$percorsi_terapeutici_sedute,$stato_pagamento));
-                if($percorsi_terapeutici_sedute){
-                    if($params['stato_pagamento']=='Pendente'){
-                        $params['data_pagamento']='';
-                        $params['tipo_pagamento']='';
-                    }
-                    Update('percorsi_terapeutici_sedute')->set($params)->where("id={$seduta['id']}");
-                }
-                else{
-                    Insert($params)->into('percorsi_terapeutici_sedute');
-                }
-            }    
-        }
+        private $enums_list = [];
 
         private function map():array{
             return [
@@ -116,8 +33,7 @@
             return $ret;
         }
 
-        private $enums_list = [];
-        private function enum($col_in, $value) {
+        private function _enum($col_in, $value) {
             if (!isset($this->enums_list[$col_in])) {
                 $list=Enum('percorsi_terapeutici_sedute', $col_in)->list;
                 $this->enums_list[$col_in] = $list;
@@ -129,7 +45,6 @@
             return ['error' => "Valore {$value} non è valido"];
         }
         
-
         public function map_in($data):array{
             $ret=[];
             foreach($this->map() as $key=>$value){
@@ -140,7 +55,7 @@
                         $v=match($type){
                             'date'=>format_date($val,''),
                             'double'=>str_replace(',','.',$val),
-                            'enum'=>$this->enum($value['col'],$val),
+                            'enum'=>$this->_enum($value['col'],$val),
                             default=>$val
                         };
                         if($v!==null){
