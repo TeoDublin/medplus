@@ -67,7 +67,7 @@
 <div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl" >
         <div class="modal-content" >
-            <div class="modal-header"><h4 class="modal-title"><?php echo $_REQUEST['storico']?'Tutti i Percorsi':'In Svolgimento'; ?></h4>
+            <div class="modal-header"><h4 class="modal-title"><?php echo $_REQUEST['storico']?'Tutti i Percorsi':'Trattamenti in essere'; ?></h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
@@ -525,7 +525,7 @@
                                             <div class="accordion-button border py-2 collapsed" name="row_colloqui" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-colloqui" aria-expanded="false" aria-controls="collapse-colloqui">
                                                 <div class="d-flex flex-row w-100">
                                                     <div class="flex-fill d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                        <span>Colloquio</span>
+                                                        <h5 class="p-0 m-0">COLLOQUIO</h5>
                                                     </div>
                                                 </div>
                                             </div>

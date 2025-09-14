@@ -347,12 +347,12 @@
                                                                                     #
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="w-20">
+                                                                            <div class="w-15">
                                                                                 <div class="d-grid h-100 align-content-center">
                                                                                     Seduta
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="w-20">
+                                                                            <div class="w-15">
                                                                                 <div class="d-grid h-100 align-content-center d-none d-md-block">
                                                                                     Scadenza
                                                                                 </div>
@@ -360,17 +360,22 @@
                                                                                     N.
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="w-25">
+                                                                            <div class="w-15">
                                                                                 <div class="d-grid h-100 align-content-center">
                                                                                     Prezzo
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="w-25 d-none d-md-block">
+                                                                            <div class="w-15">
+                                                                                <div class="d-grid h-100 align-content-center">
+                                                                                    Saldato
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="w-20 d-none d-md-block">
                                                                                 <div class="d-grid h-100 align-content-center">
                                                                                     Stato Pagamento
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="w-md-25">
+                                                                            <div class="w-md-15">
                                                                                 <div class="d-grid h-100 align-content-center">
                                                                                     Stato Seduta
                                                                                 </div>
@@ -382,7 +387,7 @@
                                                                             $abble=in_array($v['stato_pagamento'],['Pendente','Parziale']);
                                                                             ?>
                                                                             <div 
-                                                                                class="d-flex w-100 border p-3 hover <?php echo $abble?'':'disabled'; ?>" 
+                                                                                class="d-flex w-100 border p-3 hover <?php echo $abble?'':'disabled'; ?> <?php echo $v['stato_pagamento'];?>" 
                                                                                 onclick="window.modalHandlers['percorsi_pendenze'].check(this)"
                                                                                 data-id="<?php echo $v['id'];?>"
                                                                                 data-realizzato_da="<?php echo $v['realizzato_da'];?>"
@@ -399,27 +404,32 @@
                                                                                     ?>
                                                                                     
                                                                                 </div>
-                                                                                <div class="w-20">
+                                                                                <div class="w-15">
                                                                                     <div class="d-grid h-100 align-content-center">
                                                                                         <?php echo $v['index']; ?>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="w-20">
+                                                                                <div class="w-15">
                                                                                     <div class="d-grid h-100 align-content-center">
                                                                                         <?php echo unformat_date($v['data_seduta']); ?>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="w-25">
+                                                                                <div class="w-15">
                                                                                     <div class="d-grid h-100 align-content-center prezzo">
                                                                                         <?php echo number_format($v['prezzo'],2,'.',''); ?>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="w-25 d-none d-md-block">
+                                                                                <div class="w-15">
+                                                                                    <div class="d-grid h-100 align-content-center prezzo">
+                                                                                        <?php echo number_format($v['saldato'],2,'.',''); ?>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="w-20 d-none d-md-block">
                                                                                     <div class="d-grid h-100 align-content-center">
                                                                                         <?php echo $v['stato_pagamento']; ?>
                                                                                     </div>
                                                                                 </div>
-                                                                                <div class="w-md-25">
+                                                                                <div class="w-md-15">
                                                                                     <div class="d-grid h-100 align-content-center">
                                                                                         <?php echo $v['stato_seduta']; ?>
                                                                                     </div>

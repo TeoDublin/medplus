@@ -32,4 +32,13 @@
         ])->where("id={$id_percorso}");
     }
 
-    Sedute()->refresh($id_percorso);
+    $prezzo_seduta=(double)$_REQUEST['prezzo']/(int)$_REQUEST['sedute'];
+    for($i=1;$i<=(int)$_REQUEST['sedute'];$i++){
+        Insert([
+            'index'=>$i,
+            'id_cliente'=>$_REQUEST['id_cliente'],
+            'id_percorso'=>$id_percorso,
+            'id_combo'=>$id_combo,
+            'prezzo'=>$prezzo_seduta
+        ])->into('percorsi_terapeutici_sedute');
+    }

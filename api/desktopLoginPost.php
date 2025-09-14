@@ -11,8 +11,8 @@ require_once '../includes.php';
 function _categoria(){
     $ret=[
         'Inizio Giornata'=>'log',
-        'Pausa Inizio'=>'pausa',
-        'Pausa Fine'=>'pausa',
+        'Pausa Pranzo Inizio'=>'pausa',
+        'Pausa Pranzo Fine'=>'pausa',
         'Fine Giornata'=>'log'
     ];
     return $ret[$_POST['selected']];

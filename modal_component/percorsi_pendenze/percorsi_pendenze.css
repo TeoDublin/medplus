@@ -10,3 +10,7 @@
 .checked{
     background-color: var(--base-bg-light);
 }
+
+.Parziale, .Fatturato{
+    background-color: var(--bs-warning);
+}

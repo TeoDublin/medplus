@@ -1,5 +1,26 @@
-window.modalHandlers['percorso_combo'] = Object.assign(
-    window.modalHandlers['percorso_combo'] || {}, {
+window.modalHandlers['percorso_combo'] = {
+    prezzo_picked:false,
+    prezzo_a_sedute:0,
+    btnSalva:function(element,id_cliente,id_percorso,id_combo){
+        const modal = element.closest('.modal');
+        let _data = {
+            trattamenti:[],
+            prezzo_tabellare:modal.querySelector('[name=prezzo_tabellare]').value,
+            prezzo:modal.querySelector('[name=prezzo]').value,
+            note:modal.querySelector('[name=note]').value,
+            sedute:modal.querySelector('[name=sedute]').value,
+            realizzato_da:modal.querySelector('[name=realizzato_da]').value,
+            id_cliente:id_cliente,
+            id_percorso:id_percorso,
+            id_combo:id_combo
+        };
+        modal.querySelectorAll('[name=id_trattamento]').forEach(element=>{
+            _data.trattamenti.push(element.value);
+        });
+        $.post('post/percorso_terapeutico.php',_data).done(()=>{
+            reload_modal_component('percorsi','percorsi',{id_cliente:id_cliente});
+        }).fail(()=>{fail();})
+    },
     delEnter:function(element){
         element.closest('.d-flex').classList.add('bg-danger');
         element.querySelector('svg').setAttribute('fill', 'white');
@@ -90,4 +111,4 @@ window.modalHandlers['percorso_combo'] = Object.assign(
         modal.querySelector('#single_tabellare').value = single_tabellare;
         modal.querySelector('[name=prezzo_tabellare]').value = single_tabellare * sedute;
     },
-});
+}

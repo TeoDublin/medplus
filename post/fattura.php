@@ -12,6 +12,19 @@
         ->where("id = {$_REQUEST['id_cliente']}")
         ->first();
     }
+
+    function _stato_pagamento($percorsi_terapeutici_sedute,$importo){
+
+        if($_REQUEST['metodo_pagamento']=='Bonifico'){
+            return 'Fatturato';
+        }
+        elseif($importo < $percorsi_terapeutici_sedute){
+            return 'Parziale';
+        }
+
+        return 'Saldato';
+    }
+
     $pdf = new FPDF();
     define('EURO',chr(128));
     $pdf->AddPage();
@@ -155,6 +168,20 @@
                 $origine='trattamenti';
                 $id_origine=$obj['id_percorso'];
                 $id_origine_child=$obj['id'];
+
+                $percorsi_terapeutici_sedute=Select('*')->from('percorsi_terapeutici_sedute')->where("id={$obj['id']}")->first_or_false();
+
+                if(!$percorsi_terapeutici_sedute){
+                    throw new Exception("Error Processing Request", 1);
+                }
+
+                Update('percorsi_terapeutici_sedute')->set([
+                    'data_pagamento'=>$_REQUEST['data_pagamento'],
+                    'tipo_pagamento'=>'Fattura',
+                    'saldato'=>$importo,
+                    'stato_pagamento'=>_stato_pagamento($percorsi_terapeutici_sedute, $importo)
+                ])->where("id=$id_origine_child");
+
                 break;
             }
         }
@@ -167,10 +194,6 @@
             'id_fattura'=>$id_fattura,
             'importo'=>$importo
         ])->into('pagamenti_fatture');
-
-	    if($origine=='trattamenti'){
-            Sedute()->refresh($obj['id_percorso'],$_REQUEST['data_pagamento'],'Fattura');
-        }
 
         if($totale<=0)break;
     }
