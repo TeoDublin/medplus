@@ -42,8 +42,7 @@ if(!$has_error&&isset($_POST['selected'])){
     ])->into('utenti_presenze');
 }
 else{
-    echo json_encode(['error'=>'not allowed']);
-    exit();
+    $ret = ['response'=>'Gia registrato in precedenza'];
 }
 
 
