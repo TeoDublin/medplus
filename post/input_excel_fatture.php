@@ -6,7 +6,10 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 $fatture = Fatture();
 $errors=[];
 if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
+    $dir = 'arquive/fatture_in/'.now('Y-m-d').'/';
+    mkdir( $dir, 0777, true );
     $tmpPath = $_FILES['file']['tmp_name'];
+    move_uploaded_file( $tmpPath, $dir.basename($_FILES['file']['name']) );
     $spreadsheet = IOFactory::load($tmpPath);
     $sheet = $spreadsheet->getActiveSheet();
     $data = $sheet->toArray();
