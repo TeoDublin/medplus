@@ -205,3 +205,18 @@
     function _json_encode($array){
         return '\'' . htmlspecialchars(json_encode($array,JSON_UNESCAPED_UNICODE|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT), ENT_QUOTES) . '\'';
     }
+
+    function _giorni($id_corso){
+        return Select("*, 
+            CASE 
+                WHEN giorno = 'LUNEDI' THEN 1
+                WHEN giorno = 'MARTEDI' THEN 2
+                WHEN giorno = 'MERCOLEDI' THEN 3
+                WHEN giorno = 'GIOVEDI' THEN 4
+                WHEN giorno = 'VENERDI' THEN 5
+                WHEN giorno = 'SABATO' THEN 6
+                WHEN giorno = 'DOMENICA' THEN 7
+                ELSE NULL
+            END AS num")->from('corsi_giorni')->where("id_corso={$id_corso}"
+        )->get_or_false();
+    }

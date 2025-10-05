@@ -8,6 +8,7 @@ function parseFilter(){
     let stato_seduta = document.querySelector('#stato_seduta').value;
     let stato_pagamento = document.querySelector('#stato_pagamento').value;
     let tipo_pagamento = document.querySelector('#tipo_pagamento').value;
+    let realizzato_da = document.querySelector('#realizzato_da').value;
     let stato_saldato_terapista = document.querySelector('#stato_saldato_terapista').value;
     let cliente = document.querySelector('#cliente').value;
     let nominativo = document.querySelector('#cliente option:checked').innerHTML;
@@ -33,6 +34,7 @@ function parseFilter(){
 
     if(stato_pagamento!=='')ret.stato_pagamento=stato_pagamento;
     if(tipo_pagamento!=='')ret.tipo_pagamento=tipo_pagamento;
+    if(realizzato_da!=='')ret.realizzato_da=realizzato_da;
     if(stato_saldato_terapista!=='')ret.stato_saldato_terapista=stato_saldato_terapista;
 
     if(cliente!=='')ret.cliente=cliente;

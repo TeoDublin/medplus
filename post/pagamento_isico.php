@@ -25,7 +25,7 @@
 
                     Update('percorsi_terapeutici_sedute')->set([
                         'data_pagamento'=>$_REQUEST['_data']['data'],
-                        'tipo_pagamento'=>'Senza Fattura',
+                        'tipo_pagamento'=>'Isico',
                         'saldato'=>($saldato + (double)$obj['saldato']),
                         'stato_pagamento'=>(($saldato + (double)$obj['saldato']) < $prezzo ? 'Parziale' : 'Saldato')
                     ])->where("id={$obj['id']}");

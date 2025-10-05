@@ -17,6 +17,7 @@
         if($_POST['stato_seduta'])$where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
         if($_POST['stato_pagamento'])$where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
         if($_POST['tipo_pagamento'])$where.=" AND tipo_pagamento ='{$_POST['tipo_pagamento']}'";
+        if($_POST['realizzato_da'])$where.=" AND realizzato_da ='{$_POST['realizzato_da']}'";
         if($_POST['stato_saldato_terapista'])$where.=" AND stato_saldato_terapista ='{$_POST['stato_saldato_terapista']}'";
         if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
     }
@@ -47,6 +48,7 @@
             if($_POST['stato_seduta']) echo "<div class=\"filter-label bg-gray\"><span >Stato Seduta: {$_POST['stato_seduta']}</span></div>";
             if($_POST['stato_pagamento']) echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: {$_POST['stato_pagamento']}</span></div>";
             if($_POST['tipo_pagamento']) echo "<div class=\"filter-label bg-gray\"><span >Tipo Pagamento: {$_POST['tipo_pagamento']}</span></div>";
+            if($_POST['realizzato_da']) echo "<div class=\"filter-label bg-gray\"><span >realizzato da: {$_POST['realizzato_da']}</span></div>";
             if($_POST['stato_saldato_terapista']) echo "<div class=\"filter-label bg-gray\"><span >Stato Saldato Terapista: {$_POST['stato_saldato_terapista']}</span></div>";
             if(isset($_POST['nominativo'])) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
         ?>
@@ -71,11 +73,12 @@
                         <th class="w-10">Cliente</th>
                         <th class="w-5">Acron.</th>
                         <th class="w-5">N.</th>
-                        <th class="w-10">Stato Seduta</th>
+                        <th class="w-5">Stato Seduta</th>
                         <th class="w-5">Data Seduta</th>
                         <th class="w-5">Prezzo</th>
                         <th class="w-10">Stato Pagamento</th>
-                        <th class="w-10">Tipo Pagamento</th>
+                        <th class="w-5">Tipo Pagamento</th>
+                        <th class="w-10">Realizzato da</th>
                         <th class="w-10">Terapista</th>
                         <th class="w-5">% Terap.</th>
                         <th class="w-5">Saldo Terap.</th>
@@ -95,6 +98,7 @@
                             <td><?php echo number_format($seduta['prezzo'],2); ?></td>
                             <td><?php echo $seduta['stato_pagamento']; ?></td>
                             <td><?php echo $seduta['tipo_pagamento']??'-'; ?></td>
+                            <td><?php echo $seduta['realizzato_da']??'-'; ?></td>
                             <td><?php echo $seduta['terapista']; ?></td>
                             <td><?php echo number_format($seduta['percentuale_terapista'],0); ?></td>
                             <td><?php echo number_format($seduta['saldo_terapista'],2); ?></td>
@@ -322,6 +326,31 @@
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute','tipo_pagamento')->get() as $enum) {
                                         $selected=$_POST['tipo_pagamento']&&$_POST['tipo_pagamento']==$enum?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion p-1" id="filter_realizzato_da">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_realizzato_da" aria-expanded="false" aria-controls="collapse_filter_realizzato_da">
+                    Realizzato da
+                    </button>
+                </h2>
+                <div id="collapse_filter_realizzato_da" class="accordion-collapse collapse" data-bs-parent="#filter_realizzato_da">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="realizzato_da">Realizzato da</label>
+                            <select class="form-control" id="realizzato_da" value="<?php echo $_POST['realizzato_da']; ?>">
+                                <option value="">Tutti</option>
+                                <?php 
+                                    foreach (Enum('percorsi_terapeutici','realizzato_da')->get() as $enum) {
+                                        $selected=$_POST['realizzato_da']&&$_POST['realizzato_da']==$enum?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>

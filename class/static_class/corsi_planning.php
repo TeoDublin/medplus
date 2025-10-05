@@ -33,7 +33,7 @@
                         'scadenza'=>$corso_columns['scadenza'],
                     ]))->first_or_false()
                 ){
-                    Insert($corso_columns)->into('corsi_pagamenti')->flush();
+                    Insert($corso_columns)->into('corsi_pagamenti');
                 }
                 $start->modify('+1 month');
             }
