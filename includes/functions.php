@@ -62,7 +62,6 @@
         $rootUrl = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $host;
         return $rootUrl . root_path("{$path}");
     }
-    
     function image(string $name): string {
         return root_path("assets/images/{$name}");
     }
@@ -208,7 +207,6 @@
     function _json_encode($array){
         return '\'' . htmlspecialchars(json_encode($array,JSON_UNESCAPED_UNICODE|JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT), ENT_QUOTES) . '\'';
     }
-
     function _giorni($id_corso){
         return Select("*, 
             CASE 
@@ -222,4 +220,27 @@
                 ELSE NULL
             END AS num")->from('corsi_giorni')->where("id_corso={$id_corso}"
         )->get_or_false();
+    }
+    function isset_n_valid($var){
+        if(!isset($var)){
+            return false;
+        }
+        return valid($var);
+    }
+    function valid($var){
+        if(is_array($var)){
+            return count($var)>0 ? true : false;
+        }
+        else{
+            if($var === null){
+                return false;
+            }
+            if($var === ""){
+                return false;
+            }
+            if(is_bool($var)){
+                return $var;
+            }
+        }
+        return true;
     }

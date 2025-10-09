@@ -8,26 +8,45 @@
     $where=$ruolo=='display'?"( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )":'1=1';
     $url='pagamenti.php';
     if(_has_filters()){
-        if($_POST['data_seduta']['all']);
-        else{
-            if($_POST['data_seduta']['da'])$where.=" AND data_seduta >='{$_POST['data_seduta']['da']}'";
-            if($_POST['data_seduta']['a'])$where.=" AND data_seduta <='{$_POST['data_seduta']['a']}'";    
+        if(!isset($_POST['data_seduta']['all'])){
+            if(isset_n_valid($_POST['data_seduta']['da'])){
+                $where.=" AND data_seduta >='{$_POST['data_seduta']['da']}'";
+            }
+            if(isset_n_valid($_POST['data_seduta']['a'])){
+                $where.=" AND data_seduta <='{$_POST['data_seduta']['a']}'";
+            }    
         }
-        if($_POST['data_pagamento']['all']);
-        else{
-            if($_POST['data_pagamento']['da'])$where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}'";
-            if($_POST['data_pagamento']['a'])$where.=" AND data_pagamento <='{$_POST['data_pagamento']['a']}'";    
+        if(!isset($_POST['data_pagamento']['all'])){
+            if(isset_n_valid($_POST['data_pagamento']['da'])){
+                $where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}'";
+            }
+            if(isset_n_valid($_POST['data_pagamento']['a'])){
+                $where.=" AND data_pagamento <='{$_POST['data_pagamento']['a']}'";
+            }    
         }
-        if(isset($_POST['id_terapista']))$where.=" AND id_terapista ='{$_POST['id_terapista']}'";
-        if($_POST['stato_seduta'])$where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
-        if($_POST['stato_pagamento'])$where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
-        if($_POST['tipo_pagamento'])$where.=" AND tipo_pagamento ='{$_POST['tipo_pagamento']}'";
-        if($_POST['realizzato_da'])$where.=" AND realizzato_da ='{$_POST['realizzato_da']}'";
-        if($_POST['stato_saldato_terapista'])$where.=" AND stato_saldato_terapista ='{$_POST['stato_saldato_terapista']}'";
-        if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
+        if(isset_n_valid($_POST['id_terapista'])){
+            $where.=" AND id_terapista ='{$_POST['id_terapista']}'";
+        }
+        if(isset_n_valid($_POST['stato_seduta'])){
+            $where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
+        }
+        if(isset_n_valid($_POST['stato_pagamento'])){
+            $where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
+        }
+        if(isset_n_valid($_POST['tipo_pagamento'])){
+            $where.=" AND tipo_pagamento ='{$_POST['tipo_pagamento']}'";
+        }
+        if(isset_n_valid($_POST['realizzato_da'])){
+            $where.=" AND realizzato_da ='{$_POST['realizzato_da']}'";
+        }
+        if(isset_n_valid($_POST['stato_saldato_terapista'])){
+            $where.=" AND stato_saldato_terapista ='{$_POST['stato_saldato_terapista']}'";
+        }
+        if(isset_n_valid($_POST['cliente'])){
+            $where.=" AND id_cliente ='{$_POST['cliente']}'";
+        }
     }
-    elseif(isset($_REQUEST['btnClean']));
-    else{
+    elseif(!isset($_REQUEST['btnClean'])){
         $_POST['stato_seduta']='Conclusa';
         $_POST['data_seduta']['da']=date('Y-m-01');
         $_POST['data_seduta']['a']=date('Y-m-d');
