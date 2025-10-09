@@ -13,7 +13,7 @@
                     <input type="number" name="id_cliente" value="<?php echo $_REQUEST['id_cliente'];?>" hidden/> 
                     <div class="m-2">
                         <label for="valore" class="form-label" >Valore</label>
-                        <input type="number" class="form-control" name="valore" value=""/> 
+                        <input type="number" class="form-control" name="valore" value="<?php echo $_REQUEST['sumSelected']; ?>" disabled/> 
                     </div>
                     <div class="m-2">
                         <label for="data" class="form-label" >Data</label>

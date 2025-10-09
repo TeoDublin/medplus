@@ -13,6 +13,11 @@
             if($_POST['data_seduta']['da'])$where.=" AND data_seduta >='{$_POST['data_seduta']['da']}'";
             if($_POST['data_seduta']['a'])$where.=" AND data_seduta <='{$_POST['data_seduta']['a']}'";    
         }
+        if($_POST['data_pagamento']['all']);
+        else{
+            if($_POST['data_pagamento']['da'])$where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}'";
+            if($_POST['data_pagamento']['a'])$where.=" AND data_pagamento <='{$_POST['data_pagamento']['a']}'";    
+        }
         if(isset($_POST['id_terapista']))$where.=" AND id_terapista ='{$_POST['id_terapista']}'";
         if($_POST['stato_seduta'])$where.=" AND stato_seduta ='{$_POST['stato_seduta']}'";
         if($_POST['stato_pagamento'])$where.=" AND stato_pagamento ='{$_POST['stato_pagamento']}'";
@@ -51,6 +56,11 @@
             if($_POST['realizzato_da']) echo "<div class=\"filter-label bg-gray\"><span >realizzato da: {$_POST['realizzato_da']}</span></div>";
             if($_POST['stato_saldato_terapista']) echo "<div class=\"filter-label bg-gray\"><span >Stato Saldato Terapista: {$_POST['stato_saldato_terapista']}</span></div>";
             if(isset($_POST['nominativo'])) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
+            if(isset($_POST['data_pagamento']['all']));
+            else{
+                if($_POST['data_pagamento']['da']) echo "<div class=\"filter-label bg-gray\"><span >Pagamento Da: ".unformat_date($_POST['data_pagamento']['da'])."</span></div>"; 
+                if($_POST['data_pagamento']['a']) echo "<div class=\"filter-label bg-gray\"><span >Pagamento A: ".unformat_date($_POST['data_pagamento']['a'])."</span></div>";    
+            } 
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
@@ -72,10 +82,11 @@
                     <tr class="small">
                         <th class="w-10">Cliente</th>
                         <th class="w-5">Acron.</th>
-                        <th class="w-5">N.</th>
                         <th class="w-5">Stato Seduta</th>
                         <th class="w-5">Data Seduta</th>
+                        <th class="w-5">Data Pag.</th>
                         <th class="w-5">Prezzo</th>
+                        <th class="w-5">Saldato</th>
                         <th class="w-10">Stato Pagamento</th>
                         <th class="w-5">Tipo Pagamento</th>
                         <th class="w-10">Realizzato da</th>
@@ -84,7 +95,7 @@
                         <th class="w-5">Saldo Terap.</th>
                         <th class="w-5">Saldato Terap.</th>
                         <th class="w-5">Data Saldato Terap.</th>
-                        <th class="w-10">Stato Saldato Terap.</th>
+                        <th class="w-5">Stato Saldato Terap.</th>
                     </tr>
                 </thead>
                 <tbody><?php 
@@ -92,10 +103,11 @@
                         <tr data-id=<?php echo $seduta['id']; ?> style="font-size:12px;line-height:8px; word-break:break-word;">
                             <td><?php echo $seduta['nominativo']; ?></td>
                             <td><?php echo $seduta['acronimo']; ?></td>
-                            <td><?php echo $seduta['index']; ?></td>
                             <td><?php echo $seduta['stato_seduta']; ?></td>
                             <td><?php echo $seduta['data_seduta']?format($seduta['data_seduta'],'d/m/y'):'-'; ?></td>
+                            <td><?php echo $seduta['data_pagamento']?format($seduta['data_pagamento'],'d/m/y'):'-'; ?></td>
                             <td><?php echo number_format($seduta['prezzo'],2); ?></td>
+                            <td><?php echo number_format($seduta['saldato'],2); ?></td>
                             <td><?php echo $seduta['stato_pagamento']; ?></td>
                             <td><?php echo $seduta['tipo_pagamento']??'-'; ?></td>
                             <td><?php echo $seduta['realizzato_da']??'-'; ?></td>
@@ -201,6 +213,37 @@
                                     value="<?= isset($_POST['data_seduta']['all']) ? htmlspecialchars($_POST['data_seduta']['all']) : '' ?>" 
                                     <?= !empty($_POST['data_seduta']['all']) ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="data_seduta_all">
+                                    Seleziona tutto
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion p-1" id="filter_data_pagamento">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_data_pagamento" aria-expanded="false" aria-controls="collapse_filter_data_pagamento">
+                    Data Pagamento
+                    </button>
+                </h2>
+                <div id="collapse_filter_data_pagamento" class="accordion-collapse collapse" data-bs-parent="#filter_data_pagamento">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="data_pagamento_da">Da</label>
+                            <input class="form-control" type="date" id="data_pagamento_da" value="<?php echo $_POST['data_pagamento']['da']; ?>">
+                        </div>
+                        <div>
+                            <label for="data_pagamento_a">A</label>
+                            <input class="form-control" type="date" id="data_pagamento_a" value="<?php echo $_POST['data_pagamento']['a']; ?>">
+                        </div>
+                        <div class="mt-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="data_pagamento_all" 
+                                    value="<?= isset($_POST['data_pagamento']['all']) ? htmlspecialchars($_POST['data_pagamento']['all']) : '' ?>" 
+                                    <?= !empty($_POST['data_pagamento']['all']) ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="data_pagamento_all">
                                     Seleziona tutto
                                 </label>
                             </div>

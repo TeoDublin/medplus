@@ -41,6 +41,9 @@
     function root_path(string $path): string {
         return "/".PROJECT_NAME."/{$path}";
     }
+    function archive_path(string $path): string {
+        return "/".PROJECT_NAME."/{$path}";
+    }    
     function privacy_path(string $path):string{
         return dirname(__DIR__) . "/".PRIVACY_FOLDER."/".$path;
     }

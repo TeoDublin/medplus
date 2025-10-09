@@ -1,5 +1,6 @@
 window.modalHandlers['percorsi_pendenze'] = {
     closePersistent:'fattura',
+    sumSelected: 0,
     realizzato_da:function(_data){
         let realizzato_da = null;
         _data.forEach((v)=>{
@@ -68,10 +69,10 @@ window.modalHandlers['percorsi_pendenze'] = {
         const realizzato_da=this.realizzato_da(_data);
         if(!realizzato_da.hasError){
             if(realizzato_da.realizzato_da=='Isico'){
-                modal_component('pagamento_isico','pagamento_isico',{id_cliente:id_cliente,_data:_data});
+                modal_component('pagamento_isico','pagamento_isico',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
             }
             else{
-                modal_component('senza_fattura','senza_fattura',{id_cliente:id_cliente,_data:_data});
+                modal_component('senza_fattura','senza_fattura',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
             }
         }
     },
@@ -79,7 +80,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
         if(!realizzato_da.hasError){
-            modal_component('fatturato_aruba','fatturato_aruba',{id_cliente:id_cliente,_data:_data});
+            modal_component('fatturato_aruba','fatturato_aruba',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
         }
     },
     toggleBtns:function(){
@@ -107,6 +108,7 @@ window.modalHandlers['percorsi_pendenze'] = {
             sumSelected+=prezzo;
         }
         document.querySelector('#sum-selected').textContent = sumSelected;
+        this.sumSelected = sumSelected;
         this.toggleBtns();
     },
     uncheckAll:function(){

@@ -4,6 +4,9 @@ function parseFilter(){
     let data_seduta_da = document.querySelector('#data_seduta_da').value;
     let data_seduta_a = document.querySelector('#data_seduta_a').value;
     let data_seduta_all = document.querySelector('#data_seduta_all').checked;
+    let data_pagamento_da = document.querySelector('#data_pagamento_da').value;
+    let data_pagamento_a = document.querySelector('#data_pagamento_a').value;
+    let data_pagamento_all = document.querySelector('#data_pagamento_all').checked;
     let id_terapista = document.querySelector('#id_terapista').value;
     let stato_seduta = document.querySelector('#stato_seduta').value;
     let stato_pagamento = document.querySelector('#stato_pagamento').value;
@@ -24,6 +27,19 @@ function parseFilter(){
         else{
             if (data_seduta_da !== '') ret.data_seduta.da = data_seduta_da;
             if (data_seduta_a !== '') ret.data_seduta.a = data_seduta_a;    
+        }
+    }
+    if(data_pagamento_da !== '' && data_pagamento_a !== ''){
+        if(data_pagamento_a<data_pagamento_da){
+            alerts.push("Data fine non puo essere inferiore alla data Inizio");
+        }
+    }
+    if (data_pagamento_da !== '' || data_pagamento_a !== '' || data_pagamento_all ==true ) {
+        ret.data_pagamento = {};
+        if (data_pagamento_all == true) ret.data_pagamento.all = data_pagamento_all;
+        else{
+            if (data_pagamento_da !== '') ret.data_pagamento.da = data_pagamento_da;
+            if (data_pagamento_a !== '') ret.data_pagamento.a = data_pagamento_a;    
         }
     }
     if(id_terapista!==''){

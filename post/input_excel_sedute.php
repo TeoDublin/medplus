@@ -6,11 +6,11 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 $sedute = Sedute();
 $errors=[];
 if ($_FILES['file']['error'] === UPLOAD_ERR_OK) {
-    $dir = 'arquive/sedute_in/'.now('Y-m-d').'/';
-    mkdir( $dir, 0777, true );
+    $dir = root('/archive/sedute_in/'.now('Y-m-d').'/');
+    $mkdir=mkdir( $dir, 0777, true );
     $tmpPath = $_FILES['file']['tmp_name'];
-    move_uploaded_file( $tmpPath, $dir.basename($_FILES['file']['name']) );
     $spreadsheet = IOFactory::load($tmpPath);
+    move_uploaded_file( $tmpPath, $dir.now('Y-m-d h:i:s').'_'.basename($_FILES['file']['name']));
     $sheet = $spreadsheet->getActiveSheet();
     $data = $sheet->toArray();
     $erros=$headers=[];

@@ -176,7 +176,7 @@
                     $id_origine_child=$obj['id'];
 
                     Update('percorsi_terapeutici_sedute')->set([
-                        'data_pagamento'=>$_REQUEST['_data']['data'],
+                        'data_pagamento'=>$_REQUEST['_data']['data'] ?? $_REQUEST['data_pagamento'],
                         'tipo_pagamento'=>'Fattura',
                         'saldato'=>($saldato + (double)$obj['saldato']),
                         'stato_pagamento'=>(($saldato + (double)$obj['saldato']) < $prezzo ? 'Parziale' : 'Saldato')

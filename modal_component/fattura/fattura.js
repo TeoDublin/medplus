@@ -16,7 +16,7 @@ window.modalHandlers['fattura'] = Object.assign(
             bollo = 2;            
         }
         new_total = new_total + inps + bollo;
-        totale.value = parseFloat(new_total).toFixed(2);
+        // totale.value = parseFloat(new_total).toFixed(2);
         modal.querySelector('#inps').value=inps;
         modal.querySelector('#bollo').value=bollo;
     },
