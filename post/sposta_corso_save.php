@@ -10,9 +10,11 @@
     }
     else{
         $save=[
+            'id_corso'=>$_REQUEST['id_corso'],
             'id_corsi_planning'=>$_REQUEST['id'],
             'row_inizio'=>$_REQUEST['row_inizio'],
             'row_fine'=>$_REQUEST['row_fine'],
+            'id_terapista'=>$_REQUEST['id_terapista'],
             'data'=>$_REQUEST['data']
         ];
     }

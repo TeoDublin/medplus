@@ -30,6 +30,7 @@
                     $rows=Select("id,TIME_FORMAT(ora, '%H:%i') as ora")->from('planning_row')->get();
                 ?>
                 <div class="p-2">
+                    <input type="text" value="<?php echo $id_corso; ?>" name="id_corso" hidden>
                     <div class="mb-3">
                         <label for="terapista" class="form-label">Terapista</label>
                         <select type="text"  name="id_terapista" <?php echo _attr_data($id_corso);?> class="form-control text-center" value="<?php echo $_REQUEST['id_terapista']??'';?>" 

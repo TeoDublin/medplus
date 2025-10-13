@@ -40,6 +40,7 @@
                 'id_cliente'=>$_REQUEST['_data']['id_cliente'],
                 'valore'=>$saldato,
                 'data'=>$_REQUEST['_data']['data'],
+                'metodo'=>$_REQUEST['_data']['metodo'],
                 'note'=>$_REQUEST['_data']['note']?:'-'
             ])->into('pagamenti_senza_fattura')->get();
 

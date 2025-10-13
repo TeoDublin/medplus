@@ -20,6 +20,15 @@
                         <input type="date" class="form-control" name="data" value="<?php echo now('Y-m-d'); ?>"/> 
                     </div>
                     <div class="m-2">
+                        <label for="data" class="form-label" >Metodo</label><?php
+                            echo "<select class=\"form-control text-center\" name=\"metodo\" value=\"Contanti\">";
+                                foreach(Enum('pagamenti_senza_fattura','metodo')->get() as $enum){
+                                    $selected=$enum=='Contanti'?'selected':'';
+                                    echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                                }
+                            echo "</select>";?>
+                    </div>
+                    <div class="m-2">
                         <label for="note" class="form-label" >Note</label>
                         <textarea class="form-control" name="note" value="" rows="4"></textarea> 
                     </div>
