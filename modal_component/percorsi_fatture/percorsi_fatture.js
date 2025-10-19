@@ -1,56 +1,15 @@
 window.modalHandlers['percorsi_fatture']={
-    deletePersistent:'fattura',
-    enterRow:function(element){
-        element.closest('.fattura_row').classList.add('success');
+    delEnter:function(e){
+        e.closest('.accordion-row').querySelector('.accordion').classList.add('bg-warning');
     },
-    leaveRow:function(element){
-        element.closest('.fattura_row').classList.remove('success');
+    delLeave:function(e){
+        e.closest('.accordion-row').querySelector('.accordion').classList.remove('bg-warning');
     },
-    clickRow: (element) => {
-        window.open(element.closest('.fattura_row').querySelector('#link').href, '_blank');
-    },
-    enterDelete:function(element){
-        element.closest('.fattura_row').classList.add('warning');
-    },
-    leaveDelete:function(element){
-        element.closest('.fattura_row').classList.remove('warning');
-    },
-    clickDelete:function(id,id_cliente,table){
-        if(confirm('sicuro di voler eliminare ?')){
-            $.post('post/delete_percorsi_fatture.php',{table:table,id:id}).done(()=>{
-                reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id_cliente});
+    delClick:function(e){
+        if(confirm('Sicuro di volere eliminare ?')){
+            $.post('post/delete_percorsi_fatture.php',e.dataset).done(()=>{
+                reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:e.dataset.id_cliente});
             }).fail(()=>{fail()});
         }
-    },
-    clickEdit:function(id_fattura){
-        modal_component('fattura','fattura',{id_fattura:id_fattura});
-    },
-    enterStato:function(element){
-    },
-    leaveStato:function(element){
-    },
-    enterEdit:function(element){
-        element.closest('div.fattura_row').classList.add('bg-success');
-    },
-    leaveEdit:function(element){
-        element.closest('div.fattura_row').classList.remove('bg-success');
-    },
-    changeStato:function(stato,id){
-        $.post('post/fattura_cambia_stato.php',{stato:stato,id:id}).done(()=>{success()}).fail(()=>{fail()});
-    },
-    changeFatturatoDa:function(fatturato_da,id){
-        $.post('post/fattura_cambia_fatturato_da.php',{fatturato_da:fatturato_da,id:id}).done(()=>{success()}).fail(()=>{fail()});
-    },
-}
-window.modalHandlers['fattura'] = Object.assign(
-    window.modalHandlers['fattura'] || {},
-    {
-    persistent:true,
-    generatePDF:function(e,id_cliente,oggetti) {
-        let _oggetti=JSON.parse(oggetti);
-        $.post('post/fattura.php',{..._data(e), ..._oggetti}).done(response=>{
-            window.open(response,'_blank');
-            reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:id_cliente});
-        });
-    },
-});
+    }
+};

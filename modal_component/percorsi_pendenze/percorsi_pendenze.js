@@ -1,19 +1,26 @@
 window.modalHandlers['percorsi_pendenze'] = {
     closePersistent:'fattura',
     sumSelected: 0,
-    realizzato_da:function(_data){
+    realizzato_da: function(_data) {
         let realizzato_da = null;
-        _data.forEach((v)=>{
-            if(realizzato_da==null){
-                realizzato_da=v.realizzato_da;
+        let hasError = false;
+        
+        for (let v of _data) {
+            if (realizzato_da === null) {
+                realizzato_da = v.realizzato_da;
             }
-            if(v.realizzato_da !== realizzato_da){
+            if (v.realizzato_da !== realizzato_da) {
                 alert('Non puoi fatturare Isico e Medplus insieme');
-                hasError=true;
-                return {hasError:true}; 
+                hasError = true;
+                break;
             }
-        });
-        return {hasError:false, realizzato_da:realizzato_da};
+        }
+
+        if (hasError) {
+            return { hasError: true };
+        } else {
+            return { hasError: false, realizzato_da };
+        }
     },
     fatturaClick:function(){
         let hasError=false;

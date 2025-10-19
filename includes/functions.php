@@ -50,6 +50,9 @@
     function privacy_url(string $path):string{
         return url(PRIVACY_FOLDER."/".$path);
     }
+    function fatture_url(string $path){
+        return url(FATTURE_FOLDER."/".$path);
+    }
     function fatture_path(string $filename):string{
         return FATTURE_FOLDER.'/'.$filename;
     }

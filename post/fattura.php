@@ -135,14 +135,32 @@
         'stato'=>$stato,
         'fatturato_da'=>$_REQUEST['is_isico']=='true'?'Isico':'Medplus'
     ];
+
+    $save_pagamenti=[
+        'id_cliente'=>$_REQUEST['id_cliente'],
+        'origine'=>'fatture',
+        'metodo'=>$_REQUEST['metodo_pagamento'],
+        'data'=>$_REQUEST['data_pagamento'],
+        'imponibile'=>$_REQUEST['importo'],
+        'inps'=>$_REQUEST['inps'],
+        'bollo'=>$_REQUEST['bollo'],
+        'totale'=>((double)$_REQUEST['importo'] + (double)$_REQUEST['bollo'] + (double) $_REQUEST['inps']),
+        'note'=>'-',
+        'stato'=>$stato
+    ];
+
     if(isset($_REQUEST['id_fattura'])){
         $id_fattura=$_REQUEST['id_fattura'];
         $oggetti=Select('*,  id_origine as id_percorso')->from('pagamenti_fatture')->where("id_fattura={$id_fattura}")->get();
+        $fatture=Select('*')->from('fatture')->where("id={$id_fattura}")->first();
+        Update('pagamenti')->set($save_pagamenti)->where("id={$fatture['id_pagamenti']}");
         Update('fatture')->set($save)->where("id={$id_fattura}");
         Delete()->from('pagamenti_fatture')->where("id_fattura={$id_fattura}");
         Delete()->from('fatture_table')->where("id_fattura={$id_fattura}");
     }
     else{
+        $id_pagamento=Insert($save_pagamenti)->into('pagamenti')->get();
+        $save['id_pagamenti']=$id_pagamento;
         $id_fattura=Insert($save)->into('fatture')->get();
         $oggetti=$_REQUEST['oggetti'];
     }

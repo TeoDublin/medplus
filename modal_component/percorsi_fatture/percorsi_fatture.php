@@ -2,13 +2,35 @@
     style('modal_component/percorsi_fatture/percorsi_fatture.css');
     $session=Session();
     $ruolo=$session->get('ruolo')??false;
-    $fatture=Select('*')->from('view_fatture')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
-    $senza_fattura=Select('*')->from('pagamenti_senza_fattura')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
-    $aruba=Select('*')->from('pagamenti_aruba')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
-    $isico=Select('*')->from('pagamenti_isico')->where("id_cliente={$_REQUEST['id_cliente']}")->get_or_false();
+
+    function _origine($value){
+        switch ($value['origine']) {
+            case 'fatture':
+                $ret = 'FATTURA';
+                break;
+            case 'isico':
+                $ret = 'ISICO';
+                break;
+            case 'senza_fattura':
+                $ret = 'SENZA FATTURA';
+                break;
+            case 'aruba':
+                $ret = 'ARUBA';
+                break;
+        }
+
+        return $ret;
+    }
+
+    // $ruolo!='display';
+    $pagamenti = Select('*')->from('pagamenti')->where("id_cliente={$_REQUEST['id_cliente']}")->orderby('data desc')->get();
+    $table = [];
+    foreach ($pagamenti as $value) {
+        $table[$value['data']][] = $value;
+    }
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
-    <div class="modal-dialog modal-xxl">
+    <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Pagamenti</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
@@ -18,363 +40,267 @@
                 <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
                 <div class="p-2">
                     <div class="container-fluid text-center py-4">
-                        <?php if(!$fatture&&!$isico&&!($senza_fattura&&$ruolo!='display')&&!$aruba){?>
+                        <?php if(empty($table)){?>
                             <div class="card">
                                 <div class="card-body">
-                                    <span>Non ci fatture per questo cliente.</span>
+                                    <span>Non ci sono pagamenti per questo cliente.</span>
                                 </div>
                             </div><?php
                         }
-                        else{ 
-                            if($fatture){?>
-                                <div class="card mb-3">
-                                    <div class="card-header">Fatture</div>
-                                    <div class="card-body">
-                                        <div class="table-responsive title">
-                                            <div class="my-0">
-                                                <div class="flex-row titles w-100 d-flex fattura_row">
-                                                    <div class="flex-fill d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Fattura</span>
-                                                    </div>
-                                                    <div class="w-10 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="d-none d-md-block">Totale</span>
-                                                        <span class="d-md-none">$</span>
-                                                    </div>                                                    
-                                                    <div class="w-5 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="d-none d-md-block">Importo</span>
-                                                        <span class="d-md-none">$</span>
-                                                    </div>                                                    
-                                                    <div class="w-5 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Bollo</span>
-                                                    </div>
-                                                    <div class="w-5 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">INPS</span>
-                                                    </div>
-                                                    <div class="w-5 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Nr.</span>
-                                                    </div>                                                    
-                                                    <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Emissione</span>
-                                                    </div>
-                                                    <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Pagamento</span>
-                                                    </div>
-                                                    <div class="w-15 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Stato</span>
-                                                    </div>
-                                                    <div class="w-15 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Fatturato Da</span>
-                                                    </div>
-                                                    <div class="w-5 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">#</span>
-                                                    </div>
-                                                    <div class="w-5 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">#</span>
+                        else{
+                            foreach ($table as $data => $pagamento) {?>
+                                <div class="d-flex w-100 ">
+                                    <div class="d-flex w-100 ">
+                                        <div class="accordion mb-2 w-100"  id="accordionFlush<?php echo $data;?>">
+                                            <div class="accordion-item px-">
+                                                <h2 class="accordion-header">
+                                                    <button class="accordion-button collapsed border" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<?php echo $data;?>" aria-expanded="false" aria-controls="flush-<?php echo $data;?>">
+                                                        <div class="w-100">
+                                                            <div class="h-100 text-center d-grid align-content-center justify-contents-center" style="padding:0!important">
+                                                                <h5 class="p-0 m-0"><?php echo unformat_date($data); ?></h5>
+                                                            </div>
+                                                        </div>
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-<?php echo $data;?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlush<?php echo $data;?>" >
+                                                    <div class="accordion-body">
+                                                        <!-- titles -->
+                                                        <div class="d-flex mb-2" style="padding-left:20px;padding-right:40px;width:97%!important">
+                                                            <div class="w-md-30">
+                                                                <div class="d-grid h-100 align-content-center">
+                                                                    Origine
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-15 d-none d-md-block">
+                                                                <div class="d-grid h-100 align-content-center">
+                                                                    Metodo
+                                                                </div>                                    
+                                                            </div>
+                                                            <div class="w-15">
+                                                                <div class="d-grid h-100 align-content-center">
+                                                                    Stato
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-10 d-none d-md-block">
+                                                                <div class="d-grid h-100 align-content-center">
+                                                                    Imponibile
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-10 d-none d-md-block">
+                                                                <div class="d-grid h-100 align-content-center">
+                                                                    Inps
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-10">
+                                                                <div class="d-grid h-100 align-content-center">
+                                                                    Bollo
+                                                                </div>
+                                                            </div>
+                                                            <div class="w-10">
+                                                                <div class="d-grid h-100 align-content-center">
+                                                                    Totale
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <?php 
+                                                            foreach ($pagamento as $value) {
+                                                                $origine = _origine($value);
+                                                                $_origine = str_replace(' ','_',$origine);?>
+                                                                <div class="w-100 d-flex flex-row accordion-row">
+                                                                    <div class="accordion mb-2"  id="accordionFlush<?php echo $value['id'];?>" style="width:97%!important;">
+                                                                        <div class="accordion-item px-0">
+                                                                            <h2 class="accordion-header">
+                                                                                <button class="accordion-button collapsed text-center <?php echo $_origine;?> border" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<?php echo $value['id'];?>" aria-expanded="false" aria-controls="flush-<?php echo $value['id'];?>" style="width:100%!important;">
+                                                                                    <div class="d-flex w-100">
+                                                                                        <div class="w-md-30">
+                                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                                <?php echo $origine;?>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="w-15 d-none d-md-block">
+                                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                                <?php echo strtoupper($value['metodo']); ?>
+                                                                                            </div>                                    
+                                                                                        </div>
+                                                                                        <div class="w-15">
+                                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                                <?php echo strtoupper($value['stato']); ?>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="w-10 d-none d-md-block">
+                                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                                <?php echo number_format($value['imponibile'], 2, '.', ''); ?>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="w-10 d-none d-md-block">
+                                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                                <?php echo number_format($value['inps'], 2, '.', ''); ?>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="w-10">
+                                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                                <?php echo number_format($value['bollo'], 2, '.', ''); ?>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="w-10">
+                                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                                <?php echo $value['totale']; ?>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </button>
+                                                                            </h2>
+                                                                            <div id="flush-<?php echo $value['id'];?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlush<?php echo $value['id'];?>">
+                                                                                <div class="accordion-body">
+
+                                                                                    <div class="d-flex flex-column w-100 ">
+                                                                                        <?php 
+                                                                                            if($value['origine']=='fatture'){
+                                                                                                $fattura = Select('*')->from('fatture')->where("id_pagamenti={$value['id']}")->first();
+                                                                                                echo "<div class=\"w-100 d-flex flex-row border bg-primary rounded mb-4\">
+                                                                                                    <a class=\"w-100 text-decoration-none text-black p-1 text-white\" id=\"link\" href=\"".fatture_url($fattura['link'])."\" target=\"_blank\">
+                                                                                                        ". icon('pdf.svg','white',20,20)."
+                                                                                                        <span> {$fattura['index']}.pdf</span>
+                                                                                                    </a>
+                                                                                                </div>";
+                                                                                            }?>
+                                                                                            <!-- titles -->
+                                                                                            <div class="d-flex w-100 my-3" style="padding-left:20px;padding-right:40px">
+                                                                                                <div class="w-10">
+                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                        Origine
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="w-md-30">
+                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                        trattamento/Corso
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="w-15">
+                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                        Seduta/Scadenza
+                                                                                                    </div>                                    
+                                                                                                </div>
+                                                                                                <div class="w-15">
+                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                        Prezzo
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="w-15 d-none d-md-block">
+                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                        Terapista
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                                <div class="w-15 d-none d-md-block">
+                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                        Realizzato da
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <?php 
+                                                                                                $binds = Select('*')->from('view_pagamenti_child')->where("id_pagamenti={$value['id']}")->get();
+                                                                                                foreach ($binds as $bind) {
+                                                                                                    switch ($bind['origine']) {
+                                                                                                        case 'trattamenti':{?>
+                                                                                                            <div class="d-flex w-100 border py-3" style="padding-left:20px;padding-right:40px">
+                                                                                                                <div class="w-10">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        Trattamento
+                                                                                                                    </div>                                    
+                                                                                                                </div>
+                                                                                                                <div class="w-md-30">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo $bind['trattamenti']; ?>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="w-15">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo empty($bind['data_seduta']) ? 'Da Prenotare' : unformat_date($bind['data_seduta']); ?>
+                                                                                                                    </div>                                    
+                                                                                                                </div>
+                                                                                                                <div class="w-15">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo $bind['prezzo']; ?>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="w-15 d-none d-md-block">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo $bind['terapista']; ?>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="w-15 d-none d-md-block">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo $bind['realizzato_da']; ?>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div><?php
+                                                                                                            break;
+                                                                                                        }
+                                                                                                        case 'corsi':{?>
+                                                                                                            <div class="d-flex w-100  border py-3" style="padding-left:20px;padding-right:40px">
+                                                                                                                <div class="w-10">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        Corso
+                                                                                                                    </div>                                    
+                                                                                                                </div>
+                                                                                                                <div class="w-md-30">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo $bind['corso']; ?>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="w-15">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo unformat_date($bind['corso_scadenza']); ?>
+                                                                                                                    </div>                                    
+                                                                                                                </div>
+                                                                                                                <div class="w-15">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo $bind['corso_prezzo']; ?>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="w-15 d-none d-md-block">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo $bind['corso_terapista']; ?>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                                <div class="w-15 d-none d-md-block">
+                                                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                                                        <?php echo $bind['corso_realizzato_da']; ?>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div><?php
+                                                                                                            break;
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            ?>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-2 del d-flex justify-content-center align-items-center" style="width:3%!important;"
+                                                                        data-table="<?php echo $value['origine'];?>"
+                                                                        data-id="<?php echo $value['id'];?>"
+                                                                        data-id_cliente="<?php echo $value['id_cliente'];?>"
+                                                                        onmouseenter="window.modalHandlers['percorsi_fatture'].delEnter(this);"
+                                                                        onmouseleave="window.modalHandlers['percorsi_fatture'].delLeave(this);"
+                                                                        onclick="window.modalHandlers['percorsi_fatture'].delClick(this);">
+                                                                        <?php echo icon('bin.svg','red',20,20); ?>
+                                                                    </div>
+                                                                </div>
+                                                                <?php
+                                                            }
+                                                        ?>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="psm"></p>
-                                        <?php foreach ($fatture as $fattura) {?>
-                                            <div class="table-responsive">
-                                                <div class="my-0">
-                                                    <div class="flex-row titles w-100 d-flex fattura_row" >
-                                                        <div class="flex-fill d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
-                                                            >
-                                                            <span><a id="link" href="<?php echo fatture_path($fattura['link']);?>" target="_blank"><?php echo $fattura['index'].".pdf";?></a></span>
-                                                        </div>
-                                                        <div class="w-10 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
-                                                            >
-                                                            <span><?php echo $fattura['totale'];?></span>
-                                                        </div>                                                        
-                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
-                                                            >
-                                                            <span><?php echo $fattura['importo'];?></span>
-                                                        </div>
-                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
-                                                            >
-                                                            <span><?php echo $fattura['bollo'];?></span>
-                                                        </div>
-                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
-                                                            >
-                                                            <span><?php echo $fattura['inps'];?></span>
-                                                        </div>                                          
-                                                        <div class="w-5 d-none d-md-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
-                                                            >
-                                                            <span><?php echo $fattura['index'];?></span>
-                                                        </div>
-                                                        <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
-                                                            >
-                                                            <span><?php echo unformat_date($fattura['timestamp']);?></span>
-                                                        </div>
-                                                        <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterRow(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveRow(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickRow(this,<?php echo $fattura['id'];?>)"             
-                                                            >
-                                                            <span><?php echo $fattura['data']?unformat_date($fattura['data']):'-';?></span>
-                                                        </div>
-                                                        <div class="w-15 px-2 d-flex align-items-center justify-content-center text-center">
-                                                            <?php 
-                                                                echo "<select class=\"form-control text-center\" name=\"stato\" value=\"{$fattura['stato']}\"
-                                                                    onmouseenter=\"window.modalHandlers['percorsi_fatture'].enterStato(this)\"
-                                                                    onmouseleave=\"window.modalHandlers['percorsi_fatture'].leaveStato(this)\"
-                                                                    onchange=\"window.modalHandlers['percorsi_fatture'].changeStato(this.value,{$fattura['id']})\"                                                    
-                                                                >";
-                                                                foreach(Enum('fatture','stato')->list as $enum){
-                                                                    $selected=$fattura['stato']==$enum?'selected':'';
-                                                                    echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
-                                                                }
-                                                                echo "</select>";
-                                                            ?>
-                                                        </div>
-                                                        <div class="w-15 px-2 d-flex align-items-center justify-content-center text-center">
-                                                            <?php 
-                                                                echo "<select class=\"form-control text-center\" name=\"fatturato_da\" value=\"{$fattura['fatturato_da']}\"
-                                                                    onmouseenter=\"window.modalHandlers['percorsi_fatture'].enterStato(this)\"
-                                                                    onmouseleave=\"window.modalHandlers['percorsi_fatture'].leaveStato(this)\"
-                                                                    onchange=\"window.modalHandlers['percorsi_fatture'].changeFatturatoDa(this.value,{$fattura['id']})\"                                                    
-                                                                >";
-                                                                foreach(Enum('fatture','fatturato_da')->list as $enum){
-                                                                    $selected=$fattura['fatturato_da']==$enum?'selected':'';
-                                                                    echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
-                                                                }
-                                                                echo "</select>";
-                                                            ?>
-                                                        </div>
-                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
-                                                            onmouseenter="window.modalHandlers['percorsi_fatture'].enterEdit(this)"
-                                                            onmouseleave="window.modalHandlers['percorsi_fatture'].leaveEdit(this)"                                                                
-                                                            onclick="window.modalHandlers['percorsi_fatture'].clickEdit(<?php echo $fattura['id']; ?>)"             
-                                                            >
-                                                            <span><?php echo icon('edit.svg');?></span>
-                                                        </div>
-                                                        <div class="w-5 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickDelete(<?php echo $fattura['id'].','.$_REQUEST['id_cliente'].',\'fatture\'';?>)"             
-                                                            >
-                                                            <span><?php echo icon('bin.svg');?></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>                                
-                                            <p class="psm"><?php
-                                        }?>
                                     </div>
                                 </div><?php
                             }
-                            if($senza_fattura&&$ruolo!='display'){?>
-                                <div class="card mb-3">
-                                    <div class="card-header">Contanti</div>
-                                    <div class="card-body">
-                                        <div class="table-responsive title">
-                                            <div class="my-0">
-                                                <div class="flex-row titles w-100 d-flex fattura_row">
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Note</span>
-                                                    </div>
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="d-none d-md-block">Importo</span>
-                                                        <span class="d-md-none">$</span>
-                                                    </div>
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Emissione</span>
-                                                    </div>
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Pagamento</span>
-                                                    </div>
-                                                    <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Stato</span>
-                                                    </div>
-                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">#</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <?php foreach ($senza_fattura as $senza) {?>
-                                            <div class="table-responsive">
-                                                <div class="my-0">
-                                                    <div class="flex-row titles w-100 d-flex fattura_row" >
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                            <span><?php echo $senza['note'];?></span>
-                                                        </div>
-                                                        <div class="cc2 d-flex align-items-center justify-content-center text-center">
-                                                            <span><?php echo $senza['valore'];?></span>
-                                                        </div>
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
-                                                            <span><?php echo unformat_date($senza['timestamp']);?></span>
-                                                        </div>
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
-                                                            <span><?php echo $senza['data']?unformat_date($senza['data']):'-';?></span>
-                                                        </div>
-                                                        <div class="cc4 d-flex align-items-center justify-content-center text-center"      >
-                                                            <span>Saldata</span>
-                                                        </div>
-                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickDelete(<?php echo $senza['id'].','.$_REQUEST['id_cliente'].',\'pagamenti_senza_fattura\'';?>)"             
-                                                            >
-                                                            <span><?php echo icon('bin.svg');?></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>                                
-                                            <p class="psm"><?php
-                                        }?>
-                                    </div>
-                                </div><?php
-                            }
-                            if($aruba){?>
-                                <div class="card">
-                                    <div class="card-header">Fatturato Aruba</div>
-                                    <div class="card-body">
-                                        <div class="table-responsive title">
-                                            <div class="my-0">
-                                                <div class="flex-row titles w-100 d-flex fattura_row">
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Note</span>
-                                                    </div>
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="d-none d-md-block">Importo</span>
-                                                        <span class="d-md-none">$</span>
-                                                    </div>
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Emissione</span>
-                                                    </div>
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Pagamento</span>
-                                                    </div>
-                                                    <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Stato</span>
-                                                    </div>
-                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">#</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <?php foreach ($aruba as $a) {?>
-                                            <div class="table-responsive">
-                                                <div class="my-0">
-                                                    <div class="flex-row titles w-100 d-flex fattura_row" >
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                            <span><?php echo $a['note'];?></span>
-                                                        </div>
-                                                        <div class="cc2 d-flex align-items-center justify-content-center text-center">
-                                                            <span><?php echo $a['valore'];?></span>
-                                                        </div>
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
-                                                            <span><?php echo unformat_date($a['timestamp']);?></span>
-                                                        </div>
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
-                                                            <span><?php echo $a['data']?unformat_date($a['data']):'-';?></span>
-                                                        </div>
-                                                        <div class="cc4 d-flex align-items-center justify-content-center text-center"      >
-                                                            <span>Saldata</span>
-                                                        </div>
-                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickDelete(<?php echo $a['id'].','.$_REQUEST['id_cliente'].',\'pagamenti_aruba\'';?>)"             
-                                                            >
-                                                            <span><?php echo icon('bin.svg');?></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>                                
-                                            <p class="psm"><?php
-                                        }?>
-                                    </div>
-                                </div><?php
-                            }
-                            if($isico){?>
-                                <div class="card">
-                                    <div class="card-header">Fatturato isico</div>
-                                    <div class="card-body">
-                                        <div class="table-responsive title">
-                                            <div class="my-0">
-                                                <div class="flex-row titles w-100 d-flex fattura_row">
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Note</span>
-                                                    </div>
-                                                    <div class="cc2 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="d-none d-md-block">Importo</span>
-                                                        <span class="d-md-none">$</span>
-                                                    </div>
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Emissione</span>
-                                                    </div>
-                                                    <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Pagamento</span>
-                                                    </div>
-                                                    <div class="cc4 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">Stato</span>
-                                                    </div>
-                                                    <div class="cc1 d-flex align-items-center justify-content-center text-center">
-                                                        <span class="">#</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <?php foreach ($isico as $a) {?>
-                                            <div class="table-responsive">
-                                                <div class="my-0">
-                                                    <div class="flex-row titles w-100 d-flex fattura_row" >
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center">
-                                                            <span><?php echo $a['note'];?></span>
-                                                        </div>
-                                                        <div class="cc2 d-flex align-items-center justify-content-center text-center">
-                                                            <span><?php echo $a['valore'];?></span>
-                                                        </div>
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
-                                                            <span><?php echo unformat_date($a['timestamp']);?></span>
-                                                        </div>
-                                                        <div class="cc2 d-none d-md-flex align-items-center justify-content-center text-center"        >
-                                                            <span><?php echo $a['data']?unformat_date($a['data']):'-';?></span>
-                                                        </div>
-                                                        <div class="cc4 d-flex align-items-center justify-content-center text-center"      >
-                                                            <span>Saldata</span>
-                                                        </div>
-                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center"
-                                                                onmouseenter="window.modalHandlers['percorsi_fatture'].enterDelete(this)"
-                                                                onmouseleave="window.modalHandlers['percorsi_fatture'].leaveDelete(this)"
-                                                                onclick="window.modalHandlers['percorsi_fatture'].clickDelete(<?php echo $a['id'].','.$_REQUEST['id_cliente'].',\'pagamenti_isico\'';?>)"             
-                                                            >
-                                                            <span><?php echo icon('bin.svg');?></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>                                
-                                            <p class="psm"><?php
-                                        }?>
-                                    </div>
-                                </div><?php
-                            }
-                        }?>
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

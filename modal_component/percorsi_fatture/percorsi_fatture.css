@@ -1,50 +1,22 @@
-.table-responsive:not(.title) {
-    border: solid rgba(128, 128, 128, 0.501) 1px;
+/* .border.FATTURA{
+    --bs-border-color : var(--bs-);
+}
+.border.SENZA_FATTURA{
+    --bs-border-color : blue;
+}
+.border.ISICO{
+    --bs-border-color : green;
+}
+.border.ARUBA{
+    --bs-border-color : black;
+} */
+
+.del{
+    cursor:pointer;
+}
+
+.bg-warning{
+    opacity:50%;
+    border:solid red 1px!important;
     border-radius: 5px;
-}
-.fattura_row{
-    padding: 10px;
-    min-height: 50px!important;
-    cursor: pointer;
-}
-.fattura_row.checked{
-    background-color: var(--base-bg-light);
-}
-.titles > .cc1,
-.flex-row > .cc1 {
-    flex: 0 0 auto;
-    width: 10%;
-}
-
-.titles > .cc2,
-.flex-row > .cc2 {
-    flex: 0 0 auto;
-    width: 15%;
-}
-
-.titles > .cc3,
-.flex-row > .cc3 {
-    flex: 0 0 auto;
-    width: 25%;
-}
-
-.titles > .cc4,
-.flex-row > .cc4 {
-    flex: 1 1 auto;
-}
-
-.d-flex {
-    display: flex;
-}
-
-.align-items-center {
-    align-items: center;
-}
-
-.justify-content-center {
-    justify-content: center;
-}
-
-.text-center {
-    text-align: center;
 }

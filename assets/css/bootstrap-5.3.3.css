@@ -260,6 +260,8 @@
 	--base-bg-colorfull2: #5d7fff;
 	--base-bg-colorfull3: #56ebf7;
 	--base-bg-colorfull4: #aad5d8;
+
+	--bs-border-color:#d6d6dd;
 }
 
 [data-bs-theme=green] {

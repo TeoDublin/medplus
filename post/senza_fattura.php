@@ -2,6 +2,21 @@
     $_REQUEST['skip_cookie']=true;
     require_once '../includes.php';
     $valore=(double)$_REQUEST['_data']['valore'];
+    $inps =  0;
+    $bollo = 0;
+
+    $id_pagamenti = Insert([
+        'id_cliente'=>$_REQUEST['_data']['id_cliente'],
+        'origine'=>'senza_fattura',
+        'metodo'=>$_REQUEST['_data']['metodo'],
+        'data'=>$_REQUEST['_data']['data'],
+        'imponibile'=>$valore,
+        'inps'=> $inps,
+        'bollo' => $bollo,
+        'stato' => 'Saldata',
+        'totale' => ( $valore + $inps + $bollo )
+    ])->into('pagamenti')->get();
+
     foreach ($_REQUEST['percorsi'] as $key=>$value) {
         if($valore>0){
 
@@ -38,6 +53,7 @@
                 'id_origine'=>$id_origine,
                 'id_origine_child'=>$id_origine_child,
                 'id_cliente'=>$_REQUEST['_data']['id_cliente'],
+                'id_pagamenti'=>$id_pagamenti,
                 'valore'=>$saldato,
                 'data'=>$_REQUEST['_data']['data'],
                 'metodo'=>$_REQUEST['_data']['metodo'],
