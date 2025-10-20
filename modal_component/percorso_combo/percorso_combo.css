@@ -1,0 +1,14 @@
+.color-box {
+  display:inline-block;
+  width:20px;
+  height:20px;
+  border:1px solid black;
+  border-radius:3px;
+  vertical-align:middle;
+  margin-right:8px;
+}
+
+.dropdown-menu {
+  width: 100%;
+  min-width: unset;
+}

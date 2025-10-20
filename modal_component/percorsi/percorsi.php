@@ -297,6 +297,9 @@
                                                             <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                                                 <span>N</span><span class="d-none d-md-block">ote</span>
                                                             </div>
+                                                          <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
+                                                                <span>C</span><span class="d-none d-md-block">olore</span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -340,6 +343,9 @@
                                                                                 onmouseleave="window.modalHandlers['percorsi'].noteLeave(this)"
                                                                             >
                                                                             <?php echo icon('info.svg','black',20,20); ?>
+                                                                        </div>
+                                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
+                                                                            <div class="color-box-<?php echo $percorso['bnw'];?>"></div>
                                                                         </div>
                                                                     </div>
                                                                 </div>

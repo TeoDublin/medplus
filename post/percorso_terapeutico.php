@@ -19,6 +19,7 @@
             'prezzo'=>$_REQUEST['prezzo'],
             'note'=>$_REQUEST['note'],
             'realizzato_da'=>$_REQUEST['realizzato_da'],
+            'bnw'=>$_REQUEST['bnw']
         ])->into('percorsi_terapeutici')->get();
     }
     else{
@@ -28,7 +29,8 @@
             'sedute'=>$_REQUEST['sedute'],
             'prezzo_tabellare'=>$_REQUEST['prezzo_tabellare'],
             'prezzo'=>$_REQUEST['prezzo'],
-            'note'=>$_REQUEST['note']
+            'note'=>$_REQUEST['note'],
+            'bnw'=>$_REQUEST['bnw']
         ])->where("id={$id_percorso}");
     }
 

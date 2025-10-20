@@ -252,12 +252,12 @@
                                             <div class="accordion-body">
                                                 <!-- titles -->
                                                 <div class="d-flex w-100 mb-2" style="padding-left:20px;padding-right:40px">
-                                                    <div class="w-md-25">
+                                                    <div class="w-md-20">
                                                         <div class="d-grid h-100 align-content-center">
                                                             Percorso
                                                         </div>
                                                     </div>
-                                                    <div class="w-15 d-none d-md-block">
+                                                    <div class="w-10 d-none d-md-block">
                                                         <div class="d-grid h-100 align-content-center">
                                                             Tabellare
                                                         </div>                                    
@@ -287,7 +287,11 @@
                                                             Realizato da
                                                         </div>
                                                     </div>
-                                                    
+                                                    <div class="w-10">
+                                                        <div class="d-grid h-100 align-content-center">
+                                                            Colore
+                                                        </div>
+                                                    </div>
                                                 </div>
 
                                                 <!-- collapses --><?php 
@@ -299,12 +303,12 @@
                                                                 <h2 class="accordion-header">
                                                                 <button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?php echo $value['id'];?>" aria-expanded="false" aria-controls="flush-collapse<?php echo $value['id'];?>">
                                                                     <div class="d-flex w-100">
-                                                                        <div class="w-md-25">
+                                                                        <div class="w-md-20">
                                                                             <div class="d-grid h-100 align-content-center fw-bold">
                                                                                 <?php echo strtoupper($value['acronimo']);?>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="w-15 d-none d-md-block">
+                                                                        <div class="w-10 d-none d-md-block">
                                                                             <div class="d-grid h-100 align-content-center">
                                                                                 <?php echo number_format($value['prezzo_tabellare'], 2, '.', ''); ?>
                                                                             </div>                                    
@@ -332,6 +336,11 @@
                                                                         <div class="w-20">
                                                                             <div class="d-grid h-100 align-content-center">
                                                                                 <?php echo $value['realizzato_da']; ?>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="w-10">
+                                                                            <div class="d-flex h-100 align-content-center">
+                                                                                <div class="m-auto color-box-<?php echo $value['bnw'];?>"></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

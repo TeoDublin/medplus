@@ -1,18 +1,30 @@
 <?php 
+    style('modal_component/percorso_combo/percorso_combo.css');
+
     function _view_percorsi(){
         return $_REQUEST['id_percorso']?Select('*')->from('view_percorsi')->where("id={$_REQUEST['id_percorso']}")->first_or_false():false;
     }
+
     function _view_trattamenti(){
         return Select('t.*')
         ->from('view_trattamenti', 't')
         ->orderby('t.categoria, t.trattamento ASC')
         ->get();
     }
+
     function _percorsi_combo_trattamenti($id_combo){
         return Select('*')->from('percorsi_combo_trattamenti')->where("id_combo={$id_combo}")->get();
     }
+
     $view_trattamenti = _view_trattamenti();
     $view_percorsi=_view_percorsi();
+    $bnw = $view_percorsi['bnw']??'black';
+
+    $arr_bnw = [
+        'neutro'=>"background-color:transparent; border:1px solid #ccc;",
+        'black'=>"background-color:black;",
+        'white'=>"background-color:white;"
+    ];
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-lg">
@@ -42,8 +54,28 @@
                             onchange="window.modalHandlers['percorso_combo'].changeSedute(this)"
                             />
                     </div>
-                    <div class="py-2 pe-2 w-15">
-                        <label for="btn" class="form-label">Realizzato da</label>
+                    <div class="py-2 pe-2 w-10">
+                        <input id="bnw" name="bnw" value="<?php echo $bnw;?>" hidden/>
+                        <label for="btn" class="form-label">Colore</label>
+                        <div class="dropdown w-100">
+                            <button class="btn border dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                <span class="color-box" id="bnw-span" style="<?php echo $arr_bnw[$bnw];?>"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li class="dropdown-li" data-value="neutro" onclick="window.modalHandlers['percorso_combo'].dropdowLiClick(this)">
+                                    <a class="dropdown-item" href="#"><span class="color-box" style="<?php echo $arr_bnw['neutro'];?>"></span></a>
+                                </li>
+                                <li class="dropdown-li" data-value="black" onclick="window.modalHandlers['percorso_combo'].dropdowLiClick(this)">
+                                    <a class="dropdown-item" href="#"><span class="color-box" style="<?php echo $arr_bnw['black'];?>"></span></a>
+                                </li>
+                                <li class="dropdown-li" data-value="white" onclick="window.modalHandlers['percorso_combo'].dropdowLiClick(this)">
+                                    <a class="dropdown-item" href="#"><span class="color-box" style="<?php echo $arr_bnw['white'];?>"></span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="py-2 pe-2 w-20">
+                        <label for="btn" class="form-label">#</label>
                         <select class="form-select" id="realizzato_da" name="realizzato_da" value="<?php echo $view_percorsi['realizzato_da']??'1';?>">
                             <?php 
                                 foreach(Enum('percorsi_terapeutici','realizzato_da')->list as $value){
