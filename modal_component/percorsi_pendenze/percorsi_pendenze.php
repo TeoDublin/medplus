@@ -289,7 +289,7 @@
                                                     </div>
                                                     <div class="w-10">
                                                         <div class="d-grid h-100 align-content-center">
-                                                            Colore
+                                                            Voucher
                                                         </div>
                                                     </div>
                                                 </div>
@@ -339,8 +339,8 @@
                                                                             </div>
                                                                         </div>
                                                                         <div class="w-10">
-                                                                            <div class="d-flex h-100 align-content-center">
-                                                                                <div class="m-auto color-box-<?php echo $value['bnw'];?>"></div>
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                <?php echo $value['bnw']; ?>
                                                                             </div>
                                                                         </div>
                                                                     </div>

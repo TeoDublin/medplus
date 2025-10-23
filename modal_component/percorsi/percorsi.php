@@ -279,26 +279,26 @@
                                                     <div class="my-0">
                                                         <div class="flex-row titles w-100 d-flex">
                                                             <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class=""></span>
+                                                                <span></span>
                                                             </div>
                                                             <div class="cc2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class="">Trattamento</span>
+                                                                <span>Trattamento</span>
                                                             </div>
                                                             <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class="">Realizzato da</span>
+                                                                <span>Realizzato da</span>
                                                             </div>
                                                             <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 d-none d-md-block">
-                                                                <span class="">Inizio</span>
+                                                                <span>Inizio</span>
                                                             </div>
                                                             <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                                                 <span class="d-none d-md-block">Prezzo</span>
                                                                 <span class="d-md-none">$</span>
                                                             </div>
-                                                            <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
+                                                            <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                                                 <span>N</span><span class="d-none d-md-block">ote</span>
                                                             </div>
-                                                          <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span>C</span><span class="d-none d-md-block">olore</span>
+                                                          <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
+                                                                <span>V</span><span class="d-none d-md-block">oucher</span>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -330,10 +330,10 @@
                                                                             >
                                                                             <span><?php echo $percorso['acronimo']; ?></span>
                                                                         </div>
-                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 d-none d-md-block"><span class=""><?php echo $percorso['realizzato_da']; ?></span></div>
-                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 d-none d-md-block"><span class=""><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
-                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $percorso['prezzo']; ?></span></div>
-                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"
+                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 d-none d-md-flex"><span><?php echo $percorso['realizzato_da']; ?></span></div>
+                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 d-none d-md-flex"><span><?php echo format($percorso['timestamp'],'d/m/Y'); ?></span></div>
+                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo $percorso['prezzo']; ?></span></div>
+                                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"
                                                                                 title=""
                                                                                 data-bs-toggle="popover"
                                                                                 data-bs-placement="right"
@@ -344,8 +344,8 @@
                                                                             >
                                                                             <?php echo icon('info.svg','black',20,20); ?>
                                                                         </div>
-                                                                        <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                            <div class="color-box-<?php echo $percorso['bnw'];?>"></div>
+                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
+                                                                            <span><?php echo $percorso['bnw']; ?></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -412,10 +412,10 @@
                                                                                                     ?>
                                                                                                     
                                                                                                 </div>
-                                                                                                <div class="w-10 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta['index']; ?></span></div>
-                                                                                                <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta['prezzo']; ?></span></div>
+                                                                                                <div class="w-10 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo $seduta['index']; ?></span></div>
+                                                                                                <div class="w-10 d-none d-md-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo $seduta['prezzo']; ?></span></div>
                                                                                                 <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 div-<?php echo $debitore?'Debitore':$seduta['stato_pagamento']; ?>">
-                                                                                                    <span class="">
+                                                                                                    <span>
                                                                                                         <?php 
                                                                                                             if($debitore){
                                                                                                                 echo 'Debitore';
@@ -428,7 +428,7 @@
                                                                                                             }
                                                                                                         ?>
                                                                                                     </span></div>
-                                                                                                <div class="flex-fill d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 div-<?php echo $seduta['stato_seduta']; ?>"><span class=""><?php echo $seduta['stato_seduta']; ?></span></div>
+                                                                                                <div class="flex-fill d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 div-<?php echo $seduta['stato_seduta']; ?>"><span><?php echo $seduta['stato_seduta']; ?></span></div>
                                                                                                 <div class="w-25 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                                                                                     <?php if($abble){?>
                                                                                                         <button class="btn btn-primary flex-fill" 
@@ -456,30 +456,30 @@
                                                                                                 <div class="my-0">
                                                                                                     <div class="flex-row seduta-titles w-100 d-flex">
                                                                                                         <div class="csp1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                                                            <span class="">Terapista</span>
+                                                                                                            <span>Terapista</span>
                                                                                                         </div>
                                                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                                                            <span class="">Data</span>
+                                                                                                            <span>Data</span>
                                                                                                         </div>
                                                                                                         <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                                                            <span class="">Inizio</span>
+                                                                                                            <span>Inizio</span>
                                                                                                         </div>
                                                                                                         <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                                                            <span class="">Fine</span>
+                                                                                                            <span>Fine</span>
                                                                                                         </div>
                                                                                                         <div class="csp4 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                                                            <span class="">Stato</span>
+                                                                                                            <span>Stato</span>
                                                                                                         </div>
                                                                                                         <div class="csp3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                                                            <span class="">#</span>
+                                                                                                            <span>#</span>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                     <?php foreach($sedute_prenotate as $seduta_prenotata){?>
                                                                                                         <div class="flex-row seduta-titles w-100 d-flex ">
                                                                                                             <div class="csp1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><?php _nome_terapista($seduta_prenotata['terapista']); ?></div>
-                                                                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo italian_date($seduta_prenotata['data'],"%a %d/%m"); ?></span></div>
-                                                                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
-                                                                                                            <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
+                                                                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo italian_date($seduta_prenotata['data'],"%a %d/%m"); ?></span></div>
+                                                                                                            <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo $seduta_prenotata['ora_inizio']; ?></span></div>
+                                                                                                            <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo $seduta_prenotata['ora_fine']; ?></span></div>
                                                                                                             <div class="csp4 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 statoHover">
                                                                                                                 <select type="text" class="form-control text-center text-break flex-shrink-1" id="stato_prenotazione" value="<?php echo $seduta_prenotata['stato_prenotazione']??'';?>" 
                                                                                                                     onchange="window.modalHandlers['percorsi'].changeStatoPrenotazione(this,<?php echo $seduta_prenotata['id'].','.$seduta['id'];?>)">
@@ -542,30 +542,30 @@
                                                     <div class="my-0">
                                                         <div class="flex-row seduta-titles w-100 d-flex">
                                                             <div class="csp1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class="">Terapista</span>
+                                                                <span>Terapista</span>
                                                             </div>
                                                             <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class="">Data</span>
+                                                                <span>Data</span>
                                                             </div>
                                                             <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class="">Inizio</span>
+                                                                <span>Inizio</span>
                                                             </div>
                                                             <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class="">Fine</span>
+                                                                <span>Fine</span>
                                                             </div>
                                                             <div class="csp4 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class="">Stato</span>
+                                                                <span>Stato</span>
                                                             </div>
                                                             <div class="csp3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span class="">#</span>
+                                                                <span>#</span>
                                                             </div>
                                                         </div>
                                                         <?php foreach ($view_colloqui as $colloquio) {?>
                                                             <div class="flex-row seduta-titles w-100 d-flex ">
                                                                 <div class="csp1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><?php _nome_terapista($colloquio['terapista']); ?></div>
-                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $colloquio['data_formated']; ?></span></div>
-                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $colloquio['ora_inizio_formated']; ?></span></div>
-                                                                <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center text-break flex-shrink-1"><span class=""><?php echo $colloquio['ora_fine_formated']; ?></span></div>
+                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo $colloquio['data_formated']; ?></span></div>
+                                                                <div class="csp2 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo $colloquio['ora_inizio_formated']; ?></span></div>
+                                                                <div class="csp2 d-flex d-none d-md-block align-items-center justify-content-center text-center text-break flex-shrink-1"><span><?php echo $colloquio['ora_fine_formated']; ?></span></div>
                                                                 <div class="csp4 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1 statoHover">
                                                                     <select type="text" class="form-control text-center text-break flex-shrink-1" id="colloquio_stato_prenotazione" value="<?php echo $colloquio['stato_prenotazione']??'';?>" 
                                                                         onchange="window.modalHandlers['percorsi'].changeStatoColloquio(this,<?php echo $colloquio['id'];?>)">

@@ -18,13 +18,8 @@
 
     $view_trattamenti = _view_trattamenti();
     $view_percorsi=_view_percorsi();
-    $bnw = $view_percorsi['bnw']??'black';
+    $bnw = $view_percorsi['bnw']??'da definire';
 
-    $arr_bnw = [
-        'neutro'=>"background-color:transparent; border:1px solid #ccc;",
-        'black'=>"background-color:black;",
-        'white'=>"background-color:white;"
-    ];
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-lg">
@@ -34,49 +29,38 @@
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="d-flex flex-row">
+                <div class="d-flex flex-row text-center">
                     <input type="text" id="single_tabellare" value="<?php echo $view_percorsi['prezzo_tabellare']??'0';?>" hidden/>
                     <div class="p-2 flex-fill">
                         <label for="acronimo" class="form-label">Acronimo</label>
                         <input type="text" class="form-control" name="acronimo" placeholder="Aggiungi trattamento" value="<?php echo $view_percorsi['acronimo']??'';?>" disabled/>
                     </div>
-                    <div class="py-2 pe-2 w-15">
+                    <div class="py-2 pe-2 w-10">
                         <label class="form-label" for="prezzo_tabellare">Tabellare</label>
                         <input type="number" class="form-control text-center" name="prezzo_tabellare" value="<?php echo $view_percorsi['prezzo_tabellare']??'0';?>" disabled/>
                     </div>
-                    <div class="py-2 pe-2 w-15">
+                    <div class="py-2 pe-2 w-10">
                         <label class="form-label" for="prezzo">Prezzo</label>
                         <input type="number" class="form-control text-center" name="prezzo" value="<?php echo $view_percorsi['prezzo']??'0';?>" onchange="window.modalHandlers['percorso_combo'].changePrezzo(this)"/>
                     </div>
-                    <div class="py-2 pe-2 w-15">
+                    <div class="py-2 pe-2 w-10">
                         <label for="sedute" class="form-label">Sedute</label>
                         <input type="number" class="form-control" name="sedute" value="<?php echo $view_percorsi['sedute']??'1';?>" disabled
                             onchange="window.modalHandlers['percorso_combo'].changeSedute(this)"
                             />
                     </div>
-                    <div class="py-2 pe-2 w-10">
-                        <input id="bnw" name="bnw" value="<?php echo $bnw;?>" hidden/>
-                        <label for="btn" class="form-label">Colore</label>
-                        <div class="dropdown w-100">
-                            <button class="btn border dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                <span class="color-box" id="bnw-span" style="<?php echo $arr_bnw[$bnw];?>"></span>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li class="dropdown-li" data-value="neutro" onclick="window.modalHandlers['percorso_combo'].dropdowLiClick(this)">
-                                    <a class="dropdown-item" href="#"><span class="color-box" style="<?php echo $arr_bnw['neutro'];?>"></span></a>
-                                </li>
-                                <li class="dropdown-li" data-value="black" onclick="window.modalHandlers['percorso_combo'].dropdowLiClick(this)">
-                                    <a class="dropdown-item" href="#"><span class="color-box" style="<?php echo $arr_bnw['black'];?>"></span></a>
-                                </li>
-                                <li class="dropdown-li" data-value="white" onclick="window.modalHandlers['percorso_combo'].dropdowLiClick(this)">
-                                    <a class="dropdown-item" href="#"><span class="color-box" style="<?php echo $arr_bnw['white'];?>"></span></a>
-                                </li>
-                            </ul>
-                        </div>
+                    <div class="py-2 pe-2 w-20 text-center">
+                        <label for="bnw" class="form-label">Voucher</label><?php
+                        echo "<select class=\"form-select text-center\" name=\"bnw\" value=\"{$bnw}\">";
+                            foreach(Enum('percorsi_terapeutici','bnw')->get() as $enum){
+                                $selected=$enum==$bnw?'selected':'';
+                                echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                            }
+                        echo "</select>";?>
                     </div>
                     <div class="py-2 pe-2 w-20">
-                        <label for="btn" class="form-label">#</label>
-                        <select class="form-select" id="realizzato_da" name="realizzato_da" value="<?php echo $view_percorsi['realizzato_da']??'1';?>">
+                        <label for="btn" class="form-label">Realizzato da</label>
+                        <select class="form-select text-center" id="realizzato_da" name="realizzato_da" value="<?php echo $view_percorsi['realizzato_da']??'1';?>">
                             <?php 
                                 foreach(Enum('percorsi_terapeutici','realizzato_da')->list as $value){
                                     $selected = (isset($view_percorsi['realizzato_da']) && $view_percorsi['realizzato_da'] == $value) ? 'selected' : '';
