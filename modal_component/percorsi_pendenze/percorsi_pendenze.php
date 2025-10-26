@@ -401,6 +401,7 @@
                                                                                 data-id="<?php echo $v['id'];?>"
                                                                                 data-realizzato_da="<?php echo $v['realizzato_da'];?>"
                                                                                 data-view="view_sedute"
+                                                                                data-bnw="<?php echo $value['bnw']; ?>"
                                                                                 >
                                                                                 <div class="w-5 ">
                                                                                     <?php 

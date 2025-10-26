@@ -14,7 +14,8 @@
         'inps'=> $inps,
         'bollo' => $bollo,
         'stato' => 'Saldata',
-        'totale' => ( $valore + $inps + $bollo )
+        'totale' => ( $valore + $inps + $bollo ),
+        'bnw'=>$_REQUEST['_data']['bnw']
     ])->into('pagamenti')->get();
 
     foreach ($_REQUEST['percorsi'] as $key=>$value) {

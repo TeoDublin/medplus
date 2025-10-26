@@ -22,11 +22,32 @@ window.modalHandlers['percorsi_pendenze'] = {
             return { hasError: false, realizzato_da };
         }
     },
+    bnw: function(_data) {
+        let bnw = null;
+        let hasError = false;
+        
+        for (let v of _data) {
+            if (bnw === null) {
+                bnw = v.bnw;
+            }
+            if (v.bnw !== bnw) {
+                alert('Non puoi fatturare voucher diversi insieme');
+                hasError = true;
+                break;
+            }
+        }
+
+        if (hasError) {
+            return { hasError: true };
+        } else {
+            return { hasError: false, bnw };
+        }
+    },
     fatturaClick:function(){
         let hasError=false;
         const raw = document.querySelector('#data_cliente').textContent.trim();
         let _data = this._data();
-        if(!this.realizzato_da(_data).hasError){
+        if(!this.realizzato_da(_data).hasError && !this.bnw(_data).hasError){
             let error = 'Per generare la fattura devi inserire i dati:\n\n';
             try {
                 let data_cliente = JSON.parse(raw);
@@ -74,7 +95,7 @@ window.modalHandlers['percorsi_pendenze'] = {
     senzaFatturaClick:function(id_cliente){
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
-        if(!realizzato_da.hasError){
+        if(!realizzato_da.hasError && !this.bnw(_data).hasError){
             if(realizzato_da.realizzato_da=='Isico'){
                 modal_component('pagamento_isico','pagamento_isico',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
             }
@@ -86,7 +107,7 @@ window.modalHandlers['percorsi_pendenze'] = {
     arubaClick:function(id_cliente){
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
-        if(!realizzato_da.hasError){
+        if(!realizzato_da.hasError && !this.bnw(_data).hasError){
             modal_component('fatturato_aruba','fatturato_aruba',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
         }
     },

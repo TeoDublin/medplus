@@ -73,6 +73,7 @@
             </div>
             <div class="modal-body">
                 <input type="text" id="id_cliente" value="<?php echo $id_cliente; ?>" hidden/>
+                <input type="text" name="bnw" value="<?php echo $_REQUEST['_data'][0]['bnw'];?>" hidden/> 
                 <div class="p-2 card my-2">
                     <div class="pb-0 mb-0 card-body w-100">
                         <div class="d-flex flex-column w-100 my-3">

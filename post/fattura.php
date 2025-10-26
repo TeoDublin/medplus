@@ -146,7 +146,8 @@
         'bollo'=>$_REQUEST['bollo'],
         'totale'=>((double)$_REQUEST['importo'] + (double)$_REQUEST['bollo'] + (double) $_REQUEST['inps']),
         'note'=>'-',
-        'stato'=>$stato
+        'stato'=>$stato,
+        'bnw'=>$_REQUEST['oggetti'][0]['bnw']
     ];
 
     if(isset($_REQUEST['id_fattura'])){
