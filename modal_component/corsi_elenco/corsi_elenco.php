@@ -114,6 +114,7 @@
                                             <div class="flex-fill"><span>Cliente</span></div>
                                             <div class="w-20 mx-2"><span>Prezzo</span></div>
                                             <div class="w-20 mx-2"><span>Dt.Inizio</span></div>
+                                            <div class="w-20 mx-2"><span>Voucher</span></div>
                                             <div class="w-10"><span>#</span></div>
                                         </div>
                                     </div>
@@ -126,6 +127,7 @@
                                                     $_REQUEST['cliente']=$cliente['id_cliente'];
                                                     $_REQUEST['prezzo']=$cliente['prezzo'];
                                                     $_REQUEST['data_inizio']=$cliente['data_inizio'];
+                                                    $_REQUEST['bnw']=$cliente['bnw'];
 
                                                     if($is_first){
                                                         $is_first=false;

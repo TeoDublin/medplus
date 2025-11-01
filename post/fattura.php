@@ -146,9 +146,12 @@
         'bollo'=>$_REQUEST['bollo'],
         'totale'=>((double)$_REQUEST['importo'] + (double)$_REQUEST['bollo'] + (double) $_REQUEST['inps']),
         'note'=>'-',
-        'stato'=>$stato,
-        'bnw'=>$_REQUEST['oggetti'][0]['bnw']
+        'stato'=>$stato
     ];
+
+    if(isset_n_valid($_REQUEST['oggetti'][0]['bnw'])){
+        $save_pagamenti['bnw']=$_REQUEST['oggetti'][0]['bnw'];
+    }
 
     if(isset($_REQUEST['id_fattura'])){
         $id_fattura=$_REQUEST['id_fattura'];

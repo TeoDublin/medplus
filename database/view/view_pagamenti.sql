@@ -118,7 +118,7 @@ SELECT
     cp.id AS id,
     cp.id_cliente AS id_cliente,
     c.id AS id_origine,
-    'neutro' AS bnw,
+    cc.bnw AS bnw,
     c.corso AS nome,
     c.corso AS acronimo,
     (cp.scadenza COLLATE utf8mb4_general_ci) AS scadenza,
@@ -143,6 +143,7 @@ SELECT
     ) AS non_fatturato
 FROM 
     medplus.corsi_pagamenti cp
+LEFT JOIN corsi_classi cc ON cp.id_corso = cc.id_corso AND cp.id_cliente = cc.id_cliente
 LEFT JOIN 
     (
         SELECT 

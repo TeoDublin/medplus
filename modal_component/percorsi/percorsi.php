@@ -4,27 +4,32 @@
         if(!$_REQUEST['storico'])$ret->and("stato <> 'Concluso'");
         return $ret->get_or_false();
     }
+
     function _view_colloqui(){
         return Select('*,DATE_FORMAT(x.data,"%d/%m") as data_formated,TIME_FORMAT(x.ora_inizio,"%H:%i") as "ora_inizio_formated", TIME_FORMAT(x.ora_fine,"%H:%i") as "ora_fine_formated"')
         ->from('view_colloqui')
         ->where("id_cliente={$_REQUEST['id_cliente']}")
         ->get_or_false();
     }
+
     function _view_classi(){
         return Select('*')->from('view_classi')->where("id_cliente={$_REQUEST['id_cliente']} AND deleted = 0")->get_or_false();
     }
+
     function _view_pagamenti($id_corso){
         return Select('*')->from('view_pagamenti')->where("id_origine={$id_corso} AND id_cliente={$_REQUEST['id_cliente']} AND origine = 'corsi'")->get();
     }
+
     function _view_sedute($id_percorso){
         $session=Session();
         $ruolo=$session->get('ruolo')??'';
         $ret=Select('*')->from('view_sedute')->where("id_percorso={$id_percorso}");
-        if(!$_REQUEST['storico'])$ret->and("( stato_seduta <> 'Conclusa' or stato_pagamento <> 'Saldato')");
+        if(!$_REQUEST['storico'])$ret->and("( stato_seduta <> 'Conclusa' or NOT stato_pagamento IN('Saldato', 'Esente'))");
         if($ruolo=='display')$ret->and("( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )");
         $ret->orderby('`data_seduta` IS NULL,`data_seduta`, `index` ASC');
         return $ret->get();
     }
+    
     function _percorsi_terapeutici_sedute_prenotate($id_seduta){
         return Select('sp.id,sp.stato_prenotazione,sp.data,t.terapista,TIME_FORMAT(pri.ora,"%H:%i") as "ora_inizio", TIME_FORMAT(prf.ora,"%H:%i") as "ora_fine"')
             ->from('percorsi_terapeutici_sedute_prenotate','sp')
@@ -34,6 +39,7 @@
             ->where("sp.id_seduta={$id_seduta}")
             ->get();
     }
+
     function _nome_terapista($nome){
         $explode=explode(' ',$nome);
         $is_first=true;
@@ -114,7 +120,7 @@
                                                         <div class="d-grid align-content-center justify-contents-center h-100">
                                                         </div>
                                                     </div>
-                                                    <div class="w-25">
+                                                    <div class="w-20">
                                                         <div class="d-grid align-content-center justify-contents-center h-100">
                                                             Corso
                                                         </div>
@@ -124,14 +130,19 @@
                                                             Inizio
                                                         </div>
                                                     </div>
-                                                    <div class="w-25">
+                                                    <div class="w-20">
                                                         <div class="d-grid align-content-center justify-contents-center h-100">
                                                             Prezzo
                                                         </div>
                                                     </div>
-                                                    <div class="w-25">
+                                                    <div class="w-20">
                                                         <div class="d-grid align-content-center justify-contents-center h-100">
                                                             Realizato da
+                                                        </div>
+                                                    </div>
+                                                    <div class="w-15">
+                                                        <div class="d-grid align-content-center justify-contents-center h-100">
+                                                            Voucher
                                                         </div>
                                                     </div>
                                                 </div><?php 
@@ -148,7 +159,7 @@
                                                                                 <?php echo icon('bin.svg','black',16,16); ?>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="w-25">
+                                                                        <div class="w-20">
                                                                             <div class="d-grid align-content-center justify-contents-center h-100">
                                                                                 <?php echo $value['corso']; ?>
                                                                             </div>
@@ -158,14 +169,19 @@
                                                                                 <?php echo unformat_date($value['data_inizio']); ?>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="w-25">
+                                                                        <div class="w-20">
                                                                             <div class="d-grid align-content-center justify-contents-center h-100">
                                                                                 <?php echo number_format($value['prezzo'],2,'.',''); ?>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="w-25">
+                                                                        <div class="w-20">
                                                                             <div class="d-grid align-content-center justify-contents-center h-100">
                                                                                 <?php echo $value['realizzato_da']; ?>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="w-15">
+                                                                            <div class="d-grid align-content-center justify-contents-center h-100">
+                                                                                <?php echo $value['bnw']; ?>
                                                                             </div>
                                                                         </div>
                                                                     </div>

@@ -3,6 +3,7 @@
     require_once '../includes.php';
     $id=request('id');
     $first_date=now('Y-m-d');
+
     $corso=[
         'id_categoria'=>$_REQUEST['id_categoria'],
         'id_terapista'=>$_REQUEST['id_terapista'],
@@ -11,6 +12,7 @@
         'scadenza'=>$_REQUEST['scadenza'],
         'realizzato_da'=>$_REQUEST['realizzato_da']
     ];
+
     if($id&&!empty($id)){
         Update('corsi')->set($corso)->where("id={$id}");
     }
@@ -38,7 +40,8 @@
             'id_corso'=>$id,
             'id_cliente'=>$cliente['cliente'],
             'prezzo'=>$cliente['prezzo'],
-            'data_inizio'=>$cliente['data_inizio']
+            'data_inizio'=>$cliente['data_inizio'],
+            'bnw'=>$cliente['bnw']
         ];
 
         if(!$corsi_classi){
@@ -78,6 +81,7 @@
     $now = now('Y-m-d');
     $future_date = (new DateTime($now))->add(new DateInterval('P60D'))->format('Y-m-d');
     Delete()->from('corsi_planning')->where("id_corso={$corso['id']} AND data >= '{$first_date}' AND data <= '{$future_date}'");
+    
     if (($giorni = _giorni($id))) {
         $start = new DateTime($first_date);
         $end = new DateTime($future_date);

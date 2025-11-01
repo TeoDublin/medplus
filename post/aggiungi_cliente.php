@@ -10,4 +10,16 @@
 </div>
 <div class="w-20 mx-2"><input class="form-control text-center prezzo" type="number" value="<?php echo $_REQUEST['prezzo']??$_REQUEST['prezzo_tabellare'];?>"/></div>
 <div class="w-20 mx-2"><input class="form-control text-center data_inizio" type="date" value="<?php echo $_REQUEST['data_inizio']??now('Y-m-d');?>"/></div>
-<div class="w-5 pt-1 del-btn-cliente" ><?php echo icon('bin.svg'); ?></div>
+<div class="w-20 mx-2"><?php
+    
+    $bnw = isset_n_valid($_REQUEST['bnw']) ? $_REQUEST['bnw'] :'da definire';
+    
+    echo "<select class=\"form-control text-center flex-fill bnw\" value=\"{$_REQUEST['cliente']}\">";
+        foreach(Enum('corsi_classi','bnw')->get() as $enum){
+            $selected = $bnw ==$enum?'selected':'';
+            echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+        }
+    echo "</select>";?>
+</div>
+
+<div class="w-10 pt-1 del-btn-cliente" ><?php echo icon('bin.svg'); ?></div>

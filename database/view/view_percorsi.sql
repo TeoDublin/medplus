@@ -53,7 +53,7 @@ LEFT JOIN
             medplus.percorsi_terapeutici_sedute p ON pts.id_seduta = p.id
         WHERE 
             pts.stato_prenotazione = 'Conclusa'
-            AND p.stato_pagamento = 'Saldato'
+            AND p.stato_pagamento IN( 'Saldato', 'Esente' )
         GROUP BY 
             pts.id_percorso
     ) p ON pt.id = p.id_percorso

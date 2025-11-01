@@ -129,7 +129,7 @@
 </div>
 
 <!-- filters -->
-<div class="floating-menu text-center">
+<div class="floating-menu text-center pb-5">
     <div class="content p-0 h-100">
         <div class="pt-3 p-2">
             <h6>FILTRA</h6>

@@ -4,6 +4,7 @@
     $valore=(double)$_REQUEST['_data']['valore'];
     $inps = (double)$_REQUEST['_data']['inps'] ?? 0;
     $bollo = (double)$_REQUEST['_data']['bollo'] ?? 0;
+    $bnw = isset_n_valid($_REQUEST['_data']['bnw']) ? $_REQUEST['_data']['bnw'] : 'da definire';
 
     $id_pagamenti = Insert([
         'id_cliente'=>$_REQUEST['_data']['id_cliente'],
@@ -15,7 +16,7 @@
         'bollo' => $bollo,
         'stato' => 'Saldata',
         'totale' => ( $valore + $inps + $bollo ),
-        'bnw'=>$_REQUEST['_data']['bnw']
+        'bnw'=>$bnw
     ])->into('pagamenti')->get();
 
     foreach ($_REQUEST['percorsi'] as $key=>$value) {
