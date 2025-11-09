@@ -11,9 +11,6 @@
             <li class="nav-item">
                 <a class="nav-link <?php echo _tab('incassi')?'active':'';?>" aria-current="page" href="pagamenti.php?tab=incassi&pagination=0">Incassi</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link <?php echo _tab('uscite')?'active':'';?>" aria-current="page" href="pagamenti.php?tab=uscite&pagination=0">Uscite</a>
-            </li>
         </ul>
         <div class="p-1">
             <?php $tab=cookie('tab','sedute'); require_once "{$tab}/{$tab}.php";?>

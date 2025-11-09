@@ -11,6 +11,8 @@ td,th {
     min-height: 30px;
 }
 .filter-label{
+    max-height: 80px;
+    overflow: hidden!important;
     margin-left: 10px;
     padding: 7px;
     border-radius: 7px;
@@ -18,11 +20,11 @@ td,th {
 }
 .floating-menu {
     position: fixed;
-    right: -250px;
+    right: -350px;
     top: 50%;
     transform: translateY(-50%);
     transition: right 0.3s ease;
-    width: 250px;
+    width: 350px;
     height: 100vh;
     background-color: #f8f9fa;
     z-index: 1020;
@@ -60,7 +62,7 @@ td,th {
     border: none;
 }
 .floating-menu-btn.open {
-    right: 210px;
+    right: 310px;
     background-color: transparent;
 }
 .floating-menu-btn > button.left{
@@ -83,36 +85,7 @@ td,th {
 .floating-menu-btn > button.right{
     display: none;
 }
-.floating-input-incassi {
-    position: fixed;
-    bottom: 110px;
-    transition: right 0.3s ease;
-    z-index: 1021;
-    right: 10px;
-    background-color: var(--base-bg-colorfull2);
-    padding: 10px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-}
-.floating-input-incassi:hover > .tip {
-    display: block!important;
-    bottom: 114px;
-    right: 80px;
-    border: solid var(--base-bg-colorfull2) 5px;
-}
-.floating-input-incassi:hover svg {
-    fill: black!important;
-    width: 40px;
-    height: 40px;
-}
-.floating-input-incassi:hover {
-    border: solid var(--base-bg-colorfull2) 5px;
-    background-color: white;
-}
-.floating-input-incassi.open {
-    right: 260px;
-}
+
 .floating-excel-btn {
     position: fixed;
     bottom: 10px;
@@ -125,6 +98,7 @@ td,th {
     border: none;
     cursor: pointer;
 }
+
 .floating-excel-btn:hover > .tip {
     display: block!important;
     bottom: 14px;
@@ -142,7 +116,7 @@ td,th {
     height: 40px;
 }
 .floating-excel-btn.open {
-    right: 260px;
+    right: 360px;
 }
 .floating-download-pdf-btn {
     position: fixed;
@@ -174,4 +148,8 @@ td,th {
 }
 .floating-download-pdf-btn.open {
     right: 260px;
+}
+
+.bootstrap-select .filter-option-inner-inner {
+  white-space: normal !important;
 }

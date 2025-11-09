@@ -6,10 +6,11 @@
     }
 
     function _view_colloqui(){
-        return Select('*,DATE_FORMAT(x.data,"%d/%m") as data_formated,TIME_FORMAT(x.ora_inizio,"%H:%i") as "ora_inizio_formated", TIME_FORMAT(x.ora_fine,"%H:%i") as "ora_fine_formated"')
-        ->from('view_colloqui')
-        ->where("id_cliente={$_REQUEST['id_cliente']}")
-        ->get_or_false();
+        $ret = Select('*,DATE_FORMAT(x.data,"%d/%m") as data_formated,TIME_FORMAT(x.ora_inizio,"%H:%i") as "ora_inizio_formated", TIME_FORMAT(x.ora_fine,"%H:%i") as "ora_fine_formated"');
+        $ret->from('view_colloqui');
+        $ret->where("id_cliente={$_REQUEST['id_cliente']}");
+        if(!$_REQUEST['storico'])$ret->and("`data` >= '".now('Y-m-d')."'");
+        return $ret->get_or_false();
     }
 
     function _view_classi(){

@@ -8,7 +8,7 @@ SELECT
     pt.prezzo_tabellare AS prezzo_tabellare,
     pt.prezzo AS prezzo,
     pt.note AS note,
-    pt.timestamp AS timestamp,
+    IF(p.data_prima_seduta IS NULL, pt.timestamp, p.data_prima_seduta) AS timestamp,
     pt.realizzato_da AS realizzato_da,
     pt.bnw AS bnw,
     t.trattamenti AS trattamento,
@@ -45,6 +45,7 @@ LEFT JOIN
 LEFT JOIN 
     (
         SELECT 
+            min(`data`) as data_prima_seduta,
             pts.id_percorso AS id_percorso,
             COUNT(pts.id) AS sp_count
         FROM 

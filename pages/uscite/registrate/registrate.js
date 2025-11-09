@@ -28,15 +28,18 @@ function parseFilter(){
     }
     return ret;
 }
+
 function btnFiltra() {
-    $.post('post/component/uscite.php?pagination=0', parseFilter())
+    $.post('post/component/uscite_registrate.php?pagination=0', parseFilter())
     .done(response => { loadView(response);});
 }
+
 function btnClean(){
-    $.post('post/component/uscite.php?pagination=0', {'btnClean':true} ).done(response => { loadView(response);});
+    $.post('post/component/uscite_registrate.php?pagination=0', {'btnClean':true} ).done(response => { loadView(response);});
 }
+
 function loadView(response){
-    document.querySelector('#spa_uscite').innerHTML = response;
+    document.querySelector('#spa_registrate').innerHTML = response;
     const floatingMenu = document.querySelector('.floating-menu');
     const floatingMenuBtn = document.querySelector('.floating-menu-btn');
     const floatingExcelBtn = document.querySelector('.floating-excel-btn');
@@ -49,7 +52,7 @@ function loadView(response){
         link.addEventListener('click', event => {
             event.preventDefault();
             let page = parseInt(event.target.dataset.n) - 1;
-            $.post('post/component/uscite.php?pagination=' + page, parseFilter()).done(response => loadView(response));
+            $.post('post/component/uscite_registrate.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
 }
@@ -77,5 +80,5 @@ function clickEdit(id){
     modal_component('add_uscita','add_uscita',{id:id});
 }
 document.addEventListener('DOMContentLoaded',function(){
-    $.post('post/component/uscite.php?pagination=0', {} ).done(response => { loadView(response);});
+    $.post('post/component/uscite_registrate.php?pagination=0', {} ).done(response => { loadView(response);});
 });

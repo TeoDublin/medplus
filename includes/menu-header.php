@@ -54,6 +54,14 @@
                         <div class="menu-label align-self-center hide" ><span>Pagamenti</span></div>
                     </div><?php                     
                 } 
+				if(in_array('menu_uscite',$elementi)){?>
+                    <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page',$home)=='uscite'?'menu-active':''?>" id="menu-uscite" title="uscite">
+                        <div class="d-flex align-items-start mx-2" >
+                            <?php echo icon('cart.svg','black',31,30);?>
+                        </div>
+                        <div class="menu-label align-self-center hide" ><span>Uscite</span></div>
+                    </div><?php                     
+                } 
                 if(in_array('menu_terapisti',$elementi)){?>
                     <div class="menu-option d-flex w-100 justify-content-start py-3 <?php echo cookie('menu_page',$home)=='terapisti'?'menu-active':''?>" id="menu-terapisti" title="terapisti">
                         <div class="d-flex align-items-start mx-2" >

@@ -11,5 +11,14 @@ window.modalHandlers['percorsi_fatture']={
                 reload_modal_component('percorsi_fatture','percorsi_fatture',{id_cliente:e.dataset.id_cliente});
             }).fail(()=>{fail()});
         }
+    },
+    statoChange:function(e){
+        let _data = e.dataset;
+        _data.stato = e.value;
+        $.post('post/fattura_cambia_stato.php',_data).done(()=>{
+            success();
+        }).fail(()=>{
+            fail();
+        });
     }
 };

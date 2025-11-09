@@ -2,10 +2,18 @@
     require_once '../../includes.php';
     $session=Session();
     $ruolo=$session->get('ruolo')??false;
+
     function _has_filters(){
         return count($_POST)>0&&!isset($_REQUEST['btnClean']);
     }
-    $where=$ruolo=='display'?"( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' )":'1=1';
+
+    if($ruolo=='display'){
+        $where = "( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' ) AND bnw <> 'no'";
+    }
+    else{
+        $where = '1=1';
+    }
+    
     $url='pagamenti.php';
     if(_has_filters()){
 

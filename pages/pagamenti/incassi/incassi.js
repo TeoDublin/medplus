@@ -4,12 +4,6 @@ function parseFilter(){
     let data_da = document.querySelector('#data_da').value;
     let data_a = document.querySelector('#data_a').value;
     let data_all = document.querySelector('#data_all').checked;
-    let stato = document.querySelector('#stato').value;
-    let origine = document.querySelector('#origine').value;
-    let bnw = document.querySelector('#bnw').value;
-    let metodo = document.querySelector('#metodo').value;
-    let cliente = document.querySelector('#cliente').value;
-    let nominativo = document.querySelector('#cliente option:checked').innerHTML;
 
     if(data_da !== '' && data_a !== ''){
         if(data_a<data_da){
@@ -26,17 +20,36 @@ function parseFilter(){
         }
     }
 
-    if(stato!=='')ret.stato=stato;
-    if(origine!=='')ret.origine=origine;
-    if(bnw!=='')ret.bnw=bnw;
-    if(metodo!=='')ret.metodo=metodo;
+    let stato = $('#stato').val() || [];
+    if (stato.length > 0) {
+        ret.stato = stato;
+    }
 
-    if(cliente!=='')ret.cliente=cliente;
-    if(nominativo!=='')ret.nominativo=nominativo;
+    let origine = $('#origine').val() || [];
+    if (origine.length > 0) {
+        ret.origine = origine;
+    }
+
+    let bnw = $('#bnw').val() || [];
+    if (bnw.length > 0) {
+        ret.bnw = bnw;
+    }
+
+    let metodo = $('#metodo').val() || [];
+    if (metodo.length > 0) {
+        ret.metodo = metodo;
+    }
+
+    let cliente = $('#cliente').val() || [];
+    if (cliente.length > 0) {
+        ret.cliente = cliente;
+        ret.nominativo = $('#cliente option:selected').map(function(){return $(this).text()}).get();
+    }
 
     if(alert.length>0){
         alert(alerts.join('\n'));       
     }
+    
     return ret;
 }
 
@@ -53,16 +66,14 @@ function loadView(response){
     document.querySelector('#spa_incassi').innerHTML = response;
     const floatingMenu = document.querySelector('.floating-menu');
     const floatingMenuBtn = document.querySelector('.floating-menu-btn');
-    const floatingInputincassi = document.querySelector('.floating-input-incassi');
-    const floatingDownloadPdfBtn = document.querySelector('.floating-download-pdf-btn');
     const floatingExcelBtn = document.querySelector('.floating-excel-btn');
+
     floatingMenuBtn.addEventListener('click', () => {
         floatingMenu.classList.toggle('open');
         floatingMenuBtn.classList.toggle('open');
-        floatingInputincassi.classList.toggle('open');
-        floatingDownloadPdfBtn.classList.toggle('open');
         floatingExcelBtn.classList.toggle('open');
     });
+
     document.querySelectorAll('a.page-link').forEach(link => {
         link.addEventListener('click', event => {
             event.preventDefault();
@@ -70,7 +81,21 @@ function loadView(response){
             $.post('post/component/incassi.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
-    document.querySelector('#filter_cliente').querySelector('select#cliente').searchable();
+
+    document.querySelectorAll('.selectpicker').forEach(el => {
+        const $el = $(el);
+        if (!$el.hasClass('active-selectpicker')) {
+            $('.selectpicker').selectpicker({
+                liveSearch: true,
+                noneSelectedText: 'Tutti',
+                actionsBox: true,
+                selectAllText: 'Seleziona tutto',
+                deselectAllText: 'Deseleziona tutto',
+                width: 300
+            });
+            $el.addClass('active-selectpicker');
+        }
+    });
     
 }
 

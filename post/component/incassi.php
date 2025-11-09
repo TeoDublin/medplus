@@ -7,6 +7,14 @@
         return count($_POST)>0&&!isset($_REQUEST['btnClean']);
     }
 
+    if($ruolo=='display'){
+        $where = "origine <> 'senza_fattura' AND bnw <> 'no'";
+    }
+    else{
+        $where = '1=1';
+    }
+    
+
     function _pagamenti($where){
         return Select('p.*, c.nominativo')
             ->from('pagamenti','p')
@@ -16,7 +24,6 @@
             ->get_table();
     }
 
-    $where=$ruolo=='display'?"( origine <> 'senza_fattura' )":'1=1';
     $url='pagamenti.php';
     
     if(_has_filters()){
@@ -31,23 +38,23 @@
         }
 
         if(isset_n_valid($_POST['stato'])){
-            $where.=" AND stato ='{$_POST['stato']}'";
+            $where.=" AND stato IN('".implode("','",$_POST['stato'])."')";
         }
 
         if(isset_n_valid($_POST['origine'])){
-            $where.=" AND origine ='{$_POST['origine']}'";
+            $where.=" AND origine IN('".implode("','",$_POST['origine'])."')";
         }
 
         if(isset_n_valid($_POST['bnw'])){
-            $where.=" AND bnw ='{$_POST['bnw']}'";
+            $where.=" AND bnw IN('".implode("','",$_POST['bnw'])."')";
         }
 
         if(isset_n_valid($_POST['metodo'])){
-            $where.=" AND metodo ='{$_POST['metodo']}'";
+            $where.=" AND metodo IN('".implode("','",$_POST['metodo'])."')";
         }
 
         if(isset_n_valid($_POST['cliente'])){
-            $where.=" AND id_cliente ='{$_POST['cliente']}'";
+            $where.=" AND id_cliente IN(".implode(',',$_POST['cliente']).")";
         }
     }
     elseif(!isset($_REQUEST['btnClean'])){
@@ -66,17 +73,30 @@
     <?php
     if(_has_filters()){?>
         <?php
-            if(isset($_POST['data']['all']));
-            else{
-                if(isset($_POST['data']['da'])) echo "<div class=\"filter-label bg-gray\"><span > Da: ".unformat_date($_POST['data']['da'])."</span></div>"; 
-                if(isset($_POST['data']['a'])) echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data']['a'])."</span></div>";    
+            if(!isset_n_valid($_POST['data_seduta']['all'])){
+                if(isset_n_valid($_POST['data']['da'])){
+                    echo "<div class=\"filter-label bg-gray\"><span > Da: ".unformat_date($_POST['data']['da'])."</span></div>"; 
+                }
+                if(isset_n_valid($_POST['data']['a'])){
+                    echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data']['a'])."</span></div>";
+                } 
             } 
 
-            if(isset($_POST['stato'])) echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: {$_POST['stato']}</span></div>";
-            if(isset($_POST['origine'])) echo "<div class=\"filter-label bg-gray\"><span >Tipo Pagamento: {$_POST['origine']}</span></div>";
-            if(isset($_POST['bnw'])) echo "<div class=\"filter-label bg-gray\"><span >Voucher: {$_POST['bnw']}</span></div>";
-            if(isset($_POST['metodo'])) echo "<div class=\"filter-label bg-gray\"><span >Metodo: {$_POST['metodo']}</span></div>";
-            if(isset($_POST['nominativo'])) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
+            if(isset_n_valid($_POST['stato'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: ".implode(', ',$_POST['stato'])."</span></div>";
+            }
+            if(isset_n_valid($_POST['origine'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Tipo Pagamento: ".implode(', ',$_POST['origine'])."</span></div>";
+            }
+            if(isset_n_valid($_POST['bnw'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Voucher: ".implode(', ',$_POST['bnw'])."</span></div>";
+            }
+            if(isset_n_valid($_POST['metodo'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Metodo: ".implode(', ',$_POST['metodo'])."</span></div>";
+            }
+            if(isset_n_valid($_POST['nominativo'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Nominativo: ".implode(', ',$_POST['nominativo'])."</span></div>";
+            }
 
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
@@ -167,11 +187,10 @@
                     <div class="accordion-body">
                         <div>
                             <label for="cliente">Nominativo Cliente</label>
-                            <select class="form-control" id="cliente" value="<?php echo $_POST['cliente']; ?>">
-                                <option value="">Tutti</option>
+                            <select class="form-control selectpicker" id="cliente" value="<?php echo $_POST['cliente']; ?>" multiple>
                                 <?php 
                                     foreach(Select('*')->from('clienti')->get() as $enum){
-                                        $selected = $_POST['cliente']==$enum['id']?'selected':'';
+                                        $selected = in_array($enum['id'],( $_POST['cliente'] ?? []))?'selected':'';
                                         echo "<option value=\"{$enum['id']}\" {$selected}>{$enum['nominativo']}</option>";
                                     }
                                 ?>
@@ -224,11 +243,10 @@
                     <div class="accordion-body">
                         <div>
                             <label for="stato">Stato Pagamento</label>
-                            <select class="form-control" id="stato" value="<?php echo $_POST['stato']; ?>">
-                                <option value="">Tutti</option>
+                            <select class="form-control selectpicker" id="stato" value="<?php echo $_POST['stato']; ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','stato')->get() as $enum) {
-                                        $selected=$_POST['stato']&&$_POST['stato']==$enum?'selected':'';
+                                        $selected = in_array($enum,( $_POST['stato'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>
@@ -249,11 +267,10 @@
                     <div class="accordion-body">
                         <div>
                             <label for="metodo">Metodo Pagamento</label>
-                            <select class="form-control" id="metodo" value="<?php echo $_POST['metodo']; ?>">
-                                <option value="">Tutti</option>
+                            <select class="form-control selectpicker" id="metodo" value="<?php echo $_POST['metodo']; ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','metodo')->get() as $enum) {
-                                        $selected=$_POST['metodo']&&$_POST['metodo']==$enum?'selected':'';
+                                        $selected = in_array($enum,( $_POST['metodo'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>
@@ -274,11 +291,10 @@
                     <div class="accordion-body">
                         <div>
                             <label for="origine">Tipo Pagamento</label>
-                            <select class="form-control" id="origine" value="<?php echo $_POST['origine']; ?>">
-                                <option value="">Tutti</option>
+                            <select class="form-control selectpicker" id="origine" value="<?php echo $_POST['origine']; ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','origine')->get() as $enum) {
-                                        $selected=$_POST['origine']&&$_POST['origine']==$enum?'selected':'';
+                                        $selected = in_array($enum,( $_POST['origine'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>
@@ -300,11 +316,10 @@
                     <div class="accordion-body">
                         <div>
                             <label for="bnw">Voucher</label>
-                            <select class="form-control" id="bnw" value="<?php echo $_POST['bnw']; ?>">
-                                <option value="">Tutti</option>
+                            <select class="form-control selectpicker" id="bnw" value="<?php echo $_POST['bnw']; ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','bnw')->get() as $enum) {
-                                        $selected=$_POST['bnw']&&$_POST['bnw']==$enum?'selected':'';
+                                        $selected = in_array($enum,( $_POST['bnw'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>

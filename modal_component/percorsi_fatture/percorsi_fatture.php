@@ -124,7 +124,21 @@
                                                                                         </div>
                                                                                         <div class="w-15">
                                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                                <?php echo strtoupper($value['stato']); ?>
+                                                                                                <?php 
+                                                                                                    if($_origine=='FATTURA'&&$value['metodo']=='Bonifico'){
+                                                                                                        echo "<select 
+                                                                                                            data-id=\"".$value['id']."\"
+                                                                                                            class=\"form-control text-center\" name=\"stato\" value=\"{$value['stato']}\" onchange=\"window.modalHandlers['percorsi_fatture'].statoChange(this);\">";
+                                                                                                            foreach(Enum('fatture','stato')->get() as $enum){
+                                                                                                                $selected=$value['stato']==$enum?'selected':'';
+                                                                                                                echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                                                                                                            }
+                                                                                                        echo "</select>";
+                                                                                                    }
+                                                                                                    else{
+                                                                                                        echo strtoupper($value['stato']); 
+                                                                                                    }
+                                                                                                ?>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="w-10 d-none d-md-block">

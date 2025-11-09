@@ -45,6 +45,7 @@ class Session
         session_unset();
         session_destroy();
     }
+    
     public function login($username,$password,$user)
     {
         if(password_verify($password,$user['password'])){

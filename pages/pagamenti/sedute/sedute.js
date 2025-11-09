@@ -14,6 +14,7 @@ function parseFilter(){
             alerts.push("Data fine non puo essere inferiore alla data Inizio");
         }
     }
+
     if (data_seduta_da !== '' || data_seduta_a !== '' || data_seduta_all ==true ) {
         ret.data_seduta = {};
         if (data_seduta_all == true) ret.data_seduta.all = data_seduta_all;
@@ -22,11 +23,13 @@ function parseFilter(){
             if (data_seduta_a !== '') ret.data_seduta.a = data_seduta_a;    
         }
     }
+
     if(data_pagamento_da !== '' && data_pagamento_a !== ''){
         if(data_pagamento_a<data_pagamento_da){
             alerts.push("Data fine non puo essere inferiore alla data Inizio");
         }
     }
+    
     if (data_pagamento_da !== '' || data_pagamento_a !== '' || data_pagamento_all ==true ) {
         ret.data_pagamento = {};
         if (data_pagamento_all == true) ret.data_pagamento.all = data_pagamento_all;
@@ -84,13 +87,16 @@ function parseFilter(){
 
     return ret;
 }
+
 function btnFiltra() {
     $.post('post/component/sedute.php?pagination=0', parseFilter())
     .done(response => { loadView(response);});
 }
+
 function btnClean(){
     $.post('post/component/sedute.php?pagination=0', {'btnClean':true} ).done(response => { loadView(response);});
 }
+
 function loadView(response){
     document.querySelector('#spa_sedute').innerHTML = response;
     const floatingMenu = document.querySelector('.floating-menu');
@@ -131,9 +137,11 @@ function loadView(response){
     });
 
 }
+
 function inputExcel(){
     modal_component('input_excel_sedute','input_excel_sedute',{});
 }
+
 document.addEventListener('DOMContentLoaded',function(){
     $.post('post/component/sedute.php?pagination=0', {} ).done(response => { loadView(response);});
 });

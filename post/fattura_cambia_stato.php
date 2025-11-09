@@ -1,40 +1,28 @@
 <?php
     $_REQUEST['skip_cookie']=true;
     require_once '../includes.php';
-    function _percorsi(){
-        return Select("f.data as 'data_fattura',pf.*")
-            ->from('pagamenti_fatture','pf')
-            ->left_join('fatture f ON pf.id_fattura = f.id')
-            ->where("pf.id_fattura={$_REQUEST['id']}")->get();
+    
+    if(!isset_n_valid($_REQUEST['id'])){
+        throw new Exception("Error Processing Request", 1);
     }
 
-    function _stato_pagamento($percorsi_terapeutici_sedute){
-        
-        if($_REQUEST['stato']=='Pendente'){
-            return 'Fatturato';
-        }
+    Update('pagamenti')->set(['stato'=>$_REQUEST['stato']])->where("id={$_REQUEST['id']}");
 
-        if($percorsi_terapeutici_sedute['saldato']>=$percorsi_terapeutici_sedute['prezzo']){
-            return 'Saldato';
-        }
+    Update('fatture')->set(['stato'=>$_REQUEST['stato']])->where("id_pagamenti={$_REQUEST['id']}");
 
-        return 'Parziale';
-    }
+    $fatture = Select('*')->from('fatture')->where("id_pagamenti={$_REQUEST['id']}")->get();
 
-    Update('fatture')->set(['stato'=>$_REQUEST['stato']])->where("id={$_REQUEST['id']}");
-    foreach (_percorsi() as $percorso) {
-        if($percorso['origine']=='trattamenti'){
+    $stato_pagamento = $_REQUEST['stato'] == 'Saldata' ? 'Saldato' : 'Fatturato';
 
-            $percorsi_terapeutici_sedute=Select('*')->from('percorsi_terapeutici_sedute')->where("id={$percorso['id_origine_child']}")->first_or_false();
+    foreach ($fatture as $fattura) {
 
-            if(!$percorsi_terapeutici_sedute){
-                throw new Exception("Error Processing Request", 1);
+        $pagamenti_fatture = Select('*')->from('pagamenti_fatture')->where("id_fattura={$fattura['id']}")->get();
+
+        foreach ($pagamenti_fatture as $pagamento_fatture) {
+            if($pagamento_fatture['origine']=='trattamenti'){
+                Update('percorsi_terapeutici_sedute')->set(['stato_pagamento'=>$stato_pagamento])->where("id={$pagamento_fatture['id_origine_child']}");
             }
-
-            Update('percorsi_terapeutici_sedute')->set([
-                'data_pagamento'=>$percorso['data_fattura'],
-                'stato_pagamento'=>_stato_pagamento($percorsi_terapeutici_sedute)
-            ])->where("id={$percorsi_terapeutici_sedute['id']}");
         }
-
     }
+    
+    

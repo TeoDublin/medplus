@@ -20,6 +20,7 @@
         clienti: document.querySelector('#menu-clienti'),
         utenti: document.querySelector('#menu-utenti'),
         pagamenti: document.querySelector('#menu-pagamenti'),
+        uscite: document.querySelector('#menu-uscite'),
         trattamenti: document.querySelector('#menu-trattamenti'),
         corsi: document.querySelector('#menu-corsi'),
         dashboard: document.querySelector('#menu-dashboard'),
@@ -65,6 +66,9 @@
             }
             if(in_array('menu_pagamenti',$elementi)){?>
                 this.pagamenti.addEventListener('click', () => navigate('pagamenti.php','pagamenti'));<?php
+            }
+            if(in_array('menu_uscite',$elementi)){?>
+                this.uscite.addEventListener('click', () => navigate('uscite.php','uscite'));<?php
             }
             if(in_array('menu_terapisti',$elementi)){?>
                 this.terapisti.addEventListener('click', () => navigate('terapisti.php','terapisti'));<?php
