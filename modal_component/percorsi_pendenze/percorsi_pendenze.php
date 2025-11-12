@@ -568,6 +568,10 @@
                         <div class="me-1">Totale Selezionato:</div>
                         <div class="fw-bold" id="sum-selected">0</div>
                     </div>
+                    <div class="d-flex flex-row" style="color:white;font-size:20px">
+                        <div class="me-1">Sedute Selezionate:</div>
+                        <div class="fw-bold" id="count-selected">0</div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -2,27 +2,48 @@
     $_REQUEST['skip_cookie']=true;
     require_once '../includes.php';
     
-    if(!isset_n_valid($_REQUEST['id'])){
+    if(!isset($_REQUEST['id']) || !isset($_REQUEST['table']) || !isset($_REQUEST['stato'])){
         throw new Exception("Error Processing Request", 1);
     }
 
-    Update('pagamenti')->set(['stato'=>$_REQUEST['stato']])->where("id={$_REQUEST['id']}");
-
-    Update('fatture')->set(['stato'=>$_REQUEST['stato']])->where("id_pagamenti={$_REQUEST['id']}");
-
-    $fatture = Select('*')->from('fatture')->where("id_pagamenti={$_REQUEST['id']}")->get();
-
     $stato_pagamento = $_REQUEST['stato'] == 'Saldata' ? 'Saldato' : 'Fatturato';
+    $save_sedute = ['stato_pagamento'=>$stato_pagamento];
+    $save = ['stato'=>$_REQUEST['stato']];
 
-    foreach ($fatture as $fattura) {
+    if(isset($_REQUEST['data'])){
+        $save['data'] = $save_sedute['data_pagamento'] = $_REQUEST['data'];
+    }
 
-        $pagamenti_fatture = Select('*')->from('pagamenti_fatture')->where("id_fattura={$fattura['id']}")->get();
+    Update('pagamenti')->set($save)->where("id={$_REQUEST['id']}");
 
-        foreach ($pagamenti_fatture as $pagamento_fatture) {
-            if($pagamento_fatture['origine']=='trattamenti'){
-                Update('percorsi_terapeutici_sedute')->set(['stato_pagamento'=>$stato_pagamento])->where("id={$pagamento_fatture['id_origine_child']}");
+    if($_REQUEST['table'] == 'fatture'){
+
+        Update($_REQUEST['table'])->set($save)->where("id_pagamenti={$_REQUEST['id']}");
+
+        $fatture = Select('*')->from('fatture')->where("id_pagamenti={$_REQUEST['id']}")->get();
+
+        foreach ($fatture as $fattura) {
+
+            $pagamenti_fatture = Select('*')->from('pagamenti_fatture')->where("id_fattura={$fattura['id']}")->get();
+
+            foreach ($pagamenti_fatture as $pagamento_fatture) {
+                if($pagamento_fatture['origine']=='trattamenti'){
+                    Update('percorsi_terapeutici_sedute')->set($save_sedute)->where("id={$pagamento_fatture['id_origine_child']}");
+                }
             }
         }
+
     }
+    else{
+
+        if(isset($_REQUEST['data'])){
+            Update($_REQUEST['table'])->set(['data'=>$_REQUEST['data']])->where("id_pagamenti={$_REQUEST['id']}");
+        }
+
+        foreach (Select('*')->from($_REQUEST['table'])->where("id_pagamenti={$_REQUEST['id']} AND origine = 'trattamenti'")->get() as $pagamento ) {
+            Update('percorsi_terapeutici_sedute')->set($save_sedute)->where("id={$pagamento['id_origine_child']}");
+        }
+    }
+
     
     

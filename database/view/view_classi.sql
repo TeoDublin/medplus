@@ -12,12 +12,12 @@ SELECT
     c.prezzo AS prezzo_tabellare,
     cc.prezzo AS prezzo,
     c.scadenza AS scadenza,
-    c.realizzato_da AS realizzato_da,
     cc.data_inizio AS data_inizio,
     t.terapista AS terapista,
     ct.nominativo AS nominativo,
     cg.giorni AS giorni,
-    cc.bnw AS bnw
+    cc.bnw AS bnw,
+    cc.realizzato_da as realizzato_da
 FROM medplus.corsi_classi cc
 LEFT JOIN medplus.corsi c ON cc.id_corso = c.id
 LEFT JOIN medplus.clienti ct ON cc.id_cliente = ct.id

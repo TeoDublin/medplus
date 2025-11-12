@@ -125,15 +125,14 @@
                                                                                         <div class="w-15">
                                                                                             <div class="d-grid h-100 align-content-center">
                                                                                                 <?php 
-                                                                                                    if($_origine=='FATTURA'&&$value['metodo']=='Bonifico'){
-                                                                                                        echo "<select 
+                                                                                                    if($value['metodo']=='Bonifico'){
+                                                                                                        echo "<buttom 
                                                                                                             data-id=\"".$value['id']."\"
-                                                                                                            class=\"form-control text-center\" name=\"stato\" value=\"{$value['stato']}\" onchange=\"window.modalHandlers['percorsi_fatture'].statoChange(this);\">";
-                                                                                                            foreach(Enum('fatture','stato')->get() as $enum){
-                                                                                                                $selected=$value['stato']==$enum?'selected':'';
-                                                                                                                echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
-                                                                                                            }
-                                                                                                        echo "</select>";
+                                                                                                            data-origine=\"".$value['origine']."\"
+                                                                                                            data-id_cliente=\"".$_REQUEST['id_cliente']."\"
+                                                                                                            class=\"form-control text-center\" name=\"stato\" value=\"{$value['stato']}\" onclick=\"window.modalHandlers['percorsi_fatture'].statoChange(this);\">";
+                                                                                                            echo strtoupper($value['stato']);
+                                                                                                        echo "</buttom>";
                                                                                                     }
                                                                                                     else{
                                                                                                         echo strtoupper($value['stato']); 
@@ -180,7 +179,7 @@
                                                                                             }?>
                                                                                             <!-- titles -->
                                                                                             <div class="d-flex w-100 my-3" style="padding-left:20px;padding-right:40px">
-                                                                                                <div class="w-10">
+                                                                                                <div class="flex-fill">
                                                                                                     <div class="d-grid h-100 align-content-center">
                                                                                                         Origine
                                                                                                     </div>
@@ -205,11 +204,6 @@
                                                                                                         Terapista
                                                                                                     </div>
                                                                                                 </div>
-                                                                                                <div class="w-15 d-none d-md-block">
-                                                                                                    <div class="d-grid h-100 align-content-center">
-                                                                                                        Realizzato da
-                                                                                                    </div>
-                                                                                                </div>
                                                                                             </div>
                                                                                             <?php 
                                                                                                 $binds = Select('*')->from('view_pagamenti_child')->where("id_pagamenti={$value['id']}")->get();
@@ -217,7 +211,7 @@
                                                                                                     switch ($bind['origine']) {
                                                                                                         case 'trattamenti':{?>
                                                                                                             <div class="d-flex w-100 border py-3" style="padding-left:20px;padding-right:40px">
-                                                                                                                <div class="w-10">
+                                                                                                                <div class="flex-fill">
                                                                                                                     <div class="d-grid h-100 align-content-center">
                                                                                                                         Trattamento
                                                                                                                     </div>                                    
@@ -242,17 +236,12 @@
                                                                                                                         <?php echo $bind['terapista']; ?>
                                                                                                                     </div>
                                                                                                                 </div>
-                                                                                                                <div class="w-15 d-none d-md-block">
-                                                                                                                    <div class="d-grid h-100 align-content-center">
-                                                                                                                        <?php echo $bind['realizzato_da']; ?>
-                                                                                                                    </div>
-                                                                                                                </div>
                                                                                                             </div><?php
                                                                                                             break;
                                                                                                         }
                                                                                                         case 'corsi':{?>
                                                                                                             <div class="d-flex w-100  border py-3" style="padding-left:20px;padding-right:40px">
-                                                                                                                <div class="w-10">
+                                                                                                                <div class="flex-fill">
                                                                                                                     <div class="d-grid h-100 align-content-center">
                                                                                                                         Corso
                                                                                                                     </div>                                    
@@ -275,11 +264,6 @@
                                                                                                                 <div class="w-15 d-none d-md-block">
                                                                                                                     <div class="d-grid h-100 align-content-center">
                                                                                                                         <?php echo $bind['corso_terapista']; ?>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="w-15 d-none d-md-block">
-                                                                                                                    <div class="d-grid h-100 align-content-center">
-                                                                                                                        <?php echo $bind['corso_realizzato_da']; ?>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div><?php

@@ -4,7 +4,8 @@
     $valore=(double)$_REQUEST['_data']['valore'];
     $inps = (double)$_REQUEST['_data']['inps'] ?? 0;
     $bollo = (double)$_REQUEST['_data']['bollo'] ?? 0;
-    $bnw = isset_n_valid($_REQUEST['_data']['bnw']) ? $_REQUEST['_data']['bnw'] : 'da definire';
+    $bnw = isset($_REQUEST['_data']['bnw']) ? $_REQUEST['_data']['bnw'] : 'da definire';
+    $stato = isset($_REQUEST['_data']['metodo']) && $_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Pendente' : 'Saldata';
 
     $id_pagamenti = Insert([
         'id_cliente'=>$_REQUEST['_data']['id_cliente'],
@@ -14,7 +15,7 @@
         'imponibile'=>$valore,
         'inps'=> $inps,
         'bollo' => $bollo,
-        'stato' => 'Saldata',
+        'stato' => $stato,
         'totale' => ( $valore + $inps + $bollo ),
         'bnw'=>$bnw
     ])->into('pagamenti')->get();
@@ -44,7 +45,7 @@
                         'data_pagamento'=>$_REQUEST['_data']['data'],
                         'tipo_pagamento'=>'Isico',
                         'saldato'=>($saldato + (double)$obj['saldato']),
-                        'stato_pagamento'=>(($saldato + (double)$obj['saldato']) < $prezzo ? 'Parziale' : 'Saldato')
+                        'stato_pagamento'=>($_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Fatturato' : 'Saldato')
                     ])->where("id={$obj['id']}");
                     break;
                 }

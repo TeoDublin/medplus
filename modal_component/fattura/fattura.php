@@ -1,5 +1,22 @@
 <?php style('modal_component/fattura/fattura.css'); ?>
 <?php 
+
+    function _bnw(){
+
+        if(!isset($_REQUEST['_data'])){
+            return '';
+        }
+        if(!isset($_REQUEST['_data'][0])){
+            return '';
+        }
+        if(!isset($_REQUEST['_data'][0]['bnw'])){
+            return '';
+        }
+
+        return $_REQUEST['_data'][0]['bnw'];
+
+    }
+
     function _deleted_index($index){
         return Select('fe.index')
         ->from('fatture_eliminate','fe')
@@ -8,8 +25,11 @@
         ->and("fe.index <> {$index}")
         ->get();
     }
+
     function _index($oggetti){
-        if($oggetti['index'])return $oggetti['index'];
+        if(isset($oggetti['index'])){
+            return $oggetti['index'];
+        }
         else{
             $index=Select('max(`index`) as mx')->from('fatture')->first_or_false();
             if(!$index['mx'])$index=Select("JSON_EXTRACT(setup, '$.first_index') as first_index")->from('setup')->where("`key`='fatture'")->col('first_index');
@@ -21,6 +41,7 @@
             return $index; 
         }
     }
+
     function _total($oggetti){
         $ret=0;
         foreach($oggetti??[] as $obj){
@@ -28,6 +49,7 @@
         }
         return $ret;
     }
+
     function _oggetti(){
         $ret=[];
         foreach($_REQUEST['data'] as $key=>$value){
@@ -35,7 +57,8 @@
         }
         return $ret;
     }
-    if($_REQUEST['id_fattura']){
+
+    if(isset($_REQUEST['id_fattura'])){
         $view_fatture=Select('*')->from('view_fatture')->where("id={$_REQUEST['id_fattura']}")->first();
         $id_cliente=$view_fatture['id_cliente'];
         $data_pagamento=$view_fatture['data'];
@@ -73,7 +96,7 @@
             </div>
             <div class="modal-body">
                 <input type="text" id="id_cliente" value="<?php echo $id_cliente; ?>" hidden/>
-                <input type="text" name="bnw" value="<?php echo $_REQUEST['_data'][0]['bnw'];?>" hidden/> 
+                <input type="text" name="bnw" value="<?php echo _bnw();?>" hidden/> 
                 <div class="p-2 card my-2">
                     <div class="pb-0 mb-0 card-body w-100">
                         <div class="d-flex flex-column w-100 my-3">
@@ -193,7 +216,7 @@
                     </div>  
                     <div class="flex-col mt-3" 
                         <?php 
-                            if($_REQUEST['id_fattura']){
+                            if(isset($_REQUEST['id_fattura'])){
                                 echo "onclick=\"window.modalHandlers['fattura'].generatePDF(this,{$id_cliente},"._json_encode(['id_fattura'=>$_REQUEST['id_fattura'],'oggetti'=>$oggetti]).")\"";
                             }
                             else{

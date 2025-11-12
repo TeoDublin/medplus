@@ -133,7 +133,7 @@
         'data'=>$_REQUEST['data_pagamento'],
         'metodo'=>$_REQUEST['metodo_pagamento'],
         'stato'=>$stato,
-        'fatturato_da'=>$_REQUEST['is_isico']=='true'?'Isico':'Medplus'
+        'fatturato_da'=>'Medplus'
     ];
 
     $save_pagamenti=[
@@ -149,7 +149,7 @@
         'stato'=>$stato
     ];
 
-    if(isset_n_valid($_REQUEST['oggetti'][0]['bnw'])){
+    if(isset($_REQUEST['oggetti'][0]['bnw'])){
         $save_pagamenti['bnw']=$_REQUEST['oggetti'][0]['bnw'];
     }
 
@@ -201,7 +201,7 @@
                         'data_pagamento'=>$_REQUEST['_data']['data'] ?? $_REQUEST['data_pagamento'],
                         'tipo_pagamento'=>'Fattura',
                         'saldato'=>($saldato + (double)$obj['saldato']),
-                        'stato_pagamento'=>(($saldato + (double)$obj['saldato']) < $prezzo ? 'Parziale' : 'Saldato')
+                        'stato_pagamento'=>($_REQUEST['metodo_pagamento'] == 'Bonifico' ? 'Fatturato' : 'Saldato')
                     ])->where("id={$obj['id']}");
                     break;
                 }

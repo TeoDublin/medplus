@@ -2,6 +2,7 @@ DROP VIEW IF EXISTS view_pagamenti_child;
 CREATE VIEW view_pagamenti_child AS 
 SELECT 
 	psf.id,
+  psf.id_origine,
   psf.id_pagamenti,
   psf.origine,
   'senza_fattura' as origine_pagamento,
@@ -15,7 +16,6 @@ SELECT
   pt.realizzato_da,
   cp.prezzo as corso_prezzo,
   cp.scadenza as corso_scadenza,
-  c.realizzato_da as corso_realizzato_da,
   tc.terapista as corso_terapista,
 	c.corso
 FROM `pagamenti_senza_fattura` psf
@@ -38,6 +38,7 @@ UNION ALL
 
 SELECT 
 	psf.id,
+  psf.id_origine,
   psf.id_pagamenti,
   psf.origine,
   'isico' as origine_pagamento,
@@ -51,9 +52,8 @@ SELECT
     pt.realizzato_da,
     cp.prezzo as corso_prezzo,
     cp.scadenza as corso_scadenza,
-    c.realizzato_da as corso_realizzato_da,
     tc.terapista as corso_terapista,
-	c.corso
+	  c.corso
 FROM `pagamenti_isico` psf
 LEFT JOIN percorsi_terapeutici_sedute pts ON psf.id_origine_child = pts.id AND psf.origine = 'trattamenti'
 LEFT JOIN percorsi_terapeutici pt ON pts.id_percorso = pt.id
@@ -74,6 +74,7 @@ UNION ALL
 
 SELECT 
 	psf.id,
+  psf.id_origine,
   psf.id_pagamenti,
   psf.origine,
   'aruba' as origine_pagamento,
@@ -87,7 +88,6 @@ SELECT
     pt.realizzato_da,
     cp.prezzo as corso_prezzo,
     cp.scadenza as corso_scadenza,
-    c.realizzato_da as corso_realizzato_da,
     tc.terapista as corso_terapista,
 	c.corso
 FROM `pagamenti_aruba` psf
@@ -110,6 +110,7 @@ UNION ALL
 
 SELECT 
 	psf.id,
+  psf.id_origine,
   f.id_pagamenti,
   psf.origine,
   'fatture' as origine_pagamento,
@@ -123,7 +124,6 @@ SELECT
     pt.realizzato_da,
     cp.prezzo as corso_prezzo,
     cp.scadenza as corso_scadenza,
-    c.realizzato_da as corso_realizzato_da,
     tc.terapista as corso_terapista,
 	c.corso
 FROM `pagamenti_fatture` psf

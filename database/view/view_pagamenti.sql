@@ -114,7 +114,7 @@ UNION ALL
 
 SELECT 
     ('corsi' COLLATE utf8mb4_general_ci) AS origine,
-    c.realizzato_da AS realizzato_da,
+    cc.realizzato_da AS realizzato_da,
     cp.id AS id,
     cp.id_cliente AS id_cliente,
     c.id AS id_origine,

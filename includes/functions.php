@@ -224,12 +224,6 @@
             END AS num")->from('corsi_giorni')->where("id_corso={$id_corso}"
         )->get_or_false();
     }
-    function isset_n_valid($var){
-        if(!isset($var)){
-            return false;
-        }
-        return valid($var);
-    }
     function valid($var){
         if(is_array($var)){
             return count($var)>0 ? true : false;

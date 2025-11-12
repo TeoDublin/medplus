@@ -8,7 +8,7 @@ class Html{
     }
     public function pagination($result, $url): void {
         if (!str_contains($url, '?')) $url .= '?';
-        if ($result->pages > 1 && !$_REQUEST['search']) { ?>
+        if ($result->pages > 1 && !isset($_REQUEST['search'])) { ?>
             <div class="d-flex align-content-end">
                 <div class="ms-auto flex-grow-0 me-md-3">
                     <nav aria-label="Page navigation example">
@@ -58,7 +58,7 @@ class Html{
     
     public function pagination2($result, $url): void {
         if (!str_contains($url, '?')) $url .= '?';
-        if ($result->pages > 1 && !$_REQUEST['search']) { ?>
+        if ($result->pages > 1 && !isset($_REQUEST['search'])) { ?>
             <div class="d-flex flex-fill align-content-start">
                 <div class="ms-md-3">
                     <nav aria-label="Page navigation example">

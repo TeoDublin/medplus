@@ -29,31 +29,31 @@
     if(_has_filters()){
 
         if(!isset($_POST['data']['all'])){
-            if(isset_n_valid($_POST['data']['da'])){
+            if(isset($_POST['data']['da'])){
                 $where.=" AND data >='{$_POST['data']['da']}'";
             }
-            if(isset_n_valid($_POST['data']['a'])){
+            if(isset($_POST['data']['a'])){
                 $where.=" AND data <='{$_POST['data']['a']}'";
             }    
         }
 
-        if(isset_n_valid($_POST['stato'])){
+        if(isset($_POST['stato'])){
             $where.=" AND stato IN('".implode("','",$_POST['stato'])."')";
         }
 
-        if(isset_n_valid($_POST['origine'])){
+        if(isset($_POST['origine'])){
             $where.=" AND origine IN('".implode("','",$_POST['origine'])."')";
         }
 
-        if(isset_n_valid($_POST['bnw'])){
+        if(isset($_POST['bnw'])){
             $where.=" AND bnw IN('".implode("','",$_POST['bnw'])."')";
         }
 
-        if(isset_n_valid($_POST['metodo'])){
+        if(isset($_POST['metodo'])){
             $where.=" AND metodo IN('".implode("','",$_POST['metodo'])."')";
         }
 
-        if(isset_n_valid($_POST['cliente'])){
+        if(isset($_POST['cliente'])){
             $where.=" AND id_cliente IN(".implode(',',$_POST['cliente']).")";
         }
     }
@@ -73,28 +73,28 @@
     <?php
     if(_has_filters()){?>
         <?php
-            if(!isset_n_valid($_POST['data_seduta']['all'])){
-                if(isset_n_valid($_POST['data']['da'])){
+            if(!isset($_POST['data_seduta']['all'])){
+                if(isset($_POST['data']['da'])){
                     echo "<div class=\"filter-label bg-gray\"><span > Da: ".unformat_date($_POST['data']['da'])."</span></div>"; 
                 }
-                if(isset_n_valid($_POST['data']['a'])){
+                if(isset($_POST['data']['a'])){
                     echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data']['a'])."</span></div>";
                 } 
             } 
 
-            if(isset_n_valid($_POST['stato'])){
+            if(isset($_POST['stato'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: ".implode(', ',$_POST['stato'])."</span></div>";
             }
-            if(isset_n_valid($_POST['origine'])){
+            if(isset($_POST['origine'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Tipo Pagamento: ".implode(', ',$_POST['origine'])."</span></div>";
             }
-            if(isset_n_valid($_POST['bnw'])){
+            if(isset($_POST['bnw'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Voucher: ".implode(', ',$_POST['bnw'])."</span></div>";
             }
-            if(isset_n_valid($_POST['metodo'])){
+            if(isset($_POST['metodo'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Metodo: ".implode(', ',$_POST['metodo'])."</span></div>";
             }
-            if(isset_n_valid($_POST['nominativo'])){
+            if(isset($_POST['nominativo'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Nominativo: ".implode(', ',$_POST['nominativo'])."</span></div>";
             }
 
@@ -118,23 +118,21 @@
                 <thead>
                     <tr class="small">
                         <th class="w-15">nominativo</th>
-                        <th class="w-15">origine</th>
                         <th class="w-10">metodo</th>
                         <th class="w-10">data</th>
                         <th class="w-5">imponibile</th>
                         <th class="w-5">inps</th>
                         <th class="w-5">bollo</th>
                         <th class="w-5">totale</th>
-                        <th class="w-10">note</th>
-                        <th class="w-10">stato</th>
-                        <th class="w-10">voucher</th>
+                        <th class="w-15">note</th>
+                        <th class="w-15">stato</th>
+                        <th class="w-15">voucher</th>
                     </tr>
                 </thead>
                 <tbody><?php 
                     foreach($pagamenti->result as $pagamento){?>
                         <tr data-id=<?php echo $pagamento['id']; ?> style="font-size:12px;line-height:8px; word-break:break-word;">
                             <td><?php echo $pagamento['nominativo']; ?></td>
-                            <td><?php echo $pagamento['origine']; ?></td>
                             <td><?php echo $pagamento['metodo']; ?></td>
                             <td><?php echo $pagamento['data']?format($pagamento['data'],'d/m/y'):'-'; ?></td>
                             <td><?php echo number_format($pagamento['imponibile'],2, ',', '.'); ?></td>

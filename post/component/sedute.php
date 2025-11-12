@@ -18,52 +18,52 @@
     if(_has_filters()){
 
         if(!isset($_POST['data_seduta']['all'])){
-            if(isset_n_valid($_POST['data_seduta']['da'])){
+            if(isset($_POST['data_seduta']['da'])){
                 $where.=" AND data_seduta >='{$_POST['data_seduta']['da']}'";
             }
-            if(isset_n_valid($_POST['data_seduta']['a'])){
+            if(isset($_POST['data_seduta']['a'])){
                 $where.=" AND data_seduta <='{$_POST['data_seduta']['a']}'";
             }    
         }
 
         if(!isset($_POST['data_pagamento']['all'])){
-            if(isset_n_valid($_POST['data_pagamento']['da'])){
+            if(isset($_POST['data_pagamento']['da'])){
                 $where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}'";
             }
-            if(isset_n_valid($_POST['data_pagamento']['a'])){
+            if(isset($_POST['data_pagamento']['a'])){
                 $where.=" AND data_pagamento <='{$_POST['data_pagamento']['a']}'";
             }    
         }
 
-        if(isset_n_valid($_POST['id_terapista'])){
+        if(isset($_POST['id_terapista'])){
             $where.=" AND id_terapista IN(".implode(',',$_POST['id_terapista']).")";
         }
 
-        if(isset_n_valid($_POST['stato_seduta'])){
+        if(isset($_POST['stato_seduta'])){
             $where.=" AND stato_seduta IN('".implode("','",$_POST['stato_seduta'])."')";
         }
 
-        if(isset_n_valid($_POST['stato_pagamento'])){
+        if(isset($_POST['stato_pagamento'])){
             $where.=" AND stato_pagamento IN('".implode("','",$_POST['stato_pagamento'])."')";
         }
 
-        if(isset_n_valid($_POST['tipo_pagamento'])){
+        if(isset($_POST['tipo_pagamento'])){
             $where.=" AND tipo_pagamento IN('".implode("','",$_POST['tipo_pagamento'])."')";
         }
 
-        if(isset_n_valid($_POST['realizzato_da'])){
+        if(isset($_POST['realizzato_da'])){
             $where.=" AND realizzato_da IN('".implode("','",$_POST['realizzato_da'])."')";
         }
 
-        if(isset_n_valid($_POST['bnw'])){
+        if(isset($_POST['bnw'])){
             $where.=" AND bnw IN('".implode("','",$_POST['bnw'])."')";
         }
 
-        if(isset_n_valid($_POST['stato_saldato_terapista'])){
+        if(isset($_POST['stato_saldato_terapista'])){
             $where.=" AND stato_saldato_terapista IN('".implode("','",$_POST['stato_saldato_terapista'])."')";
         }
 
-        if(isset_n_valid($_POST['cliente'])){
+        if(isset($_POST['cliente'])){
             $where.=" AND id_cliente IN(".implode(',',$_POST['cliente']).")";
         }
 
@@ -87,52 +87,52 @@
     if(_has_filters()){?>
         <?php
 
-            if(!isset_n_valid($_POST['data_seduta']['all'])){
-                if(isset_n_valid($_POST['data_seduta']['da'])){
+            if(!isset($_POST['data_seduta']['all'])){
+                if(isset($_POST['data_seduta']['da'])){
                     echo "<div class=\"filter-label bg-gray\"><span >Seduta Da: ".unformat_date($_POST['data_seduta']['da'])."</span></div>"; 
                 }
-                if(isset_n_valid($_POST['data_seduta']['a'])){
+                if(isset($_POST['data_seduta']['a'])){
                     echo "<div class=\"filter-label bg-gray\"><span >Seduta A: ".unformat_date($_POST['data_seduta']['a'])."</span></div>";    
                 }                
             }
 
-            if(isset_n_valid($_POST['id_terapista'])){
+            if(isset($_POST['id_terapista'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Terapista: ".implode(', ',$_POST['terapista'])."</span></div>";
             }
 
-            if(isset_n_valid($_POST['stato_seduta'])){
+            if(isset($_POST['stato_seduta'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Stato Seduta: ".implode(', ',$_POST['stato_seduta'])."</span></div>";
             }
 
-            if(isset_n_valid($_POST['stato_pagamento'])){
+            if(isset($_POST['stato_pagamento'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: ".implode(', ',$_POST['stato_pagamento'])."</span></div>";
             }
 
-            if(isset_n_valid($_POST['tipo_pagamento'])){
+            if(isset($_POST['tipo_pagamento'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Tipo Pagamento: ".implode(', ',$_POST['tipo_pagamento'])."</span></div>";
             }
 
-            if(isset_n_valid($_POST['realizzato_da'])){
+            if(isset($_POST['realizzato_da'])){
                 echo "<div class=\"filter-label bg-gray\"><span >realizzato da: ".implode(', ',$_POST['realizzato_da'])."</span></div>";
             }
 
-            if(isset_n_valid($_POST['bnw'])){
+            if(isset($_POST['bnw'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Voucher: ".implode(', ',$_POST['bnw'])."</span></div>";
             }
 
-            if(isset_n_valid($_POST['stato_saldato_terapista'])){
+            if(isset($_POST['stato_saldato_terapista'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Stato Saldato Terapista: ".implode(', ',$_POST['stato_saldato_terapista'])."</span></div>";
             } 
 
-            if(isset_n_valid($_POST['nominativo'])){
+            if(isset($_POST['nominativo'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Nominativo: ".implode(', ',$_POST['nominativo'])."</span></div>";
             }
 
-            if(!isset_n_valid($_POST['data_pagamento']['all'])){
-                if(isset_n_valid($_POST['data_pagamento']['da'])){
+            if(!isset($_POST['data_pagamento']['all'])){
+                if(isset($_POST['data_pagamento']['da'])){
                     echo "<div class=\"filter-label bg-gray\"><span >Pagamento Da: ".unformat_date($_POST['data_pagamento']['da'])."</span></div>"; 
                 }
-                if(isset_n_valid($_POST['data_pagamento']['a'])){
+                if(isset($_POST['data_pagamento']['a'])){
                     echo "<div class=\"filter-label bg-gray\"><span >Pagamento A: ".unformat_date($_POST['data_pagamento']['a'])."</span></div>";    
                 }
             } 
@@ -242,7 +242,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="cliente">Nominativo Cliente</label>
-                            <select class="form-control selectpicker" id="cliente" value="<?php echo $_POST['cliente']; ?>" multiple>
+                            <select class="form-control selectpicker" id="cliente" value="<?php echo isset($_POST['cliente'])?$_POST['cliente']:''; ?>" multiple>
                                 <?php 
                                     foreach(Select('*')->from('clienti')->get() as $enum){
                                         $selected = in_array($enum['id'],( $_POST['cliente'] ?? []))?'selected':'';
@@ -297,11 +297,11 @@
                     <div class="accordion-body">
                         <div>
                             <label for="data_pagamento_da">Da</label>
-                            <input class="form-control" type="date" id="data_pagamento_da" value="<?php echo $_POST['data_pagamento']['da']; ?>">
+                            <input class="form-control" type="date" id="data_pagamento_da" value="<?php echo isset($_POST['data_pagamento']) ? $_POST['data_pagamento']['da'] : ''; ?>">
                         </div>
                         <div>
                             <label for="data_pagamento_a">A</label>
-                            <input class="form-control" type="date" id="data_pagamento_a" value="<?php echo $_POST['data_pagamento']['a']; ?>">
+                            <input class="form-control" type="date" id="data_pagamento_a" value="<?php echo isset($_POST['data_pagamento']) ? $_POST['data_pagamento']['a'] : ''; ?>">
                         </div>
                         <div class="mt-3">
                             <div class="form-check">
@@ -328,7 +328,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="id_terapista">Terapista</label>
-                            <select class="form-control selectpicker" id="id_terapista" value="<?php echo $_POST['id_terapista']; ?>"  multiple>
+                            <select class="form-control selectpicker" id="id_terapista" value="<?php echo isset($_POST['id_terapista']) ? $_POST['id_terapista'] : ''; ?>"  multiple>
                                 <option value="0" <?= (isset($_POST['id_terapista']) && $_POST['id_terapista'] === "0") ? 'selected' : '' ?>>Non Assegnato</option>
                                 <?php 
                                     foreach (Select('*')->from('terapisti')->get() as $terapista) {
@@ -353,7 +353,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="stato_seduta">Stato Seduta</label>
-                            <select class="form-control selectpicker" id="stato_seduta" value="<?php echo $_POST['stato_seduta']; ?>" multiple>
+                            <select class="form-control selectpicker" id="stato_seduta" value="<?php echo isset($_POST['stato_seduta']) ? $_POST['stato_seduta'] : ''; ?>" multiple>
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute_prenotate','stato_prenotazione')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['stato_seduta'] ?? []))?'selected':'';
@@ -377,7 +377,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="stato_pagamento">Stato Pagamento</label>
-                            <select class="form-control selectpicker" id="stato_pagamento" value="<?php echo $_POST['stato_pagamento']; ?>" multiple>
+                            <select class="form-control selectpicker" id="stato_pagamento" value="<?php echo isset($_POST['stato_pagamento']) ? $_POST['stato_pagamento'] : ''; ?>" multiple>
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute','stato_pagamento')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['stato_pagamento'] ?? []))?'selected':'';
@@ -401,7 +401,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="stato_saldato_terapista">Pagamento Terapista</label>
-                            <select class="form-control selectpicker" id="stato_saldato_terapista" value="<?php echo $_POST['stato_saldato_terapista']; ?>" multiple>
+                            <select class="form-control selectpicker" id="stato_saldato_terapista" value="<?php echo isset($_POST['stato_saldato_terapista']) ? $_POST['stato_saldato_terapista'] : ''; ?>" multiple>
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute','stato_saldato_terapista')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['stato_saldato_terapista'] ?? []))?'selected':'';
@@ -425,7 +425,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="tipo_pagamento">Tipo Pagamento</label>
-                            <select class="form-control selectpicker" id="tipo_pagamento" value="<?php echo $_POST['tipo_pagamento']; ?>" multiple>
+                            <select class="form-control selectpicker" id="tipo_pagamento" value="<?php echo isset($_POST['tipo_pagamento']) ? $_POST['tipo_pagamento'] : ''; ?>" multiple>
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute','tipo_pagamento')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['tipo_pagamento'] ?? []))?'selected':'';
@@ -449,7 +449,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="realizzato_da">Realizzato da</label>
-                            <select class="form-control selectpicker" id="realizzato_da" value="<?php echo $_POST['realizzato_da']; ?>" multiple>
+                            <select class="form-control selectpicker" id="realizzato_da" value="<?php echo isset($_POST['realizzato_da']) ? $_POST['realizzato_da'] : ''; ?>" multiple>
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici','realizzato_da')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['realizzato_da'] ?? []))?'selected':'';

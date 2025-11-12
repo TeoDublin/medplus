@@ -29,7 +29,10 @@
         return $ret;
     }; 
     $_planning=function ($id_terapista,$row)use(&$terapista_planning){
-        $class='';$id='';$origin='empty';
+        $class='';
+        $id='';
+        $origin='empty';
+        $motivo='';
         foreach ($terapista_planning[$id_terapista]['planning'] as $plan) {
             $row_inizio=(int)$plan['row_inizio'];
             $row_fine=(int)$plan['row_fine'];

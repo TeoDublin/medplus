@@ -9,8 +9,7 @@
         'id_terapista'=>$_REQUEST['id_terapista'],
         'corso'=>$_REQUEST['corso'],
         'prezzo'=>$_REQUEST['prezzo'],
-        'scadenza'=>$_REQUEST['scadenza'],
-        'realizzato_da'=>$_REQUEST['realizzato_da']
+        'scadenza'=>$_REQUEST['scadenza']
     ];
 
     if($id&&!empty($id)){
@@ -41,7 +40,8 @@
             'id_cliente'=>$cliente['cliente'],
             'prezzo'=>$cliente['prezzo'],
             'data_inizio'=>$cliente['data_inizio'],
-            'bnw'=>$cliente['bnw']
+            'bnw'=>$cliente['bnw'],
+            'realizzato_da'=>$cliente['realizzato_da'],
         ];
 
         if(!$corsi_classi){

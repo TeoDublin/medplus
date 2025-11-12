@@ -13,12 +13,6 @@ window.modalHandlers['percorsi_fatture']={
         }
     },
     statoChange:function(e){
-        let _data = e.dataset;
-        _data.stato = e.value;
-        $.post('post/fattura_cambia_stato.php',_data).done(()=>{
-            success();
-        }).fail(()=>{
-            fail();
-        });
+        modal_component('fattura_cambia_stato','fattura_cambia_stato',e.dataset);
     }
 };

@@ -322,12 +322,19 @@
                                                 </div>
                                                 <!-- accordions -->
                                                 <?php foreach ($view_percorsi as $percorso) {
+                                                    $view_pagamenti_child = Select('*')->from('view_pagamenti_child')->where("id_origine = {$percorso['id']}")->get();
+                                                    $con_pagamento = count($view_pagamenti_child) > 0;
                                                     $view_sedute=_view_sedute($percorso['id']);?>
                                                     <div class="accordion" id="accordion-percorso<?php echo $percorso['id'];?>">
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header">
                                                                 <div class="accordion-button border py-2 collapsed <?php echo $percorso['stato']; ?>" name="row_percorso" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-percorso<?php echo $percorso['id'];?>" aria-expanded="false" aria-controls="collapse-percorso<?php echo $percorso['id'];?>">
-                                                                    <div class="d-flex flex-row w-100">
+                                                                    <div 
+                                                                        class="d-flex flex-row w-100 save"
+                                                                        data-id_percorso=<?php echo $percorso['id'];?>
+                                                                        data-id_cliente=<?php echo $_REQUEST['id_cliente'];?>
+                                                                        data-con_pagamento=<?php echo $con_pagamento; ?>
+                                                                        >
                                                                         <input value="<?php echo $percorso['id'];?>" name="id_percorso" hidden/>
                                                                         <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1" 
                                                                             onclick="window.modalHandlers['percorsi'].deleteClick(this)" 
@@ -361,8 +368,8 @@
                                                                             >
                                                                             <?php echo icon('info.svg','black',20,20); ?>
                                                                         </div>
-                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                            <span><?php echo $percorso['bnw']; ?></span>
+                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1" onclick="window.modalHandlers['percorsi'].cambiaVoucher(this)">
+                                                                            <button class="btn border w-100 mx-3"><?php echo $percorso['bnw']; ?></button>
                                                                         </div>
                                                                     </div>
                                                                 </div>

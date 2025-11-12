@@ -1,5 +1,5 @@
 <?php 
-    if(isset_n_valid($_REQUEST['id'])){
+    if(isset($_REQUEST['id'])){
         $indirizzato_a=Select('*')->from('indirizzato_a')->where("id={$_REQUEST['id']}")->first_or_false();
     }
 ?>

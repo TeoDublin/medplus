@@ -1,5 +1,5 @@
 <?php 
-    if(isset_n_valid($_REQUEST['id'])){
+    if(isset($_REQUEST['id'])){
         $uscita=Select('*')->from('uscite_per_giorno')->where("id={$_REQUEST['id']}")->first_or_false();
     }
 ?>

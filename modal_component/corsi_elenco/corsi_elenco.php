@@ -24,16 +24,7 @@
                                 }
                             echo "</select>";?>
                         </div>
-                        <div class="w-md-20 mx-2">
-                            <label for="realizzato_da" class="form-label">Realizzato Da</label><?php 
-                            echo "<select class=\"form-control text-center\" name=\"realizzato_da\" value=\"{$corso['realizzato_da']}\">";
-                                foreach(Enum('corsi','realizzato_da')->get() as $enum){
-                                    $selected=$corso['realizzato_da']==$enum?'selected':'';
-                                    echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
-                                }
-                            echo "</select>";?>
-                        </div>
-                        <div class="flex-fill">
+                        <div class="flex-fill ms-2">
                             <label for="corso" class="form-label" >Corso</label>
                             <input type="text" class="form-control text-center" placeholder="Di un nome al corso" name="corso" value="<?php echo $corso['corso']??''; ?>"/> 
                         </div>
@@ -112,9 +103,10 @@
                                     <div class="table-responsive mb-2 title">
                                         <div class="d-flex flex-row w-100">
                                             <div class="flex-fill"><span>Cliente</span></div>
-                                            <div class="w-20 mx-2"><span>Prezzo</span></div>
-                                            <div class="w-20 mx-2"><span>Dt.Inizio</span></div>
+                                            <div class="w-15 mx-2"><span>Prezzo</span></div>
+                                            <div class="w-15 mx-2"><span>Dt.Inizio</span></div>
                                             <div class="w-20 mx-2"><span>Voucher</span></div>
+                                            <div class="w-20 mx-2"><span>Realizzato Da</span></div>
                                             <div class="w-10"><span>#</span></div>
                                         </div>
                                     </div>
@@ -128,6 +120,7 @@
                                                     $_REQUEST['prezzo']=$cliente['prezzo'];
                                                     $_REQUEST['data_inizio']=$cliente['data_inizio'];
                                                     $_REQUEST['bnw']=$cliente['bnw'];
+                                                    $_REQUEST['realizzato_da']=$cliente['realizzato_da'];
 
                                                     if($is_first){
                                                         $is_first=false;

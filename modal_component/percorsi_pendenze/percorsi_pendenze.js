@@ -1,6 +1,7 @@
 window.modalHandlers['percorsi_pendenze'] = {
     closePersistent:'fattura',
     sumSelected: 0,
+    countSelected:0,
     realizzato_da: function(_data) {
         let realizzato_da = null;
         let hasError = false;
@@ -124,19 +125,24 @@ window.modalHandlers['percorsi_pendenze'] = {
         let element = e.querySelector('.form-check');
         const prezzo = parseFloat(e.querySelector('.prezzo').textContent);
         let sumSelected = parseFloat(document.querySelector('#sum-selected').textContent);
+        let countSelected = this.countSelected;
 
         if(e.classList.contains('checked')){
             e.classList.remove('checked');
             element.checked = false;
             sumSelected-=prezzo;
+            countSelected --;
         }
         else {
             e.classList.add('checked');
             element.checked = true;
             sumSelected+=prezzo;
+            countSelected ++;
         }
         document.querySelector('#sum-selected').textContent = sumSelected;
+        document.querySelector('#count-selected').textContent = countSelected;
         this.sumSelected = sumSelected;
+        this.countSelected = countSelected;
         this.toggleBtns();
     },
     uncheckAll:function(){
@@ -170,10 +176,20 @@ window.modalHandlers['fattura'] = Object.assign(
     persistent:true,
 
     generatePDF:function(e,id_cliente,oggetti) {
+        const div = document.createElement('div');
+        div.id = 'div_fattura_spinner';
+        div.style = 'z-index:99999!important';
+        div.innerHTML = spinner();
+        document.querySelector('#modal_fattura').appendChild(div);
         const _oggetti=JSON.parse(oggetti);
-        $.post('post/fattura.php',{..._data(e), ..._oggetti}).done(response=>{
+        const _merged = Object.assign({}, _data(e), _oggetti);
+        $.post('post/fattura.php', _merged).done(response=>{
             window.open(response,'_blank');
             reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:id_cliente});
+        }).fail(()=>{
+            fail();
+        }).always(() => {
+            div.remove();
         });
     },
 });
