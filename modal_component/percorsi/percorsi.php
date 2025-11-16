@@ -54,7 +54,20 @@
         }
     }
     function _stato_pagamento($v){
-        if((int)$v['saldato']>=(int)$v['prezzo']){
+
+        if($v['origine'] == 'corsi'){
+            $ret = Select('*')->from('corsi_pagamenti')->where("id={$v['id']}")->first_or_false();
+            if(isset($ret['stato_pagamento'])){
+                if(!null_or_empty($ret['stato_pagamento'])){
+                    return $ret['stato_pagamento'];
+                }
+            }
+        }
+
+        if((int)$v['prezzo'] == 0){
+            return 'Esente';
+        }
+        elseif((int)$v['saldato']>=(int)$v['prezzo']){
             return 'Saldato';
         }
         elseif($v['saldato']>0){

@@ -27,7 +27,19 @@
                 break;
             }
             case 'corsi_pagamenti':{
-                Update('corsi_pagamenti')->set(['prezzo'=>$_REQUEST['prezzo']])->where("id={$value['id']}");
+
+                $save = ['prezzo'=>$_REQUEST['prezzo']];
+
+                if( $_REQUEST['prezzo'] == 0 ){
+                    $corsi_pagamenti = Select('*')->from('corsi_pagamenti')->where("id={$value['id']}")->first();
+                    if(isset($corsi_pagamenti['scadenza']) && !null_or_empty($corsi_pagamenti['scadenza'])){
+                        $save['data_pagamento'] = $corsi_pagamenti['scadenza'];
+                    }
+                    $save['stato_pagamento'] = 'Esente';
+                    $save['tipo_pagamento'] = 'Esente';
+                }
+
+                Update('corsi_pagamenti')->set($save)->where("id={$value['id']}");
                 break;
             }
         }

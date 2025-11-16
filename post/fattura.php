@@ -190,6 +190,13 @@
                     $origine='corsi';
                     $id_origine=$obj['id_corso'];
                     $id_origine_child=$obj['id'];
+                    
+                    Update('corsi_pagamenti')->set([
+                        'data_pagamento'=>$_REQUEST['_data']['data'] ?? $_REQUEST['data_pagamento'],
+                        'tipo_pagamento'=>'Fattura',
+                        'stato_pagamento'=>($_REQUEST['metodo_pagamento'] == 'Bonifico' ? 'Fatturato' : 'Saldato')
+                    ])->where("id={$obj['id']}");
+                    
                     break;
                 }
                 case 'view_sedute':{
@@ -203,6 +210,7 @@
                         'saldato'=>($saldato + (double)$obj['saldato']),
                         'stato_pagamento'=>($_REQUEST['metodo_pagamento'] == 'Bonifico' ? 'Fatturato' : 'Saldato')
                     ])->where("id={$obj['id']}");
+
                     break;
                 }
             }

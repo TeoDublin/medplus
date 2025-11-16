@@ -143,7 +143,7 @@
     ?>
 </div>
 <div>
-    <span><?php echo "Quantità: {$view_sedute->total}, Totale: € {$sum['prezzo']}, Incassato: € {$sum['saldato']}, Pendente: € ".number_format($sum['prezzo']-$sum['saldato'],2); ?></span>
+    <span><?php echo "Quantità: ".number_format($view_sedute->total,2, ',', '.').", Totale: € ".number_format($sum['prezzo'],2, ',', '.').", Incassato: € ".number_format($sum['saldato'],2, ',', '.').", Pendente: € ".number_format($sum['prezzo']-$sum['saldato'],2, ',', '.'); ?></span>
 </div>
 
 <!-- table -->

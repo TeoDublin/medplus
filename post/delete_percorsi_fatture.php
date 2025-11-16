@@ -26,9 +26,16 @@
                         ->where("id={$percorsi_terapeutici_sedute['id']}");
 
                         break;
-                    case 'corsi':
-                        # code...
+                    case 'corsi':{
+
+                        Update('corsi_pagamenti')->set([
+                            'data_pagamento'=>'',
+                            'tipo_pagamento'=>'',
+                            'stato_pagamento'=>'Pendente'
+                        ])->where("id={$pagamento['id_origine_child']}");
+
                         break;
+                    }
                 }
             }
 
@@ -58,9 +65,17 @@
 
                         break;
                     }
-                    case 'corsi':
-                        # code...
+                    case 'corsi':{
+
+                        Update('corsi_pagamenti')->set([
+                            'data_pagamento'=>'',
+                            'tipo_pagamento'=>'',
+                            'stato_pagamento'=>'Pendente'
+                        ])
+                        ->where("id={$pagamento['id_origine_child']}");
+
                         break;
+                    }
                 }
             }
         }

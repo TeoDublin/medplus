@@ -17,6 +17,25 @@
         $formattedDate = strftime($format, strtotime($date));
         return ucfirst($formattedDate);
     }
+
+    function null_or_empty($val){
+        if($val == null){
+            return true;
+        }
+        if(is_array($val)){
+            if(count($val) == 0){
+                return true;
+            }
+        }
+        else{
+            if($val == ''){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     function environment():string{
         return $_SERVER['HTTP_HOST']=='127.0.0.1:8080'?'dev':'prod';
     }

@@ -5,8 +5,15 @@
         'id_cliente'=>$_REQUEST['id_cliente'],
         'scadenza'=>$_REQUEST['scadenza'],
         'prezzo'=>$_REQUEST['prezzo'],
-        'prezzo_tabellare'=>$_REQUEST['prezzo_tabellare']
+        'prezzo_tabellare'=>$_REQUEST['prezzo_tabellare'],
     ];
+
+    if( $_REQUEST['prezzo'] == 0 ){
+        $save['stato_pagamento'] = 'Esente';
+        $save['data_pagamento'] = $_REQUEST['scadenza'];
+        $save['tipo_pagamento'] = 'Esente';
+    }
+
     if($corsi_sospensioni=Select('*')
         ->from('corsi_sospensioni')
         ->where("id_corso={$_REQUEST['id_corso']} and id_cliente={$_REQUEST['id_cliente']} and mese={$_REQUEST['mese']} and anno={$_REQUEST['anno']}")->first_or_false()

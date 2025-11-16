@@ -27,13 +27,22 @@
 
             $prezzo = (double)$obj['prezzo'];
 
-            $saldato = $prezzo <= ($valore + (double)$obj['saldato']) ? ($prezzo - (double)$obj['saldato']) : $valore;
+            $req_saldato = (double) ( $obj['saldato'] ?? 0 );
+
+            $saldato = $prezzo <= ($valore + $req_saldato) ? ($prezzo - $req_saldato) : $valore;
 
             switch($value['view']){
                 case 'corsi_pagamenti':{
                     $origine='corsi';
                     $id_origine=$obj['id_corso'];
                     $id_origine_child=$obj['id'];
+
+                    Update('corsi_pagamenti')->set([
+                        'data_pagamento'=>$_REQUEST['_data']['data'],
+                        'tipo_pagamento'=>'Isico',
+                        'stato_pagamento'=>($_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Fatturato' : 'Saldato')
+                    ])->where("id={$obj['id']}");
+                    
                     break;
                 }
                 case 'view_sedute':{
@@ -44,7 +53,7 @@
                     Update('percorsi_terapeutici_sedute')->set([
                         'data_pagamento'=>$_REQUEST['_data']['data'],
                         'tipo_pagamento'=>'Isico',
-                        'saldato'=>($saldato + (double)$obj['saldato']),
+                        'saldato'=>($saldato + $req_saldato),
                         'stato_pagamento'=>($_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Fatturato' : 'Saldato')
                     ])->where("id={$obj['id']}");
                     break;

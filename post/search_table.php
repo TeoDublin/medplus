@@ -8,7 +8,12 @@
     }
     $table=$select->get_table();
     $table->{'cols'}=$_REQUEST['cols']??array_keys(array_diff_key($table->result[0]??[],['id'=>1]));
-    $table->{'actions'}=is_array($_REQUEST['actions'])?json_encode($_REQUEST['actions']):$_REQUEST['actions'];
+    if(!isset($_REQUEST['actions'])){
+        $table->{'actions'} = '';
+    }
+    else{
+        $table->{'actions'}=is_array($_REQUEST['actions'])?json_encode($_REQUEST['actions']):$_REQUEST['actions'];
+    }
     if(isset($_REQUEST['search'])){
         $table->{'search'}=$_REQUEST['search'];
     }

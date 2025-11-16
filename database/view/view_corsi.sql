@@ -9,7 +9,8 @@ SELECT
     (c.prezzo COLLATE utf8mb4_general_ci) AS prezzo_tabellare,
     (c.scadenza COLLATE utf8mb4_general_ci) AS scadenza,
     (t.terapista COLLATE utf8mb4_general_ci) AS terapista,
-    (cg.giorni COLLATE utf8mb4_general_ci) AS giorni
+    (cg.giorni COLLATE utf8mb4_general_ci) AS giorni,
+    c.timestamp as timestamp
 FROM 
     medplus.corsi c
     LEFT JOIN medplus.terapisti t ON c.id_terapista = t.id

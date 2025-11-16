@@ -114,7 +114,7 @@
                                         if($clienti){?>
                                             <?php
                                                 $is_first=true;
-                                                $_REQUEST['prezzo_tabellare']=$corso['prezzo'];
+                                                $_REQUEST['prezzo_tabellare']=$corso['prezzo'] ?? $corso['prezzo_tabellare'];
                                                 foreach($clienti as $cliente){
                                                     $_REQUEST['cliente']=$cliente['id_cliente'];
                                                     $_REQUEST['prezzo']=$cliente['prezzo'];

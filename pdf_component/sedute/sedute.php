@@ -14,7 +14,6 @@
             <div class="flex-fill">Cliente</div>
             <div class="w-15">Saldo</div>
             <div class="w-15">Prezzo</div>
-            <div class="w-15">Voucher</div>
         </div>
     </div>
     <?php 
@@ -27,7 +26,6 @@
                 echo '<div class="flex-fill border">' . _txt($result['nominativo']) . '</div>';
                 echo '<div class="w-15 border">' . number_format($saldo, 2, '.', '') . '</div>';
                 echo '<div class="w-15 border">' . number_format($prezzo, 2, '.', '') . '</div>';
-                echo '<div class="w-15 border">' ._txt($result['bnw']) . '</div>';
             echo '</div>';
             $total_saldo += $saldo;
             $count++;

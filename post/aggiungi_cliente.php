@@ -1,9 +1,13 @@
-<?php require_once __DIR__.'/../includes.php'; ?>
+<?php require_once __DIR__.'/../includes.php'; 
+
+$cliente = $_REQUEST['cliente'] ?? 0;
+?>
 <div class="flex-fill"><?php
-    echo "<select class=\"form-control text-center flex-fill cliente\" value=\"{$_REQUEST['cliente']}\">";
+    echo "<select class=\"form-control text-center flex-fill cliente\" value=\"{$cliente}\">";
         echo "<option></option>";
         foreach(Select('*')->from('clienti')->get() as $enum){
-            $selected = $_REQUEST['cliente']==$enum['id']?'selected':'';
+            
+            $selected = $cliente ==$enum['id']?'selected':'';
             echo "<option value=\"{$enum['id']}\" {$selected}>{$enum['nominativo']}</option>";
         }
     echo "</select>";?>
@@ -14,7 +18,7 @@
     
     $bnw = isset($_REQUEST['bnw']) ? $_REQUEST['bnw'] :'da definire';
     
-    echo "<select class=\"form-control text-center flex-fill bnw\" value=\"{$_REQUEST['cliente']}\">";
+    echo "<select class=\"form-control text-center flex-fill bnw\" value=\"{$cliente}\">";
         foreach(Enum('corsi_classi','bnw')->get() as $enum){
             $selected = $bnw ==$enum?'selected':'';
             echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
