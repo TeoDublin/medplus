@@ -1,0 +1,4 @@
+div.d-flex {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}

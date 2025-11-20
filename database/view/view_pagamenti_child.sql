@@ -33,6 +33,7 @@ LEFT JOIN (
 LEFT JOIN corsi_pagamenti cp ON psf.id_origine_child = cp.id AND psf.origine = 'corsi'
 LEFT JOIN corsi c ON cp.id_corso = c.id
 LEFT JOIN terapisti tc ON c.id_terapista = tc.id
+GROUP BY psf.id_origine_child, psf.id_pagamenti
 
 UNION ALL
 
@@ -69,6 +70,7 @@ LEFT JOIN (
 LEFT JOIN corsi_pagamenti cp ON psf.id_origine_child = cp.id AND psf.origine = 'corsi'
 LEFT JOIN corsi c ON cp.id_corso = c.id
 LEFT JOIN terapisti tc ON c.id_terapista = tc.id
+GROUP BY psf.id_origine_child, psf.id_pagamenti
 
 UNION ALL
 
@@ -105,6 +107,7 @@ LEFT JOIN (
 LEFT JOIN corsi_pagamenti cp ON psf.id_origine_child = cp.id AND psf.origine = 'corsi'
 LEFT JOIN corsi c ON cp.id_corso = c.id
 LEFT JOIN terapisti tc ON c.id_terapista = tc.id
+GROUP BY psf.id_origine_child, psf.id_pagamenti
 
 UNION ALL
 
@@ -141,4 +144,5 @@ LEFT JOIN (
 ) t ON pts.id_combo = t.id_combo
 LEFT JOIN corsi_pagamenti cp ON psf.id_origine_child = cp.id AND psf.origine = 'corsi'
 LEFT JOIN corsi c ON cp.id_corso = c.id
-LEFT JOIN terapisti tc ON c.id_terapista = tc.id;
+LEFT JOIN terapisti tc ON c.id_terapista = tc.id
+GROUP BY psf.id_origine_child, f.id_pagamenti;

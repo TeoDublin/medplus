@@ -6,6 +6,9 @@
                 <a class="nav-link <?php echo _tab('sedute')?'active':'';?>" aria-current="page" href="pagamenti.php?tab=sedute&pagination=0">Sedute</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link <?php echo _tab('corsi')?'active':'';?>" aria-current="page" href="pagamenti.php?tab=corsi&pagination=0">Corsi</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link <?php echo _tab('fatture')?'active':'';?>" aria-current="page" href="pagamenti.php?tab=fatture&pagination=0">Fatture</a>
             </li>
             <li class="nav-item">

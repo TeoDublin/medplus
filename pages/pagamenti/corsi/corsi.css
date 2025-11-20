@@ -1,0 +1,154 @@
+td,th {
+    white-space: normal!important;
+    word-break: break-word!important;
+}
+.filter-labels{
+    height: 80px;
+    min-height: 80px;
+}
+.filter-labels.none{
+    height: 30px;
+    min-height: 30px;
+}
+.filter-label{
+    max-height: 80px;
+    overflow: hidden!important;
+    margin-left: 10px;
+    padding: 7px;
+    border-radius: 7px;
+    color: white;
+}
+.floating-menu {
+    position: fixed;
+    right: -350px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: right 0.3s ease;
+    width: 350px;
+    height: 100vh;
+    background-color: #f8f9fa;
+    z-index: 1020;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevents content from overflowing */
+}
+.floating-menu .content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 60px;
+}
+.floating-menu .sticky-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: transparent;
+    padding: 10px;
+}
+.floating-menu.open {
+    right: 0;
+}
+.floating-menu-btn {
+    position: fixed;
+    right: 0;
+    transform: translateY(-50%);
+    transition: right 0.3s ease;
+    width: 40px;
+    z-index: 1021;
+    right: 0;
+    top: 50%;
+    height: 120px;
+    background-color: transparent;
+    border: none;
+}
+.floating-menu-btn.open {
+    right: 310px;
+    background-color: transparent;
+}
+.floating-menu-btn > button.left{
+    width: 40px;
+    border: solid rgba(var(--base-bg-primary-rgb), 0.1) 1px;
+    border-radius: 10px 0 0 10px;
+    background-color: rgba(var(--base-bg-primary-rgb), 0.1);
+    display: block;
+}
+.floating-menu-btn.open > button.left{
+    display: none;
+}
+.floating-menu-btn.open > button.right{
+    width: 40px;
+    border: solid rgba(var(--base-bg-primary-rgb), 0.1) 1px;
+    border-radius: 0 10px 10px 0;
+    background-color: rgba(var(--base-bg-primary-rgb), 0.1);
+    display: block;
+}
+.floating-menu-btn > button.right{
+    display: none;
+}
+.floating-excel-btn {
+    position: fixed;
+    bottom: 10px;
+    transition: right 0.3s ease;
+    z-index: 1021;
+    right: 10px;
+    background-color: var(--base-bg-colorfull3);
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+.floating-excel-btn:hover > .tip {
+    display: block!important;
+    bottom: 14px;
+    right: 80px;
+    border: solid var(--base-bg-colorfull3) 5px;
+}
+.floating-excel-btn:hover {
+    border: solid var(--base-bg-colorfull3) 5px;
+    background-color: white;
+    z-index: 1099;
+}
+.floating-excel-btn:hover svg {
+    fill: black!important;
+    width: 40px;
+    height: 40px;
+}
+.floating-excel-btn.open {
+    right: 360px;
+}
+.floating-download-pdf-btn {
+    position: fixed;
+    bottom: 60px;
+    transition: right 0.3s ease;
+    z-index: 1021;
+    right: 10px;
+    background-color: var(--base-bg-colorfull4);
+    padding: 10px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+}
+.floating-download-pdf-btn:hover > .tip {
+    display: block!important;
+    bottom: 64px;
+    right: 80px;
+    border: solid var(--base-bg-colorfull4) 5px;
+}
+.floating-download-pdf-btn:hover {
+    border: solid var(--base-bg-colorfull4) 5px;
+    background-color: white;
+    z-index: 1099;
+}
+.floating-download-pdf-btn:hover svg {
+    fill: black!important;
+    width: 40px;
+    height: 40px;
+}
+.floating-download-pdf-btn.open {
+    right: 360px;
+}
+
+.bootstrap-select .filter-option-inner-inner {
+  white-space: normal !important;
+}
+
