@@ -69,11 +69,11 @@
 
     }
     elseif(!isset($_REQUEST['btnClean'])){
-        $_POST['stato_seduta']=['Conclusa'];
-        $_POST['data_seduta']['da']=date('Y-m-01');
-        $_POST['data_seduta']['a']=date('Y-m-d');
-        $where.=" AND data_seduta >='{$_POST['data_seduta']['da']}' AND data_seduta <='{$_POST['data_seduta']['a']}'";
-        $where.=" AND stato_seduta IN('".implode("','",$_POST['stato_seduta'])."')";
+        $_POST['stato_pagamento']=['Saldato'];
+        $_POST['data_pagamento']['da']=date('Y-m-01');
+        $_POST['data_pagamento']['a']=date('Y-m-d');
+        $where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}' AND data_pagamento <='{$_POST['data_pagamento']['a']}'";
+        $where.=" AND stato_pagamento IN('".implode("','",$_POST['stato_pagamento'])."')";
     }
 
     $view_sedute = Select('*')->from('view_sedute')->where($where)->orderby('data_seduta ASC')->get_table();

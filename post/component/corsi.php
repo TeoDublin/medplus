@@ -65,9 +65,11 @@
 
     }
     elseif(!isset($_REQUEST['btnClean'])){
-        $_POST['scadenza']['da']=date('Y-m-01');
-        $_POST['scadenza']['a']=date('Y-m-d');
-        $where.=" AND scadenza >='{$_POST['scadenza']['da']}' AND scadenza <='{$_POST['scadenza']['a']}'";
+        $_POST['stato_pagamento']=['Saldato'];
+        $_POST['data_pagamento']['da']=date('Y-m-01');
+        $_POST['data_pagamento']['a']=date('Y-m-d');
+        $where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}' AND data_pagamento <='{$_POST['data_pagamento']['a']}'";
+        $where.=" AND stato_pagamento IN('".implode("','",$_POST['stato_pagamento'])."')";
     }
 
     $view_corsi_sedute = Select('*')->from('view_corsi_sedute')->where($where)->orderby('scadenza ASC')->get_table();
@@ -83,10 +85,10 @@
 
             if(!isset($_POST['scadenza']['all'])){
                 if(isset($_POST['scadenza']['da'])){
-                    echo "<div class=\"filter-label bg-gray\"><span >Seduta Da: ".unformat_date($_POST['scadenza']['da'])."</span></div>"; 
+                    echo "<div class=\"filter-label bg-gray\"><span >Scadenza Da: ".unformat_date($_POST['scadenza']['da'])."</span></div>"; 
                 }
                 if(isset($_POST['scadenza']['a'])){
-                    echo "<div class=\"filter-label bg-gray\"><span >Seduta A: ".unformat_date($_POST['scadenza']['a'])."</span></div>";    
+                    echo "<div class=\"filter-label bg-gray\"><span >Scadenza A: ".unformat_date($_POST['scadenza']['a'])."</span></div>";    
                 }                
             }
 

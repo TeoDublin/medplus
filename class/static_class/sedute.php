@@ -5,7 +5,8 @@
 
         private function map():array{
             return [
-                'id'=>['col'=>'id'],
+                'id'=>['col'=>'id','type'=>'dont_save'],
+                'id_pagamenti'=>['col'=>'id_pagamenti','type'=>'dont_save'],
                 'Nominativo'=>['col'=>'nominativo','type'=>'dont_save'],
                 'Portato Da'=>['col'=>'portato_da','type'=>'dont_save'],
                 'Terapista'=>['col'=>'terapista','type'=>'dont_save'],

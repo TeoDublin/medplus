@@ -18,6 +18,7 @@ $line = 1;
 function _map_out($result){
     $map =  [
         'id'=>['col'=>'id'],
+        'id_pagamenti'=>['col'=>'id_pagamenti'],
         'Nominativo'=>['col'=>'nominativo','type'=>'dont_save'],
         'Terapista'=>['col'=>'terapista','type'=>'dont_save'],
         'Corso'=>['col'=>'corso','type'=>'dont_save'],

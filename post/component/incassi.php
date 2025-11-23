@@ -58,9 +58,11 @@
         }
     }
     elseif(!isset($_REQUEST['btnClean'])){
+        $_POST['stato'] = ['Saldata'];
         $_POST['data']['da']=date('Y-m-01');
         $_POST['data']['a']=date('Y-m-d');
         $where.=" AND `data` >='{$_POST['data']['da']}' AND `data` <='{$_POST['data']['a']}'";
+        $where.=" AND stato IN('".implode("','",$_POST['stato'])."')";
     }
 
     $pagamenti = _pagamenti($where);

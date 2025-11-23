@@ -1,5 +1,10 @@
 window.modalHandlers['classi'] = {
     click:function(e){
-        modal_component('conferma_corso','conferma_corso',e.dataset);
+        if(e.classList.contains('payed')){
+            alert('già Fatturato');
+        }
+        else{
+            modal_component('conferma_corso','conferma_corso',e.dataset);
+        }
     }
 }

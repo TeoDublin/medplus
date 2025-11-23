@@ -38,7 +38,8 @@
                     Update('corsi_pagamenti')->set([
                         'data_pagamento'=>$_REQUEST['_data']['data'],
                         'tipo_pagamento'=>'Senza Fattura',
-                        'stato_pagamento'=>($_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Fatturato' : 'Saldato')
+                        'stato_pagamento'=>($_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Fatturato' : 'Saldato'),
+                        'id_pagamenti'=>$id_pagamenti
                     ])->where("id={$obj['id']}");
                     
                     break;
@@ -52,7 +53,8 @@
                         'data_pagamento'=>$_REQUEST['_data']['data'],
                         'tipo_pagamento'=>'Senza Fattura',
                         'saldato'=>($saldato + (double)$obj['saldato']),
-                        'stato_pagamento'=>($_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Fatturato' : 'Saldato')
+                        'stato_pagamento'=>($_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Fatturato' : 'Saldato'),
+                        'id_pagamenti'=>$id_pagamenti
                     ])->where("id={$obj['id']}");
                     break;
                 }

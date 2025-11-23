@@ -17,6 +17,7 @@ $line = 1;
 
 function _map():array{
     return [
+        'id'=>['col'=>'id'],
         'Nominativo'=>['col'=>'nominativo'],
         'Origine'=>['col'=>'origine'],
         'Metodo'=>['col'=>'metodo'],

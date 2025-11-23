@@ -14,16 +14,30 @@
     $current_month->setTime(0, 0, 0);
 
     $_classe_icon = function($m,$classe) use (&$year, &$inizio, &$current_month) {
-        $classe['scadenza']="{$year}-".str_pad($m,2,'0',STR_PAD_LEFT)."-".str_pad($classe['corso_scadenza'],2,'0',STR_PAD_LEFT);
+        $scadenza = "{$year}-".str_pad($m,2,'0',STR_PAD_LEFT)."-".str_pad($classe['corso_scadenza'],2,'0',STR_PAD_LEFT);
+
+        $corsi_pagamenti = Select('*')->from('corsi_pagamenti')->where("id_cliente = {$classe['id_cliente']} AND id_corso = {$classe['id_corso']} AND scadenza = '{$scadenza}' ")->first_or_false();
+        
+        $classe['scadenza'] = $scadenza;
         $classe['mese']=$m;
         $classe['anno']=$year;
         $data_set=data_set($classe)." onclick=\"window.modalHandlers['classi'].click(this)\"";
-        switch ($classe[$m]) {
-            case '1': return "<div {$data_set}>".icon('check.svg', 'green', 20, 20)."</div>";
-            case '2': return "<div {$data_set}>".icon('x.svg', 'red', 20, 20)."</div>";
-            case '3': return "<div {$data_set}>".icon('circle.svg', 'gray', 20, 20)."</div>";
-            case '4': return "<div {$data_set}>".icon('circle.svg', 'red', 20, 20)."</div>";
+
+        if($corsi_pagamenti && in_array($corsi_pagamenti['stato_pagamento'],['Saldato','Fatturato'])){
+            return "<div {$data_set} class=\"payed\">".icon('circle-check.svg', 'green', 20, 20)."</div>";
         }
+        elseif(!$corsi_pagamenti && $classe[$m] == 1){
+            return "<div {$data_set}>".icon('x.svg', 'red', 20, 20)."</div>";
+        }
+        else{
+            switch ($classe[$m]) {
+                case '1': return "<div {$data_set}>".icon('check.svg', 'green', 20, 20)."</div>";
+                case '2': return "<div {$data_set}>".icon('x.svg', 'red', 20, 20)."</div>";
+                case '3': return "<div {$data_set}>".icon('circle.svg', 'gray', 20, 20)."</div>";
+                case '4': return "<div {$data_set}>".icon('circle.svg', 'red', 20, 20)."</div>";
+            }
+        }
+
     };
         
 ?>

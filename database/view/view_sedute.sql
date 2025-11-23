@@ -6,6 +6,7 @@ SELECT
     `pts`.`id_cliente` AS `id_cliente`,
     `pts`.`id_percorso` AS `id_percorso`,
     `pts`.`id_combo` AS `id_combo`,
+    `pts`.`id_pagamenti` AS `id_pagamenti`,
     `pts`.`prezzo` AS `prezzo`,
     `pts`.`saldato` AS `saldato`,
     `pts`.`id_terapista` AS `id_terapista`,
@@ -16,7 +17,7 @@ SELECT
     (`pts`.`stato_pagamento` COLLATE utf8mb4_general_ci) AS `stato_pagamento`,
     (`pts`.`stato_saldato_terapista` COLLATE utf8mb4_general_ci) AS `stato_saldato_terapista`,
     (`pts`.`data_seduta` COLLATE utf8mb4_general_ci) AS `data_seduta`,
-    (`pts`.`data_pagamento` COLLATE utf8mb4_general_ci) AS `data_pagamento`,
+    (`p`.`data` COLLATE utf8mb4_general_ci) AS `data_pagamento`,
     (`pts`.`data_saldato_terapista` COLLATE utf8mb4_general_ci) AS `data_saldato_terapista`,
     (`pts`.`timestamp` COLLATE utf8mb4_general_ci) AS `timestamp`,
     (`c`.`nominativo` COLLATE utf8mb4_general_ci) AS `nominativo`,
@@ -28,28 +29,21 @@ SELECT
     `pt`.`realizzato_da` AS `realizzato_da`,
     `pt`.`bnw` AS `bnw`
 FROM 
-    `medplus`.`percorsi_terapeutici_sedute` AS `pts`
-LEFT JOIN 
-    `medplus`.`percorsi_terapeutici` AS `pt` 
-    ON `pts`.`id_percorso` = `pt`.`id`
-LEFT JOIN 
-    `medplus`.`terapisti` AS `t` 
-    ON `pts`.`id_terapista` = `t`.`id`
-LEFT JOIN 
-    `medplus`.`clienti` AS `c` 
-    ON `pts`.`id_cliente` = `c`.`id`
-LEFT JOIN 
-    `medplus`.`terapisti` AS `tpd` 
-    ON `c`.`portato_da` = `tpd`.`id`
+    `percorsi_terapeutici_sedute` AS `pts`
+LEFT JOIN `percorsi_terapeutici` AS `pt` ON `pts`.`id_percorso` = `pt`.`id`
+LEFT JOIN `terapisti` AS `t` ON `pts`.`id_terapista` = `t`.`id`
+LEFT JOIN `clienti` AS `c` ON `pts`.`id_cliente` = `c`.`id`
+LEFT JOIN `terapisti` AS `tpd` ON `c`.`portato_da` = `tpd`.`id`
+LEFT JOIN pagamenti p on pts.id_pagamenti = p.id
 LEFT JOIN 
     (
         SELECT 
             `pct`.`id_combo` AS `id_combo`,
             GROUP_CONCAT(`t`.`trattamento` SEPARATOR ';') AS `trattamenti`
         FROM 
-            `medplus`.`percorsi_combo_trattamenti` AS `pct`
+            `percorsi_combo_trattamenti` AS `pct`
         LEFT JOIN 
-            `medplus`.`trattamenti` AS `t` 
+            `trattamenti` AS `t` 
             ON `pct`.`id_trattamento` = `t`.`id`
         GROUP BY 
             `pct`.`id_combo`
@@ -61,9 +55,9 @@ LEFT JOIN
             `pct`.`id_combo` AS `id_combo`,
             GROUP_CONCAT(`t`.`acronimo` SEPARATOR ' - ') AS `acronimo`
         FROM 
-            `medplus`.`percorsi_combo_trattamenti` AS `pct`
+            `percorsi_combo_trattamenti` AS `pct`
         LEFT JOIN 
-            `medplus`.`trattamenti` AS `t` 
+            `trattamenti` AS `t` 
             ON `pct`.`id_trattamento` = `t`.`id`
         GROUP BY 
             `pct`.`id_combo`
