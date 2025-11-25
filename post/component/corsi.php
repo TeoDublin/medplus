@@ -66,7 +66,7 @@
     }
     elseif(!isset($_REQUEST['btnClean'])){
         $_POST['stato_pagamento']=['Saldato'];
-        $_POST['data_pagamento']['da']=date('Y-m-01');
+        $_POST['data_pagamento']['da']=date('Y-m-d');
         $_POST['data_pagamento']['a']=date('Y-m-d');
         $where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}' AND data_pagamento <='{$_POST['data_pagamento']['a']}'";
         $where.=" AND stato_pagamento IN('".implode("','",$_POST['stato_pagamento'])."')";
@@ -149,13 +149,12 @@
                 <thead>
                     <tr class="small">
                         <th class="w-15">Cliente</th>
-                        <th class="w-25">Corso</th>
-                        <th class="w-5">Scadenza</th>
-                        <th class="w-5">Data Pag.</th>
-                        <th class="w-5">Prezzo</th>
-                        <th class="w-5">Saldato</th>
+                        <th class="w-15">Corso</th>
+                        <th class="w-10">Scadenza</th>
+                        <th class="w-10">Data Pag.</th>
+                        <th class="w-10">Prezzo</th>
+                        <th class="w-10">Saldato</th>
                         <th class="w-10">Stato Pagamento</th>
-                        <th class="w-10">Tipo Pagamento</th>
                         <th class="w-10">Realizzato da</th>
                         <th class="w-10">Terapista</th>
                     </tr>
@@ -170,7 +169,6 @@
                             <td><?php echo number_format($corso['prezzo'],2); ?></td>
                             <td><?php echo number_format($corso['saldato'],2); ?></td>
                             <td><?php echo $corso['stato_pagamento']; ?></td>
-                            <td><?php echo $corso['tipo_pagamento']??'-'; ?></td>
                             <td><?php echo $corso['realizzato_da']??'-'; ?></td>
                             <td><?php echo $corso['terapista']; ?></td>
                         </tr>

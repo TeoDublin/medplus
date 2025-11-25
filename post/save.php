@@ -11,4 +11,5 @@
         $id=Insert($_REQUEST)->into($table)->get();
     }
     
-    echo $id;
+    ob_clean();
+    echo trim($id);

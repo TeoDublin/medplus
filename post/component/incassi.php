@@ -59,7 +59,7 @@
     }
     elseif(!isset($_REQUEST['btnClean'])){
         $_POST['stato'] = ['Saldata'];
-        $_POST['data']['da']=date('Y-m-01');
+        $_POST['data']['da']=date('Y-m-d');
         $_POST['data']['a']=date('Y-m-d');
         $where.=" AND `data` >='{$_POST['data']['da']}' AND `data` <='{$_POST['data']['a']}'";
         $where.=" AND stato IN('".implode("','",$_POST['stato'])."')";
@@ -122,13 +122,13 @@
                         <th class="w-15">nominativo</th>
                         <th class="w-10">metodo</th>
                         <th class="w-10">data</th>
-                        <th class="w-5">imponibile</th>
-                        <th class="w-5">inps</th>
-                        <th class="w-5">bollo</th>
-                        <th class="w-5">totale</th>
-                        <th class="w-15">note</th>
-                        <th class="w-15">stato</th>
-                        <th class="w-15">voucher</th>
+                        <th class="w-10">imponibile</th>
+                        <th class="w-10">inps</th>
+                        <th class="w-10">bollo</th>
+                        <th class="w-10">totale</th>
+                        <th class="w-10">note</th>
+                        <th class="w-10">stato</th>
+                        <th class="w-5">voucher</th>
                     </tr>
                 </thead>
                 <tbody><?php 

@@ -182,15 +182,17 @@ function closeModalAndScripts(modalElement) {
         if (modalElement.modalHandlers) {
             delete modalElement.modalHandlers;
         }
-
-        if(window.modalHandlers[component].closePersistent !== undefined && window.modalHandlers[component].closePersistent ){
-            document.querySelectorAll(`script[component="modal_${window.modalHandlers[component].closePersistent}"]`).forEach(to_remove => { to_remove.remove(); });
-            delete window.modalHandlers[window.modalHandlers[component].closePersistent];
-        }
-    
-        if(window.modalHandlers[component].persistent === undefined){
-            document.querySelectorAll(`script[component="${modal_id}"]`).forEach(to_remove => { to_remove.remove(); });
-            delete window.modalHandlers[component];
+        
+        if(window.modalHandlers[component] !== undefined){
+            if(window.modalHandlers[component].closePersistent !== undefined && window.modalHandlers[component].closePersistent ){
+                document.querySelectorAll(`script[component="modal_${window.modalHandlers[component].closePersistent}"]`).forEach(to_remove => { to_remove.remove(); });
+                delete window.modalHandlers[window.modalHandlers[component].closePersistent];
+            }
+        
+            if(window.modalHandlers[component].persistent === undefined){
+                document.querySelectorAll(`script[component="${modal_id}"]`).forEach(to_remove => { to_remove.remove(); });
+                delete window.modalHandlers[component];
+            }
         }
 
         document.querySelectorAll('#' + modalElement.id.replace('modal_','div_')).forEach(to_remove => { to_remove.remove(); });
@@ -324,6 +326,18 @@ function pdf(component,sid) {
         a.remove();
     });
 }
+
+function save_data(element){
+    const save = element.closest('.modal').querySelector('.save');
+    let ret = save.dataset;
+    save.querySelectorAll('[name]').forEach( element => { 
+        if(element.value !=='Seleziona' && element.value !== ''){
+            ret[element.name]=element.value;
+        }
+    });
+    return ret;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {
         const toastLive = document.getElementById('successToast');

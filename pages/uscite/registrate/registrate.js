@@ -1,27 +1,27 @@
 function parseFilter(){
     let ret = {};
     let alerts = [];
-    let data_da = document.querySelector('#data_da').value;
-    let data_a = document.querySelector('#data_a').value;
-    let data_all = document.querySelector('#data_all').checked;
-    let id_uscita = document.querySelector('#nome').value;
-    let nome= document.querySelector('#nome option:checked').innerHTML;
+    let data_pagamento_da = document.querySelector('#data_pagamento_da').value;
+    let data_pagamento_a = document.querySelector('#data_pagamento_a').value;
+    let data_pagamento_all = document.querySelector('#data_pagamento_all').checked;
+    let id_uscita = document.querySelector('#indirizzato_a').value;
+    let indirizzato_a= document.querySelector('#indirizzato_a option:checked').innerHTML;
 
-    if(data_da !== '' && data_a !== ''){
-        if(data_a<data_da){
-            alerts.push("Data fine non puo essere inferiore alla data Inizio");
+    if(data_pagamento_da !== '' && data_pagamento_a !== ''){
+        if(data_pagamento_a<data_pagamento_da){
+            alerts.push("data_pagamento fine non puo essere inferiore alla data_pagamento Inizio");
         }
     }
-    if (data_da !== '' || data_a !== '' || data_all ==true ) {
-        ret.data = {};
-        if (data_all == true) ret.data.all = data_all;
+    if (data_pagamento_da !== '' || data_pagamento_a !== '' || data_pagamento_all ==true ) {
+        ret.data_pagamento = {};
+        if (data_pagamento_all == true) ret.data_pagamento.all = data_pagamento_all;
         else{
-            if (data_da !== '') ret.data.da = data_da;
-            if (data_a !== '') ret.data.a = data_a;    
+            if (data_pagamento_da !== '') ret.data_pagamento.da = data_pagamento_da;
+            if (data_pagamento_a !== '') ret.data_pagamento.a = data_pagamento_a;    
         }
     }
     if(id_uscita!=='')ret.id_uscita=id_uscita;
-    if(nome!==''&&nome!=='Tutti')ret.nome=nome;
+    if(indirizzato_a!==''&&indirizzato_a!=='Tutti')ret.indirizzato_a=indirizzato_a;
 
     if(alert.length>0){
         alert(alerts.join('\n'));       
@@ -51,34 +51,42 @@ function loadView(response){
     document.querySelectorAll('a.page-link').forEach(link => {
         link.addEventListener('click', event => {
             event.preventDefault();
-            let page = parseInt(event.target.dataset.n) - 1;
+            let page = parseInt(event.target.data_pagamentoset.n) - 1;
             $.post('post/component/uscite_registrate.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
 }
+
 function aggiungiUscita(){
     modal_component('add_uscita','add_uscita',{});
 }
+
 function enterDel(e){
     e.closest('tr').classList.add('bg-danger');
 }
+
 function leaveDel(e){
     e.closest('tr').classList.remove('bg-danger');
 }
+
 function delClick(id){
     if(confirm('Sicuro di voler eliminare?')){
-        $.post('post/delete.php',{table:'uscite_per_giorno',id:id}).done(()=>{success_and_refresh();}).fail(()=>{fail();})
+        $.post('post/delete.php',{table:'uscite_registrate',id:id}).done(()=>{success_and_refresh();}).fail(()=>{fail();})
     }
 }
+
 function enterEdit(e){
     e.closest('tr').classList.add('bg-success');
 }
+
 function leaveEdit(e){
     e.closest('tr').classList.remove('bg-success');
 }
+
 function clickEdit(id){
     modal_component('add_uscita','add_uscita',{id:id});
 }
+
 document.addEventListener('DOMContentLoaded',function(){
     $.post('post/component/uscite_registrate.php?pagination=0', {} ).done(response => { loadView(response);});
 });

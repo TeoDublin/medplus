@@ -1,9 +1,11 @@
 <?php
+
     function request($key,$fallback=false){
         $ret=$_REQUEST[$key]??false;
         unset($_REQUEST[$key]);
         return $ret ?? $fallback;
     }
+
     function parse_where($where):string{
         return implode(' AND ', array_map(
             fn($key, $value) => is_numeric($value) ? "$key=$value" : "$key='$value'",
@@ -11,6 +13,7 @@
             $where
         ));        
     }
+
     function italian_date($date,$format){
         putenv('LC_TIME=it_IT.UTF-8');
         setlocale(LC_TIME, 'it_IT.UTF-8');

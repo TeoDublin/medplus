@@ -70,7 +70,7 @@
     }
     elseif(!isset($_REQUEST['btnClean'])){
         $_POST['stato_pagamento']=['Saldato'];
-        $_POST['data_pagamento']['da']=date('Y-m-01');
+        $_POST['data_pagamento']['da']=date('Y-m-d');
         $_POST['data_pagamento']['a']=date('Y-m-d');
         $where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}' AND data_pagamento <='{$_POST['data_pagamento']['a']}'";
         $where.=" AND stato_pagamento IN('".implode("','",$_POST['stato_pagamento'])."')";
@@ -161,10 +161,9 @@
                         <th class="w-10">Stato Seduta</th>
                         <th class="w-10">Data Seduta</th>
                         <th class="w-10">Data Pag.</th>
-                        <th class="w-5">Prezzo</th>
-                        <th class="w-5">Saldato</th>
+                        <th class="w-10">Prezzo</th>
+                        <th class="w-10">Saldato</th>
                         <th class="w-10">Stato Pagamento</th>
-                        <th class="w-10">Tipo Pagamento</th>
                         <th class="w-10">Realizzato da</th>
                         <th class="w-20">Terapista</th>
                     </tr>
@@ -180,7 +179,6 @@
                             <td><?php echo number_format($seduta['prezzo'],2); ?></td>
                             <td><?php echo number_format($seduta['saldato'],2); ?></td>
                             <td><?php echo $seduta['stato_pagamento']; ?></td>
-                            <td><?php echo $seduta['tipo_pagamento']??'-'; ?></td>
                             <td><?php echo $seduta['realizzato_da']??'-'; ?></td>
                             <td><?php echo $seduta['terapista']; ?></td>
                         </tr>
