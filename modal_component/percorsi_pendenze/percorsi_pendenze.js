@@ -23,93 +23,95 @@ window.modalHandlers['percorsi_pendenze'] = {
             return { hasError: false, realizzato_da };
         }
     },
-    bnw: function(_data) {
-        let bnw = null;
-        let hasError = false;
-        
-        for (let v of _data) {
-            if (bnw === null) {
-                bnw = v.bnw;
-            }
-            if (v.bnw !== bnw) {
-                alert('Non puoi fatturare voucher diversi insieme');
-                hasError = true;
-                break;
-            }
-        }
-
-        if (hasError) {
-            return { hasError: true };
-        } else {
-            return { hasError: false, bnw };
-        }
-    },
     fatturaClick:function(){
         let hasError=false;
         const raw = document.querySelector('#data_cliente').textContent.trim();
         let _data = this._data();
-        if(!this.realizzato_da(_data).hasError && !this.bnw(_data).hasError){
-            let error = 'Per generare la fattura devi inserire i dati:\n\n';
-            try {
-                let data_cliente = JSON.parse(raw);
-                if (!data_cliente || Object.keys(data_cliente).length === 0) {
+        const realizzato_da=this.realizzato_da(_data);
+        if(!realizzato_da.hasError){
+            if(realizzato_da.realizzato_da=='Isico'){
+                alert('Non puoi fatturare Isico qui');
+            }
+            else{
+                let error = 'Per generare la fattura devi inserire i dati:\n\n';
+                try {
+                    let data_cliente = JSON.parse(raw);
+                    if (!data_cliente || Object.keys(data_cliente).length === 0) {
+                        hasError=true;
+                        error+='- Cliente\n';
+                    } 
+                    else {
+
+                        if(!data_cliente.id||data_cliente.id==''){
+                            hasError=true;
+                            error+='- Nominativo\n';
+                        }
+                        if(!data_cliente.indirizzo||data_cliente.indirizzo==''){
+                            hasError=true;
+                            error+='- Indirizzo\n';
+                        }
+                        if(!data_cliente.cap||data_cliente.cap==''){
+                            hasError=true;
+                            error+='- Cap\n';
+                        }
+                        if(!data_cliente.citta||data_cliente.citta==''){
+                            hasError=true;
+                            error+='- Citta\n';
+                        }
+                        if(!data_cliente.cf||data_cliente.cf==''){
+                            hasError=true;
+                            error+='- Codice fiscale\n';
+                        }
+                        if(hasError){
+                            alert(error);
+                        }
+                        else{
+                            modal_component('fattura','fattura',{data:_data,data_cliente:data_cliente});
+                        }
+                    }
+                } 
+                catch {
                     hasError=true;
                     error+='- Cliente\n';
-                } 
-                else {
-
-                    if(!data_cliente.id||data_cliente.id==''){
-                        hasError=true;
-                        error+='- Nominativo\n';
-                    }
-                    if(!data_cliente.indirizzo||data_cliente.indirizzo==''){
-                        hasError=true;
-                        error+='- Indirizzo\n';
-                    }
-                    if(!data_cliente.cap||data_cliente.cap==''){
-                        hasError=true;
-                        error+='- Cap\n';
-                    }
-                    if(!data_cliente.citta||data_cliente.citta==''){
-                        hasError=true;
-                        error+='- Citta\n';
-                    }
-                    if(!data_cliente.cf||data_cliente.cf==''){
-                        hasError=true;
-                        error+='- Codice fiscale\n';
-                    }
-                    if(hasError){
-                        alert(error);
-                    }
-                    else{
-                        modal_component('fattura','fattura',{data:_data,data_cliente:data_cliente});
-                    }
-                }
-            } 
-            catch {
-                hasError=true;
-                error+='- Cliente\n';
-            }   
+                }   
+            }
         }
 
     },
     senzaFatturaClick:function(id_cliente){
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
-        if(!realizzato_da.hasError && !this.bnw(_data).hasError){
+        if(!realizzato_da.hasError){
             if(realizzato_da.realizzato_da=='Isico'){
-                modal_component('pagamento_isico','pagamento_isico',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
+                alert('Non puoi fatturare Isico qui');
             }
             else{
                 modal_component('senza_fattura','senza_fattura',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
             }
         }
     },
+    isicoClick:function(id_cliente){
+        let _data = this._data();
+        const realizzato_da=this.realizzato_da(_data);
+        if(!realizzato_da.hasError){
+            if(realizzato_da.realizzato_da !== 'Isico'){
+                alert('Non puoi fatturare Medplus qui');
+            }
+            else{
+                modal_component('pagamento_isico','pagamento_isico',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
+            }
+        }
+    },
     arubaClick:function(id_cliente){
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
-        if(!realizzato_da.hasError && !this.bnw(_data).hasError){
-            modal_component('fatturato_aruba','fatturato_aruba',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
+        if(!realizzato_da.hasError){
+            if(realizzato_da.realizzato_da=='Isico'){
+                alert('Non puoi fatturare Isico qui');
+            }
+            else{
+                modal_component('fatturato_aruba','fatturato_aruba',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
+            }
         }
     },
     toggleBtns:function(){

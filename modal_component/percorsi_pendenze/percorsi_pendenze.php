@@ -513,18 +513,18 @@
             </div>
         </div>
         <div class="d-flex w-100 flex-wrap">
-            <div class= "d-flex me-1 mt-1 w-md-33" 
+            <div class= "d-flex me-1 mt-1 w-md-25" 
                 onclick="window.modalHandlers['percorsi_pendenze'].fatturaClick();">
                 <div class="d-flex flex-row btn btn-primary flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
                         <?php echo icon('document.svg','white',20,20); ?>
                     </div>
                     <div class="d-grid justify-content-center align-items-center">
-                        Fattura
+                        Fattura D.Z.
                     </div>
                 </div>
             </div>
-            <div class= "d-flex me-1 mt-1 w-md-33" onclick="window.modalHandlers['percorsi_pendenze'].arubaClick(<?php echo $_REQUEST['id_cliente'];?>);">
+            <div class= "d-flex me-1 mt-1 w-md-25" onclick="window.modalHandlers['percorsi_pendenze'].arubaClick(<?php echo $_REQUEST['id_cliente'];?>);">
                 <div class="d-flex flex-row btn btn-primary flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
                         <?php echo icon('document.svg','white',20,20); ?>
@@ -534,32 +534,26 @@
                     </div>
                 </div>
             </div>
-            <?php 
-                if($ruolo!='display'){?>
-                    <div class= "d-flex me-1 mt-1 flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(<?php echo $_REQUEST['id_cliente'];?>);">
-                        <div class="d-flex flex-row btn btn-primary flex-fill">
-                            <div class="d-grid justify-content-center align-items-center me-1">
-                                <?php echo icon('coin.svg','white',20,20); ?>
-                            </div>
-                            <div class="d-grid justify-content-center align-items-center">
-                                Contanti
-                            </div>
-                        </div>
-                    </div><?php
-                }
-                else{?>
-                    <div class= "d-flex me-1 mt-1 flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(<?php echo $_REQUEST['id_cliente'];?>);">
-                        <div class="d-flex flex-row btn btn-primary flex-fill">
-                            <div class="d-grid justify-content-center align-items-center me-1">
-                                <?php echo icon('coin.svg','white',20,20); ?>
-                            </div>
-                            <div class="d-grid justify-content-center align-items-center">
-                                Pagamento Isico
-                            </div>
-                        </div>
-                    </div><?php
-                }
-            ?>  
+            <div class= "d-flex me-1 mt-1 w-md-25" onclick="window.modalHandlers['percorsi_pendenze'].isicoClick(<?php echo $_REQUEST['id_cliente'];?>);">
+                <div class="d-flex flex-row btn btn-primary flex-fill">
+                    <div class="d-grid justify-content-center align-items-center me-1">
+                        <?php echo icon('document.svg','white',20,20); ?>
+                    </div>
+                    <div class="d-grid justify-content-center align-items-center">
+                        Fatturato Isico
+                    </div>
+                </div>
+            </div>
+            <div class= "d-flex me-1 mt-1 flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(<?php echo $_REQUEST['id_cliente'];?>);">
+                <div class="d-flex flex-row btn btn-primary flex-fill">
+                    <div class="d-grid justify-content-center align-items-center me-1">
+                        <?php echo icon('coin.svg','white',20,20); ?>
+                    </div>
+                    <div class="d-grid justify-content-center align-items-center">
+                        Contanti
+                    </div>
+                </div>
+            </div>
         </div>
         <div>
             <div class="w-100 d-flex d-row mt-2 p-2">

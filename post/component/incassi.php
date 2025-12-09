@@ -13,16 +13,6 @@
     else{
         $where = '1=1';
     }
-    
-
-    function _pagamenti($where){
-        return Select('p.*, c.nominativo')
-            ->from('pagamenti','p')
-            ->left_join('clienti c on p.id_cliente = c.id')
-            ->where($where)
-            ->orderby('data DESC')
-            ->get_table();
-    }
 
     $url='pagamenti.php';
     
@@ -65,8 +55,8 @@
         $where.=" AND stato IN('".implode("','",$_POST['stato'])."')";
     }
 
-    $pagamenti = _pagamenti($where);
-    $sum= Select("sum(imponibile) as imponibile, sum(imponibile) + sum(bollo) as 'imponibile + bollo', sum(totale) as totale")->from('pagamenti')->where($where)->first();
+    $_view_incassi = Select('*')->from('view_incassi')->where($where)->get_table();
+    $sum= Select("sum(totale) as totale, sum(IF(stato = 'Pendente', 0, imponibile)) as imponibile, sum(IF(stato = 'Pendente', imponibile, 0 )) as fatturato")->from('view_incassi')->where($where)->first();
 ?>
 
 <!-- where -->
@@ -106,12 +96,12 @@
     ?>
 </div>
 <div>
-    <span><?php echo "Totale: € ".number_format($sum['totale'],2, ',', '.').", Imponibile: € ".number_format($sum['imponibile'],2, ',', '.'); ?></span>
+    <span><?php echo "Totale: € ".number_format($sum['totale'],2, ',', '.').", Imponibile: € ".number_format($sum['imponibile'],2, ',', '.').", Fatturato: € ".number_format($sum['fatturato'],2, ',', '.'); ?></span>
 </div>
 
 <!-- table -->
 <?php 
-    if(!$pagamenti->result){?>
+    if(!$_view_incassi->result){?>
         <div class="card card-body mt-3 text-center"><h5>Non trovato</h5></div><?php
     }
     else{?>
@@ -132,7 +122,7 @@
                     </tr>
                 </thead>
                 <tbody><?php 
-                    foreach($pagamenti->result as $pagamento){?>
+                    foreach($_view_incassi->result as $pagamento){?>
                         <tr data-id=<?php echo $pagamento['id']; ?> style="font-size:12px;line-height:8px; word-break:break-word;">
                             <td><?php echo $pagamento['nominativo']; ?></td>
                             <td><?php echo $pagamento['metodo']; ?></td>
@@ -153,7 +143,7 @@
     <?php
     }
 ?>
-<?php Html()->pagination2($pagamenti,$url); ?>
+<?php Html()->pagination2($_view_incassi,$url); ?>
 
 <!-- floating menu -->
 <div class="floating-menu-btn">

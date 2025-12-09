@@ -47,6 +47,10 @@
             $where.=" AND stato_pagamento IN('".implode("','",$_POST['stato_pagamento'])."')";
         }
 
+        if(isset($_POST['metodo'])){
+            $where.=" AND metodo IN('".implode("','",$_POST['metodo'])."')";
+        }
+
         if(isset($_POST['tipo_pagamento'])){
             $where.=" AND tipo_pagamento IN('".implode("','",$_POST['tipo_pagamento'])."')";
         }
@@ -106,6 +110,10 @@
 
             if(isset($_POST['stato_pagamento'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: ".implode(', ',$_POST['stato_pagamento'])."</span></div>";
+            }
+
+            if(isset($_POST['metodo'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: ".implode(', ',$_POST['metodo'])."</span></div>";
             }
 
             if(isset($_POST['tipo_pagamento'])){
@@ -364,30 +372,6 @@
                 </div>
             </div>
         </div>
-        <div class="accordion p-1" id="filter_stato_pagamento">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_stato_pagamento" aria-expanded="false" aria-controls="collapse_filter_stato_pagamento">
-                    Stato Pagamento
-                    </button>
-                </h2>
-                <div id="collapse_filter_stato_pagamento" class="accordion-collapse collapse" data-bs-parent="#filter_stato_pagamento">
-                    <div class="accordion-body">
-                        <div>
-                            <label for="stato_pagamento">Stato Pagamento</label>
-                            <select class="form-control selectpicker" id="stato_pagamento" value="<?php echo isset($_POST['stato_pagamento']) ? $_POST['stato_pagamento'] : ''; ?>" multiple>
-                                <?php 
-                                    foreach (Enum('percorsi_terapeutici_sedute','stato_pagamento')->get() as $enum) {
-                                        $selected = in_array($enum,( $_POST['stato_pagamento'] ?? []))?'selected':'';
-                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="accordion p-1" id="filter_stato_saldato_terapista">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -403,6 +387,54 @@
                                 <?php 
                                     foreach (Enum('percorsi_terapeutici_sedute','stato_saldato_terapista')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['stato_saldato_terapista'] ?? []))?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion p-1" id="filter_realizzato_da">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_realizzato_da" aria-expanded="false" aria-controls="collapse_filter_realizzato_da">
+                    Realizzato da
+                    </button>
+                </h2>
+                <div id="collapse_filter_realizzato_da" class="accordion-collapse collapse" data-bs-parent="#filter_realizzato_da">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="realizzato_da">Realizzato da</label>
+                            <select class="form-control selectpicker" id="realizzato_da" value="<?php echo isset($_POST['realizzato_da']) ? $_POST['realizzato_da'] : ''; ?>" multiple>
+                                <?php 
+                                    foreach (Enum('percorsi_terapeutici','realizzato_da')->get() as $enum) {
+                                        $selected = in_array($enum,( $_POST['realizzato_da'] ?? []))?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion p-1" id="filter_stato_pagamento">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_stato_pagamento" aria-expanded="false" aria-controls="collapse_filter_stato_pagamento">
+                    Stato Pagamento
+                    </button>
+                </h2>
+                <div id="collapse_filter_stato_pagamento" class="accordion-collapse collapse" data-bs-parent="#filter_stato_pagamento">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="stato_pagamento">Stato Pagamento</label>
+                            <select class="form-control selectpicker" id="stato_pagamento" value="<?php echo isset($_POST['stato_pagamento']) ? $_POST['stato_pagamento'] : ''; ?>" multiple>
+                                <?php 
+                                    foreach (Enum('percorsi_terapeutici_sedute','stato_pagamento')->get() as $enum) {
+                                        $selected = in_array($enum,( $_POST['stato_pagamento'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>
@@ -436,21 +468,21 @@
                 </div>
             </div>
         </div>
-        <div class="accordion p-1" id="filter_realizzato_da">
+        <div class="accordion p-1" id="filter_metodo">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_realizzato_da" aria-expanded="false" aria-controls="collapse_filter_realizzato_da">
-                    Realizzato da
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_metodo" aria-expanded="false" aria-controls="collapse_filter_metodo">
+                    Metodo Pagamento
                     </button>
                 </h2>
-                <div id="collapse_filter_realizzato_da" class="accordion-collapse collapse" data-bs-parent="#filter_realizzato_da">
+                <div id="collapse_filter_metodo" class="accordion-collapse collapse" data-bs-parent="#filter_metodo">
                     <div class="accordion-body">
                         <div>
-                            <label for="realizzato_da">Realizzato da</label>
-                            <select class="form-control selectpicker" id="realizzato_da" value="<?php echo isset($_POST['realizzato_da']) ? $_POST['realizzato_da'] : ''; ?>" multiple>
+                            <label for="metodo">Metodo Pagamento</label>
+                            <select class="form-control selectpicker" id="metodo" value="<?php echo isset($_POST['metodo']) ? $_POST['metodo'] : ''; ?>" multiple>
                                 <?php 
-                                    foreach (Enum('percorsi_terapeutici','realizzato_da')->get() as $enum) {
-                                        $selected = in_array($enum,( $_POST['realizzato_da'] ?? []))?'selected':'';
+                                    foreach (Enum('pagamenti','metodo')->get() as $enum) {
+                                        $selected = in_array($enum,( $_POST['metodo'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>

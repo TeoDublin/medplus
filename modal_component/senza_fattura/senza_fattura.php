@@ -22,7 +22,7 @@
                     </div>
                     <div class="m-2">
                         <label for="data" class="form-label" >Metodo</label><?php
-                            echo "<select class=\"form-control text-center\" name=\"metodo\" value=\"Contanti\">";
+                            echo "<select class=\"form-control text-center\" name=\"metodo\" value=\"Contanti\" readonly disabled>";
                                 foreach(Enum('pagamenti_senza_fattura','metodo')->get() as $enum){
                                     $selected=$enum=='Contanti'?'selected':'';
                                     echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";

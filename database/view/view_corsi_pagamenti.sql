@@ -7,7 +7,7 @@ SELECT
     ccl.id_corso AS id_corso,
     ccl.data_inizio AS data_inizio,
     c.prezzo AS prezzo_tabellare,
-    COALESCE(cp.prezzo, ccl.prezzo) AS prezzo,
+    COALESCE(ccl.prezzo, cp.prezzo ) AS prezzo,
     c.scadenza AS corso_scadenza,
     c.id_terapista AS id_terapista,
     c.corso AS corso,

@@ -15,7 +15,13 @@ SELECT
     cc.realizzato_da,
     t.id as id_terapista,
 	t.terapista,
-    cc.bnw
+    (
+        IF(`p`.`origine` IS NULL, 
+            'da definire',
+            if( `p`.`origine` = 'senza_fattura' and `p`.`metodo` = 'Contanti', 'no', 'si') 
+        ) COLLATE utf8mb4_general_ci
+    ) AS `bnw`,
+    (`p`.`metodo` COLLATE utf8mb4_general_ci) AS `metodo`
 FROM `corsi_pagamenti` cp
 LEFT JOIN clienti cli ON cp.id_cliente = cli.id
 LEFT JOIN corsi c ON cp.id_corso = c.id

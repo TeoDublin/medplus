@@ -195,7 +195,7 @@
                         'data_pagamento'=>$_REQUEST['_data']['data'] ?? $_REQUEST['data_pagamento'],
                         'tipo_pagamento'=>'Fattura',
                         'stato_pagamento'=>($_REQUEST['metodo_pagamento'] == 'Bonifico' ? 'Fatturato' : 'Saldato'),
-                        'id_pagamenti'=>$id_pagamenti
+                        'id_pagamenti'=>$id_pagamento
                     ])->where("id={$obj['id']}");
                     
                     break;
@@ -210,7 +210,7 @@
                         'tipo_pagamento'=>'Fattura',
                         'saldato'=>($saldato + (double)$obj['saldato']),
                         'stato_pagamento'=>($_REQUEST['metodo_pagamento'] == 'Bonifico' ? 'Fatturato' : 'Saldato'),
-                        'id_pagamenti'=>$id_pagamenti
+                        'id_pagamenti'=>$id_pagamento
                     ])->where("id={$obj['id']}");
 
                     break;

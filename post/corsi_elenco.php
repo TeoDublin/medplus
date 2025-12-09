@@ -89,3 +89,15 @@
         $period = new DatePeriod($start, $interval, $end->add($interval));
         Corsiplanning::insert_corsi_planning($period,$giorni,$corso);
     }
+
+    $corsi_pagamenti = Select("id,scadenza,CONCAT( DATE_FORMAT( scadenza, '%Y-%m-'), LPAD({$_REQUEST['scadenza']}, 2, '0') ) as check_scadenza")
+        ->from('corsi_pagamenti')
+        ->where("id_corso = {$id}")
+        ->get();
+
+    foreach ($corsi_pagamenti as $key => $value) {
+        if($value['scadenza']!=$value['check_scadenza']){
+            Update('corsi_pagamenti')->set(['scadenza'=>$value['check_scadenza']])->where("id={$value['id']}");
+        }
+    }
+            

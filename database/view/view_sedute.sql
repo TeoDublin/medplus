@@ -27,7 +27,13 @@ SELECT
     (`ta`.`acronimo` COLLATE utf8mb4_general_ci) AS `acronimo`,
     `pts`.`tipo_pagamento` AS `tipo_pagamento`,
     `pt`.`realizzato_da` AS `realizzato_da`,
-    `pt`.`bnw` AS `bnw`
+    (
+        IF(`p`.`origine` IS NULL, 
+            'da definire',
+            if( `p`.`origine` = 'senza_fattura' and `p`.`metodo` = 'Contanti', 'no', 'si') 
+        ) COLLATE utf8mb4_general_ci
+    ) AS `bnw`,
+    (`p`.`metodo` COLLATE utf8mb4_general_ci) AS `metodo`
 FROM 
     `percorsi_terapeutici_sedute` AS `pts`
 LEFT JOIN `percorsi_terapeutici` AS `pt` ON `pts`.`id_percorso` = `pt`.`id`
