@@ -71,7 +71,7 @@ function leaveDel(e){
 
 function delClick(id){
     if(confirm('Sicuro di voler eliminare?')){
-        $.post('post/delete.php',{table:'uscite_registrate',id:id}).done(()=>{success_and_refresh();}).fail(()=>{fail();})
+        $.post('post/uscite_delete.php',{table:'uscite_registrate',id:id}).done(()=>{success_and_refresh();}).fail(()=>{fail();})
     }
 }
 

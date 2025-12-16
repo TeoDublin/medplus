@@ -264,3 +264,7 @@
     font-style: italic;
     height: 62px;
 }
+
+.error-validate{
+    border: solid red 1px!important;
+}

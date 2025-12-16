@@ -127,11 +127,11 @@
                     <div class="accordion-body">
                         <div>
                             <label for="data_pagamento_da">Da</label>
-                            <input class="form-control" type="date" id="data_pagamento_da" value="<?php echo $_POST['data_pagamento']['da']; ?>">
+                            <input class="form-control" type="date" id="data_pagamento_da" value="<?php echo isset($_POST['data_pagamento']['da']) ? $_POST['data_pagamento']['da'] : ''; ?>">
                         </div>
                         <div>
                             <label for="data_pagamento_a">A</label>
-                            <input class="form-control" type="date" id="data_pagamento_a" value="<?php echo $_POST['data_pagamento']['a']; ?>">
+                            <input class="form-control" type="date" id="data_pagamento_a" value="<?php echo isset($_POST['data_pagamento']['a']) ? $_POST['data_pagamento']['a'] : ''; ?>">
                         </div>
                         <div class="mt-3">
                             <div class="form-check">

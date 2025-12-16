@@ -1,0 +1,5 @@
+.fileHover:hover{
+    border:solid var(--base-bg-primary) 1px!important;
+    cursor:pointer;
+    border-radius: 5px;
+}

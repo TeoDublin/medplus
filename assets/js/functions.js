@@ -310,6 +310,7 @@ function zip(page) {
         }
     });
 }
+
 function pdf(component,sid) {
     const div = document.createElement('div');
     div.id = 'div_pdf_spinner';
@@ -337,6 +338,53 @@ function save_data(element){
     });
     return ret;
 }
+
+
+function validate(element){
+
+    let ret = {hasError:false};
+    const save = element.closest('.modal').querySelector('.save');
+    
+    save.querySelectorAll('[name]').forEach( element => { 
+
+        if(element.classList.contains('error-validate')){
+            element.classList.remove('error-validate');
+        }
+
+        if(element.value =='Seleziona' || element.value == ''){
+            if(element.hasAttribute('required')){
+                let raw = element.getAttribute('required');
+
+                if (raw && raw.trim() !== ''){
+                    raw = raw.replace(/'/g, '"');
+                    let obj = JSON.parse(raw);
+                    console.log(obj);
+                }
+                else{
+                    if(!element.classList.contains('error-validate')){
+                        element.classList.add('error-validate');
+                    }
+                    ret['hasError'] = true;
+
+                    const pop = new bootstrap.Popover(element, {
+                        container: '.modal-body',
+                        content: "Campo obbligatorio",
+                        placement: 'top',
+                        trigger: 'manual'
+                    });
+
+                    pop.show();
+
+                    element.addEventListener('mouseenter', () => pop.hide(), { once: true });
+                }
+
+            }
+        }
+    });
+
+    return ret;
+}
+
 
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {

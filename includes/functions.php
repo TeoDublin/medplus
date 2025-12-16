@@ -69,6 +69,26 @@
     function privacy_path(string $path):string{
         return dirname(__DIR__) . "/".PRIVACY_FOLDER."/".$path;
     }
+
+    function uscite_path(string $path):string{
+        return dirname(__DIR__) . "/".USCITE_FOLDER."/".$path;
+    }
+
+    function unique_name(string $path){
+        if(!is_file($path)){
+            return $path;
+        }
+        $ext = end(explode('.',$path));
+        $basename = str_replace(".{$ext}", '',$path);
+        $count=0;
+        $new_path = $path; 
+        while (is_file($new_path)) {
+            $count++;
+            $new_path = "{$basename}_{$count}.{$ext}";
+        }
+        return $new_path;
+    }
+
     function privacy_url(string $path):string{
         return url(PRIVACY_FOLDER."/".$path);
     }
@@ -194,6 +214,15 @@
             return $date_value->format('d/m/Y');
         }
     }
+
+    function unformat_datetime(?string $date,string $fallback='-'):string{
+        if(!$date)return $fallback;
+        else{
+            $date_value=new DateTime(date($date));
+            return $date_value->format('d/m/Y H:i:s');
+        }
+    }
+
     function data_set(array $params):String{
         $arr_data_set=[];
         foreach($params as $k=>$v)$arr_data_set[]="data-{$k}=\"{$v}\"";

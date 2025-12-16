@@ -56,7 +56,7 @@
     }
 
     $_view_incassi = Select('*')->from('view_incassi')->where($where)->get_table();
-    $sum= Select("sum(totale) as totale, sum(IF(stato = 'Pendente', 0, imponibile)) as imponibile, sum(IF(stato = 'Pendente', imponibile, 0 )) as fatturato")->from('view_incassi')->where($where)->first();
+    $sum= Select("sum(totale) as totale, sum(IF(stato = 'Pendente', 0, imponibile)) as imponibile, sum(IF(stato = 'Pendente', imponibile, 0 )) as pendente")->from('view_incassi')->where($where)->first();
 ?>
 
 <!-- where -->
@@ -96,7 +96,7 @@
     ?>
 </div>
 <div>
-    <span><?php echo "Totale: € ".number_format($sum['totale'],2, ',', '.').", Imponibile: € ".number_format($sum['imponibile'],2, ',', '.').", Fatturato: € ".number_format($sum['fatturato'],2, ',', '.'); ?></span>
+    <span><?php echo "Totale: € ".number_format($sum['totale'],2, ',', '.')." Imponibile: € ".number_format($sum['imponibile'],2, ',', '.')." Pendente: € ".number_format($sum['pendente'],2, ',', '.'); ?></span>
 </div>
 
 <!-- table -->

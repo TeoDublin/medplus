@@ -183,6 +183,10 @@
 }
 
 [data-bs-theme=blue] {
+	--bs-popover-bg: rgba(156, 20, 20, 0.726);
+	--bs-popover-body-color: white;
+	--bs-popover-border-color: rgb(53, 1, 1);
+	--bs-body-bg : white;
 	--bs-light: #cfe2ff;
 	--bs-green: #c6d7d1;
 	--bs-light-rgb: 207, 220, 233;
@@ -7222,7 +7226,6 @@ fieldset:disabled .btn {
 	--bs-popover-zindex: 1070;
 	--bs-popover-max-width: 276px;
 	--bs-popover-font-size: 0.875rem;
-	--bs-popover-bg: var(--bs-body-bg);
 	--bs-popover-border-width: var(--bs-border-width);
 	--bs-popover-border-color: var(--bs-border-color-translucent);
 	--bs-popover-border-radius: var(--bs-border-radius-lg);
@@ -7235,7 +7238,6 @@ fieldset:disabled .btn {
 	--bs-popover-header-bg: var(--bs-secondary-bg);
 	--bs-popover-body-padding-x: 1rem;
 	--bs-popover-body-padding-y: 1rem;
-	--bs-popover-body-color: var(--bs-body-color);
 	--bs-popover-arrow-width: 1rem;
 	--bs-popover-arrow-height: 0.5rem;
 	--bs-popover-arrow-border: var(--bs-popover-border-color);
