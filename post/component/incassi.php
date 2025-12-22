@@ -55,7 +55,7 @@
         $where.=" AND stato IN('".implode("','",$_POST['stato'])."')";
     }
 
-    $_view_incassi = Select('*')->from('view_incassi')->where($where)->get_table();
+    $_view_incassi = Select('*')->from('view_incassi')->where($where)->orderby('id desc')->get_table();
     $sum= Select("sum(totale) as totale, sum(IF(stato = 'Pendente', 0, imponibile)) as imponibile, sum(IF(stato = 'Pendente', imponibile, 0 )) as pendente")->from('view_incassi')->where($where)->first();
 ?>
 
@@ -177,7 +177,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="cliente">Nominativo Cliente</label>
-                            <select class="form-control selectpicker" id="cliente" value="<?php echo $_POST['cliente']; ?>" multiple>
+                            <select class="form-control selectpicker" id="cliente" value="<?php echo $_POST['cliente'] ?? '0'; ?>" multiple>
                                 <?php 
                                     foreach(Select('*')->from('clienti')->get() as $enum){
                                         $selected = in_array($enum['id'],( $_POST['cliente'] ?? []))?'selected':'';
@@ -233,7 +233,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="stato">Stato Pagamento</label>
-                            <select class="form-control selectpicker" id="stato" value="<?php echo $_POST['stato']; ?>" multiple>
+                            <select class="form-control selectpicker" id="stato" value="<?php echo $_POST['stato'] ?? ''; ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','stato')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['stato'] ?? []))?'selected':'';
