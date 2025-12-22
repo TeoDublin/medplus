@@ -1,5 +1,5 @@
 window.modalHandlers['add_uscita']={
-   btnSalva: function (element) {
+    btnSalva: function (element) {
         const _validate = validate(element);
         if (_validate.has_error) {
             return;
@@ -108,22 +108,25 @@ window.modalHandlers['add_uscita']={
 
         if(typeof _save_data.id_categoria === 'undefined'){
             alert('Seleziona qualcosa');
+            div.remove();
         }
         else{
             $.post('post/btn_del_categoria.php',_save_data).done(response=>{
                 
-                response = response.trim();
+                msg = response.msg;
 
-                if(response != 'success' ){
-                    return alert(response);
+                if(msg != 'success' ){
+                    return alert(msg);
                 }
 
-                modal_component('add_uscita','add_uscita',_save_data);
+                reload_modal_component('add_uscita','add_uscita',response);
 
-            }).fail(()=>fail());
+            })
+            .fail(()=>fail())
+            .always(()=>{div.remove();});
         }
 
-        div.remove();
+        
     },
     addUscita:function(element){
         let _save_data = save_data(element);
@@ -153,18 +156,32 @@ window.modalHandlers['add_uscita']={
         else{
             $.post('post/btn_del_uscita.php',_save_data).done(response=>{
                 
-                response = response.trim();
+                msg = response.msg;
 
-                if(response != 'success' ){
-                    return alert(response);
+                if(msg != 'success' ){
+                    return alert(msg);
                 }
 
-                modal_component('add_uscita','add_uscita',_save_data);
+                reload_modal_component('add_uscita','add_uscita',response);
 
             }).fail(()=>fail());
         }
 
         div.remove();
+    },
+    addIndirizzato_a:function(element){
+        let _save_data = save_data(element);
+        delete(_save_data.id_indirizzato_a);
+        modal_component('add_uscite_indirizzato_a','add_uscite_indirizzato_a',_save_data);
+    },
+    editIndirizzato_a:function(element){
+        let _save_data = save_data(element);
+
+        if( typeof _save_data.id_indirizzato_a === 'undefined' ){
+            return alert('Seleziona qualcosa');   
+        }
+
+        modal_component('add_uscite_uscita','add_uscite_uscita',_save_data);
     },
     delIndirizzato_a:function(element){
         const div = document.createElement('div');
@@ -179,25 +196,30 @@ window.modalHandlers['add_uscita']={
         }
         else{
             $.post('post/btn_del_indirizzato_a.php',_save_data).done(response=>{
-                
-                response = response.trim();
 
-                if(response != 'success' ){
-                    return alert(response);
+                msg = response.msg;
+
+                if(msg != 'success' ){
+                    return alert(msg);
                 }
 
-                modal_component('add_uscita','add_uscita',_save_data);
+                reload_modal_component('add_uscita','add_uscita',response);
 
             }).fail(()=>fail());
         }
 
         div.remove();
     },
-    indirizzato_a:function(element,add){
-        let _save_data = save_data(element);
-        if(add){
-            delete(_save_data.id_indirizzato_a);
-        }
-        modal_component('add_uscite_indirizzato_a','add_uscite_indirizzato_a',_save_data);
+    changeDataPagamento:function(element){
+        element.closest('.modal').querySelector('[name=voucher]').value = 'Seleziona';
+        element.closest('.modal').querySelectorAll('[name=voucher] option').forEach((e)=>{
+            if(element.value != 'Contanti' && e.value == 'No'){
+                e.setAttribute('disabled','disabled');
+            }
+            else{
+                e.removeAttribute('disabled');
+            }
+        });
+        
     }
 } 

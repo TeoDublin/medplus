@@ -1,23 +1,26 @@
 window.modalHandlers['indirizzato_a']={
     btnSalva:function(element){
-        let _save_data = save_data(element); 
-        _save_data.table = 'uscite_indirizzato_a';
-        const id_uscita = _save_data.id_uscita;
-        delete _save_data.id_uscita;
+        const div = document.createElement('div');
+        div.id = 'btnSalva';
+        div.innerHTML = spinner();
+        document.body.appendChild(div);
 
-        $.post('post/save.php',_save_data).done((id)=>{ 
+        let _save_data = save_data(element);
+        let _load_data = load_data(element);
+        let _data = {
+            table:'uscite_indirizzato_a',
+            save_data:_save_data, 
+            load_data:_load_data,
+            id_alias:'id_indirizzato_a'
+        };
 
-            let _data = {
-                id_indirizzato_a:id
-            }
+        $.post('post/save_n_response.php',_data).done(response=>{
 
-            if(id_uscita !== ''){
-                _data.id = id_uscita;
-            }
+            reload_modal_component('add_uscita','add_uscita',response);
 
-            reload_modal_component('add_uscita','add_uscita',_data);
-        }).fail(()=>{
-            fail();
-        });
+        })
+        .fail(()=>fail())
+        .always(()=>{div.remove();});
+        
     }
 };

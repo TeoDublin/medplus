@@ -8,13 +8,13 @@
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header"><h4 class="modal-title">Aggiungi Trattamento</h4>
+            <div class="modal-header"><h4 class="modal-title">Aggiungi Indirizzato a</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
+            <?php echo div_load(); ?>
             <div class="modal-body save"
                 data-id="<?php echo $_REQUEST['id_indirizzato_a']??''; ?>"
-                data-id_uscita="<?php echo $_REQUEST['id']??''; ?>"
                 >
                 
                 <div class="d-flex flex-row">

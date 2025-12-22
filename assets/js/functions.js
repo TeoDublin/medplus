@@ -339,6 +339,9 @@ function save_data(element){
     return ret;
 }
 
+function load_data(element){
+    return element.closest('.modal').querySelector('.load').dataset;
+}
 
 function validate(element){
 
