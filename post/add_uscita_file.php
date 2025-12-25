@@ -11,6 +11,7 @@ if(isset($_REQUEST['isJS'])){
     $unique_name = unique_name(uscite_path($original_name));
     move_uploaded_file($path, $unique_name);
     $path = $unique_name;
+    $path_relative = str_replace(project_path(),"/".PROJECT_NAME,$path);
 }
 
 $original_name_text = substr($original_name, 0, 40);
@@ -22,6 +23,7 @@ echo "<div class=\"col-auto d-flex\" >
         onClick=\"window.modalHandlers['add_uscita'].viewFileClick(this)\" 
         data-id=\"{$id}\"
         data-path=\"{$path}\"
+        data-path_relative=\"{$path_relative}\"
         data-filename=\"{$original_name}\"
         data-created_at=\"{$created_at}\"
         >

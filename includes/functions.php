@@ -86,6 +86,10 @@
         return $ret;
     }
 
+    function project_path(){
+        return dirname(__DIR__);
+    }
+
     function root_path(string $path): string {
         return "/".PROJECT_NAME."/{$path}";
     }
@@ -100,6 +104,10 @@
 
     function uscite_path(string $path):string{
         return dirname(__DIR__) . "/".USCITE_FOLDER."/".$path;
+    }
+
+    function uscite_relative_path(string $path):string{
+        return "/".PROJECT_NAME."/".USCITE_FOLDER."/".$path;
     }
 
     function unique_name(string $path){

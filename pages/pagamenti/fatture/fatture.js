@@ -36,11 +36,11 @@ function parseFilter(){
     return ret;
 }
 function btnFiltra() {
-    $.post('pages/pagamenti/fatture/post_component/fatture.php?pagination=0', parseFilter())
+    $.post('pages/pagamenti/fatture/post/fatture.php?pagination=0', parseFilter())
     .done(response => { loadView(response);});
 }
 function btnClean(){
-    $.post('pages/pagamenti/fatture/post_component/fatture.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
+    $.post('pages/pagamenti/fatture/post/fatture.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
 }
 function loadView(response){
     document.querySelector('#spa_fatture').innerHTML = response;
@@ -60,7 +60,7 @@ function loadView(response){
         link.addEventListener('click', event => {
             event.preventDefault();
             let page = parseInt(event.target.innerHTML) - 1;
-            $.post('pages/pagamenti/fatture/post_component/fatture.php?pagination=' + page, parseFilter()).done(response => loadView(response));
+            $.post('pages/pagamenti/fatture/post/fatture.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
     document.querySelector('#filter_cliente').querySelector('select#cliente').searchable();
@@ -70,5 +70,5 @@ function inputExcel(){
     modal_component('input_excel_fatture','input_excel_fatture',{});
 }
 document.addEventListener('DOMContentLoaded',function(){
-    $.post('pages/pagamenti/fatture/post_component/fatture.php?pagination=0', {} ).done(response => { loadView(response);});
+    $.post('pages/pagamenti/fatture/post/fatture.php?pagination=0', {} ).done(response => { loadView(response);});
 });

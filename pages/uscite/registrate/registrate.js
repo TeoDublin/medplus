@@ -69,12 +69,12 @@ function parseFilter(){
 }
 
 function btnFiltra() {
-    $.post('pages/uscite/registrate/post_component/registrate.php?pagination=0', parseFilter())
+    $.post('pages/uscite/registrate/post/registrate.php?pagination=0', parseFilter())
     .done(response => { loadView(response);});
 }
 
 function btnClean(){
-    $.post('pages/uscite/registrate/post_component/registrate.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
+    $.post('pages/uscite/registrate/post/registrate.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
 }
 
 function aggiungiUscita(){
@@ -123,7 +123,7 @@ function loadView(response){
         link.addEventListener('click', event => {
             event.preventDefault();
             let page = parseInt(event.target.dataset.n) - 1;
-            $.post('pages/uscite/registrate/post_component/registrate.php?pagination=' + page, parseFilter()).done(response => loadView(response));
+            $.post('pages/uscite/registrate/post/registrate.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
 
@@ -144,5 +144,5 @@ function loadView(response){
 }
 
 document.addEventListener('DOMContentLoaded',function(){
-    $.post('pages/uscite/registrate/post_component/registrate.php?', {} ).done(response => { loadView(response);});
+    $.post('pages/uscite/registrate/post/registrate.php?', {} ).done(response => { loadView(response);});
 });

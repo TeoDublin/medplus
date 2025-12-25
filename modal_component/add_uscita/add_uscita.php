@@ -221,6 +221,7 @@
                                     foreach ($files as $file) {
                                         $id = $file['id'];
                                         $path = uscite_path($file['filename']);
+                                        $path_relative = uscite_relative_path($file['filename']);
                                         $original_name = $file['original_name'];
                                         $created_at = $file['created_at'];
                                         

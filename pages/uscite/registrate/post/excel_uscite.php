@@ -1,11 +1,11 @@
 <?php
 ob_start();
 $_REQUEST['skip_cookie'] = true;
-require_once '../includes.php';
+require_once '../../../../includes.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require '../class/libraries/phpspreadsheet/vendor/autoload.php'; 
+require '../../../../class/libraries/phpspreadsheet/vendor/autoload.php'; 
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -18,9 +18,15 @@ $line = 1;
 foreach (Sql()->select($query) as $result) {
     $map = [
         'id'=>$result['id'],
-        'uscita'=>$result['nome'],
-        'data'=>unformat_date($result['data']),
-        'importo'=>$result['importo']
+        'in_capo_a '=>$result['in_capo_a'],
+        'data_pagamento'=>unformat_date($result['data_pagamento']),
+        'tipo_pagamento'=>$result['tipo_pagamento'],
+        'importo'=>$result['importo'],
+        'voucher'=>$result['voucher'],
+        'note'=>$result['note'],
+        'categoria'=>$result['categoria'],
+        'indirizzato_a'=>$result['indirizzato_a'],
+        'uscita'=>$result['uscita']
     ];
 
     if ($line == 1) {

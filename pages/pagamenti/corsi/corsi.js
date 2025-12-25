@@ -89,12 +89,12 @@ function parseFilter(){
 }
 
 function btnFiltra() {
-    $.post('pages/pagamenti/corsi/post_component/corsi.php?pagination=0', parseFilter())
+    $.post('pages/pagamenti/corsi/post/corsi.php?pagination=0', parseFilter())
     .done(response => { loadView(response);});
 }
 
 function btnClean(){
-    $.post('pages/pagamenti/corsi/post_component/corsi.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
+    $.post('pages/pagamenti/corsi/post/corsi.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
 }
 
 function loadView(response){
@@ -115,7 +115,7 @@ function loadView(response){
         link.addEventListener('click', event => {
             event.preventDefault();
             let page = parseInt(event.target.dataset.n) - 1;
-            $.post('pages/pagamenti/corsi/post_component/corsi.php?pagination=' + page, parseFilter()).done(response => loadView(response));
+            $.post('pages/pagamenti/corsi/post/corsi.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
 
@@ -141,5 +141,5 @@ function inputExcel(){
 }
 
 document.addEventListener('DOMContentLoaded',function(){
-    $.post('pages/pagamenti/corsi/post_component/corsi.php?pagination=0', {} ).done(response => { loadView(response);});
+    $.post('pages/pagamenti/corsi/post/corsi.php?pagination=0', {} ).done(response => { loadView(response);});
 });

@@ -35,6 +35,17 @@ window.modalHandlers['add_uscita']={
                 });
             }
         }
+        else{
+            const path = element.dataset.path_relative;
+
+            if(!path) {
+                return alert('File path not found');
+            }
+
+            const url = encodeURI(path);
+
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
     },
     delFileEnter:function(element){
         element.classList.add('delFileEnter');

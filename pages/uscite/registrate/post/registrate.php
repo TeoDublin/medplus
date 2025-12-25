@@ -135,7 +135,7 @@
     <button class="h-100 left"><?php echo icon('arrow-filled-left.svg'); ?></button>
     <button class="h-100 right"><?php echo icon('arrow-filled-right.svg'); ?></button>
 </div>
-<div class="floating-excel-btn" onclick="excel('post/excel_uscite.php')">
+<div class="floating-excel-btn" onclick="excel('pages/uscite/registrate/post/excel_uscite.php')">
     <div class="d-grid tip d-none justify-content-center align-content-center">
         <span>Scarrica excel con le uscite filtrate</span>
     </div>

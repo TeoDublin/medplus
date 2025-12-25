@@ -30,11 +30,11 @@ function parseFilter(){
     return ret;
 }
 function btnFiltra() {
-    $.post('pages/utenti/presenze_log/post_component/presenze_log.php?pagination=0', parseFilter())
+    $.post('pages/utenti/presenze_log/post/presenze_log.php?pagination=0', parseFilter())
     .done(response => { loadView(response);});
 }
 function btnClean(){
-    $.post('pages/utenti/presenze_log/post_component/presenze_log.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
+    $.post('pages/utenti/presenze_log/post/presenze_log.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
 }
 function loadView(response){
     document.querySelector('#spa_presenze_log').innerHTML = response;
@@ -50,7 +50,7 @@ function loadView(response){
         link.addEventListener('click', event => {
             event.preventDefault();
             let page = parseInt(event.target.dataset.n) - 1;
-            $.post('pages/utenti/presenze_log/post_component/presenze_log.php?pagination=' + page, parseFilter()).done(response => loadView(response));
+            $.post('pages/utenti/presenze_log/post/presenze_log.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
     
@@ -70,5 +70,5 @@ function del(id){
     }
 }
 document.addEventListener('DOMContentLoaded',function(){
-    $.post('pages/utenti/presenze_log/post_component/presenze_log.php?pagination=0', {} ).done(response => { loadView(response);});
+    $.post('pages/utenti/presenze_log/post/presenze_log.php?pagination=0', {} ).done(response => { loadView(response);});
 });
