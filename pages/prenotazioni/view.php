@@ -10,7 +10,7 @@
             </li><?php 
             if(in_array('tab_prenotazioni_motivi',$elementi)){?>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo _tab('motivi')?'active':'';?>" aria-current="page" href="prenotazioni.php?tab=motivi&pagination=0">Motivi</a>
+                    <a class="nav-link <?php echo _tab('motivi')?'active':'';?>" aria-current="page" href="prenotazioni.php?<?php echo unset_default(['tab'=>'motivi']);?>">Motivi</a>
                 </li><?php
             }?>
         </ul>

@@ -56,7 +56,7 @@
                 }).fail(()=>{fail();});
             };
             const navigate = (page, menu)=>{
-                window.location.href = "<?php echo url('') ?>"+page+"?pagination=0&unset=tab&menu_page="+menu;
+                window.location.href = "<?php echo url('') ?>"+page+"?<?php echo unset_default(['unset'=>'tab']);?>&menu_page="+menu;
             }
             this.menuIcon.addEventListener('click', togleListening);
             this.menuIconBack.addEventListener('click', togleListening);

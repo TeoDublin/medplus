@@ -1,31 +1,41 @@
 <?php 
-    require_once '../../includes.php';
+    require_once '../../../../includes.php';
     $session=Session();
     $ruolo=$session->get('ruolo')??false;
-    function _has_filters(){
-        return count($_POST)>0&&!$_REQUEST['btnClean'];
-    }
+
     $where='1=1';
     $url='pagamenti.php';
-    if(_has_filters()){
-        if($_POST['data']['all']);
-        else{
-            if($_POST['data']['da'])$where.=" AND `data` >='{$_POST['data']['da']}'";
-            if($_POST['data']['a'])$where.=" AND `data` <='{$_POST['data']['a']}'";
-            
+    if(has_filters()){
+        if(!isset($_POST['data']['all'])){
+            if(isset($_POST['data']['da'])){
+                $where.=" AND `data` >='{$_POST['data']['da']}'";
+            }
+            if(isset($_POST['data']['a'])){
+                $where.=" AND `data` <='{$_POST['data']['a']}'";
+            }
         }
-        if($_POST['fatturato_da'])$where.=" AND `fatturato_da` ='{$_POST['fatturato_da']}'";
-        if($_POST['index'])$where.=" AND `index` ='{$_POST['index']}'";
-        if($_POST['stato'])$where.=" AND `stato` ='{$_POST['stato']}'";
-        if($_POST['confermato_dal_commercialista'])$where.=" AND `confermato_dal_commercialista` ='{$_POST['confermato_dal_commercialista']}'";
-        if($_POST['cliente'])$where.=" AND id_cliente ='{$_POST['cliente']}'";
+        if(isset($_POST['fatturato_da'])){
+            $where.=" AND `fatturato_da` ='{$_POST['fatturato_da']}'";
+        }
+        if(isset($_POST['index'])){
+            $where.=" AND `index` ='{$_POST['index']}'";
+        }
+        if(isset($_POST['stato'])){
+            $where.=" AND `stato` ='{$_POST['stato']}'";
+        }
+        if(isset($_POST['confermato_dal_commercialista'])){
+            $where.=" AND `confermato_dal_commercialista` ='{$_POST['confermato_dal_commercialista']}'";
+        }
+        if(isset($_POST['cliente'])){
+            $where.=" AND id_cliente ='{$_POST['cliente']}'";
+        }
     }
-    elseif($_REQUEST['btnClean']);
-    else{
+    elseif(!(int)cookie('btnClean')){
         $_POST['data']['da'] = date('Y-m-01');
         $_POST['data']['a'] = date('Y-m-d');
         $where.=" AND `data` >='{$_POST['data']['da']}' AND `data` <='{$_POST['data']['a']}'";
     }
+
     $view_fatture = Select('*')->from('view_fatture')->where($where)->get_table();
     $somma_importo= number_format(Select("sum(importo) as importo")->from('view_fatture')->where($where)->col('importo'),2);
 ?>
@@ -34,18 +44,31 @@
 <div class="filter-labels d-flex flex-row align-items-center bg-light p-2">
     <span class="fw-bold">FILTRI APPLICATI:</span>
     <?php
-    if(_has_filters()){?>
+    if(has_filters()){?>
         <?php
-            if($_POST['data']['all']);
-            else{
-                if($_POST['data']['da']) echo "<div class=\"filter-label bg-gray\"><span >Da: ".unformat_date($_POST['data']['da'])."</span></div>"; 
-                if($_POST['data']['a']) echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data']['a'])."</span></div>";    
+            if(!isset($_POST['data']['all'])){
+                if(isset($_POST['data']['da'])){
+                    echo "<div class=\"filter-label bg-gray\"><span >Da: ".unformat_date($_POST['data']['da'])."</span></div>";
+                } 
+                if(isset($_POST['data']['a'])){
+                    echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data']['a'])."</span></div>";
+                }    
             } 
-            if($_POST['fatturato_da']) echo "<div class=\"filter-label bg-gray\"><span >fatturato da: {$_POST['fatturato_da']}</span></div>";
-            if($_POST['index']) echo "<div class=\"filter-label bg-gray\"><span >Numero fattura: {$_POST['index']}</span></div>";
-            if($_POST['stato']) echo "<div class=\"filter-label bg-gray\"><span >stato: {$_POST['stato']}</span></div>";
-            if(isset($_POST['confermato_dal_commercialista'])) echo "<div class=\"filter-label bg-gray\"><span>Confermato Commercialista: ".((int)$_POST['confermato_dal_commercialista']?'Si':'No')."</span></div>";
-            if($_POST['nominativo']) echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
+            if(isset($_POST['fatturato_da'])){
+                echo "<div class=\"filter-label bg-gray\"><span >fatturato da: {$_POST['fatturato_da']}</span></div>";
+            }
+            if(isset($_POST['index'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Numero fattura: {$_POST['index']}</span></div>";
+            }
+            if(isset($_POST['stato'])){
+                echo "<div class=\"filter-label bg-gray\"><span >stato: {$_POST['stato']}</span></div>";
+            }
+            if(isset($_POST['confermato_dal_commercialista'])){
+                echo "<div class=\"filter-label bg-gray\"><span>Confermato Commercialista: ".((int)$_POST['confermato_dal_commercialista']?'Si':'No')."</span></div>";
+            }
+            if(isset($_POST['nominativo'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Nominativo: {$_POST['nominativo']}</span></div>";
+            }
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }

@@ -1,8 +1,6 @@
 <?php 
-    require_once '../../includes.php';
-    function _has_filters(){
-        return count($_POST)>0&&!isset($_REQUEST['btnClean']);
-    }
+    require_once '../../../../includes.php';
+
     function _presenze_log($where){
         return Select('ut.*,u.nome as username')
             ->from('utenti_presenze','ut')
@@ -13,7 +11,7 @@
     }
     $url='utenti.php';
     $where='1=1';
-    if(_has_filters()){
+    if(has_filters()){
         if($_POST['data']['all']);
         else{
             if($_POST['data']['da'])$where.=" AND `data` >='{$_POST['data']['da']}'";
@@ -21,8 +19,7 @@
         }
         if(isset($_POST['id_utenti']))$where.=" AND id_utenti ='{$_POST['id_utenti']}'";
     }
-    elseif(isset($_REQUEST['btnClean']));
-    else{
+    elseif(!cookie('btnClean')){
         $_POST['data']['da']=date('Y-m-01');
         $_POST['data']['a']=date('Y-m-d');
         $where.=" AND `data` >='{$_POST['data']['da']}' AND `data` <='{$_POST['data']['a']}'";
@@ -34,7 +31,7 @@
 <div class="filter-labels d-flex flex-row align-items-center bg-light p-2">
     <span class="fw-bold">FILTRI APPLICATI:</span>
     <?php
-    if(_has_filters()){?>
+    if(has_filters()){?>
         <?php
             if(isset($_POST['data']['all']));
             else{

@@ -1,5 +1,5 @@
 function parseFilter(){
-    let ret = {};
+    let ret = {'unset':'btnClean'};
     let alerts = [];
     let data_da = document.querySelector('#data_da').value;
     let data_a = document.querySelector('#data_a').value;
@@ -54,12 +54,12 @@ function parseFilter(){
 }
 
 function btnFiltra() {
-    $.post('post/component/incassi.php?pagination=0', parseFilter())
+    $.post('pages/pagamenti/incassi/post_component/incassi.php?pagination=0', parseFilter())
     .done(response => { loadView(response);});
 }
 
 function btnClean(){
-    $.post('post/component/incassi.php?pagination=0', {'btnClean':true} ).done(response => { loadView(response);});
+    $.post('pages/pagamenti/incassi/post_component/incassi.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
 }
 
 function loadView(response){
@@ -78,7 +78,7 @@ function loadView(response){
         link.addEventListener('click', event => {
             event.preventDefault();
             let page = parseInt(event.target.dataset.n) - 1;
-            $.post('post/component/incassi.php?pagination=' + page, parseFilter()).done(response => loadView(response));
+            $.post('pages/pagamenti/incassi/post_component/incassi.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
 
@@ -100,5 +100,5 @@ function loadView(response){
 }
 
 document.addEventListener('DOMContentLoaded',function(){
-    $.post('post/component/incassi.php?pagination=0', {} ).done(response => { loadView(response);});
+    $.post('pages/pagamenti/incassi/post_component/incassi.php?pagination=0', {} ).done(response => { loadView(response);});
 });

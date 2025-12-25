@@ -3,12 +3,12 @@
     <div class="flex-fill flex-column">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link <?php echo _tab('elenco')?'active':'';?>" aria-current="page" href="utenti.php?tab=elenco&pagination=0">Utenti</a>
+                <a class="nav-link <?php echo _tab('elenco')?'active':'';?>" aria-current="page" href="utenti.php?<?php echo unset_default(['tab'=>'elenco']);?>">Utenti</a>
             </li>
             <?php 
                 if(in_array('tab_utenti_presenze',$elementi)){?>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo _tab('presenze_log')?'active':'';?>" aria-current="page" href="utenti.php?tab=presenze_log&pagination=0">Presenze Log</a>
+                        <a class="nav-link <?php echo _tab('presenze_log')?'active':'';?>" aria-current="page" href="utenti.php?<?php echo unset_default(['tab'=>'presenze_log']);?>">Presenze Log</a>
                     </li>
                     <?php
                 }

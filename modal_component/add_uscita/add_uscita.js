@@ -181,7 +181,7 @@ window.modalHandlers['add_uscita']={
             return alert('Seleziona qualcosa');   
         }
 
-        modal_component('add_uscite_uscita','add_uscite_uscita',_save_data);
+        modal_component('add_uscite_indirizzato_a','add_uscite_indirizzato_a',_save_data);
     },
     delIndirizzato_a:function(element){
         const div = document.createElement('div');

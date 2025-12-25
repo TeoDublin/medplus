@@ -1,11 +1,7 @@
 <?php 
-    require_once '../../includes.php';
+    require_once '../../../../includes.php';
     $session=Session();
     $ruolo=$session->get('ruolo')??false;
-    
-    function _has_filters(){
-        return count($_POST)>0&&!isset($_REQUEST['btnClean']);
-    }
 
     if($ruolo=='display'){
         $where = "origine <> 'senza_fattura' AND bnw <> 'no'";
@@ -16,7 +12,7 @@
 
     $url='pagamenti.php';
     
-    if(_has_filters()){
+    if(has_filters()){
 
         if(!isset($_POST['data']['all'])){
             if(isset($_POST['data']['da'])){
@@ -47,7 +43,7 @@
             $where.=" AND id_cliente IN(".implode(',',$_POST['cliente']).")";
         }
     }
-    elseif(!isset($_REQUEST['btnClean'])){
+    elseif(!(int)cookie('btnClean')){
         $_POST['stato'] = ['Saldata'];
         $_POST['data']['da']=date('Y-m-d');
         $_POST['data']['a']=date('Y-m-d');
@@ -63,7 +59,7 @@
 <div class="filter-labels d-flex flex-row align-items-center bg-light p-2">
     <span class="fw-bold">FILTRI APPLICATI:</span>
     <?php
-    if(_has_filters()){?>
+    if(has_filters()){?>
         <?php
             if(!isset($_POST['data_seduta']['all'])){
                 if(isset($_POST['data']['da'])){
@@ -233,7 +229,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="stato">Stato Pagamento</label>
-                            <select class="form-control selectpicker" id="stato" value="<?php echo $_POST['stato'] ?? ''; ?>" multiple>
+                            <select class="form-control selectpicker" id="stato" value="<?php echo json_encode($_POST['stato'] ?? []); ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','stato')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['stato'] ?? []))?'selected':'';
@@ -257,7 +253,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="metodo">Metodo Pagamento</label>
-                            <select class="form-control selectpicker" id="metodo" value="<?php echo $_POST['metodo']; ?>" multiple>
+                            <select class="form-control selectpicker" id="metodo" value="<?php echo json_encode($_POST['metodo'] ?? []); ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','metodo')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['metodo'] ?? []))?'selected':'';
@@ -281,7 +277,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="origine">Tipo Pagamento</label>
-                            <select class="form-control selectpicker" id="origine" value="<?php echo $_POST['origine']; ?>" multiple>
+                            <select class="form-control selectpicker" id="origine" value="<?php echo $_POST['origine'] ?? ''; ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','origine')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['origine'] ?? []))?'selected':'';
@@ -306,7 +302,7 @@
                     <div class="accordion-body">
                         <div>
                             <label for="bnw">Voucher</label>
-                            <select class="form-control selectpicker" id="bnw" value="<?php echo $_POST['bnw']; ?>" multiple>
+                            <select class="form-control selectpicker" id="bnw" value="<?php echo $_POST['bnw'] ?? ''; ?>" multiple>
                                 <?php 
                                     foreach (Enum('pagamenti','bnw')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['bnw'] ?? []))?'selected':'';

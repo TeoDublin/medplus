@@ -3,7 +3,7 @@
     <div class="flex-fill flex-column">
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link <?php echo _tab('anagrafica')?'active':'';?>" aria-current="page" href="clienti.php?tab=anagrafica&pagination=0&storico=unset">Anagrafica</a>
+                <a class="nav-link <?php echo _tab('anagrafica')?'active':'';?>" aria-current="page" href="clienti.php?tab=anagrafica&<?php echo unset_default(['unset'=>'storico']);?>">Anagrafica</a>
             </li>
         </ul>
         <div class="p-1">

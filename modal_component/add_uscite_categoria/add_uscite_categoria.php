@@ -8,7 +8,7 @@
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <div class="modal-header"><h4 class="modal-title">Aggiungi Categoria</h4>
+            <div class="modal-header"><h4 class="modal-title">Categoria</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>

@@ -1,14 +1,11 @@
 <?php 
-    require_once '../../includes.php';
-
-    function _has_filters(){
-        return count($_POST)>0&&!isset($_REQUEST['btnClean']);
-    }
+    require_once '../../../../includes.php';
 
     $where='1=1';
     $url='pagamenti.php';
     
-    if(_has_filters()){
+    if(has_filters()){
+
         if(!isset($_POST['data_pagamento']['all'])){
             if(isset($_POST['data_pagamento']['da'])){
                 $where.=" AND `data_pagamento` >='{$_POST['data_pagamento']['da']}'";
@@ -46,7 +43,7 @@
             $where.=" AND note LIKE '%".$_POST['note']."%'";
         }
     }
-    elseif(!isset($_REQUEST['btnClean'])){
+    elseif(!(int)cookie('btnClean')){
         $_POST['data_pagamento']['da']=date('Y-m-01');
         $_POST['data_pagamento']['a']=date('Y-m-d');
         $where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}' AND data_pagamento <='{$_POST['data_pagamento']['a']}'";
@@ -59,19 +56,24 @@
 <div class="filter-labels d-flex flex-row align-items-center bg-light p-2 w-100">
     <span class="fw-bold">FILTRI APPLICATI:</span>
     <?php
-    if(_has_filters()){?>
+    if(has_filters()){?>
         <?php
-            if(isset($_POST['data_pagamento']['all']));
-            else{
-                if($_POST['data_pagamento']['da']) echo "<div class=\"filter-label bg-gray\"><span >Seduta Da: ".unformat_date($_POST['data_pagamento']['da'])."</span></div>"; 
-                if($_POST['data_pagamento']['a']) echo "<div class=\"filter-label bg-gray\"><span >Seduta A: ".unformat_date($_POST['data_pagamento']['a'])."</span></div>";    
+            if(!isset($_POST['data_pagamento']['all'])){
+                if(isset($_POST['data_pagamento']['da'])){
+                    echo "<div class=\"filter-label bg-gray\"><span >Seduta Da: ".unformat_date($_POST['data_pagamento']['da'])."</span></div>"; 
+                }
+                if(isset($_POST['data_pagamento']['a'])){
+                    echo "<div class=\"filter-label bg-gray\"><span >Seduta A: ".unformat_date($_POST['data_pagamento']['a'])."</span></div>";
+                } 
             } 
-            if(isset($_POST['indirizzato_a'])) echo "<div class=\"filter-label bg-gray\"><span >Uscita: {$_POST['indirizzato_a']}</span></div>";
+            if(isset($_POST['indirizzato_a'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Uscita: {$_POST['indirizzato_a']}</span></div>";
+            }
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
     ?>
-    <button class="btn btn-secondary ms-2 ms-auto" onclick="aggiungiUscita()">Aggiungi Uscita</button>
+    <button class="btn btn-secondary ms-2 ms-auto" onclick="aggiungiUscita()">Nuova Uscita</button>
 </div>
 <div>
     <span><?php echo "Quantità: {$view_uscite_registrate->total}, Somma: € {$somma_importo}"; ?></span>

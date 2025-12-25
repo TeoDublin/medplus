@@ -1,5 +1,29 @@
 <?php
 
+    function unset_default($add=[]){
+        $commons = [
+            'pagination'=>0,
+            'unset_tab'=>['btnClean']
+        ];
+
+        $ret = [];
+        foreach(array_merge($commons,$add) as $key => $value){
+            $v = is_array($value) ? urlencode(json_encode($value)) : $value;
+            $ret[]="{$key}={$v}";
+        }
+
+        return implode('&',$ret);
+    }
+
+    function has_filters(){
+        if((int)cookie('btnClean', 0) > 0 ){
+            return true;    
+        }
+
+        return count($_POST)>0;
+    }
+
+
     function request($key,$fallback=false){
         $ret=$_REQUEST[$key]??false;
         unset($_REQUEST[$key]);

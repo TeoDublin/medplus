@@ -1,5 +1,5 @@
 function parseFilter(){
-    let ret = {};
+    let ret = {'unset':'btnClean'};
     let alerts = [];
     let data_seduta_da = document.querySelector('#data_seduta_da').value;
     let data_seduta_a = document.querySelector('#data_seduta_a').value;
@@ -94,12 +94,12 @@ function parseFilter(){
 }
 
 function btnFiltra() {
-    $.post('post/component/sedute.php?pagination=0', parseFilter())
+    $.post('pages/pagamenti/sedute/post_component/sedute.php?pagination=0', parseFilter())
     .done(response => { loadView(response);});
 }
 
 function btnClean(){
-    $.post('post/component/sedute.php?pagination=0', {'btnClean':true} ).done(response => { loadView(response);});
+    $.post('pages/pagamenti/sedute/post_component/sedute.php?pagination=0', {'btnClean':true, 'cookie':{'btnClean':1}} ).done(response => { loadView(response);});
 }
 
 function loadView(response){
@@ -122,7 +122,7 @@ function loadView(response){
         link.addEventListener('click', event => {
             event.preventDefault();
             let page = parseInt(event.target.dataset.n) - 1;
-            $.post('post/component/sedute.php?pagination=' + page, parseFilter()).done(response => loadView(response));
+            $.post('pages/pagamenti/sedute/post_component/sedute.php?pagination=' + page, parseFilter()).done(response => loadView(response));
         });
     });
 
@@ -148,5 +148,5 @@ function inputExcel(){
 }
 
 document.addEventListener('DOMContentLoaded',function(){
-    $.post('post/component/sedute.php?pagination=0', {} ).done(response => { loadView(response);});
+    $.post('pages/pagamenti/sedute/post_component/sedute.php?pagination=0', {} ).done(response => { loadView(response);});
 });

@@ -40,7 +40,7 @@
                                 "<span class=\"visually-hidden\">Pendenti di Conferma</span>".
                             "</span>";
                     }
-                    echo "<a class=\"nav-link ".($is_active?'active':'')."\" aria-current=\"page\" href=\"corsi.php?tab=classi&pagination=0&tab_classi={$corso['id']}\">{$corso['corso']}</a>".
+                    echo "<a class=\"nav-link ".($is_active?'active':'')."\" aria-current=\"page\" href=\"corsi.php?".unset_default(['tab'=>'classi','tab_classi'=>$corso['id']])."\">{$corso['corso']}</a>".
                     "</li>";
                     $is_first=false;
                 }

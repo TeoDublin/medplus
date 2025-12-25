@@ -1,11 +1,7 @@
 <?php 
-    require_once '../../includes.php';
+    require_once '../../../../includes.php';
     $session=Session();
     $ruolo=$session->get('ruolo')??false;
-
-    function _has_filters(){
-        return count($_POST)>0&&!isset($_REQUEST['btnClean']);
-    }
 
     if($ruolo=='display'){
         $where = "( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' ) AND bnw <> 'no'";
@@ -15,7 +11,7 @@
     }
     
     $url='pagamenti.php';
-    if(_has_filters()){
+    if(has_filters()){
 
         if(!isset($_POST['scadenza']['all'])){
             if(isset($_POST['scadenza']['da'])){
@@ -68,7 +64,7 @@
         }
 
     }
-    elseif(!isset($_REQUEST['btnClean'])){
+    elseif(!(int)cookie('btnClean')){
         $_POST['stato_pagamento']=['Saldato'];
         $_POST['data_pagamento']['da']=date('Y-m-d');
         $_POST['data_pagamento']['a']=date('Y-m-d');
@@ -84,7 +80,7 @@
 <div class="filter-labels d-flex flex-row align-items-center bg-light p-2">
     <span class="fw-bold">FILTRI APPLICATI:</span>
     <?php
-    if(_has_filters()){?>
+    if(has_filters()){?>
         <?php
 
             if(!isset($_POST['scadenza']['all'])){
