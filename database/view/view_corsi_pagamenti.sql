@@ -17,7 +17,18 @@ SELECT
     (cc.nominativo COLLATE utf8mb4_unicode_ci) AS nominativo,
     (ccc.categoria COLLATE utf8mb4_unicode_ci) AS categoria,
     COALESCE(YEAR(cp.scadenza), YEAR(ccl.data_inizio)) AS anno,
-    MIN(IF((MONTH(cp.scadenza) = 1), 1, IF((cs.mese = 1), 2, IF((STR_TO_DATE(CONCAT(COALESCE(YEAR(cp.scadenza), YEAR(ccl.data_inizio)), '-01-', LPAD(c.scadenza, 2, '0')), '%Y-%m-%d') BETWEEN ccl.data_inizio AND LAST_DAY(NOW())), 4, 3)))) AS `1`,
+    MIN(
+        IF((MONTH(cp.scadenza) = 1), 
+            1, 
+            IF((cs.mese = 1), 
+                2, 
+                IF((STR_TO_DATE(CONCAT(COALESCE(YEAR(cp.scadenza), YEAR(ccl.data_inizio)), '-01-', LPAD(c.scadenza, 2, '0')), '%Y-%m-%d') BETWEEN ccl.data_inizio AND LAST_DAY(NOW())), 
+                    4, 
+                    3
+                )
+            )
+        )
+    ) AS `1`,
     MIN(IF((MONTH(cp.scadenza) = 2), 1, IF((cs.mese = 2), 2, IF((STR_TO_DATE(CONCAT(COALESCE(YEAR(cp.scadenza), YEAR(ccl.data_inizio)), '-02-', LPAD(c.scadenza, 2, '0')), '%Y-%m-%d') BETWEEN ccl.data_inizio AND LAST_DAY(NOW())), 4, 3)))) AS `2`,
     MIN(IF((MONTH(cp.scadenza) = 3), 1, IF((cs.mese = 3), 2, IF((STR_TO_DATE(CONCAT(COALESCE(YEAR(cp.scadenza), YEAR(ccl.data_inizio)), '-03-', LPAD(c.scadenza, 2, '0')), '%Y-%m-%d') BETWEEN ccl.data_inizio AND LAST_DAY(NOW())), 4, 3)))) AS `3`,
     MIN(IF((MONTH(cp.scadenza) = 4), 1, IF((cs.mese = 4), 2, IF((STR_TO_DATE(CONCAT(COALESCE(YEAR(cp.scadenza), YEAR(ccl.data_inizio)), '-04-', LPAD(c.scadenza, 2, '0')), '%Y-%m-%d') BETWEEN ccl.data_inizio AND LAST_DAY(NOW())), 4, 3)))) AS `4`,
@@ -31,12 +42,12 @@ SELECT
     MIN(IF((MONTH(cp.scadenza) = 12), 1, IF((cs.mese = 12), 2, IF((STR_TO_DATE(CONCAT(COALESCE(YEAR(cp.scadenza), YEAR(ccl.data_inizio)), '-12-', LPAD(c.scadenza, 2, '0')), '%Y-%m-%d') BETWEEN ccl.data_inizio AND LAST_DAY(NOW())), 4, 3)))) AS `12`
 FROM 
     medplus.corsi_classi ccl
-    LEFT JOIN medplus.corsi_pagamenti cp ON ccl.id_corso = cp.id_corso AND ccl.id_cliente = cp.id_cliente
+    LEFT JOIN medplus.corsi_pagamenti cp ON ccl.id_corso = cp.id_corso AND ccl.id_cliente = cp.id_cliente  AND YEAR(cp.scadenza) = YEAR(ccl.data_inizio)
     LEFT JOIN medplus.corsi c ON ccl.id_corso = c.id
     LEFT JOIN medplus.clienti cc ON ccl.id_cliente = cc.id
     LEFT JOIN medplus.terapisti t ON c.id_terapista = t.id
     LEFT JOIN medplus.corsi_categorie ccc ON c.id_categoria = ccc.id
-    LEFT JOIN medplus.corsi_sospensioni cs ON ccl.id_cliente = cs.id_cliente AND ccl.id_corso = cs.id_corso
+    LEFT JOIN medplus.corsi_sospensioni cs ON ccl.id_cliente = cs.id_cliente AND ccl.id_corso = cs.id_corso AND cs.anno = YEAR(ccl.data_inizio)
 GROUP BY 
     ccl.id_cliente,
     ccl.id_corso,

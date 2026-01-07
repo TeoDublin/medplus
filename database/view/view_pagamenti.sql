@@ -143,7 +143,7 @@ SELECT
     ) AS non_fatturato
 FROM 
     medplus.corsi_pagamenti cp
-LEFT JOIN corsi_classi cc ON cp.id_corso = cc.id_corso AND cp.id_cliente = cc.id_cliente
+LEFT JOIN corsi_classi cc ON cp.id_corso = cc.id_corso AND cp.id_cliente = cc.id_cliente AND YEAR(cp.scadenza) = YEAR(cc.data_inizio)
 LEFT JOIN 
     (
         SELECT 

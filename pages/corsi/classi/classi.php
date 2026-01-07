@@ -1,10 +1,10 @@
 <?php 
     style('pages/corsi/classi/classi.css');
     require 'ctrl.php';
-    $year='2025';
+    
     $view_classi = Select('*')
         ->from('view_corsi_pagamenti','vc')
-        ->where("vc.id_corso={$tab_classi} and vc.anno = '{$year}'")
+        ->where("vc.id_corso={$tab_classi} and vc.anno = '{$tab_year}'")
         ->get_table();
 
     $data_inizio = new DateTime($corso_current['timestamp']);
@@ -13,14 +13,14 @@
     $current_month = new DateTime(date('Y-m-01'));
     $current_month->setTime(0, 0, 0);
 
-    $_classe_icon = function($m,$classe) use (&$year, &$inizio, &$current_month) {
-        $scadenza = "{$year}-".str_pad($m,2,'0',STR_PAD_LEFT)."-".str_pad($classe['corso_scadenza'],2,'0',STR_PAD_LEFT);
+    $_classe_icon = function($m,$classe) use (&$tab_year, &$inizio, &$current_month) {
+        $scadenza = "{$tab_year}-".str_pad($m,2,'0',STR_PAD_LEFT)."-".str_pad($classe['corso_scadenza'],2,'0',STR_PAD_LEFT);
 
         $corsi_pagamenti = Select('*')->from('corsi_pagamenti')->where("id_cliente = {$classe['id_cliente']} AND id_corso = {$classe['id_corso']} AND scadenza = '{$scadenza}' ")->first_or_false();
         
         $classe['scadenza'] = $scadenza;
         $classe['mese']=$m;
-        $classe['anno']=$year;
+        $classe['anno']=$tab_year;
         $data_set=data_set($classe)." onclick=\"window.modalHandlers['classi'].click(this)\"";
 
         if($corsi_pagamenti && in_array($corsi_pagamenti['stato_pagamento'],['Saldato','Fatturato'])){
