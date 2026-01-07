@@ -27,17 +27,27 @@
     }
 
     function _index($oggetti){
+        
         if(isset($oggetti['index'])){
             return $oggetti['index'];
         }
         else{
-            $index=Select('max(`index`) as mx')->from('fatture')->first_or_false();
-            if(!$index['mx'])$index=Select("JSON_EXTRACT(setup, '$.first_index') as first_index")->from('setup')->where("`key`='fatture'")->col('first_index');
+            
+            $index=Select('max(`index`) as mx')->from('fatture')->where("YEAR(`data`) = '".date('Y')."'")->first_or_false();
+            
+            if(!$index['mx']){
+                $index=Select("JSON_EXTRACT(setup, '$.first_index') as first_index")->from('setup')->where("`key`='fatture'")->col('first_index');
+            }
             else {
+                
                 $blocate=Select('max(`index`) as mx')->from('fatture_blocate')->first_or_false();
-                if($blocate&&(int)$blocate['mx']>(int)$index['mx'])$index['mx']=$blocate['mx'];
+                
+                if($blocate&&(int)$blocate['mx']>(int)$index['mx']){
+                    $index['mx']=$blocate['mx'];
+                }
                 $index=(int)$index['mx']+1;
             }
+
             return $index; 
         }
     }
