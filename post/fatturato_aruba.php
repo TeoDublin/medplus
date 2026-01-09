@@ -2,8 +2,8 @@
     $_REQUEST['skip_cookie']=true;
     require_once '../includes.php';
     $valore=(double)$_REQUEST['_data']['valore'];
-    $inps =  0;
-    $bollo = 0;
+    $inps = (double)$_REQUEST['_data']['inps'] ?? 0;
+    $bollo = (double)$_REQUEST['_data']['bollo'] ?? 0;
     $bnw = isset($_REQUEST['_data']['bnw']) ? $_REQUEST['_data']['bnw'] : 'da definire';
     $stato = isset($_REQUEST['_data']['metodo']) && $_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Pendente' : 'Saldata';
 
