@@ -7,7 +7,7 @@
         $where = "( tipo_pagamento IS NULL OR tipo_pagamento <> 'Senza Fattura' ) AND bnw <> 'no'";
     }
     else{
-        $where = '1=1';
+        $where = "( saldato > 0 OR ( NOT data_seduta IS NULL AND data_seduta <'".date('Y-m-d')."' ) AND stato_seduta <> 'Assente')";
     }
     
     $url='pagamenti.php';

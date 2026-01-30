@@ -10,7 +10,7 @@
                 <?php 
                     $corso=$_REQUEST['id']?Select('*')->from('view_corsi')->where("id={$_REQUEST['id']}")->first():[];
                     $giorni=$_REQUEST['id']?Select('*')->from('corsi_giorni')->where("id_corso={$_REQUEST['id']}")->get():[];
-                    $clienti=$_REQUEST['id']?Select('*')->from('view_classi')->where("id_corso={$_REQUEST['id']}")->get():[];
+                    $clienti=$_REQUEST['id']?Select('*')->from('view_classi')->where("id_corso={$_REQUEST['id']} AND data_inizio >= '".date('Y')."-01-01'")->get():[];
                 ?>
                 <div class="p-2">
                     <input name="id" value="<?php echo $_REQUEST['id']??'';?>" hidden/>
