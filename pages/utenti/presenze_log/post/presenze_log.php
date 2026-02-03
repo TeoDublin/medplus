@@ -93,7 +93,7 @@
     <button class="h-100 left"><?php echo icon('arrow-filled-left.svg'); ?></button>
     <button class="h-100 right"><?php echo icon('arrow-filled-right.svg'); ?></button>
 </div>
-<div class="floating-excel-btn" onclick="excel('post/excel_presenze_log.php')">
+<div class="floating-excel-btn" onclick="excel('pages/utenti/presenze_log/post/excel_presenze_log.php')">
     <div class="d-grid tip d-none justify-content-center align-content-center">
         <span>Scarrica excel con le sedute filtrate</span>
     </div>

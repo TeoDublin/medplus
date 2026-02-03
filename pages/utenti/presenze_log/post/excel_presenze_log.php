@@ -1,11 +1,11 @@
 <?php
 ob_start();
 $_REQUEST['skip_cookie'] = true;
-require_once '../includes.php';
+require_once '../../../../includes.php';
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
-require '../class/libraries/phpspreadsheet/vendor/autoload.php'; 
+require '../../../../class/libraries/phpspreadsheet/vendor/autoload.php'; 
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -14,14 +14,11 @@ $query = Session()->get('last_query');
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 $line = 1;
-$sedute = Sedute();
 
 foreach (Sql()->select($query) as $result) {
-    $map = $sedute->map_out($result);
-
     if ($line == 1) {
         $col = 'A';
-        foreach ($map as $key => $value) {
+        foreach ($result as $key => $value) {
             $sheet->setCellValue("{$col}{$line}", $key);
             $sheet->getStyle("{$col}{$line}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
             $col++;
@@ -30,7 +27,7 @@ foreach (Sql()->select($query) as $result) {
     }
 
     $col = 'A';
-    foreach ($map as $key => $value) {
+    foreach ($result as $key => $value) {
         $sheet->setCellValue("{$col}{$line}", $value);
         if (strpos($key, 'Data') !== false && !empty($value)) {
             $dateValue = \PhpOffice\PhpSpreadsheet\Shared\Date::PHPToExcel(\DateTime::createFromFormat('d/m/Y', unformat_date($value)));
