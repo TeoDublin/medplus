@@ -21,7 +21,20 @@ SELECT
             if( `p`.`origine` = 'senza_fattura' and `p`.`metodo` = 'Contanti', 'no', 'si') 
         ) COLLATE utf8mb4_general_ci
     ) AS `bnw`,
-    (`p`.`metodo` COLLATE utf8mb4_general_ci) AS `metodo`
+    (`p`.`metodo` COLLATE utf8mb4_general_ci) AS `metodo`,
+	t.percentuale_corsi as `percentuale_terapista`,
+	CAST(
+        ROUND(
+            IF(
+                cc.realizzato_da = 'Medplus', 
+                (IF(cp.stato_pagamento = 'Saldato', cp.prezzo, 0)) * (t.percentuale_corsi / 100), 
+                ((IF(cp.stato_pagamento = 'Saldato', cp.prezzo, 0)) * 0.6) * (t.percentuale_corsi / 100)
+            ),
+            2
+        ) AS DECIMAL(10,2)
+    ) AS saldo_terapista
+
+
 FROM `corsi_pagamenti` cp
 LEFT JOIN clienti cli ON cp.id_cliente = cli.id
 LEFT JOIN corsi c ON cp.id_corso = c.id

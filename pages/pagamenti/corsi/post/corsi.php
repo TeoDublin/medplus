@@ -364,7 +364,7 @@
                             <label for="realizzato_da">Realizzato da</label>
                             <select class="form-control selectpicker" id="realizzato_da" value="<?php echo isset($_POST['realizzato_da']) ? $_POST['realizzato_da'] : ''; ?>" multiple>
                                 <?php 
-                                    foreach (Enum('percorsi_terapeutici','realizzato_da')->get() as $enum) {
+                                    foreach (Enum('corsi_classi','realizzato_da')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['realizzato_da'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
