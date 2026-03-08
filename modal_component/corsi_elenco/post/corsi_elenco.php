@@ -1,6 +1,6 @@
 <?php
     $_REQUEST['skip_cookie']=true;
-    require_once '../includes.php';
+    require_once '../../../includes.php';
     $id=request('id');
     $first_date=now('Y-m-d');
 

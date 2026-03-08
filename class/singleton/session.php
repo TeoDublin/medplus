@@ -70,10 +70,17 @@ class Session
     public function login($username,$password,$user)
     {
         if(password_verify($password,$user['password'])){
+
+            if($user['expiry'] < date('Y-m-d h:i:s')){
+                Update('utenti')->set(['expiry'=>add_date('+24 hour')])->where("id={$user['id']}");
+                $this->logout();
+            }
+
             $this->set('user', $username);
             $this->set('user_id', $user['id']);
             $this->set('ruolo', $user['ruolo']);
-            $elementi = [];$home=null;
+            $elementi = [];
+            $home=null;
             foreach(Select('*')->from('view_elementi')->where("id_utente={$user['id']}")->get() as $view_elementi){
                 $elementi[]=$view_elementi['elemento'];
                 $home??=$view_elementi['home'];
@@ -82,7 +89,9 @@ class Session
             $this->set('home',$home);
             return true;
         }
-        else return false;
+        else{
+            return false;
+        }
     }
 
     public function isLoggedIn()

@@ -6,7 +6,7 @@ SELECT
     pt.id_combo AS id_combo,
     pt.sedute AS sedute,
     pt.prezzo_tabellare AS prezzo_tabellare,
-    pt.prezzo AS prezzo,
+	pts.prezzo,
     pt.note AS note,
     IF(p.data_prima_seduta IS NULL, pt.timestamp, p.data_prima_seduta) AS timestamp,
     pt.realizzato_da AS realizzato_da,
@@ -58,5 +58,14 @@ LEFT JOIN
         GROUP BY 
             pts.id_percorso
     ) p ON pt.id = p.id_percorso
+LEFT JOIN (
+	SELECT 
+    	pts.id_percorso,
+		SUM(pts.prezzo) as prezzo
+    FROM medplus.percorsi_terapeutici_sedute pts 
+    GROUP BY
+		pts.id_percorso
+) pts ON pt.id = pts.id_percorso
+
 ORDER BY 
     pt.timestamp DESC;

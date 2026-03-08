@@ -20,7 +20,7 @@ window.modalHandlers['corsi_elenco']={
                 realizzato_da: row.querySelector('.realizzato_da').value
             });
         });
-        $.post('post/corsi_elenco.php', _data).done(() => success_and_refresh()).fail(() => fail());
+        $.post('modal_component/corsi_elenco/post/corsi_elenco.php', _data).done(() => success_and_refresh()).fail(() => fail());
     },
     aggiungiGiorno(element){
         $.post('post/aggiungi_giorno.php').done(response =>{
