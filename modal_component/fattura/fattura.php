@@ -33,7 +33,7 @@
         }
         else{
             
-            $index=Select('max(`index`) as mx')->from('fatture')->where("YEAR(`data`) = '".date('Y')."'")->first_or_false();
+            $index=Select('max(`index`) as mx')->from('fatture')->where("YEAR(`data`) = '".date('Y')."' AND id > 1176")->first_or_false();
             
             if(!$index['mx']){
                 $index=Select("JSON_EXTRACT(setup, '$.first_index') as first_index")->from('setup')->where("`key`='fatture'")->col('first_index');

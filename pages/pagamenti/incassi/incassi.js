@@ -20,6 +20,12 @@ function parseFilter(){
         }
     }
 
+    let realizzato_da = $('#realizzato_da').val() || [];
+    if (realizzato_da.length > 0) {
+        ret.realizzato_da = realizzato_da;
+    }
+
+
     let stato = $('#stato').val() || [];
     if (stato.length > 0) {
         ret.stato = stato;

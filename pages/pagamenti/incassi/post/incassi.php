@@ -42,6 +42,12 @@
         if(isset($_POST['cliente'])){
             $where.=" AND id_cliente IN(".implode(',',$_POST['cliente']).")";
         }
+
+        if(isset($_POST['realizzato_da'])){
+            $where.=" AND realizzato_da IN('".implode("','",$_POST['realizzato_da'])."')";
+        }
+
+
     }
     elseif(!(int)cookie('btnClean')){
         $_POST['stato'] = ['Saldata'];
@@ -86,6 +92,10 @@
                 echo "<div class=\"filter-label bg-gray\"><span >Nominativo: ".implode(', ',$_POST['nominativo'])."</span></div>";
             }
 
+            if(isset($_POST['realizzato_da'])){
+                echo "<div class=\"filter-label bg-gray\"><span >realizzato da: ".implode(', ',$_POST['realizzato_da'])."</span></div>";
+            }
+
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
@@ -109,11 +119,12 @@
                         <th class="w-10">metodo</th>
                         <th class="w-10">data</th>
                         <th class="w-10">imponibile</th>
-                        <th class="w-10">inps</th>
-                        <th class="w-10">bollo</th>
+                        <th class="w-5">inps</th>
+                        <th class="w-5">bollo</th>
                         <th class="w-10">totale</th>
                         <th class="w-10">note</th>
                         <th class="w-10">stato</th>
+                        <th class="w-10">realizzato da</th>
                         <th class="w-5">voucher</th>
                     </tr>
                 </thead>
@@ -129,6 +140,7 @@
                             <td><?php echo number_format($pagamento['totale'],2, ',', '.'); ?></td>
                             <td><?php echo $pagamento['note']; ?></td>
                             <td><?php echo $pagamento['stato']; ?></td>
+                            <td><?php echo $pagamento['realizzato_da']??'-'; ?></td>
                             <td><?php echo $pagamento['bnw']??'-'; ?></td>
                         </tr><?php
                     }
@@ -212,6 +224,31 @@
                                     Seleziona tutto
                                 </label>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion p-1" id="filter_realizzato_da">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_realizzato_da" aria-expanded="false" aria-controls="collapse_filter_realizzato_da">
+                    Realizzato da
+                    </button>
+                </h2>
+                <div id="collapse_filter_realizzato_da" class="accordion-collapse collapse" data-bs-parent="#filter_realizzato_da">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="realizzato_da">Realizzato da</label>
+                            <select class="form-control selectpicker" id="realizzato_da" value="<?php echo isset($_POST['realizzato_da']) ? $_POST['realizzato_da'] : ''; ?>" multiple>
+                                <?php 
+                                    foreach (Enum('percorsi_terapeutici','realizzato_da')->get() as $enum) {
+                                        $selected = in_array($enum,( $_POST['realizzato_da'] ?? []))?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
                         </div>
                     </div>
                 </div>

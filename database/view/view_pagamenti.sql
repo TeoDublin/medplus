@@ -28,7 +28,8 @@ SELECT
                 ) + COALESCE(pa.totale_valore, 0)
             ) + COALESCE(pf.pendente_fatture, 0)
         )
-    ) AS non_fatturato
+    ) AS non_fatturato,
+    COALESCE(pf.id_pagamenti, COALESCE(psf.id_pagamenti, COALESCE( pa.id_pagamenti, pi.id_pagamenti)) ) as id_pagamenti
 FROM 
     medplus.percorsi_terapeutici pt
 LEFT JOIN 
@@ -61,6 +62,7 @@ LEFT JOIN
     (
         SELECT 
             psf.id_origine AS id_origine,
+            psf.id_pagamenti,
             COALESCE(SUM(psf.valore), 0) AS totale_valore
         FROM 
             medplus.pagamenti_senza_fattura psf
@@ -73,6 +75,7 @@ LEFT JOIN
     (
         SELECT 
             pi.id_origine AS id_origine,
+            pi.id_pagamenti,
             COALESCE(SUM(pi.valore), 0) AS totale_valore
         FROM 
             medplus.pagamenti_isico pi
@@ -85,6 +88,7 @@ LEFT JOIN
     (
         SELECT 
             pa.id_origine AS id_origine,
+            pa.id_pagamenti,
             COALESCE(SUM(pa.valore), 0) AS totale_valore
         FROM 
             medplus.pagamenti_aruba pa
@@ -98,6 +102,7 @@ LEFT JOIN
         SELECT 
             pf.id_origine AS id_origine,
             pf.origine AS origine,
+            f.id_pagamenti,
             SUM(CASE WHEN f.stato = 'Saldata' THEN pf.importo ELSE 0 END) AS saldato_fatture,
             SUM(CASE WHEN f.stato = 'Pendente' THEN pf.importo ELSE 0 END) AS pendente_fatture
         FROM 
@@ -140,7 +145,8 @@ SELECT
                 ) + COALESCE(pa.totale_valore, 0)
             ) + COALESCE(pf.pendente_fatture, 0)
         )
-    ) AS non_fatturato
+    ) AS non_fatturato,
+    COALESCE(pf.id_pagamenti, COALESCE(psf.id_pagamenti, COALESCE( pa.id_pagamenti, pi.id_pagamenti)) ) as id_pagamenti
 FROM 
     medplus.corsi_pagamenti cp
 LEFT JOIN corsi_classi cc ON cp.id_corso = cc.id_corso AND cp.id_cliente = cc.id_cliente AND YEAR(cp.scadenza) = YEAR(cc.data_inizio)
@@ -149,6 +155,7 @@ LEFT JOIN
         SELECT 
             psf.id_origine AS id_origine,
             psf.id_origine_child AS id_origine_child,
+            psf.id_pagamenti,
             COALESCE(SUM(psf.valore), 0) AS totale_valore
         FROM 
             medplus.pagamenti_senza_fattura psf
@@ -162,6 +169,7 @@ LEFT JOIN
         SELECT 
             pi.id_origine AS id_origine,
             pi.id_origine_child AS id_origine_child,
+            pi.id_pagamenti,
             COALESCE(SUM(pi.valore), 0) AS totale_valore
         FROM 
             medplus.pagamenti_isico pi
@@ -175,6 +183,7 @@ LEFT JOIN
         SELECT 
             pa.id_origine AS id_origine,
             pa.id_origine_child AS id_origine_child,
+            pa.id_pagamenti,
             COALESCE(SUM(pa.valore), 0) AS totale_valore
         FROM 
             medplus.pagamenti_aruba pa
@@ -189,6 +198,7 @@ LEFT JOIN
             pf.id_origine AS id_origine,
             pf.id_origine_child AS id_origine_child,
             pf.origine AS origine,
+            f.id_pagamenti,
             SUM(CASE WHEN f.stato = 'Saldata' THEN pf.importo ELSE 0 END) AS saldato_fatture,
             SUM(CASE WHEN f.stato = 'Pendente' THEN pf.importo ELSE 0 END) AS pendente_fatture
         FROM 

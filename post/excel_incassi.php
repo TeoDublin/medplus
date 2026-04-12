@@ -29,6 +29,7 @@ function _map():array{
         'Note'=>['col'=>'note'],
         'Stato'=>['col'=>'stato'],
         'Voucher'=>['col'=>'bnw'],
+        'Realizzato da'=>['col'=>'realizzato_da'],
     ];
 }
 

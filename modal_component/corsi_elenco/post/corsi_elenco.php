@@ -33,7 +33,7 @@
             $first_date=$cliente['data_inizio'];
         }
 
-        $corsi_classi = Select('*')->from('corsi_classi')->where("id_corso={$id} AND id_cliente={$cliente['cliente']}")->first_or_false();
+        $corsi_classi = Select('*')->from('corsi_classi')->where("id_corso={$id} AND id_cliente={$cliente['cliente']} AND data_inizio >= '".date('Y')."-01-01'")->first_or_false();
 
         $params = [
             'id_corso'=>$id,
@@ -69,9 +69,10 @@
         $clienti[] = $cliente['cliente'];
     }
 
-    $corsi_classi = Select('*')->from('corsi_classi')->where("id_corso={$id}")->get();
+    $corsi_classi = Select('*')->from('corsi_classi')->where("id_corso={$id} AND data_inizio >= '".date('Y')."-01-01'")->get();
 
     foreach ($corsi_classi as $cc) {
+
         if(!in_array($cc['id_cliente'],$clienti)){
             Delete()->from('corsi_classi')->where("id={$cc['id']}");
         }
