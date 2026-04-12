@@ -14,19 +14,7 @@ $cliente = $_REQUEST['cliente'] ?? 0;
 </div>
 <div class="w-15 mx-2"><input class="form-control text-center prezzo" type="number" value="<?php echo $_REQUEST['prezzo']??$_REQUEST['prezzo_tabellare'];?>"/></div>
 <div class="w-15 mx-2"><input class="form-control text-center data_inizio" type="date" value="<?php echo $_REQUEST['data_inizio']??now('Y-m-d');?>"/></div>
-<div class="w-20 mx-2"><?php
-    
-    $bnw = isset($_REQUEST['bnw']) ? $_REQUEST['bnw'] :'da definire';
-    
-    echo "<select class=\"form-control text-center flex-fill bnw\" value=\"{$cliente}\">";
-        foreach(Enum('corsi_classi','bnw')->get() as $enum){
-            $selected = $bnw ==$enum?'selected':'';
-            echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
-        }
-    echo "</select>";?>
-</div>
-
-<div class="w-20 mx-2"><?php 
+<div class="w-15 mx-2"><?php 
 
     $realizzato_da  = isset($_REQUEST['realizzato_da']) ? $_REQUEST['realizzato_da'] :'Medplus';
 

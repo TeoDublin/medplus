@@ -152,13 +152,4 @@ window.modalHandlers['percorsi'] = {
     addSeduteClick:function(id_cliente,id_percorso,id_combo){
         modal_component('add_sedute','add_sedute',{id_cliente:id_cliente,id_percorso:id_percorso,id_combo:id_combo});
     },
-    cambiaVoucher:function(element){
-        const _data = element.closest('.save').dataset;
-        if(_data.con_pagamento){
-            alert("Trattamento già fatturato");
-        }
-        else{
-            modal_component('cambia_voucher','cambia_voucher',_data);
-        }
-    }
 }

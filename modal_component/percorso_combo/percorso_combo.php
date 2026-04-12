@@ -49,15 +49,6 @@
                             onchange="window.modalHandlers['percorso_combo'].changeSedute(this)"
                             />
                     </div>
-                    <div class="py-2 pe-2 w-20 text-center">
-                        <label for="bnw" class="form-label">Voucher</label><?php
-                        echo "<select class=\"form-select text-center\" name=\"bnw\" value=\"{$bnw}\">";
-                            foreach(Enum('percorsi_terapeutici','bnw')->get() as $enum){
-                                $selected=$enum==$bnw?'selected':'';
-                                echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
-                            }
-                        echo "</select>";?>
-                    </div>
                     <div class="py-2 pe-2 w-20">
                         <label for="btn" class="form-label">Realizzato da</label>
                         <select class="form-select text-center" id="realizzato_da" name="realizzato_da" value="<?php echo $view_percorsi['realizzato_da']??'1';?>">

@@ -381,8 +381,8 @@
                                                                             >
                                                                             <?php echo icon('info.svg','black',20,20); ?>
                                                                         </div>
-                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1" onclick="window.modalHandlers['percorsi'].cambiaVoucher(this)">
-                                                                            <button class="btn border w-100 mx-3"><?php echo $percorso['bnw']; ?></button>
+                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
+                                                                            <span><?php echo $percorso['bnw']; ?></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
