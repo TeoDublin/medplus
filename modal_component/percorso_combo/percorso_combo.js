@@ -10,7 +10,6 @@ window.modalHandlers['percorso_combo'] = {
             note:modal.querySelector('[name=note]').value,
             sedute:modal.querySelector('[name=sedute]').value,
             realizzato_da:modal.querySelector('[name=realizzato_da]').value,
-            bnw:modal.querySelector('[name=bnw]').value,
             id_cliente:id_cliente,
             id_percorso:id_percorso,
             id_combo:id_combo
@@ -111,21 +110,5 @@ window.modalHandlers['percorso_combo'] = {
         modal.querySelector('[name=acronimo]').value = acronimo.join(' - ');
         modal.querySelector('#single_tabellare').value = single_tabellare;
         modal.querySelector('[name=prezzo_tabellare]').value = single_tabellare * sedute;
-    },
-    dropdowLiClick:function(e){
-
-        let arrBnw = {
-            neutro: "background-color:transparent; border:1px solid #ccc;",
-            black: "background-color:black;",
-            white: "background-color:white;"
-        };
-
-        let bnw = document.querySelector('#bnw');
-        let bnwSpan = document.querySelector('#bnw-span');
-
-        let color = e.dataset.value;
-        bnw.value = color;
-        bnwSpan.setAttribute("style", arrBnw[color]);
-
     }
 }
