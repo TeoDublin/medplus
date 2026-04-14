@@ -100,7 +100,7 @@
             }
 
             if(isset($_POST['fattura_aruba'])){
-                echo "<div class=\"filter-label bg-gray\"><span >fattura aruba: ".implode(', ',$_POST['fattura_aruba'])."</span></div>";
+                echo "<div class=\"filter-label bg-gray\"><span >Num. Ft. Aruba: ".implode(', ',$_POST['fattura_aruba'])."</span></div>";
             }
 
         ?>
@@ -132,7 +132,7 @@
                         <th class="w-5">note</th>
                         <th class="w-10">stato</th>
                         <th class="w-10">realizzato da</th>
-                        <th class="w-10">fattura aruba</th>
+                        <th class="w-10">Num. Ft. Aruba</th>
                         <th class="w-5">voucher</th>
                     </tr>
                 </thead>
@@ -268,13 +268,13 @@
             <div class="accordion-item">
                 <h2 class="accordion-header">
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_fattura_aruba" aria-expanded="false" aria-controls="collapse_filter_fattura_aruba">
-                    Fattura Aruba
+                    Num. Ft. Aruba
                     </button>
                 </h2>
                 <div id="collapse_filter_fattura_aruba" class="accordion-collapse collapse" data-bs-parent="#filter_fattura_aruba">
                     <div class="accordion-body">
                         <div>
-                            <label for="fattura_aruba">Fattura Aruba</label>
+                            <label for="fattura_aruba">Num. Ft. Aruba</label>
                             <select class="form-control selectpicker" id="fattura_aruba" value="<?php echo isset($_POST['fattura_aruba']) ? $_POST['fattura_aruba'] : ''; ?>" multiple>
                                 <?php 
                                     foreach (Select('fattura_aruba')->from('pagamenti')->where("fattura_aruba IS NOT NULL")->groupby('fattura_aruba')->get() as $enum) {

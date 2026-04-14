@@ -109,7 +109,7 @@
                                                                         </div>
                                                                         <div class="w-15">
                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                Fattura Aruba
+                                                                                Num. Ft. Aruba
                                                                             </div>
                                                                         </div>
                                                                         

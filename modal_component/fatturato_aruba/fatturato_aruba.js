@@ -20,7 +20,7 @@ window.modalHandlers['fatturato_aruba']={
                 div_fattura_aruba.classList.add('div_error');
             }
 
-            alert('Fattura Aruba è obbligatorio');
+            alert('Num. Ft. Aruba è obbligatorio');
            
         }
         else{

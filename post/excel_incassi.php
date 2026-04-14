@@ -29,7 +29,7 @@ function _map():array{
         'Stato'=>['col'=>'stato'],
         'Voucher'=>['col'=>'bnw'],
         'Realizzato da'=>['col'=>'realizzato_da'],
-        'Fattura Aruba'=>['col'=>'fattura_aruba'],
+        'Num. Ft. Aruba'=>['col'=>'fattura_aruba'],
     ];
 }
 
