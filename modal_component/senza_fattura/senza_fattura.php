@@ -10,8 +10,7 @@
                     $_data=str_replace('"',"'",json_encode($_REQUEST['_data']??[]));
                 ?>
                 <div class="p-2">
-                    <input type="number" name="id_cliente" value="<?php echo $_REQUEST['id_cliente'];?>" hidden/> 
-                    <input type="text" name="bnw" value="<?php echo $_REQUEST['_data'][0]['bnw'];?>" hidden/> 
+                    <input type="number" name="id_cliente" value="<?php echo $_REQUEST['id_cliente'];?>" hidden/>  
                     <div class="m-2">
                         <label for="valore" class="form-label" >Valore</label>
                         <input type="number" class="form-control" name="valore" value="<?php echo $_REQUEST['sumSelected']; ?>" disabled/> 

@@ -40,7 +40,6 @@
             'id_cliente'=>$cliente['cliente'],
             'prezzo'=>$cliente['prezzo'],
             'data_inizio'=>$cliente['data_inizio'],
-            'bnw'=>$cliente['bnw'],
             'realizzato_da'=>$cliente['realizzato_da'],
         ];
 

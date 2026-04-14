@@ -134,7 +134,7 @@
                                                         <div class="d-grid align-content-center justify-contents-center h-100">
                                                         </div>
                                                     </div>
-                                                    <div class="w-20">
+                                                    <div class="w-25">
                                                         <div class="d-grid align-content-center justify-contents-center h-100">
                                                             Corso
                                                         </div>
@@ -144,19 +144,14 @@
                                                             Inizio
                                                         </div>
                                                     </div>
-                                                    <div class="w-20">
+                                                    <div class="w-25">
                                                         <div class="d-grid align-content-center justify-contents-center h-100">
                                                             Prezzo
                                                         </div>
                                                     </div>
-                                                    <div class="w-20">
+                                                    <div class="w-25">
                                                         <div class="d-grid align-content-center justify-contents-center h-100">
                                                             Realizato da
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-15">
-                                                        <div class="d-grid align-content-center justify-contents-center h-100">
-                                                            Voucher
                                                         </div>
                                                     </div>
                                                 </div><?php 
@@ -173,7 +168,7 @@
                                                                                 <?php echo icon('bin.svg','black',16,16); ?>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="w-20">
+                                                                        <div class="w-25">
                                                                             <div class="d-grid align-content-center justify-contents-center h-100">
                                                                                 <?php echo $value['corso']; ?>
                                                                             </div>
@@ -183,19 +178,14 @@
                                                                                 <?php echo unformat_date($value['data_inizio']); ?>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="w-20">
+                                                                        <div class="w-25">
                                                                             <div class="d-grid align-content-center justify-contents-center h-100">
                                                                                 <?php echo number_format($value['prezzo'],2,'.',''); ?>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="w-20">
+                                                                        <div class="w-25">
                                                                             <div class="d-grid align-content-center justify-contents-center h-100">
                                                                                 <?php echo $value['realizzato_da']; ?>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="w-15">
-                                                                            <div class="d-grid align-content-center justify-contents-center h-100">
-                                                                                <?php echo $value['bnw']; ?>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -327,9 +317,6 @@
                                                             <div class="cc1 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
                                                                 <span>N</span><span class="d-none d-md-block">ote</span>
                                                             </div>
-                                                          <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                <span>V</span><span class="d-none d-md-block">oucher</span>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -380,9 +367,6 @@
                                                                                 onmouseleave="window.modalHandlers['percorsi'].noteLeave(this)"
                                                                             >
                                                                             <?php echo icon('info.svg','black',20,20); ?>
-                                                                        </div>
-                                                                        <div class="cc3 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">
-                                                                            <span><?php echo $percorso['bnw']; ?></span>
                                                                         </div>
                                                                     </div>
                                                                 </div>

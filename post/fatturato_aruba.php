@@ -4,7 +4,6 @@
     $valore=(double)$_REQUEST['_data']['valore'];
     $inps = (double)$_REQUEST['_data']['inps'] ?? 0;
     $bollo = (double)$_REQUEST['_data']['bollo'] ?? 0;
-    $bnw = isset($_REQUEST['_data']['bnw']) ? $_REQUEST['_data']['bnw'] : 'da definire';
     $stato = isset($_REQUEST['_data']['metodo']) && $_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Pendente' : 'Saldata';
 
     $id_pagamenti = Insert([
@@ -17,7 +16,7 @@
         'bollo' => $bollo,
         'stato' => $stato,
         'totale' => ( $valore + $inps + $bollo ),
-        'bnw'=>$bnw
+        'fattura_aruba'=>$_REQUEST['_data']['fattura_aruba']
     ])->into('pagamenti')->get();
 
     foreach ($_REQUEST['percorsi'] as $key=>$value) {
@@ -69,7 +68,8 @@
                 'valore'=>$saldato,
                 'data'=>$_REQUEST['_data']['data'],
                 'metodo'=>$_REQUEST['_data']['metodo'],
-                'note'=>$_REQUEST['_data']['note']?:'-'
+                'note'=>$_REQUEST['_data']['note']?:'-',
+                'fattura_aruba'=>$_REQUEST['_data']['fattura_aruba']
             ])->into('pagamenti_aruba')->get();
 
             $valore= $valore - $saldato;

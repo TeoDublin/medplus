@@ -96,19 +96,14 @@
                                             <div class="accordion-body">
                                                 <!-- titles -->
                                                 <div class="d-flex w-100 mb-2" style="padding-left:20px;padding-right:40px">
-                                                    <div class="w-40">
+                                                    <div class="w-60">
                                                         <div class="d-grid h-100 align-content-center d-none d-md-block">
                                                             Corso
                                                         </div>
                                                     </div>
-                                                    <div class="w-30">
+                                                    <div class="w-40">
                                                         <div class="d-grid h-100 align-content-center">
                                                             Realizato da
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-30">
-                                                        <div class="d-grid h-100 align-content-center">
-                                                            Voucher
                                                         </div>
                                                     </div>
                                                 </div>
@@ -118,19 +113,14 @@
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header">
                                                                 <button class="accordion-button collapsed border text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCorso<?php echo $value['id'];?>" aria-expanded="false" aria-controls="flush-collapseCorso<?php echo $value['id'];?>">
-                                                                    <div class="w-40">
+                                                                    <div class="w-60">
                                                                         <div class="d-grid h-100 align-content-center fw-bold">
                                                                             <?php echo strtoupper($value['nome']); ?>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="w-30">
+                                                                    <div class="w-40">
                                                                         <div class="d-grid h-100 align-content-center">
                                                                             <?php echo $value['realizzato_da']; ?>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="w-30">
-                                                                        <div class="d-grid h-100 align-content-center">
-                                                                            <?php echo $value['bnw']; ?>
                                                                         </div>
                                                                     </div>
                                                                 </button>
@@ -191,7 +181,6 @@
                                                                             data-id="<?php echo $v['id'];?>"
                                                                             data-realizzato_da="<?php echo $v['realizzato_da'];?>"
                                                                             data-view="corsi_pagamenti"
-                                                                            data-bnw="<?php echo $v['bnw']; ?>"
                                                                             >
                                                                             <div class="w-5 ">
                                                                                 <?php 
@@ -293,14 +282,9 @@
                                                             Non Fatturato
                                                         </div>
                                                     </div>
-                                                    <div class="w-20">
+                                                    <div class="w-30">
                                                         <div class="d-grid h-100 align-content-center">
                                                             Realizato da
-                                                        </div>
-                                                    </div>
-                                                    <div class="w-10">
-                                                        <div class="d-grid h-100 align-content-center">
-                                                            Voucher
                                                         </div>
                                                     </div>
                                                 </div>
@@ -344,14 +328,9 @@
                                                                                 <?php echo number_format($value['non_fatturato'], 2, '.', ''); ?>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="w-20">
+                                                                        <div class="w-30">
                                                                             <div class="d-grid h-100 align-content-center">
                                                                                 <?php echo $value['realizzato_da']; ?>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="w-10">
-                                                                            <div class="d-grid h-100 align-content-center">
-                                                                                <?php echo $value['bnw']; ?>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -412,7 +391,6 @@
                                                                                 data-id="<?php echo $v['id'];?>"
                                                                                 data-realizzato_da="<?php echo $v['realizzato_da'];?>"
                                                                                 data-view="view_sedute"
-                                                                                data-bnw="<?php echo $value['bnw']; ?>"
                                                                                 >
                                                                                 <div class="w-5 ">
                                                                                     <?php 

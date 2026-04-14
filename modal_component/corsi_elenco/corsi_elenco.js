@@ -16,7 +16,6 @@ window.modalHandlers['corsi_elenco']={
                 cliente: row.querySelector('select.cliente').value,
                 prezzo: row.querySelector('.prezzo').value,
                 data_inizio: row.querySelector('.data_inizio').value,
-                bnw: row.querySelector('.bnw').value,
                 realizzato_da: row.querySelector('.realizzato_da').value
             });
         });

@@ -268,3 +268,9 @@
 .error-validate{
     border: solid red 1px!important;
 }
+
+.div_error{
+    border: solid red 1px!important;
+    padding: 5px!important;
+    border-radius: 5px;
+}

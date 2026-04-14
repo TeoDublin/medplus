@@ -64,55 +64,67 @@
                                                 </h2>
                                                 <div id="flush-<?php echo $data;?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlush<?php echo $data;?>" >
                                                     <div class="accordion-body">
-                                                        <!-- titles -->
-                                                        <div class="d-flex mb-2" style="padding-left:20px;padding-right:40px;width:97%!important">
-                                                            <div class="w-md-30">
-                                                                <div class="d-grid h-100 align-content-center">
-                                                                    Origine
-                                                                </div>
-                                                            </div>
-                                                            <div class="w-15 d-none d-md-block">
-                                                                <div class="d-grid h-100 align-content-center">
-                                                                    Metodo
-                                                                </div>                                    
-                                                            </div>
-                                                            <div class="w-15">
-                                                                <div class="d-grid h-100 align-content-center">
-                                                                    Stato
-                                                                </div>
-                                                            </div>
-                                                            <div class="w-10 d-none d-md-block">
-                                                                <div class="d-grid h-100 align-content-center">
-                                                                    Imponibile
-                                                                </div>
-                                                            </div>
-                                                            <div class="w-10 d-none d-md-block">
-                                                                <div class="d-grid h-100 align-content-center">
-                                                                    Inps
-                                                                </div>
-                                                            </div>
-                                                            <div class="w-10">
-                                                                <div class="d-grid h-100 align-content-center">
-                                                                    Bollo
-                                                                </div>
-                                                            </div>
-                                                            <div class="w-10">
-                                                                <div class="d-grid h-100 align-content-center">
-                                                                    Totale
-                                                                </div>
-                                                            </div>
-                                                        </div>
                                                         <?php 
+                                                            $has_titles = false;
                                                             foreach ($pagamento as $value) {
                                                                 $origine = _origine($value);
-                                                                $_origine = str_replace(' ','_',$origine);?>
+                                                                $_origine = str_replace(' ','_',$origine);
+                                                                if(!$has_titles):?>
+                                                                    <!-- titles -->
+                                                                    <div class="d-flex mb-2" style="padding-left:20px;padding-right:40px;width:97%!important">
+                                                                        <div class="w-md-15">
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                Origine
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="w-15 d-none d-md-block">
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                Metodo
+                                                                            </div>                                    
+                                                                        </div>
+                                                                        <div class="w-15">
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                Stato
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="w-10 d-none d-md-block">
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                Imponibile
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="w-10 d-none d-md-block">
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                Inps
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="w-10">
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                Bollo
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="w-10">
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                Totale
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="w-15">
+                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                Fattura Aruba
+                                                                            </div>
+                                                                        </div>
+                                                                        
+                                                                    </div>
+                                                                    <?php 
+                                                                    $has_titles = true;
+                                                                endif;?>
+
                                                                 <div class="w-100 d-flex flex-row accordion-row">
                                                                     <div class="accordion mb-2"  id="accordionFlush<?php echo $value['id'];?>" style="width:97%!important;">
                                                                         <div class="accordion-item px-0">
                                                                             <h2 class="accordion-header">
                                                                                 <button class="accordion-button collapsed text-center <?php echo $_origine;?> border" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<?php echo $value['id'];?>" aria-expanded="false" aria-controls="flush-<?php echo $value['id'];?>" style="width:100%!important;">
                                                                                     <div class="d-flex w-100">
-                                                                                        <div class="w-md-30">
+                                                                                        <div class="w-md-15">
                                                                                             <div class="d-grid h-100 align-content-center">
                                                                                                 <?php echo $origine;?>
                                                                                             </div>
@@ -160,6 +172,13 @@
                                                                                                 <?php echo $value['totale']; ?>
                                                                                             </div>
                                                                                         </div>
+                                                                                        
+                                                                                        <div class="w-15">
+                                                                                            <div class="d-grid h-100 align-content-center">
+                                                                                                <?php echo $value['fattura_aruba'] ?? '-'; ?>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        
                                                                                     </div>
                                                                                 </button>
                                                                             </h2>

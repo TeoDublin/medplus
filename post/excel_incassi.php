@@ -19,7 +19,6 @@ function _map():array{
     return [
         'id'=>['col'=>'id'],
         'Nominativo'=>['col'=>'nominativo'],
-        'Origine'=>['col'=>'origine'],
         'Metodo'=>['col'=>'metodo'],
         'Data'=>['col'=>'data','type'=>'date'],
         'Imponibile'=>['col'=>'imponibile','type'=>'double'],
@@ -30,6 +29,7 @@ function _map():array{
         'Stato'=>['col'=>'stato'],
         'Voucher'=>['col'=>'bnw'],
         'Realizzato da'=>['col'=>'realizzato_da'],
+        'Fattura Aruba'=>['col'=>'fattura_aruba'],
     ];
 }
 

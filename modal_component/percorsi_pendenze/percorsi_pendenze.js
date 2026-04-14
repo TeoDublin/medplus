@@ -96,7 +96,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         if(!realizzato_da.hasError){
             console.log(realizzato_da.realizzato_da);
             if(realizzato_da.realizzato_da !== 'Isico Napoli' && realizzato_da.realizzato_da !== 'Isico Salerno' && realizzato_da.realizzato_da !== 'Isico'){
-                alert('Non puoi fatturare Isico qui');
+                alert('Non puoi fatturare Medplus qui');
             }
             else{
                 modal_component('pagamento_isico','pagamento_isico',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});

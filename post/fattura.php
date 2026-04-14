@@ -149,10 +149,6 @@
         'stato'=>$stato
     ];
 
-    if(isset($_REQUEST['oggetti'][0]['bnw'])){
-        $save_pagamenti['bnw']=$_REQUEST['oggetti'][0]['bnw'];
-    }
-
     if(isset($_REQUEST['id_fattura'])){
         $id_fattura=$_REQUEST['id_fattura'];
         $oggetti=Select('*,  id_origine as id_percorso')->from('pagamenti_fatture')->where("id_fattura={$id_fattura}")->get();

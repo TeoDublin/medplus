@@ -1,22 +1,6 @@
 <?php style('modal_component/fattura/fattura.css'); ?>
 <?php 
 
-    function _bnw(){
-
-        if(!isset($_REQUEST['_data'])){
-            return '';
-        }
-        if(!isset($_REQUEST['_data'][0])){
-            return '';
-        }
-        if(!isset($_REQUEST['_data'][0]['bnw'])){
-            return '';
-        }
-
-        return $_REQUEST['_data'][0]['bnw'];
-
-    }
-
     function _deleted_index($index){
         return Select('fe.index')
         ->from('fatture_eliminate','fe')
@@ -106,7 +90,6 @@
             </div>
             <div class="modal-body">
                 <input type="text" id="id_cliente" value="<?php echo $id_cliente; ?>" hidden/>
-                <input type="text" name="bnw" value="<?php echo _bnw();?>" hidden/> 
                 <div class="p-2 card my-2">
                     <div class="pb-0 mb-0 card-body w-100">
                         <div class="d-flex flex-column w-100 my-3">

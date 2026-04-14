@@ -59,11 +59,6 @@ function parseFilter(){
         ret.realizzato_da = realizzato_da;
     }
 
-    let bnw = $('#bnw').val() || [];
-    if (bnw.length > 0) {
-        ret.bnw = bnw;
-    }
-
     let stato_saldato_terapista = $('#stato_saldato_terapista').val() || [];
     if (stato_saldato_terapista.length > 0) {
         ret.stato_saldato_terapista = stato_saldato_terapista;

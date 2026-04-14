@@ -25,6 +25,10 @@ function parseFilter(){
         ret.realizzato_da = realizzato_da;
     }
 
+    let fattura_aruba = $('#fattura_aruba').val() || [];
+    if (fattura_aruba.length > 0) {
+        ret.fattura_aruba = fattura_aruba;
+    }
 
     let stato = $('#stato').val() || [];
     if (stato.length > 0) {
@@ -34,11 +38,6 @@ function parseFilter(){
     let origine = $('#origine').val() || [];
     if (origine.length > 0) {
         ret.origine = origine;
-    }
-
-    let bnw = $('#bnw').val() || [];
-    if (bnw.length > 0) {
-        ret.bnw = bnw;
     }
 
     let metodo = $('#metodo').val() || [];

@@ -47,6 +47,9 @@
             $where.=" AND realizzato_da IN('".implode("','",$_POST['realizzato_da'])."')";
         }
 
+        if(isset($_POST['fattura_aruba'])){
+            $where.=" AND fattura_aruba IN('".implode("','",$_POST['fattura_aruba'])."')";
+        }
 
     }
     elseif(!(int)cookie('btnClean')){
@@ -96,6 +99,10 @@
                 echo "<div class=\"filter-label bg-gray\"><span >realizzato da: ".implode(', ',$_POST['realizzato_da'])."</span></div>";
             }
 
+            if(isset($_POST['fattura_aruba'])){
+                echo "<div class=\"filter-label bg-gray\"><span >fattura aruba: ".implode(', ',$_POST['fattura_aruba'])."</span></div>";
+            }
+
         ?>
         <button class="btn btn-secondary ms-2" onclick="btnClean()">Pulisci Filtri</button><?php
     }
@@ -115,16 +122,17 @@
             <table class="table table-striped table-hover text-center">
                 <thead>
                     <tr class="small">
-                        <th class="w-15">nominativo</th>
+                        <th class="w-10">nominativo</th>
                         <th class="w-10">metodo</th>
                         <th class="w-10">data</th>
                         <th class="w-10">imponibile</th>
                         <th class="w-5">inps</th>
                         <th class="w-5">bollo</th>
                         <th class="w-10">totale</th>
-                        <th class="w-10">note</th>
+                        <th class="w-5">note</th>
                         <th class="w-10">stato</th>
                         <th class="w-10">realizzato da</th>
+                        <th class="w-10">fattura aruba</th>
                         <th class="w-5">voucher</th>
                     </tr>
                 </thead>
@@ -141,6 +149,7 @@
                             <td><?php echo $pagamento['note']; ?></td>
                             <td><?php echo $pagamento['stato']; ?></td>
                             <td><?php echo $pagamento['realizzato_da']??'-'; ?></td>
+                            <td><?php echo $pagamento['fattura_aruba']??'-'; ?></td>
                             <td><?php echo $pagamento['bnw']??'-'; ?></td>
                         </tr><?php
                     }
@@ -246,6 +255,31 @@
                                     foreach (Enum('percorsi_terapeutici','realizzato_da')->get() as $enum) {
                                         $selected = in_array($enum,( $_POST['realizzato_da'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion p-1" id="filter_fattura_aruba">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_fattura_aruba" aria-expanded="false" aria-controls="collapse_filter_fattura_aruba">
+                    Fattura Aruba
+                    </button>
+                </h2>
+                <div id="collapse_filter_fattura_aruba" class="accordion-collapse collapse" data-bs-parent="#filter_fattura_aruba">
+                    <div class="accordion-body">
+                        <div>
+                            <label for="fattura_aruba">Fattura Aruba</label>
+                            <select class="form-control selectpicker" id="fattura_aruba" value="<?php echo isset($_POST['fattura_aruba']) ? $_POST['fattura_aruba'] : ''; ?>" multiple>
+                                <?php 
+                                    foreach (Select('fattura_aruba')->from('pagamenti')->where("fattura_aruba IS NOT NULL")->groupby('fattura_aruba')->get() as $enum) {
+                                        $selected = in_array($enum['fattura_aruba'],( $_POST['fattura_aruba'] ?? []))?'selected':'';
+                                        echo "<option {$selected} value=\"{$enum['fattura_aruba']}\">{$enum['fattura_aruba']}</option>";
                                     }
                                 ?>
                             </select>

@@ -19,7 +19,8 @@ SELECT
         ) COLLATE utf8mb4_general_ci
     ) AS `bnw`,
     (c.nominativo COLLATE utf8mb4_general_ci) as nominativo,
-    psf.realizzato_da
+    psf.realizzato_da,
+    p.fattura_aruba
 FROM `pagamenti` p
 LEFT JOIN clienti c ON p.id_cliente = c.id
 LEFT JOIN (

@@ -18,7 +18,6 @@
 
     $view_trattamenti = _view_trattamenti();
     $view_percorsi=_view_percorsi();
-    $bnw = $view_percorsi['bnw']??'da definire';
 
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >

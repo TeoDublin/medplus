@@ -43,6 +43,10 @@
                                 }
                             echo "</select>";?>
                     </div>
+                    <div class="m-2" id="div_fattura_aruba">
+                        <label for="fattura_aruba" class="form-label" >Fattura Aruba</label>
+                        <input type="text" class="form-control" name="fattura_aruba" value=""/> 
+                    </div>
                     <div class="m-2">
                         <label for="note" class="form-label" >Note</label>
                         <textarea class="form-control" name="note" value="" rows="4"></textarea> 
