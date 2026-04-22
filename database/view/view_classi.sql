@@ -1,3 +1,4 @@
+USE medplus;
 DROP VIEW IF EXISTS view_classi;
 CREATE VIEW view_classi AS 
 SELECT 
@@ -16,7 +17,6 @@ SELECT
     t.terapista AS terapista,
     ct.nominativo AS nominativo,
     cg.giorni AS giorni,
-    cc.bnw AS bnw,
     cc.realizzato_da as realizzato_da
 FROM medplus.corsi_classi cc
 LEFT JOIN medplus.corsi c ON cc.id_corso = c.id

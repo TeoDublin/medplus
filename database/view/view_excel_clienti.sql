@@ -1,3 +1,4 @@
+USE medplus;
 DROP VIEW IF EXISTS view_excel_clienti;
 CREATE VIEW view_excel_clienti AS 
 SELECT

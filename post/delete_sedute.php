@@ -9,7 +9,7 @@
     foreach($recalc_percorso as $id_percorso=>$v){
         $percorso=Select('*')->from('percorsi_terapeutici')->where("id={$id_percorso}")->first();
         $sedute=Select('*')->from('percorsi_terapeutici_sedute')->where("id_percorso={$id_percorso}")->get();
-        $prezzo_a_seduta = (int)$percorso['prezzo']/(int)$percorso['sedute'];
+        $prezzo_a_seduta = (double)$percorso['prezzo']/(int)$percorso['sedute'];
         Update('percorsi_terapeutici')->set([
             'sedute'=>count($sedute),
             'prezzo'=>$prezzo_a_seduta*count($sedute)

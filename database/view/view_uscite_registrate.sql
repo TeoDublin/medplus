@@ -1,3 +1,4 @@
+USE medplus;
 DROP VIEW IF EXISTS view_uscite_registrate;
 CREATE VIEW view_uscite_registrate AS
 SELECT 

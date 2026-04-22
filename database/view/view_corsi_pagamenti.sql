@@ -1,3 +1,4 @@
+USE medplus;
 DROP VIEW IF EXISTS view_corsi_pagamenti;
 CREATE VIEW view_corsi_pagamenti AS 
 SELECT 

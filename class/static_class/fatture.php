@@ -10,8 +10,6 @@
                 'Data Fattura'=>['col'=>'data','type'=>'date'],
                 'Importo'=>['col'=>'importo','type'=>'double'],
                 'Metodo di pagamento' =>['col'=>'metodo','type'=>'enum'],
-                'Fatturato da'=>['col'=>'fatturato_da','type'=>'enum'],
-                'Confermato dal Commercialista'=>['col'=>'confermato_dal_commercialista','type'=>'bool'],
                 'link'=>['col'=>'link','type'=>'dont_save'],
             ];
         }

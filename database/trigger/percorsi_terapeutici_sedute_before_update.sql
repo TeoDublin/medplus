@@ -40,15 +40,11 @@ BEGIN
             SET @percentuale_sedute = 0;
             SET NEW.saldato_terapista = 0;
             SET NEW.saldo_terapista = 0;
-            SET NEW.stato_saldato_terapista = 'Esente';
-            SET NEW.data_saldato_terapista = NEW.data_seduta;
 
 		ELSEIF @id_trattamento=2 THEN
             SET @percentuale_sedute = 0;
             SET NEW.saldato_terapista = 0;
             SET NEW.saldo_terapista = 0;
-            SET NEW.stato_saldato_terapista = 'Esente';
-            SET NEW.data_saldato_terapista = NEW.data_seduta;
 	
 		ELSE
 		    SELECT percentuale_sedute 
@@ -67,26 +63,6 @@ BEGIN
 			SET NEW.saldato_terapista = 0;
 		END IF;
 	END IF;
-	
-	IF(NEW.saldato <> OLD.saldato AND NEW.stato_pagamento <> 'Fatturato') THEN
-		IF(NEW.saldato >= NEW.prezzo) THEN
-			SET NEW.stato_pagamento = 'Saldato';
-		ELSEIF(NEW.saldato > 0) THEN
-			SET NEW.stato_pagamento = 'Parziale';
-		ELSE 
-			SET NEW.stato_pagamento = 'Pendente';
-		END IF;
-	END IF;
-
-	IF(NEW.saldato_terapista <> OLD.saldato_terapista OR NEW.id_terapista <> OLD.id_terapista) THEN
-		IF(NEW.saldato_terapista >= NEW.saldo_terapista) THEN
-			SET NEW.stato_saldato_terapista = 'Saldato';
-		ELSEIF(NEW.saldato_terapista > 0) THEN
-			SET NEW.stato_saldato_terapista = 'Parziale';
-		ELSE 
-			SET NEW.stato_saldato_terapista = 'Pendente';
-		END IF;
-	END IF;
 
 	IF(NEW.prezzo = 0) THEN
 
@@ -103,8 +79,6 @@ BEGIN
     
     IF(NEW.prezzo > 0 AND NEW.stato_pagamento = 'Esente') THEN
 		SET NEW.stato_pagamento = 'Pendente';
-		SET NEW.stato_saldato_terapista = 'Pendente';
-		SET NEW.data_saldato_terapista = NULL;
 	END IF;
 END$$
 

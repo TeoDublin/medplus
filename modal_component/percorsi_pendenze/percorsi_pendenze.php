@@ -19,9 +19,15 @@
     }
 
     function _corsi(){
-        if(empty($_view_pagamenti=_view_pagamenti('corsi'))) return [];
+
         $ret=[];
+
+        if(empty($_view_pagamenti=_view_pagamenti('corsi'))){
+            return [];
+        }
+        
         foreach($_view_pagamenti as $k=>$v){
+
             if(!isset($ret[$v['id_origine']])){
                 $ret[$v['id_origine']] = $v;
             }
@@ -32,21 +38,11 @@
                 $ret[$v['id_origine']]['fatturato'] += $v['fatturato'];
                 $ret[$v['id_origine']]['non_fatturato'] += $v['non_fatturato'];
             }
+
             $ret[$v['id_origine']]['corsi'][]=$v;
         }
-        return $ret;
-    }
 
-    function _stato_pagamento($v){
-        if((int)$v['saldato']>=(int)$v['prezzo']){
-            return 'Saldato';
-        }
-        elseif($v['saldato']>0){
-            return 'Parziale';
-        }
-        else{
-            return 'Pendente';
-        }
+        return $ret;
     }
 
     function _cliente(){
@@ -60,17 +56,17 @@
 ?>
 
 <!-- modal -->
-<div class="modal bg-dark bg-opacity-50" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
+<div class="modal bg-dark bg-opacity-50" id="<?= $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header"><h4 class="modal-title">Pendenze</h4>
-                <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>                
+                <button type="button" class="btn-resize"  onclick="resize('#<?= $_REQUEST['id_modal'];?>')"></button>                
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
             <div class="container"></div>
             <div class="modal-body">
                 <div class="p-2">
-                    <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
+                    <input type="text" id="id_cliente" value="<?= $_REQUEST['id_cliente']; ?>" hidden/>
                     <div class="container-fluid card text-center py-4">
                         <?php if(!$trattamenti&&!$corsi){?>
                             <div class="card">
@@ -109,23 +105,23 @@
                                                 </div>
                                                 <!-- collapses --><?php 
                                                 foreach ($corsi as $key=>$value) {?>
-                                                    <div class="accordion mb-2" id="accordionFlushCorso<?php echo $value['id'];?>">
+                                                    <div class="accordion mb-2" id="accordionFlushCorso<?= $value['id'];?>">
                                                         <div class="accordion-item">
                                                             <h2 class="accordion-header">
-                                                                <button class="accordion-button collapsed border text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCorso<?php echo $value['id'];?>" aria-expanded="false" aria-controls="flush-collapseCorso<?php echo $value['id'];?>">
+                                                                <button class="accordion-button collapsed border text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseCorso<?= $value['id'];?>" aria-expanded="false" aria-controls="flush-collapseCorso<?= $value['id'];?>">
                                                                     <div class="w-60">
                                                                         <div class="d-grid h-100 align-content-center fw-bold">
-                                                                            <?php echo strtoupper($value['nome']); ?>
+                                                                            <?= strtoupper($value['nome']); ?>
                                                                         </div>
                                                                     </div>
                                                                     <div class="w-40">
                                                                         <div class="d-grid h-100 align-content-center">
-                                                                            <?php echo $value['realizzato_da']; ?>
+                                                                            <?= $value['realizzato_da']; ?>
                                                                         </div>
                                                                     </div>
                                                                 </button>
                                                             </h2>
-                                                            <div id="flush-collapseCorso<?php echo $value['id'];?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushCorso<?php echo $value['id'];?>">
+                                                            <div id="flush-collapseCorso<?= $value['id'];?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlushCorso<?= $value['id'];?>">
                                                                 <div class="accordion-body">
                                                                     <!-- titles -->
                                                                     <div class="d-flex w-100 px-3 mb-2">
@@ -172,14 +168,14 @@
                                                                     
                                                                     <!-- corsi --><?php
                                                                     foreach ($value['corsi'] as $v) {
-                                                                        $stato_pagamento=_stato_pagamento($v);
-                                                                        $abble=in_array($stato_pagamento,['Pendente','Parziale']);
+                                                                        $stato_pagamento = stato_pagamento($v);
+                                                                        $abble=in_array($stato_pagamento,['Pendente']);
                                                                         ?>
                                                                         <div 
-                                                                            class="d-flex w-100 border p-3 hover <?php echo $abble?'':'disabled'; ?>" 
+                                                                            class="d-flex w-100 border p-3 hover <?= $abble?'':'disabled'; ?>" 
                                                                             onclick="window.modalHandlers['percorsi_pendenze'].check(this)"
-                                                                            data-id="<?php echo $v['id'];?>"
-                                                                            data-realizzato_da="<?php echo $v['realizzato_da'];?>"
+                                                                            data-id="<?= $v['id'];?>"
+                                                                            data-realizzato_da="<?= $v['realizzato_da'];?>"
                                                                             data-view="corsi_pagamenti"
                                                                             >
                                                                             <div class="w-5 ">
@@ -195,32 +191,32 @@
                                                                             </div>
                                                                             <div class="w-15">
                                                                                 <div class="d-grid h-100 align-content-center">
-                                                                                    <?php echo unformat_date($v['scadenza']); ?>
+                                                                                    <?= unformat_date($v['scadenza']); ?>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="w-15">
                                                                                 <div class="d-grid h-100 align-content-center prezzo">
-                                                                                    <?php echo number_format($v['prezzo'],2,'.',''); ?>
+                                                                                    <?= number_format($v['prezzo'],2,'.',''); ?>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="w-15">
                                                                                 <div class="d-grid h-100 align-content-center prezzo">
-                                                                                    <?php echo number_format($v['saldato'],2,'.',''); ?>
+                                                                                    <?= number_format($v['saldato'],2,'.',''); ?>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="w-15">
                                                                                 <div class="d-grid h-100 align-content-center prezzo">
-                                                                                    <?php echo number_format($v['fatturato'],2,'.',''); ?>
+                                                                                    <?= number_format($v['fatturato'],2,'.',''); ?>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="w-15">
                                                                                 <div class="d-grid h-100 align-content-center prezzo">
-                                                                                    <?php echo number_format($v['non_fatturato'],2,'.',''); ?>
+                                                                                    <?= number_format($v['non_fatturato'],2,'.',''); ?>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="w-20 d-none d-md-block">
                                                                                 <div class="d-grid h-100 align-content-center">
-                                                                                    <?php echo $stato_pagamento; ?>
+                                                                                    <?= $stato_pagamento; ?>
                                                                                 </div>
                                                                             </div>
                                                                         </div><?php
@@ -293,50 +289,50 @@
                                                 foreach ($trattamenti as $key => $value) {?>
 
                                                     <div class="d-flex w-100 mb-2">
-                                                        <div class="accordion w-100 mt-1 px-0" id="accordionFlush<?php echo $value['id'];?>">
+                                                        <div class="accordion w-100 mt-1 px-0" id="accordionFlush<?= $value['id'];?>">
                                                             <div class="accordion-item px-0">
                                                                 <h2 class="accordion-header">
-                                                                <button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?php echo $value['id'];?>" aria-expanded="false" aria-controls="flush-collapse<?php echo $value['id'];?>">
+                                                                <button class="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse<?= $value['id'];?>" aria-expanded="false" aria-controls="flush-collapse<?= $value['id'];?>">
                                                                     <div class="d-flex w-100">
                                                                         <div class="w-md-20">
                                                                             <div class="d-grid h-100 align-content-center fw-bold">
-                                                                                <?php echo strtoupper($value['acronimo']);?>
+                                                                                <?= strtoupper($value['acronimo']);?>
                                                                             </div>
                                                                         </div>
                                                                         <div class="w-10 d-none d-md-block">
                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                <?php echo number_format($value['prezzo_tabellare'], 2, '.', ''); ?>
+                                                                                <?= number_format($value['prezzo_tabellare'], 2, '.', ''); ?>
                                                                             </div>                                    
                                                                         </div>
                                                                         <div class="w-10">
                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                <?php echo number_format($value['prezzo'], 2, '.', ''); ?>
+                                                                                <?= number_format($value['prezzo'], 2, '.', ''); ?>
                                                                             </div>
                                                                         </div>
                                                                         <div class="w-10 d-none d-md-block">
                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                <?php echo number_format($value['saldato'], 2, '.', ''); ?>
+                                                                                <?= number_format($value['saldato'], 2, '.', ''); ?>
                                                                             </div>
                                                                         </div>
                                                                         <div class="w-10 d-none d-md-block">
                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                <?php echo number_format($value['fatturato'], 2, '.', ''); ?>
+                                                                                <?= number_format($value['fatturato'], 2, '.', ''); ?>
                                                                             </div>
                                                                         </div>
                                                                         <div class="w-10">
                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                <?php echo number_format($value['non_fatturato'], 2, '.', ''); ?>
+                                                                                <?= number_format($value['non_fatturato'], 2, '.', ''); ?>
                                                                             </div>
                                                                         </div>
                                                                         <div class="w-30">
                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                <?php echo $value['realizzato_da']; ?>
+                                                                                <?= $value['realizzato_da']; ?>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </button>
                                                                 </h2>
-                                                                <div id="flush-collapse<?php echo $value['id'];?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlush<?php echo $value['id'];?>">
+                                                                <div id="flush-collapse<?= $value['id'];?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlush<?= $value['id'];?>">
                                                                     <div class="accordion-body text-center">
 
                                                                         <!-- titles -->
@@ -369,27 +365,29 @@
                                                                                     Saldato
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="w-20 d-none d-md-block">
-                                                                                <div class="d-grid h-100 align-content-center">
-                                                                                    Stato Pagamento
-                                                                                </div>
-                                                                            </div>
                                                                             <div class="w-md-15">
                                                                                 <div class="d-grid h-100 align-content-center">
                                                                                     Stato Seduta
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="w-20 d-none d-md-block">
+                                                                                <div class="d-grid h-100 align-content-center">
+                                                                                    Stato Pagamento
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         
                                                                         <!-- sedute --><?php
                                                                         foreach (_view_sedute($value['id']) as $v) {
-                                                                            $abble=in_array($v['stato_pagamento'],['Pendente','Parziale','Esente']);
+                                                                            
+                                                                            $stato_pagamento = stato_pagamento($v);
+                                                                            $abble=in_array($stato_pagamento,['Pendente']);
                                                                             ?>
                                                                             <div 
-                                                                                class="d-flex w-100 border p-3 hover <?php echo $abble?'':'disabled'; ?> <?php echo $v['stato_pagamento'];?>" 
+                                                                                class="d-flex w-100 border p-3 hover <?= $abble?'':'disabled'; ?> <?= $stato_pagamento;?>" 
                                                                                 onclick="window.modalHandlers['percorsi_pendenze'].check(this)"
-                                                                                data-id="<?php echo $v['id'];?>"
-                                                                                data-realizzato_da="<?php echo $v['realizzato_da'];?>"
+                                                                                data-id="<?= $v['id'];?>"
+                                                                                data-realizzato_da="<?= $v['realizzato_da'];?>"
                                                                                 data-view="view_sedute"
                                                                                 >
                                                                                 <div class="w-5 ">
@@ -405,32 +403,32 @@
                                                                                 </div>
                                                                                 <div class="w-15">
                                                                                     <div class="d-grid h-100 align-content-center">
-                                                                                        <?php echo $v['index']; ?>
+                                                                                        <?= $v['index']; ?>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="w-15">
                                                                                     <div class="d-grid h-100 align-content-center">
-                                                                                        <?php echo unformat_date($v['data_seduta']); ?>
+                                                                                        <?= unformat_date($v['data_seduta']); ?>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="w-15">
                                                                                     <div class="d-grid h-100 align-content-center prezzo">
-                                                                                        <?php echo number_format($v['prezzo'],2,'.',''); ?>
+                                                                                        <?= number_format($v['prezzo'],2,'.',''); ?>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="w-15">
                                                                                     <div class="d-grid h-100 align-content-center prezzo">
-                                                                                        <?php echo number_format($v['saldato'],2,'.',''); ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <div class="w-20 d-none d-md-block">
-                                                                                    <div class="d-grid h-100 align-content-center">
-                                                                                        <?php echo $v['stato_pagamento']; ?>
+                                                                                        <?= number_format($v['saldato'],2,'.',''); ?>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="w-md-15">
                                                                                     <div class="d-grid h-100 align-content-center">
-                                                                                        <?php echo $v['stato_seduta']; ?>
+                                                                                        <?= $v['stato_seduta']; ?>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="w-20 d-none d-md-block">
+                                                                                    <div class="d-grid h-100 align-content-center">
+                                                                                        <?= $stato_pagamento; ?>
                                                                                     </div>
                                                                                 </div>
                                                                             </div><?php
@@ -462,27 +460,27 @@
             <div class="d-flex me-1 mt-1 w-md-33 hover" onclick="window.modalHandlers['percorsi_pendenze'].uncheckAll()">
                 <div class="d-flex flex-row btn btn-light flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
-                        <?php echo icon('x.svg','black',20,20); ?>
+                        <?= icon('x.svg','black',20,20); ?>
                     </div>
                     <div class="d-grid justify-content-center align-items-center">
                         Rimuovi Selezione
                     </div>
                 </div>
             </div>
-            <div class="d-flex me-1 mt-1 w-md-33" onclick="window.modalHandlers['percorsi_pendenze'].changePrice(<?php echo $_REQUEST['id_cliente'];?>)">
+            <div class="d-flex me-1 mt-1 w-md-33" onclick="window.modalHandlers['percorsi_pendenze'].changePrice(<?= $_REQUEST['id_cliente'];?>)">
                 <div class="d-flex flex-row btn btn-light flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
-                        <?php echo icon('edit.svg','black',20,20); ?>
+                        <?= icon('edit.svg','black',20,20); ?>
                     </div>
                     <div class="d-grid justify-content-center align-items-center">
                         Modifica prezzo
                     </div>
                 </div>
             </div>
-            <div class="d-flex me-1 mt-1 flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].del(<?php echo $_REQUEST['id_cliente'];?>)">
+            <div class="d-flex me-1 mt-1 flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].del(<?= $_REQUEST['id_cliente'];?>)">
                 <div class="d-flex flex-row btn btn-light flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
-                        <?php echo icon('bin.svg','black',20,20); ?>
+                        <?= icon('bin.svg','black',20,20); ?>
                     </div>
                     <div class="d-grid justify-content-center align-items-center">
                         Elimina Selezione
@@ -495,37 +493,37 @@
                 onclick="window.modalHandlers['percorsi_pendenze'].fatturaClick();">
                 <div class="d-flex flex-row btn btn-primary flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
-                        <?php echo icon('document.svg','white',20,20); ?>
+                        <?= icon('document.svg','white',20,20); ?>
                     </div>
                     <div class="d-grid justify-content-center align-items-center">
                         Fattura D.Z.
                     </div>
                 </div>
             </div>
-            <div class= "d-flex me-1 mt-1 w-md-25" onclick="window.modalHandlers['percorsi_pendenze'].arubaClick(<?php echo $_REQUEST['id_cliente'];?>);">
+            <div class= "d-flex me-1 mt-1 w-md-25" onclick="window.modalHandlers['percorsi_pendenze'].arubaClick(<?= $_REQUEST['id_cliente'];?>);">
                 <div class="d-flex flex-row btn btn-primary flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
-                        <?php echo icon('document.svg','white',20,20); ?>
+                        <?= icon('document.svg','white',20,20); ?>
                     </div>
                     <div class="d-grid justify-content-center align-items-center">
                         Fatturato Aruba
                     </div>
                 </div>
             </div>
-            <div class= "d-flex me-1 mt-1 w-md-25" onclick="window.modalHandlers['percorsi_pendenze'].isicoClick(<?php echo $_REQUEST['id_cliente'];?>);">
+            <div class= "d-flex me-1 mt-1 w-md-25" onclick="window.modalHandlers['percorsi_pendenze'].isicoClick(<?= $_REQUEST['id_cliente'];?>);">
                 <div class="d-flex flex-row btn btn-primary flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
-                        <?php echo icon('document.svg','white',20,20); ?>
+                        <?= icon('document.svg','white',20,20); ?>
                     </div>
                     <div class="d-grid justify-content-center align-items-center">
                         Fatturato Isico
                     </div>
                 </div>
             </div>
-            <div class= "d-flex me-1 mt-1 flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(<?php echo $_REQUEST['id_cliente'];?>);">
+            <div class= "d-flex me-1 mt-1 flex-fill" onclick="window.modalHandlers['percorsi_pendenze'].senzaFatturaClick(<?= $_REQUEST['id_cliente'];?>);">
                 <div class="d-flex flex-row btn btn-primary flex-fill">
                     <div class="d-grid justify-content-center align-items-center me-1">
-                        <?php echo icon('coin.svg','white',20,20); ?>
+                        <?= icon('coin.svg','white',20,20); ?>
                     </div>
                     <div class="d-grid justify-content-center align-items-center">
                         Contanti
@@ -551,12 +549,11 @@
 </div>
 
 <script type="json/object" id="data_cliente">
-    <?php echo json_encode(_cliente()); ?>
+    <?= json_encode(_cliente()); ?>
 </script>
 
+<div id="pagamenti_child"></div>
 <div id="fattura"></div>
-<div id="senza_fattura"></div>
-<div id="fatturato_aruba"></div>
 <div id="percorso_combo"></div>
 <div id="prezzo_corso"></div>
 <div id="percorsi_modifica_prezzo"></div>

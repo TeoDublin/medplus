@@ -59,10 +59,6 @@
             $where.=" AND bnw IN('".implode("','",$_POST['bnw'])."')";
         }
 
-        if(isset($_POST['stato_saldato_terapista'])){
-            $where.=" AND stato_saldato_terapista IN('".implode("','",$_POST['stato_saldato_terapista'])."')";
-        }
-
         if(isset($_POST['cliente'])){
             $where.=" AND id_cliente IN(".implode(',',$_POST['cliente']).")";
         }
@@ -123,10 +119,6 @@
             if(isset($_POST['bnw'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Voucher: ".implode(', ',$_POST['bnw'])."</span></div>";
             }
-
-            if(isset($_POST['stato_saldato_terapista'])){
-                echo "<div class=\"filter-label bg-gray\"><span >Stato Saldato Terapista: ".implode(', ',$_POST['stato_saldato_terapista'])."</span></div>";
-            } 
 
             if(isset($_POST['nominativo'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Nominativo: ".implode(', ',$_POST['nominativo'])."</span></div>";
@@ -368,30 +360,7 @@
                 </div>
             </div>
         </div>
-        <div class="accordion p-1" id="filter_stato_saldato_terapista">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_stato_saldato_terapista" aria-expanded="false" aria-controls="collapse_filter_stato_saldato_terapista">
-                    Stato Pagamento Terapista
-                    </button>
-                </h2>
-                <div id="collapse_filter_stato_saldato_terapista" class="accordion-collapse collapse" data-bs-parent="#filter_stato_saldato_terapista">
-                    <div class="accordion-body">
-                        <div>
-                            <label for="stato_saldato_terapista">Pagamento Terapista</label>
-                            <select class="form-control selectpicker" id="stato_saldato_terapista" value="<?php echo isset($_POST['stato_saldato_terapista']) ? $_POST['stato_saldato_terapista'] : ''; ?>" multiple>
-                                <?php 
-                                    foreach (Enum('percorsi_terapeutici_sedute','stato_saldato_terapista')->get() as $enum) {
-                                        $selected = in_array($enum,( $_POST['stato_saldato_terapista'] ?? []))?'selected':'';
-                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
-                                    }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="accordion p-1" id="filter_realizzato_da">
             <div class="accordion-item">
                 <h2 class="accordion-header">

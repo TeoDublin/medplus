@@ -1,38 +1,30 @@
-window.modalHandlers['fattura'] = Object.assign(
-    window.modalHandlers['fattura'] || {}, {
-    addTotal:function(element) {
-        const modal = element.closest('.modal');
-        const totale = modal.querySelector('#sum');
-        let new_total = 0;
-        modal.querySelectorAll('.importo').forEach(importo=>{
-            let input = importo.querySelector('input').value;
-            if(input!==''){
-                new_total+=parseFloat(input);
-            }
-        });
-        let inps = Math.round(new_total * 0.04 * 100) / 100;
-        let bollo = 0;
-        if((new_total+inps)>77.47){
-            bollo = 2;            
-        }
-        new_total = new_total + inps + bollo;
-        // totale.value = parseFloat(new_total).toFixed(2);
-        modal.querySelector('#inps').value=inps;
-        modal.querySelector('#bollo').value=bollo;
+window.modalHandlers['fattura'] = {
+
+    addSpinner:function(){
+        const div = document.createElement('div');
+        div.id = 'div_fattura_spinner';
+        div.style = 'z-index:99999!important';
+        div.innerHTML = spinner();
+        document.querySelector('#modal_fattura').appendChild(div);
+        return div;
     },
+
     deleteBtnEnter:function(ele){
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.classList.add('deleteBtnEnter');});
     },
+
     deleteBtnLeave:function(ele){
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.classList.remove('deleteBtnEnter');});
     },
+
     deleteBtnClick:function(ele){
         const parent = ele.closest('.card');
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.remove();});
-        window.modalHandlers['fattura'].addTotal(parent);
         this.updateRowId();
     },
+
     addBtnClick:function() {
+
         let countOggetto = document.querySelectorAll('.oggetto').length;
         const oggettoDiv = document.createElement('div');
         oggettoDiv.className = "card-body pe-1 pb-0 pt-1 oggetto";
@@ -57,7 +49,6 @@ window.modalHandlers['fattura'] = Object.assign(
         importoDiv.id = 'row' + (countImporto + 1);
         importoInput.className = 'form-control';
         importoInput.type = 'number';
-        importoInput.addEventListener('change',function(){window.modalHandlers['fattura'].addTotal(importoInput)});
         importoDiv.appendChild(importoInput);
         const importoContainer = document.querySelector('.titleImporti');
 
@@ -95,12 +86,15 @@ window.modalHandlers['fattura'] = Object.assign(
         document.querySelector('.btns').insertBefore(btnContainer, document.querySelector('.btns').children[1]);
         this.updateRowId();
     },
+
     stampBtnEnter:function(ele){
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.classList.add('stampBtnEnter');});
     },
+
     stampBtnLeave:function(ele){
         document.querySelectorAll('#'+ele.id).forEach(element=>{ element.classList.remove('stampBtnEnter');});
     },
+
     updateRowId:function(){
         let row = 1;
         document.querySelectorAll('div.oggetto').forEach(function(e){
@@ -120,5 +114,109 @@ window.modalHandlers['fattura'] = Object.assign(
             row++;
         });
         
+    },
+
+    generatePDF:function(e) {
+
+        let total_percorsi_child = 0;
+        const oggetti = [];
+
+        const $modal = e.closest('.modal');
+
+        const $oggetti = $modal.querySelectorAll('div.oggetto');
+        const totale = parseFloat($modal.querySelector('input#sum').value);
+        const index = parseInt($modal.querySelector('select#index').value);
+        const data_creazione = $modal.querySelector('input#data_creazione').value;
+        const metodo_pagamento = $modal.querySelector('select#metodo_pagamento').value;
+        const inps = $modal.querySelector('input#inps').value;
+        const bollo = $modal.querySelector('input#bollo').value;
+        const dataPayload = payload();
+        const imponibile = totale - inps - bollo;
+
+        if (!Number.isInteger(index) || index <= 0) {
+            alert('Index non valido');
+            return;
+        }
+
+        if (!data_creazione) {
+            alert('Data pagamento mancante');
+            return;
+        }
+
+        if (!metodo_pagamento) {
+            alert('Metodo pagamento mancante');
+            return;
+        }
+
+        $modal.querySelectorAll('.importo_row').forEach((importo_row) => {
+            let input = parseInt(importo_row.querySelector('input').value) || 0;
+            total_percorsi_child += input;
+        });
+
+        console.log(imponibile);
+        console.log(total_percorsi_child);
+
+        if ( imponibile !== total_percorsi_child) {
+            alert('La somma degli importi non è uguale al totale');
+            return;
+        }
+        
+        if(!$oggetti.length){
+            alert('Devi aggiungere almeno uno oggetto');
+            return;  
+        }
+
+        for(const $oggetto of $oggetti){
+
+            let oggetto = $oggetto.querySelector('input').value;
+            let importo = $modal.querySelector('div.importo_row#' + $oggetto.id).querySelector('input').value;
+
+            if(!oggetto){
+                alert('L\'ggetto non puo essere vuoto');
+                break;   
+            }
+
+            if(!importo){
+                alert('L\'importo non puo essere vuoto');
+                break;   
+            }
+
+            oggetti.push({
+                oggetto: oggetto,
+                importo: parseFloat(importo) || 0
+            });
+
+        }
+
+        const spinnerDiv = this.addSpinner();
+
+        $.post(
+            'modal_component/fattura/post/fattura.php', 
+            {
+                payload: dataPayload,
+                index : index,
+                data_creazione: data_creazione,
+                metodo_pagamento: metodo_pagamento,
+                totale: totale,
+                inps: inps,
+                bollo: bollo,
+                oggetti: oggetti
+            }
+        ).done((response) => {
+
+            window.open(response, '_blank');
+
+            reload_modal_component(
+                'percorsi_pendenze',
+                'percorsi_pendenze',
+                {
+                    id_cliente: dataPayload.data_cliente.id
+                }
+            );
+        }).fail(function(){
+            fail();
+        }).always(() => {
+            spinnerDiv.remove();
+        });
     }
-});
+};

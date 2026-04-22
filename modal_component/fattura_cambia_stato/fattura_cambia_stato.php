@@ -1,34 +1,6 @@
 <?php 
-    function _table(){
-        switch ($_REQUEST['origine']) {
 
-            case 'fatture':{
-                $ret = 'fatture';
-                break;
-            }
-            case 'isico':{
-                $ret = 'pagamenti_isico';
-                break;
-            }
-            case 'senza_fattura':{
-                $ret = 'pagamenti_senza_fattura';
-                break;
-            }
-            case 'aruba':{
-                $ret = 'pagamenti_aruba';
-                break;
-            }
-            default:{
-                throw new Exception("Error Processing Request", 1);
-                exit();
-                break;
-            }
-
-        }
-        return $ret;
-    }
-
-    $table = _table();
+    $table = 'pagamenti';
 
     if(!isset($_REQUEST['id'])){
         echo "Accesso Negato";
@@ -44,10 +16,12 @@
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
+
             <div class="modal-header"><h4 class="modal-title">Cambia Stato</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-label="Close"></button>
             </div>
+
             <div class="modal-body save"
                 data-id="<?php echo $_REQUEST['id']??''; ?>"
                 data-origine="<?php echo $_REQUEST['origine']??''; ?>"
@@ -64,7 +38,7 @@
                                 class=\"form-control text-center\" name=\"stato\" value=\"{$pagamento['stato']}\"
                                 onchange=\"window.modalHandlers['fattura_cambia_stato'].changeStato(this)\"
                                 >";
-                                foreach(Enum('fatture','stato')->get() as $enum){
+                                foreach(Enum('pagamenti','stato')->get() as $enum){
                                     $selected=$pagamento['stato']==$enum?'selected':'';
                                     echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
                                 }

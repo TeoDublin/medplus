@@ -413,6 +413,11 @@ function validate(element){
     return ret;
 }
 
+function payload(){
+    const raw = document.querySelector('#payload').textContent.trim();
+    return JSON.parse(raw || '{}');
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     if (sessionStorage.getItem('showSuccessToast') === 'true') {
         const toastLive = document.getElementById('successToast');

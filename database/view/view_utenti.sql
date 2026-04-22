@@ -1,3 +1,4 @@
+USE medplus;
 DROP VIEW IF EXISTS view_utenti;
 CREATE  VIEW `view_utenti`  AS 
 	SELECT

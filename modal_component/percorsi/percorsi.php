@@ -14,7 +14,12 @@
     }
 
     function _view_classi(){
-        return Select('*')->from('view_classi')->where("id_cliente={$_REQUEST['id_cliente']} AND deleted = 0")->get_or_false();
+
+        $table = null_or_empty($_REQUEST['storico']) ? 'view_classi_pendenti' : 'view_classi';
+        return Select('*')
+            ->from($table)
+            ->where("id_cliente={$_REQUEST['id_cliente']} AND deleted = 0")
+            ->get_or_false();
     }
 
     function _view_pagamenti($id_corso){
@@ -51,30 +56,6 @@
             }
             else $span_class='d-none d-md-block';            
             echo "<span class=\"me-1 {$span_class}\">{$nome}</span>";
-        }
-    }
-    function _stato_pagamento($v){
-
-        if($v['origine'] == 'corsi'){
-            $ret = Select('*')->from('corsi_pagamenti')->where("id={$v['id']}")->first_or_false();
-            if(isset($ret['stato_pagamento'])){
-                if(!null_or_empty($ret['stato_pagamento'])){
-                    return $ret['stato_pagamento'];
-                }
-            }
-        }
-
-        if((int)$v['prezzo'] == 0){
-            return 'Esente';
-        }
-        elseif((int)$v['saldato']>=(int)$v['prezzo']){
-            return 'Saldato';
-        }
-        elseif($v['saldato']>0){
-            return 'Parziale';
-        }
-        else{
-            return 'Pendente';
         }
     }
 
@@ -234,7 +215,7 @@
                                                                     
                                                                     <!-- corsi --><?php
                                                                     foreach ($view_pagamenti as $v) {
-                                                                        $stato_pagamento=_stato_pagamento($v);
+                                                                        $stato_pagamento= stato_pagamento($v);
                                                                         ?>
                                                                         <div class="d-flex w-100 border p-3 hover" >
                                                                             <div class="w-20">
@@ -417,7 +398,7 @@
                                                                             <div class="accordion" id="accordionSeduta<?php echo $seduta['id'];?>">
                                                                                 <div class="accordion-item">
                                                                                     <h2 class="accordion-header">
-                                                                                        <div class="accordion-button collapsed border py-2 <?php echo $seduta['stato_seduta']; ?>" type="button" data-bs-toggle="collapse"  name="row_percorso" data-bs-target="#collapseSeduta<?php echo $seduta['id'];?>" aria-expanded="false" aria-controls="collapseSeduta<?php echo $seduta['id'];?>">
+                                                                                        <div class="accordion-button collapsed bordesudr py-2 <?php echo $seduta['stato_seduta']; ?>" type="button" data-bs-toggle="collapse"  name="row_percorso" data-bs-target="#collapseSeduta<?php echo $seduta['id'];?>" aria-expanded="false" aria-controls="collapseSeduta<?php echo $seduta['id'];?>">
                                                                                             <input value="<?php echo $seduta['id'];?>" name="id_seduta" hidden/>
                                                                                             <div class="d-flex flex-row w-100 flex-wrap">
                                                                                                 <div class="w-5 d-flex align-items-center justify-content-center text-center text-break flex-shrink-1">

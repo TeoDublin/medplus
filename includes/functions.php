@@ -23,7 +23,6 @@
         return count($_POST)>0;
     }
 
-
     function request($key,$fallback=false){
         $ret=$_REQUEST[$key]??false;
         unset($_REQUEST[$key]);
@@ -210,6 +209,7 @@
 
     function modal_script(String $component):void{
         $full_path="modal_component/{$component}/{$component}.js";
+        echo '<script defer type="json/object" id="payload">'.json_encode($_REQUEST).'</script>';
         echo '<script defer component="modal_'.$component.'" src="'.$full_path.'?v='.filemtime($full_path).'"></script>';
     }
 
@@ -368,4 +368,73 @@
         $ret.="></div>";
         
         return $ret;
+    }
+
+    function stato_pagamento($v){
+
+        if( (double) $v['prezzo'] == 0){
+            return 'Esente';
+        }
+        elseif( (double) $v['fatturato']>0 || ((double) $v['saldato'] > 0 && $v['stato_pagamento'] == 'Pendente')){
+            return 'Bonifico';
+        }
+        elseif( (double) $v['saldato'] >= (double)$v['prezzo']){
+            return 'Saldato';
+        }
+        else{
+            return 'Pendente';
+        }
+    }
+
+    function resolve_payload(array $params, array $payload): array {
+        $resolved = [];
+
+        foreach ($payload as $key => $rules) {
+
+            if (!array_key_exists($key, $params)) {
+                if (($rules['required'] ?? false) === true) {
+                    throw new InvalidArgumentException("Parametro mancante: {$key}");
+                }
+                $resolved[$key] = $rules['default'] ?? null;
+                continue;
+            }
+
+            $value = $params[$key];
+
+            if ($value === '' && ($rules['required'] ?? false)) {
+                throw new InvalidArgumentException("Parametro vuoto: {$key}");
+            }
+
+            switch ($rules['type']) {
+                case 'float':
+                    if ($value === '' || !is_numeric($value)) {
+                        throw new InvalidArgumentException("{$key} deve essere numerico");
+                    }
+                    $resolved[$key] = (float)$value;
+                    break;
+
+                case 'int|string':
+                    if ($value === '') {
+                        throw new InvalidArgumentException("{$key} non valido");
+                    }
+                    $resolved[$key] = $value;
+                    break;
+
+                case 'string':
+                    $resolved[$key] = trim((string)$value);
+                    break;
+
+                case 'array':
+                    if (!is_array($value)) {
+                        throw new InvalidArgumentException("{$key} deve essere array");
+                    }
+                    $resolved[$key] = $value;
+                    break;
+
+                default:
+                    $resolved[$key] = $value;
+            }
+        }
+
+        return $resolved;
     }

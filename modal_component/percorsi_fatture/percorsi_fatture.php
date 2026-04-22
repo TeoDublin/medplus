@@ -1,43 +1,32 @@
 <?php 
     style('modal_component/percorsi_fatture/percorsi_fatture.css');
-    $session=Session();
-    $ruolo=$session->get('ruolo')??false;
 
-    function _origine($value){
-        switch ($value['origine']) {
-            case 'fatture':
-                $ret = 'FATTURA';
-                break;
-            case 'isico':
-                $ret = 'ISICO';
-                break;
-            case 'senza_fattura':
-                $ret = 'SENZA FATTURA';
-                break;
-            case 'aruba':
-                $ret = 'ARUBA';
-                break;
-        }
-
-        return $ret;
-    }
-
-    // $ruolo!='display';
-    $pagamenti = Select('*')->from('pagamenti')->where("id_cliente={$_REQUEST['id_cliente']}")->orderby('data desc')->get();
+    $id_cliente = $_REQUEST['id_cliente'];
     $table = [];
+
+    $pagamenti = Select('p.*, f.index, f.link')
+        ->from('pagamenti','p')
+        ->where("p.id_cliente = {$id_cliente}")
+        ->left_join('fatture f ON p.id_fattura = f.id')
+        ->orderby('data_creazione desc')
+        ->get();
+    
     foreach ($pagamenti as $value) {
-        $table[$value['data']][] = $value;
+        $table[$value['data_creazione']][] = $value;
     }
+
 ?>
 <div class="modal bg-dark bg-opacity-50 vh-100" id="<?php echo $_REQUEST['id_modal'];?>" data-bs-backdrop="static" style="display: none;" >
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
+
             <div class="modal-header"><h4 class="modal-title">Pagamenti</h4>
                 <button type="button" class="btn-resize"  onclick="resize('#<?php echo $_REQUEST['id_modal'];?>')"></button>
                 <button type="button" class="btn-close" onclick="closeModal(this);" aria-span="Close"></button>
             </div>
+
             <div class="modal-body">
-                <input type="text" id="id_cliente" value="<?php echo $_REQUEST['id_cliente']; ?>" hidden/>
+                <input type="text" id="id_cliente" value="<?php echo $id_cliente; ?>" hidden/>
                 <div class="p-2">
                     <div class="container-fluid text-center py-4">
                         <?php if(empty($table)){?>
@@ -49,9 +38,11 @@
                         }
                         else{
                             foreach ($table as $data => $pagamento) {?>
+
                                 <div class="d-flex w-100 ">
                                     <div class="d-flex w-100 ">
                                         <div class="accordion mb-2 w-100"  id="accordionFlush<?php echo $data;?>">
+
                                             <div class="accordion-item px-">
                                                 <h2 class="accordion-header">
                                                     <button class="accordion-button collapsed border" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<?php echo $data;?>" aria-expanded="false" aria-controls="flush-<?php echo $data;?>">
@@ -62,19 +53,20 @@
                                                         </div>
                                                     </button>
                                                 </h2>
+
                                                 <div id="flush-<?php echo $data;?>" class="accordion-collapse collapse" data-bs-parent="#accordionFlush<?php echo $data;?>" >
                                                     <div class="accordion-body">
                                                         <?php 
                                                             $has_titles = false;
+
                                                             foreach ($pagamento as $value) {
-                                                                $origine = _origine($value);
-                                                                $_origine = str_replace(' ','_',$origine);
+
                                                                 if(!$has_titles):?>
                                                                     <!-- titles -->
                                                                     <div class="d-flex mb-2" style="padding-left:20px;padding-right:40px;width:97%!important">
                                                                         <div class="w-md-15">
                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                Origine
+                                                                                Tipo Pagamento
                                                                             </div>
                                                                         </div>
                                                                         <div class="w-15 d-none d-md-block">
@@ -119,14 +111,15 @@
                                                                 endif;?>
 
                                                                 <div class="w-100 d-flex flex-row accordion-row">
+
                                                                     <div class="accordion mb-2"  id="accordionFlush<?php echo $value['id'];?>" style="width:97%!important;">
                                                                         <div class="accordion-item px-0">
                                                                             <h2 class="accordion-header">
-                                                                                <button class="accordion-button collapsed text-center <?php echo $_origine;?> border" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<?php echo $value['id'];?>" aria-expanded="false" aria-controls="flush-<?php echo $value['id'];?>" style="width:100%!important;">
+                                                                                <button class="accordion-button collapsed text-center border" type="button" data-bs-toggle="collapse" data-bs-target="#flush-<?php echo $value['id'];?>" aria-expanded="false" aria-controls="flush-<?php echo $value['id'];?>" style="width:100%!important;">
                                                                                     <div class="d-flex w-100">
                                                                                         <div class="w-md-15">
                                                                                             <div class="d-grid h-100 align-content-center">
-                                                                                                <?php echo $origine;?>
+                                                                                                <?php echo strtoupper($value['tipo_pagamento']);?>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="w-15 d-none d-md-block">
@@ -140,8 +133,8 @@
                                                                                                     if($value['metodo']=='Bonifico'){
                                                                                                         echo "<buttom 
                                                                                                             data-id=\"".$value['id']."\"
-                                                                                                            data-origine=\"".$value['origine']."\"
-                                                                                                            data-id_cliente=\"".$_REQUEST['id_cliente']."\"
+                                                                                                            data-tipo_pagamento=\"".$value['tipo_pagamento']."\"
+                                                                                                            data-id_cliente=\"".$id_cliente."\"
                                                                                                             class=\"form-control text-center\" name=\"stato\" value=\"{$value['stato']}\" onclick=\"window.modalHandlers['percorsi_fatture'].statoChange(this);\">";
                                                                                                             echo strtoupper($value['stato']);
                                                                                                         echo "</buttom>";
@@ -187,12 +180,11 @@
 
                                                                                     <div class="d-flex flex-column w-100 ">
                                                                                         <?php 
-                                                                                            if($value['origine']=='fatture'){
-                                                                                                $fattura = Select('*')->from('fatture')->where("id_pagamenti={$value['id']}")->first();
+                                                                                            if( $value['tipo_pagamento'] == 'Fattura D.Z.' ){
                                                                                                 echo "<div class=\"w-100 d-flex flex-row border bg-primary rounded mb-4\">
-                                                                                                    <a class=\"w-100 text-decoration-none text-black p-1 text-white\" id=\"link\" href=\"".fatture_url($fattura['link'])."\" target=\"_blank\">
+                                                                                                    <a class=\"w-100 text-decoration-none text-black p-1 text-white\" id=\"link\" href=\"".fatture_url($value['link'])."\" target=\"_blank\">
                                                                                                         ". icon('pdf.svg','white',20,20)."
-                                                                                                        <span> {$fattura['index']}.pdf</span>
+                                                                                                        <span> {$value['index']}.pdf</span>
                                                                                                     </a>
                                                                                                 </div>";
                                                                                             }?>
@@ -200,7 +192,7 @@
                                                                                             <div class="d-flex w-100 my-3" style="padding-left:20px;padding-right:40px">
                                                                                                 <div class="flex-fill">
                                                                                                     <div class="d-grid h-100 align-content-center">
-                                                                                                        Origine
+                                                                                                        Tipo Pagamento
                                                                                                     </div>
                                                                                                 </div>
                                                                                                 <div class="w-md-30">
@@ -225,10 +217,18 @@
                                                                                                 </div>
                                                                                             </div>
                                                                                             <?php 
-                                                                                                $binds = Select('*')->from('view_pagamenti_child')->where("id_pagamenti={$value['id']}")->get();
+
+                                                                                                $binds = Select('*')
+                                                                                                    ->from('view_pagamenti_child')
+                                                                                                    ->where("id_pagamenti={$value['id']}")
+                                                                                                    ->get();
+
                                                                                                 foreach ($binds as $bind) {
-                                                                                                    switch ($bind['origine']) {
-                                                                                                        case 'trattamenti':{?>
+
+                                                                                                    switch ($bind['origine_pagamento']) {
+
+                                                                                                        case 'Trattamenti':{?>
+                                                                                                        
                                                                                                             <div class="d-flex w-100 border py-3" style="padding-left:20px;padding-right:40px">
                                                                                                                 <div class="flex-fill">
                                                                                                                     <div class="d-grid h-100 align-content-center">
@@ -258,7 +258,9 @@
                                                                                                             </div><?php
                                                                                                             break;
                                                                                                         }
-                                                                                                        case 'corsi':{?>
+
+                                                                                                        case 'Corsi':{?>
+
                                                                                                             <div class="d-flex w-100  border py-3" style="padding-left:20px;padding-right:40px">
                                                                                                                 <div class="flex-fill">
                                                                                                                     <div class="d-grid h-100 align-content-center">
@@ -267,22 +269,22 @@
                                                                                                                 </div>
                                                                                                                 <div class="w-md-30">
                                                                                                                     <div class="d-grid h-100 align-content-center">
-                                                                                                                        <?php echo $bind['corso']; ?>
+                                                                                                                        <?php echo $bind['trattamenti']; ?>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div class="w-15">
                                                                                                                     <div class="d-grid h-100 align-content-center">
-                                                                                                                        <?php echo unformat_date($bind['corso_scadenza']); ?>
+                                                                                                                        <?php echo unformat_date($bind['scadenza']); ?>
                                                                                                                     </div>                                    
                                                                                                                 </div>
                                                                                                                 <div class="w-15">
                                                                                                                     <div class="d-grid h-100 align-content-center">
-                                                                                                                        <?php echo $bind['corso_prezzo']; ?>
+                                                                                                                        <?php echo $bind['prezzo']; ?>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                                 <div class="w-15 d-none d-md-block">
                                                                                                                     <div class="d-grid h-100 align-content-center">
-                                                                                                                        <?php echo $bind['corso_terapista']; ?>
+                                                                                                                        <?php echo $bind['terapista']; ?>
                                                                                                                     </div>
                                                                                                                 </div>
                                                                                                             </div><?php
@@ -297,7 +299,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="mb-2 del d-flex justify-content-center align-items-center" style="width:3%!important;"
-                                                                        data-table="<?php echo $value['origine'];?>"
+                                                                        data-table="<?php echo $value['tipo_pagamento'];?>"
                                                                         data-id="<?php echo $value['id'];?>"
                                                                         data-id_cliente="<?php echo $value['id_cliente'];?>"
                                                                         onmouseenter="window.modalHandlers['percorsi_fatture'].delEnter(this);"

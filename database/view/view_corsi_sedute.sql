@@ -1,3 +1,4 @@
+USE medplus;
 DROP VIEW IF EXISTS view_corsi_sedute;
 CREATE VIEW view_corsi_sedute AS
 SELECT
@@ -7,21 +8,16 @@ SELECT
     cli.nominativo,
     c.corso,
     cp.scadenza,
-    p.data as data_pagamento,
+    p.data_creazione COLLATE utf8mb4_general_ci as data_creazione,
+    p.data_pagamento COLLATE utf8mb4_general_ci as data_pagamento,
     cp.prezzo,
     if(cp.stato_pagamento = 'Saldato', cp.prezzo, 0) as saldato,
     cp.stato_pagamento,
     cp.tipo_pagamento,
     cc.realizzato_da,
     t.id as id_terapista,
-	t.terapista,
-    (
-        IF(`p`.`origine` IS NULL, 
-            'da definire',
-            if( `p`.`origine` = 'senza_fattura' and `p`.`metodo` = 'Contanti', 'no', 'si') 
-        ) COLLATE utf8mb4_general_ci
-    ) AS `bnw`,
-    (`p`.`metodo` COLLATE utf8mb4_general_ci) AS `metodo`,
+	p.voucher COLLATE utf8mb4_general_ci as voucher,
+    p.metodo COLLATE utf8mb4_general_ci AS `metodo`,
 	t.percentuale_corsi as `percentuale_terapista`,
 	CAST(
         ROUND(
@@ -33,7 +29,6 @@ SELECT
             2
         ) AS DECIMAL(10,2)
     ) AS saldo_terapista
-
 
 FROM `corsi_pagamenti` cp
 LEFT JOIN clienti cli ON cp.id_cliente = cli.id

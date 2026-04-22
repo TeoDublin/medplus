@@ -1,7 +1,9 @@
 window.modalHandlers['percorsi_pendenze'] = {
+
     closePersistent:'fattura',
     sumSelected: 0,
     countSelected:0,
+
     realizzato_da: function(_data) {
         let realizzato_da = null;
         let hasError = false;
@@ -23,18 +25,23 @@ window.modalHandlers['percorsi_pendenze'] = {
             return { hasError: false, realizzato_da };
         }
     },
+
     fatturaClick:function(){
+
         let hasError=false;
         const raw = document.querySelector('#data_cliente').textContent.trim();
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
+
         if(!realizzato_da.hasError){
+
             if(realizzato_da.realizzato_da=='Isico Napoli' || realizzato_da.realizzato_da=='Isico Salerno' ||  realizzato_da.realizzato_da == 'Isico'){
                 alert('Non puoi fatturare Isico qui');
             }
             else{
                 let error = 'Per generare la fattura devi inserire i dati:\n\n';
                 try {
+
                     let data_cliente = JSON.parse(raw);
                     if (!data_cliente || Object.keys(data_cliente).length === 0) {
                         hasError=true;
@@ -66,7 +73,14 @@ window.modalHandlers['percorsi_pendenze'] = {
                             alert(error);
                         }
                         else{
-                            modal_component('fattura','fattura',{data:_data,data_cliente:data_cliente});
+                            modal_component(
+                                'fattura',
+                                'fattura',
+                                {
+                                    percorsi : _data,
+                                    data_cliente : data_cliente
+                                }
+                            );
                         }
                     }
                 } 
@@ -78,52 +92,94 @@ window.modalHandlers['percorsi_pendenze'] = {
         }
 
     },
+
     senzaFatturaClick:function(id_cliente){
+
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
+
         if(!realizzato_da.hasError){
             if(realizzato_da.realizzato_da=='Isico Napoli'|| realizzato_da.realizzato_da=='Isico Salerno' ||  realizzato_da.realizzato_da == 'Isico'){
                 alert('Non puoi fatturare Isico qui');
             }
             else{
-                modal_component('senza_fattura','senza_fattura',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
+                modal_component(
+                    'pagamenti_child',
+                    'pagamenti_child',
+                    {
+                        id_cliente:id_cliente,
+                        _data:_data,
+                        sumSelected:this.sumSelected, 
+                        tipo_pagamento: 'Contanti' 
+                    }
+                );
             }
         }
     },
+
     isicoClick:function(id_cliente){
+
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
+        
         if(!realizzato_da.hasError){
-            console.log(realizzato_da.realizzato_da);
+
             if(realizzato_da.realizzato_da !== 'Isico Napoli' && realizzato_da.realizzato_da !== 'Isico Salerno' && realizzato_da.realizzato_da !== 'Isico'){
                 alert('Non puoi fatturare Medplus qui');
             }
             else{
-                modal_component('pagamento_isico','pagamento_isico',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
+                modal_component(
+                    'pagamenti_child',
+                    'pagamenti_child',
+                    {
+                        id_cliente:id_cliente,
+                        _data:_data,
+                        sumSelected:this.sumSelected, 
+                        tipo_pagamento: 'Isico'
+                    }
+                );
             }
         }
     },
+
     arubaClick:function(id_cliente){
+
         let _data = this._data();
         const realizzato_da=this.realizzato_da(_data);
+        
         if(!realizzato_da.hasError){
             if(realizzato_da.realizzato_da=='Isico Napoli'|| realizzato_da.realizzato_da=='Isico Salerno' || realizzato_da.realizzato_da == 'Isico'){
                 alert('Non puoi fatturare Isico qui');
             }
             else{
-                modal_component('fatturato_aruba','fatturato_aruba',{id_cliente:id_cliente,_data:_data,sumSelected:this.sumSelected});
+                modal_component(
+                    'pagamenti_child',
+                    'pagamenti_child',
+                    {
+                        id_cliente:id_cliente,
+                        _data:_data,
+                        sumSelected:this.sumSelected, 
+                        tipo_pagamento: 'Aruba'
+                    }
+                );
             }
         }
     },
+
     toggleBtns:function(){
+
         let btn = document.querySelector('.floating-btns');
+        
         if(document.querySelectorAll('.checked').length >0){
             if(btn.classList.contains('d-none')){
                 btn.classList.remove('d-none');
             }
         }
-        else btn.classList.add('d-none');
+        else{
+            btn.classList.add('d-none');
+        }
     },
+
     check:function(e){
         let element = e.querySelector('.form-check');
         const prezzo = parseFloat(e.querySelector('.prezzo').textContent);
@@ -148,6 +204,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         this.countSelected = countSelected;
         this.toggleBtns();
     },
+
     uncheckAll:function(){
         document.querySelectorAll('.checked').forEach((div)=>{
             div.querySelector('.form-check').checked = false;
@@ -156,6 +213,7 @@ window.modalHandlers['percorsi_pendenze'] = {
         document.querySelector('#sum-selected').textContent = 0;
         this.toggleBtns();
     },
+
     _data:function(){
         let _data = [];
         document.querySelectorAll('.checked').forEach((div)=>{
@@ -163,36 +221,38 @@ window.modalHandlers['percorsi_pendenze'] = {
         });
         return _data;
     },
+
     changePrice:function(id_cliente){
-        modal_component('percorsi_modifica_prezzo','percorsi_modifica_prezzo',{id_cliente:id_cliente,data:this._data()});
+        modal_component(
+            'percorsi_modifica_prezzo',
+            'percorsi_modifica_prezzo',
+            {
+                id_cliente:id_cliente,
+                data:this._data()
+            }
+        );
     },
+
     del:function(id_cliente){
         if(confirm('Sicuro di voler procedere ?')){
-            $.post('post/percorsi_del.php',{id_cliente:id_cliente,data:this._data()}).done(()=>{ 
-                reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:id_cliente});
-            }).fail(()=>{fail()});
+            $.post(
+                'post/percorsi_del.php',
+                {
+                    id_cliente:id_cliente,
+                    data:this._data()
+                }
+            ).done(()=>{ 
+                reload_modal_component(
+                    'percorsi_pendenze',
+                    'percorsi_pendenze',
+                    {
+                        id_cliente:id_cliente
+                    }
+                );
+            })
+            .fail(
+                ()=>{fail()}
+            );
         }
     }
 }
-window.modalHandlers['fattura'] = Object.assign(
-    window.modalHandlers['fattura'] || {},{
-    persistent:true,
-
-    generatePDF:function(e,id_cliente,oggetti) {
-        const div = document.createElement('div');
-        div.id = 'div_fattura_spinner';
-        div.style = 'z-index:99999!important';
-        div.innerHTML = spinner();
-        document.querySelector('#modal_fattura').appendChild(div);
-        const _oggetti=JSON.parse(oggetti);
-        const _merged = Object.assign({}, _data(e), _oggetti);
-        $.post('post/fattura.php', _merged).done(response=>{
-            window.open(response,'_blank');
-            reload_modal_component('percorsi_pendenze','percorsi_pendenze',{id_cliente:id_cliente});
-        }).fail(()=>{
-            fail();
-        }).always(() => {
-            div.remove();
-        });
-    },
-});
