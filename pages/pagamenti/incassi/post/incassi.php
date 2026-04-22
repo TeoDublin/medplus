@@ -3,23 +3,18 @@
     $session=Session();
     $ruolo=$session->get('ruolo')??false;
 
-    if($ruolo=='display'){
-        $where = "origine <> 'senza_fattura' AND bnw <> 'no'";
-    }
-    else{
-        $where = '1=1';
-    }
+    $where = '1=1';
 
     $url='pagamenti.php';
     
     if(has_filters()){
 
-        if(!isset($_POST['data']['all'])){
-            if(isset($_POST['data']['da'])){
-                $where.=" AND data >='{$_POST['data']['da']}'";
+        if(!isset($_POST['data_creazione']['all'])){
+            if(isset($_POST['data_creazione']['da'])){
+                $where.=" AND data_creazione >='{$_POST['data_creazione']['da']}'";
             }
-            if(isset($_POST['data']['a'])){
-                $where.=" AND data <='{$_POST['data']['a']}'";
+            if(isset($_POST['data_creazione']['a'])){
+                $where.=" AND data_creazione <='{$_POST['data_creazione']['a']}'";
             }    
         }
 
@@ -27,12 +22,12 @@
             $where.=" AND stato IN('".implode("','",$_POST['stato'])."')";
         }
 
-        if(isset($_POST['origine'])){
-            $where.=" AND origine IN('".implode("','",$_POST['origine'])."')";
+        if(isset($_POST['tipo_pagamento'])){
+            $where.=" AND tipo_pagamento IN('".implode("','",$_POST['tipo_pagamento'])."')";
         }
 
-        if(isset($_POST['bnw'])){
-            $where.=" AND bnw IN('".implode("','",$_POST['bnw'])."')";
+        if(isset($_POST['voucher'])){
+            $where.=" AND voucher IN('".implode("','",$_POST['voucher'])."')";
         }
 
         if(isset($_POST['metodo'])){
@@ -53,10 +48,10 @@
 
     }
     elseif(!(int)cookie('btnClean')){
-        $_POST['stato'] = ['Saldata'];
-        $_POST['data']['da']=date('Y-m-d');
-        $_POST['data']['a']=date('Y-m-d');
-        $where.=" AND `data` >='{$_POST['data']['da']}' AND `data` <='{$_POST['data']['a']}'";
+        $_POST['stato'] = ['Saldato'];
+        $_POST['data_creazione']['da']=date('Y-m-d');
+        $_POST['data_creazione']['a']=date('Y-m-d');
+        $where.=" AND `data_creazione` >='{$_POST['data_creazione']['da']}' AND `data_creazione` <='{$_POST['data_creazione']['a']}'";
         $where.=" AND stato IN('".implode("','",$_POST['stato'])."')";
     }
 
@@ -70,27 +65,32 @@
     <?php
     if(has_filters()){?>
         <?php
-            if(!isset($_POST['data_seduta']['all'])){
-                if(isset($_POST['data']['da'])){
-                    echo "<div class=\"filter-label bg-gray\"><span > Da: ".unformat_date($_POST['data']['da'])."</span></div>"; 
+
+             if(!isset($_POST['data_creazione']['all'])){
+                if(isset($_POST['data_creazione']['da'])){
+                    echo "<div class=\"filter-label bg-gray\"><span > Da: ".unformat_date($_POST['data_creazione']['da'])."</span></div>"; 
                 }
-                if(isset($_POST['data']['a'])){
-                    echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data']['a'])."</span></div>";
+                if(isset($_POST['data_creazione']['a'])){
+                    echo "<div class=\"filter-label bg-gray\"><span >A: ".unformat_date($_POST['data_creazione']['a'])."</span></div>";
                 } 
             } 
-
+            
             if(isset($_POST['stato'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Stato Pagamento: ".implode(', ',$_POST['stato'])."</span></div>";
             }
-            if(isset($_POST['origine'])){
-                echo "<div class=\"filter-label bg-gray\"><span >Tipo Pagamento: ".implode(', ',$_POST['origine'])."</span></div>";
+
+            if(isset($_POST['tipo_pagamento'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Tipo Pagamento: ".implode(', ',$_POST['tipo_pagamento'])."</span></div>";
             }
-            if(isset($_POST['bnw'])){
-                echo "<div class=\"filter-label bg-gray\"><span >Voucher: ".implode(', ',$_POST['bnw'])."</span></div>";
+
+            if(isset($_POST['voucher'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Voucher: ".implode(', ',$_POST['voucher'])."</span></div>";
             }
+
             if(isset($_POST['metodo'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Metodo: ".implode(', ',$_POST['metodo'])."</span></div>";
             }
+
             if(isset($_POST['nominativo'])){
                 echo "<div class=\"filter-label bg-gray\"><span >Nominativo: ".implode(', ',$_POST['nominativo'])."</span></div>";
             }
@@ -125,13 +125,14 @@
                         <th class="w-10">nominativo</th>
                         <th class="w-10">metodo</th>
                         <th class="w-10">data</th>
-                        <th class="w-10">imponibile</th>
+                        <th class="w-5">imponibile</th>
                         <th class="w-5">inps</th>
                         <th class="w-5">bollo</th>
                         <th class="w-10">totale</th>
                         <th class="w-5">note</th>
-                        <th class="w-10">stato</th>
+                        <th class="w-5">stato</th>
                         <th class="w-10">realizzato da</th>
+                        <th class="w-10">tipo pagamento</th>
                         <th class="w-10">Num. Ft. Aruba</th>
                         <th class="w-5">voucher</th>
                     </tr>
@@ -141,7 +142,7 @@
                         <tr data-id=<?php echo $pagamento['id']; ?> style="font-size:12px;line-height:8px; word-break:break-word;">
                             <td><?php echo $pagamento['nominativo']; ?></td>
                             <td><?php echo $pagamento['metodo']; ?></td>
-                            <td><?php echo $pagamento['data']?format($pagamento['data'],'d/m/y'):'-'; ?></td>
+                            <td><?php echo $pagamento['data_creazione']?format($pagamento['data_creazione'],'d/m/y'):'-'; ?></td>
                             <td><?php echo number_format($pagamento['imponibile'],2, ',', '.'); ?></td>
                             <td><?php echo number_format($pagamento['inps'],2, ',', '.'); ?></td>
                             <td><?php echo number_format($pagamento['bollo'],2, ',', '.'); ?></td>
@@ -149,8 +150,9 @@
                             <td><?php echo $pagamento['note']; ?></td>
                             <td><?php echo $pagamento['stato']; ?></td>
                             <td><?php echo $pagamento['realizzato_da']??'-'; ?></td>
+                            <td><?php echo $pagamento['tipo_pagamento']??'-'; ?></td>
                             <td><?php echo $pagamento['fattura_aruba']??'-'; ?></td>
-                            <td><?php echo $pagamento['bnw']??'-'; ?></td>
+                            <td><?php echo $pagamento['voucher']??'-'; ?></td>
                         </tr><?php
                     }
                     ?>
@@ -183,6 +185,7 @@
         <div class="pt-3 p-2">
             <h6>FILTRA</h6>
         </div>
+
         <div class="accordion p-1" id="filter_cliente">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -207,6 +210,7 @@
                 </div>
             </div>
         </div>
+
         <div class="accordion p-1" id="filter_data">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -217,19 +221,19 @@
                 <div id="collapse_filter_data" class="accordion-collapse collapse" data-bs-parent="#filter_data">
                     <div class="accordion-body">
                         <div>
-                            <label for="data_da">Da</label>
-                            <input class="form-control" type="date" id="data_da" value="<?php echo $_POST['data']['da']; ?>">
+                            <label for="data_creazione_da">Da</label>
+                            <input class="form-control" type="date" id="data_creazione_da" value="<?php echo $_POST['data_creazione']['da']; ?>">
                         </div>
                         <div>
-                            <label for="data_a">A</label>
-                            <input class="form-control" type="date" id="data_a" value="<?php echo $_POST['data']['a']; ?>">
+                            <label for="data_creazione_a">A</label>
+                            <input class="form-control" type="date" id="data_creazione_a" value="<?php echo $_POST['data_creazione']['a']; ?>">
                         </div>
                         <div class="mt-3">
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="data_all" 
-                                    value="<?= isset($_POST['data']['all']) ? htmlspecialchars($_POST['data']['all']) : '' ?>" 
-                                    <?= !empty($_POST['data']['all']) ? 'checked' : '' ?>>
-                                <label class="form-check-label" for="data_all">
+                                <input class="form-check-input" type="checkbox" id="data_creazione_all" 
+                                    value="<?= isset($_POST['data_creazione']['all']) ? htmlspecialchars($_POST['data_creazione']['all']) : '' ?>" 
+                                    <?= !empty($_POST['data_creazione']['all']) ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="data_creazione_all">
                                     Seleziona tutto
                                 </label>
                             </div>
@@ -313,6 +317,7 @@
                 </div>
             </div>
         </div>
+
         <div class="accordion p-1" id="filter_metodo">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -337,6 +342,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="accordion p-1" id="filter_origine">
             <div class="accordion-item">
                 <h2 class="accordion-header">
@@ -347,11 +353,11 @@
                 <div id="collapse_filter_origine" class="accordion-collapse collapse" data-bs-parent="#filter_origine">
                     <div class="accordion-body">
                         <div>
-                            <label for="origine">Tipo Pagamento</label>
-                            <select class="form-control selectpicker" id="origine" value="<?php echo $_POST['origine'] ?? ''; ?>" multiple>
+                            <label for="tipo_pagamento">Tipo Pagamento</label>
+                            <select class="form-control selectpicker" id="tipo_pagamento" value="<?php echo $_POST['tipo_pagamento'] ?? ''; ?>" multiple>
                                 <?php 
-                                    foreach (Enum('pagamenti','origine')->get() as $enum) {
-                                        $selected = in_array($enum,( $_POST['origine'] ?? []))?'selected':'';
+                                    foreach (Enum('pagamenti','tipo_pagamento')->get() as $enum) {
+                                        $selected = in_array($enum,( $_POST['tipo_pagamento'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>
@@ -372,11 +378,11 @@
                 <div id="collapse_filter_bnw" class="accordion-collapse collapse" data-bs-parent="#filter_bnw">
                     <div class="accordion-body">
                         <div>
-                            <label for="bnw">Voucher</label>
-                            <select class="form-control selectpicker" id="bnw" value="<?php echo $_POST['bnw'] ?? ''; ?>" multiple>
+                            <label for="voucher">Voucher</label>
+                            <select class="form-control selectpicker" id="voucher" value="<?php echo $_POST['voucher'] ?? ''; ?>" multiple>
                                 <?php 
-                                    foreach (Enum('pagamenti','bnw')->get() as $enum) {
-                                        $selected = in_array($enum,( $_POST['bnw'] ?? []))?'selected':'';
+                                    foreach (Enum('pagamenti','voucher')->get() as $enum) {
+                                        $selected = in_array($enum,( $_POST['voucher'] ?? []))?'selected':'';
                                         echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                     }
                                 ?>

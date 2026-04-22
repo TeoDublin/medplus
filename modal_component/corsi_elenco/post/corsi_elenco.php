@@ -33,7 +33,10 @@
             $first_date=$cliente['data_inizio'];
         }
 
-        $corsi_classi = Select('*')->from('corsi_classi')->where("id_corso={$id} AND id_cliente={$cliente['cliente']} AND data_inizio >= '".date('Y')."-01-01'")->first_or_false();
+        $corsi_classi = Select('*')
+            ->from('corsi_classi')
+            ->where("id_corso={$id} AND id_cliente={$cliente['cliente']} AND data_inizio >= '".date('Y')."-01-01'")
+            ->first_or_false();
 
         $params = [
             'id_corso'=>$id,
@@ -44,11 +47,13 @@
         ];
 
         if(!$corsi_classi){
+
             Insert($params)->into('corsi_classi');
             $params['prezzo_tabellare'] = $cliente['prezzo'];
             unset($params['data_inizio']);
 
             $data = new DateTime(date(now("Y-m-{$_REQUEST['scadenza']}")));
+
             Corsiplanning::insert_corsi_pagamenti(
                 $cliente['data_inizio'],
                 $data->format('Y-m-d'),
@@ -57,7 +62,8 @@
                     'id_corso'=>$params['id_corso'],
                     'id_cliente'=>$params['id_cliente'],
                     'prezzo'=>$params['prezzo'],
-                    'prezzo_tabellare'=>$params['prezzo']
+                    'prezzo_tabellare'=>$params['prezzo'],
+                    'realizzato_da' => $params['realizzato_da']
                 ]
             );
         }
@@ -68,7 +74,10 @@
         $clienti[] = $cliente['cliente'];
     }
 
-    $corsi_classi = Select('*')->from('corsi_classi')->where("id_corso={$id} AND data_inizio >= '".date('Y')."-01-01'")->get();
+    $corsi_classi = Select('*')
+        ->from('corsi_classi')
+        ->where("id_corso={$id} AND data_inizio >= '".date('Y')."-01-01'")
+        ->get();
 
     foreach ($corsi_classi as $cc) {
 

@@ -1,22 +1,22 @@
 function parseFilter(){
     let ret = {'unset':'btnClean'};
     let alerts = [];
-    let data_da = document.querySelector('#data_da').value;
-    let data_a = document.querySelector('#data_a').value;
-    let data_all = document.querySelector('#data_all').checked;
+    let data_creazione_da = document.querySelector('#data_creazione_da').value;
+    let data_creazione_a = document.querySelector('#data_creazione_a').value;
+    let data_creazione_all = document.querySelector('#data_creazione_all').checked;
 
-    if(data_da !== '' && data_a !== ''){
-        if(data_a<data_da){
+    if(data_creazione_da !== '' && data_creazione_a !== ''){
+        if(data_creazione_a<data_creazione_da){
             alerts.push("Data fine non puo essere inferiore alla data Inizio");
         }
     }
 
-    if (data_da !== '' || data_a !== '' || data_all ==true ) {
-        ret.data = {};
-        if (data_all == true) ret.data.all = data_all;
+    if (data_creazione_da !== '' || data_creazione_a !== '' || data_creazione_all ==true ) {
+        ret.data_creazione = {};
+        if (data_creazione_all == true) ret.data_creazione.all = data_creazione_all;
         else{
-            if (data_da !== '') ret.data.da = data_da;
-            if (data_a !== '') ret.data.a = data_a;    
+            if (data_creazione_da !== '') ret.data_creazione.da = data_creazione_da;
+            if (data_creazione_a !== '') ret.data_creazione.a = data_creazione_a;    
         }
     }
 
@@ -45,6 +45,16 @@ function parseFilter(){
         ret.metodo = metodo;
     }
 
+    let voucher = $('#voucher').val() || [];
+    if (voucher.length > 0) {
+        ret.voucher = voucher;
+    }
+
+    let tipo_pagamento = $('#tipo_pagamento').val() || [];
+    if (tipo_pagamento.length > 0) {
+        ret.tipo_pagamento = tipo_pagamento;
+    }
+
     let cliente = $('#cliente').val() || [];
     if (cliente.length > 0) {
         ret.cliente = cliente;
@@ -68,6 +78,7 @@ function btnClean(){
 }
 
 function loadView(response){
+    
     document.querySelector('#spa_incassi').innerHTML = response;
     const floatingMenu = document.querySelector('.floating-menu');
     const floatingMenuBtn = document.querySelector('.floating-menu-btn');

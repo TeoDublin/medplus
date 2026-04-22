@@ -14,6 +14,7 @@ class Delete {
     }
 
     private function log($query){
+        
         $dir = __DIR__ . '/../../archive/logs';
 
         if (!is_dir($dir)) {

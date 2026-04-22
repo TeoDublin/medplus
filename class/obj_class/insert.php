@@ -20,7 +20,8 @@ class Insert{
     }
     public function into($table){
         $this->into=$table;
-        $this->sql->query("INSERT {$this->ignore} INTO `{$this->into}` {$this->insert} VALUES {$this->values}");
+        $query = "INSERT {$this->ignore} INTO `{$this->into}` {$this->insert} VALUES {$this->values}";
+        $this->sql->query($query);
         return $this;
     }
     public function ignore(){

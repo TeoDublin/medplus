@@ -59,11 +59,6 @@ function parseFilter(){
         ret.realizzato_da = realizzato_da;
     }
 
-    let stato_saldato_terapista = $('#stato_saldato_terapista').val() || [];
-    if (stato_saldato_terapista.length > 0) {
-        ret.stato_saldato_terapista = stato_saldato_terapista;
-    }
-
     let id_terapista = $('#id_terapista').val() || [];
     if (id_terapista.length > 0) {
         ret.id_terapista = id_terapista;

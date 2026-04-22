@@ -19,14 +19,32 @@ window.modalHandlers['percorsi'] = {
         element.closest('[name=row_percorso]').setAttribute('data-bs-toggle','collapse');
     },
     deleteClick: function (element){
+
         if(confirm('sicuro di voler eliminare ?')){
-            $.post('post/delete.php',{
-                id:element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value,
-                table:'percorsi_terapeutici'
-            }).done(function(){
+            
+            $.post(
+                'modal_component/percorsi/post/delete_percorsi.php',
+                {
+                    id:element.closest('[name=row_percorso]').querySelector('[name=id_percorso]').value,
+                }
+            ).done((response)=>{
+
+                if(!response.success){
+                    alert(response.message);
+                    return;
+                }
+
                 const id_cliente = element.closest('.modal').querySelector('#id_cliente').value;
-                reload_modal_component('percorsi','percorsi',{'id_cliente':id_cliente});
-            }).fail(function(){fail();});
+                reload_modal_component(
+                    'percorsi',
+                    'percorsi',
+                    {
+                        'id_cliente':id_cliente
+                    }
+                );
+            }).fail(()=>{
+                fail();
+            });
         }
     },
     deleteEnter: function (element){

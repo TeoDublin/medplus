@@ -1,3 +1,4 @@
+USE medplus;
 DROP VIEW IF EXISTS view_percorsi;
 CREATE VIEW view_percorsi AS
 SELECT 
@@ -10,7 +11,6 @@ SELECT
     pt.note AS note,
     IF(p.data_prima_seduta IS NULL, pt.timestamp, p.data_prima_seduta) AS timestamp,
     pt.realizzato_da AS realizzato_da,
-    pt.bnw AS bnw,
     t.trattamenti AS trattamento,
     ta.acronimo AS acronimo,
     (IF((pt.sedute <= IFNULL(p.sp_count, 0)), 'Concluso', 'Attivo') COLLATE utf8mb4_general_ci) AS stato

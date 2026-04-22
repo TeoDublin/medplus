@@ -21,8 +21,6 @@
                 'Percentuale Terapista'=>['col'=>'percentuale_terapista'],
                 'Saldo Terapista'=>['col'=>'saldo_terapista','type'=>'double'],
                 'Saldato Terapista'=>['col'=>'saldato_terapista','type'=>'double'],
-                'Stato Pagamento Terapista'=>['col'=>'stato_saldato_terapista','type'=>'enum'],
-                'Data Pagamento al Terapista'=>['col'=>'data_saldato_terapista','type'=>'date'],
                 'Realizzato da'=>['col'=>'realizzato_da','type'=>'dont_save'],
                 'Voucher'=>['col'=>'bnw','type'=>'dont_save']
             ];

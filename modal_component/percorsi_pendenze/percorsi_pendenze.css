@@ -7,11 +7,12 @@
     top:0;
     left:0;
 }
+
 .checked{
     background-color: var(--base-bg-light);
 }
 
-.Parziale, .Fatturato{
+.Bonifico{
     background-color: var(--bs-warning);
 }
 

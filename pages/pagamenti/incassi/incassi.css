@@ -2,14 +2,17 @@ td,th {
     white-space: normal!important;
     word-break: break-word!important;
 }
+
 .filter-labels{
     height: 80px;
     min-height: 80px;
 }
+
 .filter-labels.none{
     height: 30px;
     min-height: 30px;
 }
+
 .filter-label{
     max-height: 80px;
     overflow: hidden!important;
@@ -18,6 +21,7 @@ td,th {
     border-radius: 7px;
     color: white;
 }
+
 .floating-menu {
     position: fixed;
     right: -350px;
@@ -33,11 +37,13 @@ td,th {
     flex-direction: column;
     overflow: hidden; /* Prevents content from overflowing */
 }
+
 .floating-menu .content {
     flex: 1;
     overflow-y: auto;
     padding-bottom: 60px;
 }
+
 .floating-menu .sticky-bottom {
     position: absolute;
     bottom: 0;
@@ -45,9 +51,11 @@ td,th {
     background: transparent;
     padding: 10px;
 }
+
 .floating-menu.open {
     right: 0;
 }
+
 .floating-menu-btn {
     position: fixed;
     right: 0;
@@ -61,10 +69,12 @@ td,th {
     background-color: transparent;
     border: none;
 }
+
 .floating-menu-btn.open {
     right: 310px;
     background-color: transparent;
 }
+
 .floating-menu-btn > button.left{
     width: 40px;
     border: solid rgba(var(--base-bg-primary-rgb), 0.1) 1px;
@@ -72,9 +82,11 @@ td,th {
     background-color: rgba(var(--base-bg-primary-rgb), 0.1);
     display: block;
 }
+
 .floating-menu-btn.open > button.left{
     display: none;
 }
+
 .floating-menu-btn.open > button.right{
     width: 40px;
     border: solid rgba(var(--base-bg-primary-rgb), 0.1) 1px;
@@ -82,6 +94,7 @@ td,th {
     background-color: rgba(var(--base-bg-primary-rgb), 0.1);
     display: block;
 }
+
 .floating-menu-btn > button.right{
     display: none;
 }
@@ -105,19 +118,23 @@ td,th {
     right: 80px;
     border: solid var(--base-bg-colorfull3) 5px;
 }
+
 .floating-excel-btn:hover {
     border: solid var(--base-bg-colorfull3) 5px;
     background-color: white;
     z-index: 1099;
 }
+
 .floating-excel-btn:hover svg {
     fill: black!important;
     width: 40px;
     height: 40px;
 }
+
 .floating-excel-btn.open {
     right: 360px;
 }
+
 .floating-download-pdf-btn {
     position: fixed;
     bottom: 60px;
@@ -130,22 +147,26 @@ td,th {
     border: none;
     cursor: pointer;
 }
+
 .floating-download-pdf-btn:hover > .tip {
     display: block!important;
     bottom: 64px;
     right: 80px;
     border: solid var(--base-bg-colorfull4) 5px;
 }
+
 .floating-download-pdf-btn:hover {
     border: solid var(--base-bg-colorfull4) 5px;
     background-color: white;
     z-index: 1099;
 }
+
 .floating-download-pdf-btn:hover svg {
     fill: black!important;
     width: 40px;
     height: 40px;
 }
+
 .floating-download-pdf-btn.open {
     right: 260px;
 }

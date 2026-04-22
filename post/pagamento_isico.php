@@ -4,7 +4,7 @@
     $valore=(double)$_REQUEST['_data']['valore'];
     $inps = (double)$_REQUEST['_data']['inps'] ?? 0;
     $bollo = (double)$_REQUEST['_data']['bollo'] ?? 0;
-    $stato = isset($_REQUEST['_data']['metodo']) && $_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Pendente' : 'Saldata';
+    $stato = isset($_REQUEST['_data']['metodo']) && $_REQUEST['_data']['metodo'] == 'Bonifico' ? 'Pendente' : 'Saldato';
 
     $id_pagamenti = Insert([
         'id_cliente'=>$_REQUEST['_data']['id_cliente'],

@@ -23,7 +23,8 @@ class Update{
     }
     public function where(string $where){
         $this->where=$where;
-        $this->sql->query("UPDATE `{$this->table}` SET {$this->set} WHERE {$this->where}");
+        $query = "UPDATE `{$this->table}` SET {$this->set} WHERE {$this->where}";
+        $this->sql->query($query);
         return $this;
     }
     public function flush(){
