@@ -28,7 +28,6 @@ function _map_out($result){
         'Valore Saldato'=>['col'=>'saldato','type'=>'dont_save'],
         'Data Pagamento'=>['col'=>'data_pagamento','type'=>'dont_save'],
         'Realizzato da'=>['col'=>'realizzato_da','type'=>'dont_save'],
-        'Voucher'=>['col'=>'bnw','type'=>'dont_save']
     ];
 
     $ret=[];

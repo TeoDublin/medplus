@@ -4,10 +4,12 @@ class Update{
     private string $table;
     private string $set;
     private string $where;
+
     public function __construct(string $table){
         $this->sql=SQL();
         $this->table=$table;
     }
+
     public function set(array $set){
         $_set=[];
         foreach ($set as $key => $value){
@@ -21,12 +23,14 @@ class Update{
         $this->set=implode(',',$_set);
         return $this;
     }
+
     public function where(string $where){
         $this->where=$where;
         $query = "UPDATE `{$this->table}` SET {$this->set} WHERE {$this->where}";
         $this->sql->query($query);
         return $this;
     }
+
     public function flush(){
         $this->sql->flush();
     }

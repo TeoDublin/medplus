@@ -11,8 +11,6 @@ SELECT
     pts.prezzo AS prezzo,
     pts.saldato AS saldato,
     pts.id_terapista AS id_terapista,
-    pts.percentuale_terapista AS percentuale_terapista,
-    pts.saldo_terapista AS saldo_terapista,
     pts.saldato_terapista AS saldato_terapista,
     pts.stato_seduta COLLATE utf8mb4_general_ci AS stato_seduta,
     pts.stato_pagamento COLLATE utf8mb4_general_ci AS stato_pagamento,
@@ -34,7 +32,60 @@ SELECT
     tc.trattamenti COLLATE utf8mb4_general_ci AS trattamenti,
     tc.acronimo COLLATE utf8mb4_general_ci AS acronimo,
 
-    pt.realizzato_da AS realizzato_da
+    pt.realizzato_da AS realizzato_da,
+
+    COALESCE(
+        pts.percentuale_terapista,
+        CASE
+            WHEN pt.realizzato_da = 'Medplus' THEN tptm.percentuale
+            WHEN pt.realizzato_da = 'Isico Salerno' THEN tptis.percentuale
+            WHEN pt.realizzato_da = 'Isico Napoli' THEN tptin.percentuale
+            WHEN pt.realizzato_da = 'Daniela Zanotti' THEN tptdz.percentuale
+        END
+    ) AS percentuale_terapista,
+
+    FORMAT(
+        COALESCE(
+            pts.saldo_terapista,
+            CASE
+                WHEN pt.realizzato_da = 'Medplus' THEN
+                    CASE
+                        WHEN t.profilo = 'Terapista' THEN
+                            ((pts.prezzo - (pts.prezzo * 0.6)) * (COALESCE(tptm.percentuale,0) / 100))
+                        ELSE
+                            (pts.prezzo * (COALESCE(tptm.percentuale,0) / 100))
+                    END
+
+                WHEN pt.realizzato_da = 'Isico Salerno' THEN
+                    CASE
+                        WHEN t.profilo = 'Terapista' THEN
+                            ((pts.prezzo - (pts.prezzo * 0.6)) * (COALESCE(tptis.percentuale,0) / 100))
+                        ELSE
+                            (pts.prezzo * (COALESCE(tptis.percentuale,0) / 100))
+                    END
+
+                WHEN pt.realizzato_da = 'Isico Napoli' THEN
+                    CASE
+                        WHEN t.profilo = 'Terapista' THEN
+                            ((pts.prezzo - (pts.prezzo * 0.6)) * (COALESCE(tptin.percentuale,0) / 100))
+                        ELSE
+                            (pts.prezzo * (COALESCE(tptin.percentuale,0) / 100))
+                    END
+
+                WHEN pt.realizzato_da = 'Daniela Zanotti' THEN
+                    CASE
+                        WHEN t.profilo = 'Terapista' THEN
+                            ((pts.prezzo - (pts.prezzo * 0.6)) * (COALESCE(tptdz.percentuale,0) / 100))
+                        ELSE
+                            (pts.prezzo * (COALESCE(tptdz.percentuale,0) / 100))
+                    END
+
+                ELSE 0
+            END
+        ),
+        2,
+        'it_IT'
+    ) AS saldo_terapista
 
 FROM percorsi_terapeutici_sedute pts
 
@@ -52,6 +103,26 @@ LEFT JOIN terapisti tpd
 
 LEFT JOIN pagamenti p 
     ON pts.id_pagamenti = p.id
+
+LEFT JOIN terapisti_percentuali tptm 
+    ON t.id = tptm.id_terapista 
+    AND tptm.tipo_percorso = 'Trattamenti'
+    AND tptm.tipo_percentuale = 'Medplus' 
+
+LEFT JOIN terapisti_percentuali tptis 
+    ON t.id = tptis.id_terapista 
+    AND tptis.tipo_percorso = 'Trattamenti'
+    AND tptis.tipo_percentuale = 'Isico Salerno' 
+
+LEFT JOIN terapisti_percentuali tptin 
+    ON t.id = tptin.id_terapista 
+    AND tptin.tipo_percorso = 'Trattamenti'
+    AND tptin.tipo_percentuale = 'Isico Napoli'
+
+LEFT JOIN terapisti_percentuali tptdz 
+    ON t.id = tptdz.id_terapista 
+    AND tptdz.tipo_percorso = 'Trattamenti'
+    AND tptdz.tipo_percentuale = 'Daniela Zanotti' 
 
 LEFT JOIN (
     SELECT 

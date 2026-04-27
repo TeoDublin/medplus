@@ -57,6 +57,7 @@ class PagamentiChild {
             'stato' => $stato_pagamento,
             'totale' => ($valore + $inps + $bollo),
             'voucher' => $voucher,
+            'fattura_aruba' => $fattura_aruba,
             'id_fattura' => $id_fattura
         ])->into('pagamenti')->get();
 

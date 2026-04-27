@@ -1,5 +1,6 @@
 <?php 
     class Select{
+
         private SQL $sql;
         protected $alias;
         protected $select;
@@ -12,38 +13,46 @@
         protected $offset;
         protected $orderby;
         protected $groupby;
+
         public function __construct(string $select){
             $this->sql=SQL();
             $this->select=$this->where=$this->query='';
             $this->left_join=[];
             $this->select=$select;
         }
+
         public function from(string $table, $alias='x'){
             $this->alias=$alias;
             $this->from="`{$table}` {$alias}";
             return $this;
         }
+
         public function left_join(string $left_join){
             $this->left_join[]=" LEFT JOIN {$left_join} ";
             return $this;
         }
+
         public function inner_join(string $left_join){
             $this->inner_join[]=" INNER JOIN {$left_join} ";
             return $this;
         }
+
         public function where(string $where){
             if(preg_match("#([0-9]{2})/([0-9]{2})/([0-9]{4})#",$where,$m))$where=preg_replace("#[0-9]{2}/[0-9]{2}/[0-9]{4}#","{$m[3]}-{$m[2]}-{$m[1]}",$where);
             $this->where=$where;
             return $this;
         }
+
         public function groupby(string $groupby){
             $this->groupby=$groupby;
             return $this;
         }
+
         public function and(string $and){
             $this->where.=" and {$and}";
             return $this;
         }
+
         public function get(): array{
             if (preg_match_all("#\*(.+?)\*#", $this->select, $matches)) {
                 foreach ($matches[1] as $table) {
@@ -74,41 +83,51 @@
             if(!empty($this->offset))$query.=" OFFSET {$this->offset}";
             return $this->sql->select($query) ?? [];
         }
+
         public function get_n_flush(){
             $ret=$this->get();
             $this->flush();
             return $ret;
         }
+
         public function first():array{
             $ret=$this->get();
             return $ret[0] ?? [];
         }
+
         public function first_or_false(){
             $ret=$this->get();
             return $ret[0] ?? false;
         }
+
         public function col(string $col):string|null{
             return $this->first()[$col]??null;
         }
+
         public function orderby(string $orderby){
             $this->orderby=$orderby;
             return $this;
         }
+
         public function get_or_false(){
             $ret=$this->get();
             return count($ret)>0?$ret:false;
         }
+
         public function json(){
             return json_encode($this->get());
         }
+
         public function limit(int $limit){
             $this->limit=$limit;
             return $this;
         }
+
         public function offset(int $offset){
             $this->limit=$offset;
             return $this;
         }
+
         public function get_table():ResultForTable{
             if (preg_match_all("#\*(.+?)\*#", $this->select, $matches)) {
                 foreach ($matches[1] as $table) {
@@ -134,9 +153,7 @@
             Session()->set('last_query',$this->query);
             return new ResultForTable($result,$total,$this->offset,$this->limit,$query);
         }
-        public function newxt(){
-            
-        }
+
         public function flush(){
             $this->sql->flush();
         }

@@ -85,7 +85,7 @@
         <div class="card card-body mt-3 text-center"><h5>Non trovato</h5></div><?php
     }
     else{?>
-        <div class="px-1">
+        <div class="px-1 pe-4">
             <table class="table table-striped table-hover text-center">
                 <thead>
                     <tr class="small">

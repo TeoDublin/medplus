@@ -11,6 +11,7 @@
     }
     
     $url='pagamenti.php';
+    
     if(has_filters()){
 
         if(!isset($_POST['data_seduta']['all'])){

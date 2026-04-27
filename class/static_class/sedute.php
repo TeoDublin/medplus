@@ -22,7 +22,6 @@
                 'Saldo Terapista'=>['col'=>'saldo_terapista','type'=>'double'],
                 'Saldato Terapista'=>['col'=>'saldato_terapista','type'=>'double'],
                 'Realizzato da'=>['col'=>'realizzato_da','type'=>'dont_save'],
-                'Voucher'=>['col'=>'bnw','type'=>'dont_save']
             ];
         }
 

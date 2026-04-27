@@ -1,8 +1,27 @@
 
-function searchClick(){
-    window.location.href=window.location.href+"?search="+document.querySelector('.input-search').value;
+
+function delClick(id){
+
+    if(confirm('Sicuro di voler Eliminare?')){
+
+        $.post(
+            'post/delete.php',
+            {
+                table : 'terapisti',
+                id : id
+            }
+        )
+        .done((reponse) =>{
+            success_and_refresh();
+        })
+        .fail((response) => {
+            fail();
+        });
+    }
 }
+
 function editClick(element,id){
+
     if(element.classList.contains('warning')){
         delClick(id);
     }
@@ -10,16 +29,16 @@ function editClick(element,id){
         add(id);
     }
 }
-function delClick(id){
-    if(confirm('Sicuro di voler Eliminare?')){
-        $.post("post/delete.php",{table:'terapisti',id:id}).done(success_and_refresh).fail(fail);
-    }
-};
+
 function add(id){
-    let _data = { table:'terapisti', header:'terapisti' };
-    if(id){_data["id"]=id;}
-    modal_component('modal','modal',_data);
+    modal_component('terapisti_percentuali','terapisti_percentuali',{id:id});
 }
+
 document.addEventListener('DOMContentLoaded',function(){
-    search_table({table:'terapisti'});
+    search_table({
+        table:'view_terapisti_percentuali',
+        orderby:'terapista ASC',
+        cols:['id','terapista','profilo','percentuali_trattamenti','percentuali_corsi'],
+        actions:{ }
+    });
 });
