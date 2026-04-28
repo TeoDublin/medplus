@@ -1,7 +1,10 @@
 <?php 
     require_once '../../../../includes.php';
+    $session=Session();
+    $elementi=$session->get('elementi')??[];
+    $ruolo=$session->get('ruolo');
 
-    $where='1=1';
+    $where = $ruolo == 'display' ? "voucher <> 'No'":'1=1';
     $url='pagamenti.php';
     
     if(has_filters()){
@@ -96,7 +99,9 @@
                         <th>Data Pagamento</th>
                         <th>Tipo Pagamento</th>
                         <th>Importo</th>
-                        <th>Voucher</th>
+                        <?php if($ruolo !== 'display'):?>
+                            <th>Voucher</th>
+                        <?php endif;?>
                         <th>Note</th>
                         <th>#</th>
                     </tr>
@@ -111,7 +116,9 @@
                             <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo $uscita['data_pagamento']?unformat_date($uscita['data_pagamento']):'-'; ?></td>
                             <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo $uscita['tipo_pagamento']; ?></td>
                             <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo number_format($uscita['importo'],2); ?></td>
-                            <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo $uscita['voucher']; ?></td>
+                            <?php if($ruolo !== 'display'):?>
+                                <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo $uscita['voucher']; ?></td>
+                            <?php endif;?>
                             <td onmouseenter="enterEdit(this)" onmouseleave="leaveEdit(this)" onclick="clickEdit(<?php echo $uscita['id']; ?>)"><?php echo $uscita['note']; ?></td>
                             <td class="del"
                                 onmouseenter="enterDel(this);"
@@ -301,30 +308,32 @@
                 </div>
             </div>
         </div>
-		<div class="accordion p-1" id="filter_voucher">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_voucher" aria-expanded="false" aria-controls="collapse_filter_voucher">
-                    Voucher
-                    </button>
-                </h2>
-                <div id="collapse_filter_voucher" class="accordion-collapse collapse" data-bs-parent="#filter_voucher">
-                    <div class="accordion-body">
-                        <div>
-                            <label for="voucher">Voucher</label>
-                            <select class="form-control selectpicker" id="voucher" value="<?php echo $_POST['voucher'] ?? ''; ?>" multiple>
-                                <?php 
-                                    foreach (Enum('uscite_registrate','voucher')->get() as $enum) {
-                                        $selected = in_array($enum,( $_POST['voucher'] ?? []))?'selected':'';
-                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
-                                    }
-                                ?>
-                            </select>
+        <?php if($ruolo !== 'display'):?>
+            <div class="accordion p-1" id="filter_voucher">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_voucher" aria-expanded="false" aria-controls="collapse_filter_voucher">
+                        Voucher
+                        </button>
+                    </h2>
+                    <div id="collapse_filter_voucher" class="accordion-collapse collapse" data-bs-parent="#filter_voucher">
+                        <div class="accordion-body">
+                            <div>
+                                <label for="voucher">Voucher</label>
+                                <select class="form-control selectpicker" id="voucher" value="<?php echo $_POST['voucher'] ?? ''; ?>" multiple>
+                                    <?php 
+                                        foreach (Enum('uscite_registrate','voucher')->get() as $enum) {
+                                            $selected = in_array($enum,( $_POST['voucher'] ?? []))?'selected':'';
+                                            echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif;?>
 		<div class="accordion p-1" id="filter_note">
             <div class="accordion-item">
                 <h2 class="accordion-header">

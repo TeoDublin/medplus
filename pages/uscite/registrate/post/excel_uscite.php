@@ -10,7 +10,10 @@ require '../../../../class/libraries/phpspreadsheet/vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-$query = Session()->get('last_query');
+$session=Session();
+$elementi=$session->get('elementi')??[];
+$ruolo=$session->get('ruolo');
+$query = $session->get('last_query');
 $spreadsheet = new Spreadsheet();
 $sheet = $spreadsheet->getActiveSheet();
 $line = 1;
@@ -28,6 +31,10 @@ foreach (Sql()->select($query) as $result) {
         'indirizzato_a'=>$result['indirizzato_a'],
         'uscita'=>$result['uscita']
     ];
+
+    if($ruolo === 'display'){
+        unset($map['voucher']);
+    }
 
     if ($line == 1) {
         $col = 'A';

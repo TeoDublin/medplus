@@ -16,7 +16,12 @@ $sheet = $spreadsheet->getActiveSheet();
 $line = 1;
 
 function _map():array{
-    return [
+    
+    $session=Session();
+    $elementi=$session->get('elementi')??[];
+    $ruolo=$session->get('ruolo');
+
+    $map = [
         'id'=>['col'=>'id'],
         'Nominativo'=>['col'=>'nominativo'],
         'Metodo'=>['col'=>'metodo'],
@@ -28,10 +33,16 @@ function _map():array{
         'Totale'=>['col'=>'totale','type'=>'double'],
         'Note'=>['col'=>'note'],
         'Stato'=>['col'=>'stato'],
-        'Voucher'=>['col'=>'bnw'],
+        'Voucher'=>['col'=>'voucher'],
         'Realizzato da'=>['col'=>'realizzato_da'],
         'Num. Ft. Aruba'=>['col'=>'fattura_aruba'],
     ];
+
+    if($ruolo === 'display'){
+        unset($map['Voucher']);
+    }
+
+    return $map;
 }
 
 function _map_out($data):array{

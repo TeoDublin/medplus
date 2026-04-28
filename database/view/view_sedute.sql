@@ -11,7 +11,6 @@ SELECT
     pts.prezzo AS prezzo,
     pts.saldato AS saldato,
     pts.id_terapista AS id_terapista,
-    pts.saldato_terapista AS saldato_terapista,
     pts.stato_seduta COLLATE utf8mb4_general_ci AS stato_seduta,
     pts.stato_pagamento COLLATE utf8mb4_general_ci AS stato_pagamento,
     pts.data_seduta COLLATE utf8mb4_general_ci AS data_seduta,
@@ -85,7 +84,17 @@ SELECT
         ),
         2,
         'it_IT'
-    ) AS saldo_terapista
+    ) AS saldo_terapista,
+
+    IF( pts.percentuale_terapista IS NOT NULL, 
+        'Impostato', 
+        'Calcolato'
+    ) COLLATE utf8mb4_general_ci AS `origine_percentuale_terapista`,
+
+    IF( pts.saldato_terapista IS NOT NULL, 
+        'Impostato', 
+        'Calcolato'
+    ) COLLATE utf8mb4_general_ci AS `origine_saldo_terapista`
 
 FROM percorsi_terapeutici_sedute pts
 

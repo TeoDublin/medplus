@@ -1,9 +1,10 @@
 <?php 
     require_once '../../../../includes.php';
     $session=Session();
-    $ruolo=$session->get('ruolo')??false;
+    $elementi=$session->get('elementi')??[];
+    $ruolo=$session->get('ruolo');
 
-    $where = '1=1';
+    $where = $ruolo == 'display' ? "voucher <> 'No'":'1=1';
     
     $url='pagamenti.php';
     if(has_filters()){
@@ -46,8 +47,8 @@
             $where.=" AND realizzato_da IN('".implode("','",$_POST['realizzato_da'])."')";
         }
 
-        if(isset($_POST['bnw'])){
-            $where.=" AND bnw IN('".implode("','",$_POST['bnw'])."')";
+        if(isset($_POST['voucher'])){
+            $where.=" AND bnw IN('".implode("','",$_POST['voucher'])."')";
         }
 
         if(isset($_POST['cliente'])){
@@ -62,7 +63,7 @@
         $where.=" AND data_pagamento >='{$_POST['data_pagamento']['da']}' AND data_pagamento <='{$_POST['data_pagamento']['a']}'";
         $where.=" AND stato_pagamento IN('".implode("','",$_POST['stato_pagamento'])."')";
     }
-
+    
     $view_corsi_sedute = Select('*')->from('view_corsi_sedute')->where($where)->orderby('scadenza ASC')->get_table();
     $sum= Select("sum(prezzo) as prezzo, sum(saldato) as saldato")->from('view_corsi_sedute')->where($where)->first();
 ?>
@@ -103,8 +104,8 @@
                 echo "<div class=\"filter-label bg-gray\"><span >realizzato da: ".implode(', ',$_POST['realizzato_da'])."</span></div>";
             }
 
-            if(isset($_POST['bnw'])){
-                echo "<div class=\"filter-label bg-gray\"><span >Voucher: ".implode(', ',$_POST['bnw'])."</span></div>";
+            if(isset($_POST['voucher'])){
+                echo "<div class=\"filter-label bg-gray\"><span >Voucher: ".implode(', ',$_POST['voucher'])."</span></div>";
             }
 
             if(isset($_POST['nominativo'])){
@@ -410,30 +411,32 @@
                 </div>
             </div>
         </div>
-        <div class="accordion p-1" id="filter_bnw">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_bnw" aria-expanded="false" aria-controls="collapse_filter_bnw">
-                    Voucher
-                    </button>
-                </h2>
-                <div id="collapse_filter_bnw" class="accordion-collapse collapse" data-bs-parent="#filter_bnw">
-                    <div class="accordion-body">
-                        <div>
-                            <label for="bnw">Voucher</label>
-                            <select class="form-control selectpicker" id="bnw" value="<?php echo $_POST['bnw']; ?>" multiple>
-                                <?php 
-                                    foreach (Enum('percorsi_terapeutici','bnw')->get() as $enum) {
-                                        $selected = in_array($enum,( $_POST['bnw'] ?? []))?'selected':'';
-                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
-                                    }
-                                ?>
-                            </select>
+        <?php if($ruolo !== 'display'): ?>
+            <div class="accordion p-1" id="filter_bnw">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_bnw" aria-expanded="false" aria-controls="collapse_filter_bnw">
+                        Voucher
+                        </button>
+                    </h2>
+                    <div id="collapse_filter_bnw" class="accordion-collapse collapse" data-bs-parent="#filter_bnw">
+                        <div class="accordion-body">
+                            <div>
+                                <label for="bnw">Voucher</label>
+                                <select class="form-control selectpicker" id="bnw" value="<?php echo $_POST['voucher']; ?>" multiple>
+                                    <?php 
+                                        foreach (Enum('percorsi_terapeutici','voucher')->get() as $enum) {
+                                            $selected = in_array($enum,( $_POST['voucher'] ?? []))?'selected':'';
+                                            echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif;?>
     </div>
     <div class="sticky-bottom w-100" onclick="btnFiltra()">
         <button class="btn btn-primary w-100">Filtra</button>

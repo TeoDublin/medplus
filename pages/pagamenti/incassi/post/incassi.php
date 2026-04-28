@@ -1,9 +1,10 @@
 <?php 
     require_once '../../../../includes.php';
     $session=Session();
-    $ruolo=$session->get('ruolo')??false;
+    $elementi=$session->get('elementi')??[];
+    $ruolo=$session->get('ruolo');
 
-    $where = '1=1';
+    $where = $ruolo == 'display' ? "voucher <> 'No'":'1=1';
 
     $url='pagamenti.php';
     
@@ -134,7 +135,9 @@
                         <th class="w-10">realizzato da</th>
                         <th class="w-10">tipo pagamento</th>
                         <th class="w-10">Num. Ft. Aruba</th>
-                        <th class="w-5">voucher</th>
+                        <?php if($ruolo !== 'display'):?>
+                            <th class="w-5">voucher</th>
+                        <?php endif;?>
                     </tr>
                 </thead>
                 <tbody><?php 
@@ -152,7 +155,9 @@
                             <td><?php echo $pagamento['realizzato_da']??'-'; ?></td>
                             <td><?php echo $pagamento['tipo_pagamento']??'-'; ?></td>
                             <td><?php echo $pagamento['fattura_aruba']??'-'; ?></td>
-                            <td><?php echo $pagamento['voucher']??'-'; ?></td>
+                            <?php if($ruolo !== 'display'):?>
+                                <td><?php echo $pagamento['voucher']??'-'; ?></td>
+                            <?php endif;?>
                         </tr><?php
                     }
                     ?>
@@ -367,31 +372,32 @@
                 </div>
             </div>
         </div>
-
-        <div class="accordion p-1" id="filter_bnw">
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_bnw" aria-expanded="false" aria-controls="collapse_filter_bnw">
-                    Voucher
-                    </button>
-                </h2>
-                <div id="collapse_filter_bnw" class="accordion-collapse collapse" data-bs-parent="#filter_bnw">
-                    <div class="accordion-body">
-                        <div>
-                            <label for="voucher">Voucher</label>
-                            <select class="form-control selectpicker" id="voucher" value="<?php echo $_POST['voucher'] ?? ''; ?>" multiple>
-                                <?php 
-                                    foreach (Enum('pagamenti','voucher')->get() as $enum) {
-                                        $selected = in_array($enum,( $_POST['voucher'] ?? []))?'selected':'';
-                                        echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
-                                    }
-                                ?>
-                            </select>
+        <?php if($ruolo !== 'display'):?>
+            <div class="accordion p-1" id="filter_bnw">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_bnw" aria-expanded="false" aria-controls="collapse_filter_bnw">
+                        Voucher
+                        </button>
+                    </h2>
+                    <div id="collapse_filter_bnw" class="accordion-collapse collapse" data-bs-parent="#filter_bnw">
+                        <div class="accordion-body">
+                            <div>
+                                <label for="voucher">Voucher</label>
+                                <select class="form-control selectpicker" id="voucher" value="<?php echo $_POST['voucher'] ?? ''; ?>" multiple>
+                                    <?php 
+                                        foreach (Enum('pagamenti','voucher')->get() as $enum) {
+                                            $selected = in_array($enum,( $_POST['voucher'] ?? []))?'selected':'';
+                                            echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        <?php endif;?>
     </div>
     <div class="sticky-bottom w-100" onclick="btnFiltra()">
         <button class="btn btn-primary w-100">Filtra</button>

@@ -27,6 +27,8 @@ function _map_out($result){
         'Stato Pagamento'=>['col'=>'stato_pagamento','type'=>'dont_save'],
         'Valore Saldato'=>['col'=>'saldato','type'=>'dont_save'],
         'Data Pagamento'=>['col'=>'data_pagamento','type'=>'dont_save'],
+        'Percentuale Terapista'=>['col'=>'percentuale_terapista'],
+        'Saldo Terapista'=>['col'=>'saldo_terapista','type'=>'double'],
         'Realizzato da'=>['col'=>'realizzato_da','type'=>'dont_save'],
     ];
 

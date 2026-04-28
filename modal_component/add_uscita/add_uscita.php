@@ -159,18 +159,20 @@
                         <label class="form-label" for="importo">Importo</label>
                         <input class="form-control" name="importo" type="number" value="<?php echo $uscita['importo']??''; ?>" required <?php echo $disabled; ?>/>
                     </div>
-                    <div class="p-2 w-33">
-                        <label class="form-label" for="voucher">Voucher</label>
-                        <select class="form-control" name="voucher" value="<?php echo $uscita['voucher'] ?? ''; ?>" required <?php echo $disabled; ?>>
-                            <option>Seleziona</option>
-                            <?php 
-                                foreach (Enum('uscite_registrate','voucher')->get() as $enum) {
-                                    $selected=$uscita['voucher']??''==$enum?'selected':'';
-                                    echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
-                                }
-                            ?>
-                        </select>
-                    </div>
+                    <?php if($ruolo !== 'display'):?>
+                        <div class="p-2 w-33">
+                            <label class="form-label" for="voucher">Voucher</label>
+                            <select class="form-control" name="voucher" value="<?php echo $uscita['voucher'] ?? ''; ?>" required <?php echo $disabled; ?>>
+                                <option>Seleziona</option>
+                                <?php 
+                                    foreach (Enum('uscite_registrate','voucher')->get() as $enum) {
+                                        $selected=$uscita['voucher']??''==$enum?'selected':'';
+                                        echo "<option value=\"{$enum}\" {$selected}>{$enum}</option>";
+                                    }
+                                ?>
+                            </select>
+                        </div>
+                    <?php endif;?>
                    <div class="p-2 flex-fill">
                         <label class="form-label" for="in_capo_a">In Capo A</label>
                         <select class="form-control" name="in_capo_a" value="<?php echo $uscita['in_capo_a'] ?? ''; ?>" required <?php echo $disabled; ?>>

@@ -5,7 +5,7 @@
 
         private function map():array{
             return [
-                'id'=>['col'=>'id','type'=>'dont_save'],
+                'id'=>['col'=>'id'],
                 'id_pagamenti'=>['col'=>'id_pagamenti','type'=>'dont_save'],
                 'Nominativo'=>['col'=>'nominativo','type'=>'dont_save'],
                 'Portato Da'=>['col'=>'portato_da','type'=>'dont_save'],
@@ -19,8 +19,9 @@
                 'Valore Saldato'=>['col'=>'saldato','type'=>'dont_save'],
                 'Data Pagamento'=>['col'=>'data_pagamento','type'=>'dont_save'],
                 'Percentuale Terapista'=>['col'=>'percentuale_terapista'],
+                'Origine Percentuale Terapista' => ['col'=>'origine_percentuale_terapista','type'=>'dont_save'],
                 'Saldo Terapista'=>['col'=>'saldo_terapista','type'=>'double'],
-                'Saldato Terapista'=>['col'=>'saldato_terapista','type'=>'double'],
+                'Origine Saldo Terapista' => ['col'=>'origine_saldo_terapista','type'=>'dont_save'],
                 'Realizzato da'=>['col'=>'realizzato_da','type'=>'dont_save'],
             ];
         }
