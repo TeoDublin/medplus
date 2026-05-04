@@ -23,6 +23,8 @@
                 'Saldo Terapista'=>['col'=>'saldo_terapista','type'=>'double'],
                 'Origine Saldo Terapista' => ['col'=>'origine_saldo_terapista','type'=>'dont_save'],
                 'Realizzato da'=>['col'=>'realizzato_da','type'=>'dont_save'],
+                'Fee ISICO' => ['col'=>'percentuale_isico','type'=>'dont_save'],
+                'Voucher' => ['col'=>'voucher','type'=>'dont_save']
             ];
         }
 
@@ -49,16 +51,38 @@
         public function map_in($data):array{
             $ret=[];
             foreach($this->map() as $key=>$value){
-                if(($val=$data[$key])){
+
+                $val=$data[$key];
+
+                if($val){
+
                     $type=$value['type']??'text';
-                    if($type=='dont_save')continue;
+
+                    if($type=='dont_save'){
+                        continue;
+                    }
                     else{
-                        $v=match($type){
-                            'date'=>format_date($val,''),
-                            'double'=>str_replace(',','.',$val),
-                            'enum'=>$this->_enum($value['col'],$val),
-                            default=>$val
-                        };
+
+                        switch ($type) {
+                            case 'date':{
+                                $v = format_date($val,'');
+                                break;
+                            }
+                            case 'double':{
+                                $v = str_replace(',','.',$val);
+                                break;
+                            }
+                            case 'enum':{
+                                $v = $this->_enum($value['col'],$val);
+                                break;
+                            }
+                            default:{
+                                $v = $val;
+                                break;
+                            }
+                                
+                        }
+
                         if($v!==null){
                             if(isset($v['error']))$ret['has_error']=true;
                             $ret[$value['col']]=$v;

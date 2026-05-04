@@ -274,3 +274,12 @@
     padding: 5px!important;
     border-radius: 5px;
 }
+
+.inner.show{
+    overflow: hidden auto;
+    min-height: 220px!important;
+}
+
+.dropdown-menu.show{
+    min-height: 220px!important;
+}

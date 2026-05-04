@@ -30,6 +30,8 @@ function _map_out($result){
         'Percentuale Terapista'=>['col'=>'percentuale_terapista'],
         'Saldo Terapista'=>['col'=>'saldo_terapista','type'=>'double'],
         'Realizzato da'=>['col'=>'realizzato_da','type'=>'dont_save'],
+        'Fee ISICO' => ['col'=>'percentuale_isico','type'=>'dont_save'],
+        'Voucher' => ['col'=>'voucher','type'=>'dont_save']
     ];
 
     $ret=[];

@@ -18,8 +18,8 @@
     </div>
     <?php 
         foreach ($select as $result) {
-            $saldo = floatval($result['saldo_terapista']);
-            $prezzo = floatval($result['prezzo']);
+            $saldo = (float) str_replace(',', '.', $result['saldo_terapista']);
+            $prezzo = (float) str_replace(',', '.', $result['prezzo']);
             echo '<div class="d-flex flex-row w-100">';
                 echo '<div class="w-15 border">' . unformat_date($result['scadenza']) . '</div>';
                 echo '<div class="w-20 border">' . _txt($result['corso']) . '</div>';

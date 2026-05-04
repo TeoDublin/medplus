@@ -19,7 +19,7 @@ SELECT
     
     p.data_creazione COLLATE utf8mb4_general_ci AS data_creazione,
     p.data_pagamento COLLATE utf8mb4_general_ci AS data_pagamento,
-    p.voucher COLLATE utf8mb4_general_ci AS voucher,
+    COALESCE(p.voucher, 'Da definire') COLLATE utf8mb4_general_ci AS voucher,
     p.metodo COLLATE utf8mb4_general_ci AS metodo,
 
     c.nominativo COLLATE utf8mb4_general_ci AS nominativo,
@@ -46,41 +46,38 @@ SELECT
     FORMAT(
         COALESCE(
             pts.saldo_terapista,
-            CASE
-                WHEN pt.realizzato_da = 'Medplus' THEN
-                    CASE
-                        WHEN t.profilo = 'Terapista' THEN
-                            ((pts.prezzo - (pts.prezzo * 0.6)) * (COALESCE(tptm.percentuale,0) / 100))
-                        ELSE
-                            (pts.prezzo * (COALESCE(tptm.percentuale,0) / 100))
-                    END
+            IF( t.profilo = 'Titolare', 
+                CASE
+                    WHEN pt.realizzato_da = 'Medplus' THEN
+                        pts.prezzo * ( COALESCE(tptm.percentuale,0) / 100 )
+                    
+                    WHEN pt.realizzato_da = 'Daniela Zanotti' THEN
+                        pts.prezzo * ( COALESCE(tptdz.percentuale,0) / 100 )
 
-                WHEN pt.realizzato_da = 'Isico Salerno' THEN
-                    CASE
-                        WHEN t.profilo = 'Terapista' THEN
-                            ((pts.prezzo - (pts.prezzo * 0.6)) * (COALESCE(tptis.percentuale,0) / 100))
-                        ELSE
-                            (pts.prezzo * (COALESCE(tptis.percentuale,0) / 100))
-                    END
+                    WHEN pt.realizzato_da = 'Isico Salerno' THEN
+                        pts.prezzo * ( COALESCE(tptis.percentuale,0) / 100 )
 
-                WHEN pt.realizzato_da = 'Isico Napoli' THEN
-                    CASE
-                        WHEN t.profilo = 'Terapista' THEN
-                            ((pts.prezzo - (pts.prezzo * 0.6)) * (COALESCE(tptin.percentuale,0) / 100))
-                        ELSE
-                            (pts.prezzo * (COALESCE(tptin.percentuale,0) / 100))
-                    END
+                    WHEN pt.realizzato_da = 'Isico Napoli' THEN
+                        pts.prezzo * ( COALESCE(tptin.percentuale,0) / 100 )
 
-                WHEN pt.realizzato_da = 'Daniela Zanotti' THEN
-                    CASE
-                        WHEN t.profilo = 'Terapista' THEN
-                            ((pts.prezzo - (pts.prezzo * 0.6)) * (COALESCE(tptdz.percentuale,0) / 100))
-                        ELSE
-                            (pts.prezzo * (COALESCE(tptdz.percentuale,0) / 100))
-                    END
+                    ELSE 0
+                END,
+                CASE
+                    WHEN pt.realizzato_da = 'Medplus' THEN
+                        pts.prezzo * ( COALESCE(tptm.percentuale,0) / 100 )
+                    
+                    WHEN pt.realizzato_da = 'Daniela Zanotti' THEN
+                        pts.prezzo * ( COALESCE(tptdz.percentuale,0) / 100 )
 
-                ELSE 0
-            END
+                    WHEN pt.realizzato_da = 'Isico Salerno' THEN
+                        ( ( pts.prezzo - (pts.prezzo * 0.4) ) * ( COALESCE(tptis.percentuale,0) / 100 ) )
+
+                    WHEN pt.realizzato_da = 'Isico Napoli' THEN
+                        ( ( pts.prezzo - (pts.prezzo * 0.4) ) * ( COALESCE(tptin.percentuale,0) / 100 ) )
+
+                    ELSE 0
+                END
+            )
         ),
         2,
         'it_IT'
@@ -91,10 +88,26 @@ SELECT
         'Calcolato'
     ) COLLATE utf8mb4_general_ci AS `origine_percentuale_terapista`,
 
-    IF( pts.saldato_terapista IS NOT NULL, 
+    IF( pts.saldo_terapista IS NOT NULL, 
         'Impostato', 
         'Calcolato'
-    ) COLLATE utf8mb4_general_ci AS `origine_saldo_terapista`
+    ) COLLATE utf8mb4_general_ci AS `origine_saldo_terapista`,
+
+    t.profilo COLLATE utf8mb4_general_ci AS `profilo`,
+
+    FORMAT(
+        CASE
+            WHEN pt.realizzato_da = 'Isico Salerno' THEN
+                pts.prezzo * 0.3
+            WHEN pt.realizzato_da = 'Isico Napoli' THEN
+                pts.prezzo * 0.4
+            ELSE
+                0
+        END
+        ,
+        2,
+        'it_IT'
+    ) COLLATE utf8mb4_general_ci AS percentuale_isico
 
 FROM percorsi_terapeutici_sedute pts
 

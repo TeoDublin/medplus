@@ -297,6 +297,7 @@ select.selectpicker {
   border-radius: 0;
   -webkit-box-shadow: none;
           box-shadow: none;
+  min-height: 200px!important;
 }
 .bootstrap-select .dropdown-menu li {
   position: relative;

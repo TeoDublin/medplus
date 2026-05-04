@@ -59,6 +59,11 @@ function parseFilter(){
         ret.tipo_pagamento = tipo_pagamento;
     }
 
+    let voucher = $('#voucher').val() || [];
+    if (voucher.length > 0) {
+        ret.voucher = voucher;
+    }
+
     let realizzato_da = $('#realizzato_da').val() || [];
     if (realizzato_da.length > 0) {
         ret.realizzato_da = realizzato_da;

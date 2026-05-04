@@ -49,6 +49,11 @@ function parseFilter(){
         ret.metodo = metodo;
     }
 
+    let voucher = $('#voucher').val() || [];
+    if (voucher.length > 0) {
+        ret.voucher = voucher;
+    }
+
     let tipo_pagamento = $('#tipo_pagamento').val() || [];
     if (tipo_pagamento.length > 0) {
         ret.tipo_pagamento = tipo_pagamento;

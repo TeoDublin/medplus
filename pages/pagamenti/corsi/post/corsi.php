@@ -48,7 +48,7 @@
         }
 
         if(isset($_POST['voucher'])){
-            $where.=" AND bnw IN('".implode("','",$_POST['voucher'])."')";
+            $where.=" AND voucher IN('".implode("','",$_POST['voucher'])."')";
         }
 
         if(isset($_POST['cliente'])){
@@ -412,20 +412,20 @@
             </div>
         </div>
         <?php if($ruolo !== 'display'): ?>
-            <div class="accordion p-1" id="filter_bnw">
+            <div class="accordion p-1" id="filter_voucher">
                 <div class="accordion-item">
                     <h2 class="accordion-header">
-                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_bnw" aria-expanded="false" aria-controls="collapse_filter_bnw">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse_filter_voucher" aria-expanded="false" aria-controls="collapse_filter_voucher">
                         Voucher
                         </button>
                     </h2>
-                    <div id="collapse_filter_bnw" class="accordion-collapse collapse" data-bs-parent="#filter_bnw">
+                    <div id="collapse_filter_voucher" class="accordion-collapse collapse" data-bs-parent="#filter_voucher">
                         <div class="accordion-body">
                             <div>
-                                <label for="bnw">Voucher</label>
-                                <select class="form-control selectpicker" id="bnw" value="<?php echo $_POST['voucher']; ?>" multiple>
+                                <label for="voucher">Voucher</label>
+                                <select class="form-control selectpicker" id="voucher" value="<?php echo $_POST['voucher']; ?>" multiple>
                                     <?php 
-                                        foreach (Enum('percorsi_terapeutici','voucher')->get() as $enum) {
+                                        foreach (Enum('pagamenti','voucher')->get() as $enum) {
                                             $selected = in_array($enum,( $_POST['voucher'] ?? []))?'selected':'';
                                             echo "<option {$selected} value=\"{$enum}\">{$enum}</option>";
                                         }
