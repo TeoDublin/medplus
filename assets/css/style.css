@@ -1,12 +1,23 @@
+html,
+body {
+    min-height: 100vh;
+}
+
+body {
+    min-height: 100vh;
+}
+
 .page-content {
     margin-left:240px!important;
     width: calc(100vw - 240.5px)!important;
+    min-height: 100vh;
     padding: 0;
 }
 
 .page-content.menu-hidden {
     margin-left:70px!important;
     width: calc(100vw - 70.5px)!important;
+    min-height: 100vh;
     padding: 0;
 }
 

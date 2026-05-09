@@ -17,7 +17,13 @@
                     }
 
                     if($col!='id'){
-                        echo "<td scope=\"col\" class=\"text-center text-wrap {$tr_class}\">{$row->{$col}}</td>";
+                        if($col === 'colore'){
+                            $colore = $row->{$col} ?: '#e8eaed';
+                            echo "<td scope=\"col\" class=\"text-center text-wrap {$tr_class}\"><span class=\"d-inline-block border\" style=\"width:22px;height:22px;border-radius:50%;background:{$colore};vertical-align:middle;\"></span></td>";
+                        }
+                        else{
+                            echo "<td scope=\"col\" class=\"text-center text-wrap {$tr_class}\">{$row->{$col}}</td>";
+                        }
                     }
                 }
                 if($response->actions){
