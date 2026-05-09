@@ -20,8 +20,8 @@ SELECT
     p.fattura_aruba
 FROM `pagamenti` p
 LEFT JOIN pagamenti_child pc ON p.id = pc.id_pagamenti
-LEFT JOIN corsi_pagamenti cp ON cp.id_pagamenti = p.id
-LEFT JOIN percorsi_terapeutici pt on pt.id = pc.id_origine
+LEFT JOIN corsi_pagamenti cp ON pc.id_origine_child = cp.id
+LEFT JOIN percorsi_terapeutici pt on pc.id_origine = pt.id
 LEFT JOIN clienti c ON p.id_cliente = c.id
 GROUP BY p.id
 ORDER BY p.data_creazione DESC

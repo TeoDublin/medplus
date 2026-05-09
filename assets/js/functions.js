@@ -272,6 +272,7 @@ function search_table(_data){
 }
 
 function excel(page,_data={}) {
+    console.log(page);
     const div = document.createElement('div');
     div.id = 'div_excel_spinner';
     div.innerHTML=spinner();

@@ -15,7 +15,7 @@ $sheet = $spreadsheet->getActiveSheet();
 $line = 1;
 
 function _view_corsi_pagamenti_export(){
-    return Select('*')->from('view_corsi_pagamenti_export')->where("`scadenza` like '{$_POST['month']}%'")->get();
+    return Select('*')->from('view_corsi_pagamenti_export')->where("`month` = '{$_POST['month']}'")->get();
 }
 
 function _isico($categoria){
@@ -38,7 +38,9 @@ function _saldo_terapista($categoria,$percentuale_terapista,$prezzo){
     return str_replace(',','',round($ret,2));
 }
 
-foreach (_view_corsi_pagamenti_export() as $result) {
+$view_corsi_pagamenti_export = _view_corsi_pagamenti_export();
+
+foreach ( $view_corsi_pagamenti_export as $result) {
     $map=[
         'Terapista'=>$result['terapista'],
         'mese'=>$_POST['month'],
@@ -47,8 +49,9 @@ foreach (_view_corsi_pagamenti_export() as $result) {
         'Corso'=>$result['corso'],
         'Prezzo'=>str_replace(',','',$result['prezzo']),
         '% terapista'=>$result['percentuale_corsi'],
-        'Saldo Isico'=>_saldo_isico($result['categoria'],$result['prezzo']),
-        'Saldo Terapista'=>_saldo_terapista($result['categoria'],$result['percentuale_corsi'],$result['prezzo'])
+        'Saldo Isico'=>$result['saldo_isico'],
+        'Saldo Terapista'=>$result['saldo_terapista'],
+        'Realizzato Da' => $result['realizzato_da'],
     ];
     if ($line == 1) {
         $col = 'A';

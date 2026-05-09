@@ -97,7 +97,7 @@ LEFT JOIN corsi c
     ON cp.id_corso = c.id
 
 LEFT JOIN corsi_classi cc 
-    ON cp.id_corso = cc.id_corso
+    ON cp.id_corso = cc.id_corso and cp.id_cliente = cc.id_cliente and YEAR(cp.scadenza) = YEAR(cc.data_inizio)
 
 LEFT JOIN terapisti t 
     ON c.id_terapista = t.id
@@ -107,22 +107,22 @@ LEFT JOIN pagamenti p
 
 LEFT JOIN terapisti_percentuali tptm 
     ON t.id = tptm.id_terapista 
-    AND tptm.tipo_percorso = 'Trattamenti'
+    AND tptm.tipo_percorso = 'Corsi'
     AND tptm.tipo_percentuale = 'Medplus' 
 
 LEFT JOIN terapisti_percentuali tptis 
     ON t.id = tptis.id_terapista 
-    AND tptis.tipo_percorso = 'Trattamenti'
+    AND tptis.tipo_percorso = 'Corsi'
     AND tptis.tipo_percentuale = 'Isico Salerno' 
 
 LEFT JOIN terapisti_percentuali tptin 
     ON t.id = tptin.id_terapista 
-    AND tptin.tipo_percorso = 'Trattamenti'
+    AND tptin.tipo_percorso = 'Corsi'
     AND tptin.tipo_percentuale = 'Isico Napoli'
 
 LEFT JOIN terapisti_percentuali tptdz 
     ON t.id = tptdz.id_terapista 
-    AND tptdz.tipo_percorso = 'Trattamenti'
+    AND tptdz.tipo_percorso = 'Corsi'
     AND tptdz.tipo_percentuale = 'Daniela Zanotti' 
 
 GROUP BY
